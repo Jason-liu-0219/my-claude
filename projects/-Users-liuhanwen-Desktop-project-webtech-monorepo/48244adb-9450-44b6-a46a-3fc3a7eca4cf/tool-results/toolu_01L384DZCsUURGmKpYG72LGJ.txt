@@ -1,0 +1,275 @@
+     1→<template>
+     2→  <div class="device-access-table">
+     3→    <AppTable
+     4→      :bodyList="tableContentList"
+     5→      :headerList="tableHeaderList"
+     6→      :searchStatus="searchStatus"
+     7→      :displayRowButtons="false"
+     8→      :grid="false"
+     9→      scroll
+    10→      sort
+    11→    >
+    12→      <template #table-content-row="{ item, headerList }">
+    13→        <td
+    14→          v-for="header in headerList"
+    15→          :key="header.type"
+    16→          :class="header.type"
+    17→          @click="toggleSite(item)"
+    18→        >
+    19→          <div
+    20→            v-if="header.type === 'name'"
+    21→            class="device-name-wrapper"
+    22→          >
+    23→            <SvgIcon
+    24→              v-if="item.devices?.length"
+    25→              class="icon expand-icon"
+    26→              :iconClass="item.displaySubItems ? 'general_arrow_bottom' : 'general_arrow_right'"
+    27→              size="20px"
+    28→            />
+    29→            <SvgIcon
+    30→              class="icon"
+    31→              iconClass="general_location_site"
+    32→              size="28px"
+    33→            />
+    34→            <h6>{{ item.name }}</h6>
+    35→          </div>
+    36→          <template v-else-if="header.type === 'role'">
+    37→            <h6>{{ item.role }}</h6>
+    38→          </template>
+    39→        </td>
+    40→      </template>
+    41→      <template #table-content-sub-row="{ item: subItem, headerList }">
+    42→        <td
+    43→          v-for="header in headerList"
+    44→          :key="header.type"
+    45→          :class="header.type"
+    46→        >
+    47→          <div
+    48→            v-if="header.type === 'name'"
+    49→            class="device-name-wrapper"
+    50→          >
+    51→            <SvgIcon
+    52→              class="icon"
+    53→              :iconClass="getDeviceIcon(subItem.type)"
+    54→              size="28px"
+    55→            />
+    56→            <h6>{{ subItem.name }}</h6>
+    57→          </div>
+    58→          <template v-else-if="header.type === 'role'">
+    59→            <h6>{{ subItem.role }}</h6>
+    60→          </template>
+    61→        </td>
+    62→      </template>
+    63→      <template #status-icon>
+    64→        <AppTableStatusInfoIcon :status="searchStatus">
+    65→          <template #append>
+    66→            <button
+    67→              v-if="showManageButton"
+    68→              class="manage-access-button"
+    69→              @click="emit('manageAccess')"
+    70→            >
+    71→              {{ t('Manage Device Access') }}
+    72→            </button>
+    73→          </template>
+    74→        </AppTableStatusInfoIcon>
+    75→      </template>
+    76→    </AppTable>
+    77→  </div>
+    78→</template>
+    79→
+    80→<script setup>
+    81→import { ref, computed, watch } from 'vue';
+    82→import { useI18n } from 'vue-i18n';
+    83→
+    84→import AppTableStatusInfoIcon from '@vivotek/generic-vue-components/components/AppTable/AppTableStatusInfoIcon.vue';
+    85→import { sortingUtils } from '@vivotek/lib-utility';
+    86→
+    87→const { t } = useI18n();
+    88→
+    89→const props = defineProps({
+    90→  sites: {
+    91→    type: Array,
+    92→    default: () => [],
+    93→  },
+    94→  searchStatus: {
+    95→    type: String,
+    96→    default: '',
+    97→  },
+    98→  showManageButton: {
+    99→    type: Boolean,
+   100→    default: false,
+   101→  },
+   102→});
+   103→
+   104→const emit = defineEmits(['manageAccess']);
+   105→
+   106→const expandedSiteIds = ref([]);
+   107→
+   108→watch(
+   109→  () => props.sites,
+   110→  (newSites) => {
+   111→    if (newSites.length > 0 && expandedSiteIds.value.length === 0) {
+   112→      expandedSiteIds.value.push(newSites[0].id);
+   113→    }
+   114→  },
+   115→  { immediate: true },
+   116→);
+   117→
+   118→const tableHeaderList = computed(() => [
+   119→  {
+   120→    type: 'name',
+   121→    name: t('Sites/Devices'),
+   122→    sort: (a, b) => sortingUtils.sortByLocalCompare(a, b, 'name'),
+   123→    defaultArrowDirection: 'up',
+   124→  },
+   125→  {
+   126→    type: 'role',
+   127→    name: t('Role and Permission'),
+   128→    sort: null,
+   129→  },
+   130→]);
+   131→
+   132→const isExpanded = (siteId) => expandedSiteIds.value.includes(siteId);
+   133→
+   134→const tableContentList = computed(() => {
+   135→  return props.sites.map((site) => ({
+   136→    ...site,
+   137→    displaySubItems: isExpanded(site.id),
+   138→    subItems: site.devices || [],
+   139→  }));
+   140→});
+   141→
+   142→const toggleSite = (item) => {
+   143→  const index = expandedSiteIds.value.indexOf(item.id);
+   144→  if (index !== -1) {
+   145→    expandedSiteIds.value.splice(index, 1);
+   146→  } else {
+   147→    expandedSiteIds.value.push(item.id);
+   148→  }
+   149→};
+   150→
+   151→const getDeviceIcon = (type) => {
+   152→  const iconMap = {
+   153→    camera: 'general_camera_solid',
+   154→    nvr: 'general_device_solid',
+   155→    nvrchannel: 'general_camera_solid',
+   156→    vss: 'general_device_solid',
+   157→    vsschannel: 'general_camera_solid',
+   158→    bridge: 'general_RX_solid',
+   159→    unknownDevice: 'general_unknown_soild',
+   160→  };
+   161→  return iconMap[type] || 'general_camera_solid';
+   162→};
+   163→</script>
+   164→
+   165→<style scoped lang="less">
+   166→.device-access-table {
+   167→  flex: 1;
+   168→  min-height: 0;
+   169→  display: flex;
+   170→  flex-direction: column;
+   171→  background: @color-surface03;
+   172→  padding: 20px;
+   173→
+   174→  :deep(.table-layout-wrapper) {
+   175→    flex: 1;
+   176→    min-height: 0;
+   177→    background: @color-surface03;
+   178→
+   179→    .empty-block {
+   180→      background: @color-surface03;
+   181→    }
+   182→
+   183→    // Header styles
+   184→    .table-header {
+   185→      th[type='name'],
+   186→      th[type='role'] {
+   187→        flex: 1;
+   188→        flex-basis: 50%;
+   189→      }
+   190→
+   191→      .table-row:hover {
+   192→        background: transparent;
+   193→      }
+   194→    }
+   195→
+   196→    // Content styles
+   197→    .table-content {
+   198→      .name,
+   199→      .role {
+   200→        flex: 1;
+   201→        flex-basis: 50%;
+   202→      }
+   203→
+   204→      .role h6 {
+   205→        color: @color-text02;
+   206→      }
+   207→
+   208→      .table-row {
+   209→        height: 57px;
+   210→        cursor: pointer;
+   211→
+   212→        &:hover {
+   213→          background: @color-surface04;
+   214→        }
+   215→
+   216→        h6 {
+   217→          color: @color-text01;
+   218→          .text-ellipsis();
+   219→        }
+   220→      }
+   221→
+   222→      tr.sub-row {
+   223→        background: @color-surface02;
+   224→
+   225→        .name {
+   226→          padding-left: 40px;
+   227→        }
+   228→      }
+   229→    }
+   230→  }
+   231→
+   232→  // Device name wrapper
+   233→  .device-name-wrapper {
+   234→    display: flex;
+   235→    align-items: center;
+   236→    gap: 8px;
+   237→
+   238→    .icon {
+   239→      color: @color-icon03;
+   240→      flex-shrink: 0;
+   241→    }
+   242→
+   243→    .expand-icon {
+   244→      cursor: pointer;
+   245→    }
+   246→
+   247→    h6 {
+   248→      .text-ellipsis();
+   249→    }
+   250→  }
+   251→
+   252→  .manage-access-button {
+   253→    display: flex;
+   254→    align-items: center;
+   255→    justify-content: center;
+   256→    padding: 10px 24px;
+   257→    border: 1px solid @color-text03;
+   258→    border-radius: 4px;
+   259→    background: transparent;
+   260→    color: @color-text01;
+   261→    font-size: 14px;
+   262→    cursor: pointer;
+   263→    transition: all 0.2s;
+   264→
+   265→    &:hover {
+   266→      background: @color-surface04;
+   267→    }
+   268→  }
+   269→}
+   270→</style>
+   271→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

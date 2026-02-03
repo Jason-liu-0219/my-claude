@@ -1,0 +1,349 @@
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unused-expressions */
+import { RECORDING } from '@vivotek/const-vsaas';
+import VDSI from '../vdsi';
+import ComposeVsaasDeviceId from '../utility/composeVsaasDeviceId';
+import ERROR_MESSAGE from '../constants/connectionError';
+import GetFirmwareState from '../utility/getFirmwareState';
+
+export default class Configurator extends VDSI {
+  name = 'configurator';
+
+  constructor(reference) {
+    super(reference);
+
+    this.updateState({
+      isBlockCameraVcaCapabilityAndSupport: false,
+      support: {},
+      ready: false,
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get QUERIES() {
+    return [
+      'online',
+      'recording',
+      'localIP',
+      'mac',
+      'model',
+      'modelType',
+      'firmware',
+      'displayName',
+      'groupName',
+      'siteID',
+      'storageCapacity',
+      'recordingCapacityDays',
+      'deviceId',
+      'generalIconClass',
+      'statelessModelIcon',
+      'thingName',
+      'fwUpgradeState',
+      'fwUpgradeVersion',
+      'minDaysForCloudStreaming',
+      'city',
+      'fisheye',
+      'vca',
+      'ptz',
+      'isPremiumCategory',
+      'isEssentialCategory',
+      'isUnknownDevice',
+      'enableCloudBackup',
+      'getBackendIdentifier',
+      'derivationDescriptor',
+      'wizardFinished',
+      'aiObjectSearchKey',
+      'type',
+      'contractInfo',
+      'isSupportTwoWayAudio',
+      'isHalfDuplexModel',
+      'retentionDaysByUser',
+      'maxRetentionDays',
+      'isTimelapseEnabled',
+      'derivant',
+      'isMsCamera',
+    ];
+  }
+
+  get type() {
+    return this.reference.options?.type;
+  }
+
+  get online() {
+    return window.forceOfflineMac === this.mac ? false : this.reference.options?.online;
+  }
+
+  get recording() {
+    return this.reference.options?.recording;
+  }
+
+  get model() {
+    return this.reference.options?.model;
+  }
+
+  get modelType() {
+    return this.reference.options?.modelType || this.reference.options?.modelCategory || 'Essential';
+  }
+
+  get minDaysForCloudStreaming() {
+    return this.reference.options?.recordingCapacityDays || RECORDING.MIN_DAYS_FOR_CLOUD_STREAMING;
+  }
+
+  get isPremiumCategory() {
+    return this.modelType === 'Premium';
+  }
+
+  get isEssentialCategory() {
+    return this.modelType === 'Essential';
+  }
+
+  get city() {
+    return this.reference.options?.city;
+  }
+
+  set city(value) {
+    this.reference.options.city = value;
+  }
+
+  get mac() {
+    return this.reference.options?.mac;
+  }
+
+  get localIP() {
+    return this.reference.options?.ip;
+  }
+
+  get thingName() {
+    return this.reference.options?.thingName;
+  }
+
+  get deviceId() {
+    return ComposeVsaasDeviceId(this.reference.options);
+  }
+
+  get cameraType() {
+    const map = {
+      fisheye: this.fisheye,
+      ptz: this.ptz
+    };
+
+    return Object.keys(map).find((key) => map[key]) || 'default';
+  }
+
+  get isMsCamera() {
+    if (!this.model) {
+      return false;
+    }
+
+    return this.model.includes('MS');
+  }
+
+  get isUnknownDevice() {
+    return this.reference.options?.type === 'unknownDevice';
+  }
+
+  get generalIconClass() {
+    const type = this.cameraType;
+
+    if (this.isUnknownDevice) {
+      return 'general_unknown_soild';
+    }
+
+    if (this.fwUpgradeState === 'upgrading') {
+      return `status_camera_${type}_updating_solid_normal`;
+    }
+
+    if (!this.online) {
+      return `status_camera_${type}_disconnected`;
+    }
+
+    return this.recording ? `status_camera_${type}_recording` : 'general_alert_solid';
+  }
+
+  get statelessModelIcon() {
+    const type = this.cameraType;
+
+    return `status_camera_${type}`;
+  }
+
+  get displayName() {
+    return this.reference?.options?.name || this.reference?.options?.mac;
+  }
+
+  set displayName(value) {
+    this.reference.options.name = value;
+  }
+
+  get groupName() {
+    return this.reference.options.groupName;
+  }
+
+  set groupName(value) {
+    this.reference.options.groupName = value;
+  }
+
+  get siteID() {
+    return this.reference.options.siteID || this.reference.options.groupId;
+  }
+
+  set siteID(value) {
+    this.reference.options.siteID = value;
+  }
+
+  get firmware() {
+    return this.reference.options?.firmware;
+  }
+
+  get storageCapacity() {
+    return this.reference.options?.storageCapacity;
+  }
+
+  get recordingCapacityDays() {
+    return this.reference.options?.recordingCapacityDays;
+  }
+
+  get retentionDaysByUser() {
+    return this.reference.options?.retentionDaysByUser;
+  }
+
+  get maxRetentionDays() {
+    return this.reference.options?.maxRetentionDays;
+  }
+
+  get enableCloudBackup() {
+    return this.reference.options?.storageCapacity > 0;
+  }
+
+  get isTimelapseEnabled() {
+    return this.reference.options?.isTimelapseEnabled;
+  }
+
+  get fwUpgradeState() {
+    return GetFirmwareState(this.reference.options?.fwUpgradeState);
+  }
+
+  get fwUpgradeVersion() {
+    return this.reference.options?.fwUpgradeVersion;
+  }
+
+  get fisheye() {
+    return this.reference.options?.fisheye || false;
+  }
+
+  get ptz() {
+    return this.reference.options?.ptz || false;
+  }
+
+  get vca() {
+    if (this.state.isBlockCameraVcaCapabilityAndSupport) {
+      return {
+        capability: null,
+      };
+    }
+    return this.reference.options?.vca;
+  }
+
+  get wizardFinished() {
+    return true;
+  }
+
+  get aiObjectSearchKey() {
+    return this.mac;
+  }
+
+  get contractInfo() {
+    return this.reference.options?.contractInfo;
+  }
+
+  // NOTE: NOW ONLY SUPPORT FULL DUPLEX MODEL
+  get isSupportTwoWayAudio() {
+    return this.checkSupportFromOptions('audio') && this.checkSupportFromOptions('audioout');
+  }
+
+  get isHalfDuplexModel() {
+    return false;
+  }
+
+  get derivant() {
+    return this.reference.options?.derivant;
+  }
+
+  async queryServiceSupport() {
+    try {
+      const audioInConfig = await this.request('audioIn/queryConfiguration');
+      return {
+        audioin: audioInConfig?.support ?? 0
+      };
+    } catch (err) {
+      return {
+        audioin: 0
+      };
+    }
+  }
+
+  async queryConfiguration() {
+    const serviceSupport = await this.queryServiceSupport();
+    this.updateState({ support: { ...serviceSupport, ...this.state.support }, ready: true });
+    if (!this.reference.options?.support) {
+      const result = await this[Symbol.context].provide('ApiService').getDeviceInfo({ mac: this.mac });
+      this.reference.updateOptions(result[0]);
+    }
+
+    if (!this.reference.online) {
+      throw new Error(ERROR_MESSAGE.DEVICE_DISCONNECT);
+    }
+
+    try {
+      const response = await this.get('/vsaas/support');
+      const { info } = response?.data;
+      if (info) {
+        if (this.state.isBlockCameraVcaCapabilityAndSupport) {
+          const speedDomeInfo = {
+            ...info,
+            'privacy-mask': 0,
+          };
+
+          this.updateState({ support: { ...this.state.support, ...speedDomeInfo }, ready: true });
+        } else {
+          this.updateState({ support: { ...this.state.support, ...info }, ready: true });
+        }
+      }
+      return {
+        ...this.state.support,
+      };
+    } catch (err) {
+      const errorMessage = err.message || err.statusText || 'queryConfiguration failed';
+      throw new Error(errorMessage);
+    }
+  }
+
+  getBackendIdentifier() {
+    const { thingName } = this;
+    return { thingName, derivant: 'none' };
+  }
+
+  get derivationDescriptor() {
+    if (this.reference.options?.derivantInfo) {
+      return this.reference.options?.derivantInfo.derivationDescriptor;
+    }
+    return this.reference.options?.derivant;
+  }
+
+  checkServiceSupport(service) {
+    if (!this.state.ready) {
+      return false;
+    }
+    return this.checkServiceVersionCompatible(service) && this.state.support[service] === 1;
+  }
+
+  checkServiceVersionCompatible(service) {
+    if (!this.state.ready) {
+      return false;
+    }
+    return Object.prototype.hasOwnProperty.call(this.state.support, service);
+  }
+
+  checkSupportFromOptions(service) {
+    return this.reference.options?.support?.includes(service);
+  }
+}

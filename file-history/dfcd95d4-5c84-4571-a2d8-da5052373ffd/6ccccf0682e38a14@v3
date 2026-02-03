@@ -1,0 +1,425 @@
+import mutations from './mutations';
+
+vi.mock('@vivotek/threadable-canvas', () => ({}));
+
+vi.mock('@vivotek/lib-remote-config', () => {
+  return {
+    default: {
+      getConfiguration: vi.fn().mockImplementation((key) => {
+        switch (key) {
+          case 'feature_disable_speed_dome_vca_settings_models':
+            return ['SD834-EHL', 'YOUR_DEVICE_MODEL'];
+          case 'feature_api_key':
+            return true;
+          case 'feature_audit_log':
+            return true;
+          default:
+            return true;
+        }
+      }),
+    },
+    PORTAL_FEATURE_CONFIG_KEY: {
+      DISABLE_SPEED_DOMES: 'feature_disable_speed_dome_vca_settings_models',
+      API_KEY: 'feature_api_key',
+      AUDIT_LOG: 'feature_audit_log',
+    },
+  };
+});
+
+vi.mock('@vivotek/device', async (importOriginal) => {
+  const actual = await importOriginal();
+
+  const v = function v(o) {
+    this.options = {};
+    this.services = {};
+
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+    this.install = vi.fn().mockImplementation((services) => {
+      services.forEach((item) => {
+        this.services[item.name] = item;
+      });
+    });
+  };
+
+  const nvrchannel = function nvrchannel(o) {
+    this.options = {};
+    this.services = {};
+
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+
+    this.install = vi.fn().mockImplementation((services) => {
+      services.forEach((item) => {
+        this.services[item.name] = item;
+      });
+    });
+  };
+  const nvr = function nvr(o) {
+    this.options = {};
+    this.services = {};
+
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+
+    this.install = vi.fn().mockImplementation((services) => {
+      services.forEach((item) => {
+        this.services[item.name] = item;
+      });
+    });
+  };
+  return {
+    ...actual,
+    VsaasCamera: v,
+    VsaasNVRCamera: nvrchannel,
+    VsaasNVR: nvr,
+  };
+});
+
+describe('mutations', () => {
+  describe('setDevices', () => {
+    it('should set devices in paid org', () => {
+      const state = { deviceMap: {}, uninitializedDevices: {} };
+      const devices = [
+        {
+          deviceId: 'deviceAAA',
+          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+          name: 'jasonTestGroup1',
+          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+          type: 'camera',
+        },
+      ];
+
+      mutations.setDevices(state, {
+        items: devices,
+        plan: 'paid',
+      });
+
+      const instance = state.deviceMap.camera.get('deviceAAA');
+
+      expect(instance).toMatchObject({
+        deviceId: 'deviceAAA',
+        options: {
+          deviceId: 'deviceAAA',
+          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+          name: 'jasonTestGroup1',
+          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+        },
+      });
+    });
+    it('should set devices in free org', () => {
+      const state = { deviceMap: {}, uninitializedDevices: {} };
+
+      const devices = [
+        {
+          deviceId: 'deviceAAA',
+          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+          name: 'jasonTestGroup1',
+          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+          type: 'camera',
+        },
+      ];
+
+      mutations.setDevices(state, {
+        items: devices,
+        plan: 'free',
+      });
+
+      const instance = state.deviceMap.camera.get('deviceAAA');
+
+      expect(instance).toMatchObject({
+        deviceId: 'deviceAAA',
+        options: {
+          deviceId: 'deviceAAA',
+          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+          name: 'jasonTestGroup1',
+          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+        },
+      });
+    });
+  });
+  describe('resetDevices', () => {
+    it('should set state.device = {}', () => {
+      const state = {
+        deviceMap: {
+          camera: new Map([['deviceAAA', { deviceId: 'deviceAAA', options: {}, services: {} }]]),
+          nvr: new Map(),
+          bridge: new Map(),
+          nvrchannel: new Map(),
+          unknownDevice: new Map(),
+        },
+        uninitializedDevices: {
+          aaa: '123',
+        },
+      };
+
+      mutations.resetDevices(state);
+      Object.values(state.deviceMap).forEach((item) => {
+        expect(item.size).toBe(0);
+      });
+      expect(Object.keys(state.uninitializedDevices).length).toBe(0);
+    });
+  });
+  describe('deleteDevice', () => {
+    it('should delete devices', () => {
+      const spy = vi.fn();
+      const state = {
+        devices: {
+          deviceA: {},
+        },
+        uninitializedDevices: {
+          deviceA: {},
+        },
+        deviceMap: {
+          nvr: new Map(),
+          camera: new Map(),
+          nvrchannel: new Map(),
+        },
+      };
+      const device = {
+        deviceId: 'deviceA',
+        mac: 'aaa',
+        type: 'nvr',
+        notifyUpdate: spy,
+      };
+
+      state.deviceMap.nvr.set('deviceA', device);
+      mutations.deleteDevice(state, device);
+
+      expect(state.deviceMap.nvr.has('deviceA')).toBe(false);
+      expect(state.uninitializedDevices.deviceA).toBe(undefined);
+      expect(spy).toBeCalledTimes(1);
+    });
+  });
+  describe('updateDevice', () => {
+    const groupsMap = [{ id: 'groupId', name: 'groupA' }];
+
+    it('should delete unknown device when device update type to real type', () => {
+      const device = {
+        deviceId: 'thing:derivant',
+        derivant: 'derivant',
+        name: 'name',
+        city: 'city',
+        mac: 'deviceA',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'camera',
+        plan: 'paid',
+      };
+
+      const state = {
+        deviceMap: {
+          camera: new Map(),
+          nvr: new Map(),
+          bridge: new Map(),
+          nvrchannel: new Map(),
+          unknownDevice: new Map([['thing:derivant', { deviceId: 'thing:derivant', options: device }]]),
+        },
+      };
+
+      mutations.updateDevice(state, { device, groupsMap, plan: 'paid' });
+
+      expect(state.deviceMap.camera.size).toBe(1);
+      expect(state.deviceMap.camera.get(device.deviceId).options).toStrictEqual(device);
+      expect(state.deviceMap.unknownDevice.size).toBe(0);
+    });
+
+    it("should update Device when state.devices haven't this device", () => {
+      const device = {
+        deviceId: 'thing:derivant',
+        derivant: 'derivant',
+        name: 'name',
+        city: 'city',
+        mac: 'deviceA',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'camera',
+        plan: 'paid',
+      };
+      const state = {
+        deviceMap: {
+          camera: new Map(),
+          nvr: new Map(),
+          bridge: new Map(),
+          nvrchannel: new Map(),
+          unknownDevice: new Map(),
+        },
+      };
+
+      mutations.updateDevice(state, { device, groupsMap, plan: 'paid' });
+
+      expect(state.deviceMap.camera.size).toBe(1);
+      expect(state.deviceMap.camera.get(device.deviceId).options).toStrictEqual(device);
+    });
+    it('should update Device', () => {
+      const device = {
+        deviceId: 'thing:derivant',
+        derivant: 'derivant',
+        name: 'name',
+        city: 'city',
+        mac: 'deviceA',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'camera',
+      };
+      const state = {
+        deviceMap: {
+          camera: new Map(),
+          nvr: new Map(),
+          bridge: new Map(),
+          nvrchannel: new Map(),
+          unknownDevice: new Map(),
+        },
+      };
+
+      mutations.updateDevice(state, { device, groupsMap });
+      device.name = 'aaaaa';
+      mutations.updateDevice(state, { device, groupsMap });
+      expect(state.deviceMap.camera.size).toBe(1);
+      expect(state.deviceMap.camera.get(device.deviceId).options.name).toStrictEqual('aaaaa');
+    });
+    it('should update nvr and channels if nvr changed', () => {
+      const nvrDevice = {
+        deviceId: 'thing:nvr',
+        derivant: 'nvr',
+        name: 'name',
+        city: 'city',
+        mac: 'deviceNVR',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'nvr',
+        plan: 'paid',
+      };
+      const channelDevice1 = {
+        deviceId: 'thing:channel1',
+        derivant: 'channel1',
+        name: 'name1',
+        city: 'city',
+        mac: 'deviceChannel',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'nvrchannel',
+        nvrMac: 'deviceNVR',
+        nvr: nvrDevice,
+        plan: 'paid',
+      };
+      const channelDevice2 = {
+        deviceId: 'thing:channel2',
+        derivant: 'channel2',
+        name: 'name2',
+        city: 'city',
+        mac: 'deviceChannel',
+        deviceGroupID: 'groupId',
+        thingName: 'thing',
+        type: 'nvrchannel',
+        nvrMac: 'deviceNVR',
+        nvr: nvrDevice,
+        plan: 'paid',
+      };
+      const state = {
+        deviceMap: {
+          camera: new Map(),
+          nvr: new Map(),
+          bridge: new Map(),
+          nvrchannel: new Map(),
+          unknownDevice: new Map(),
+        },
+      };
+      mutations.updateDevice(state, { device: nvrDevice, groupsMap, plan: 'paid' });
+      mutations.updateDevice(state, { device: channelDevice1, groupsMap, plan: 'paid' });
+      mutations.updateDevice(state, { device: channelDevice2, groupsMap, plan: 'paid' });
+
+      expect(state.deviceMap.nvrchannel.size).toBe(2);
+      expect(state.deviceMap.nvr.size).toBe(1);
+
+      nvrDevice.name = 'aaaaa';
+      nvrDevice.city = 'bbbbb';
+      mutations.updateDevice(state, { device: nvrDevice, groupsMap });
+
+      expect(state.deviceMap.nvrchannel.size).toBe(2);
+      expect(state.deviceMap.nvr.size).toBe(1);
+
+      const nvr = state.deviceMap.nvr.get(nvrDevice.deviceId);
+      const channel1 = state.deviceMap.nvrchannel.get(channelDevice1.deviceId);
+      const channel2 = state.deviceMap.nvrchannel.get(channelDevice2.deviceId);
+
+      expect(nvr.options).toStrictEqual(nvrDevice);
+      expect(channel1.options.nvr).toStrictEqual(nvrDevice);
+      expect(channel2.options.nvr).toStrictEqual(nvrDevice);
+    });
+  });
+  describe('setSearchStatus', () => {
+    it('should set loading', () => {
+      const state = {
+        searchStatus: '',
+      };
+      mutations.setSearchStatus(state, 'loading');
+
+      expect(state.searchStatus).toBe('loading');
+    });
+  });
+  describe('updateDevicesGroupName', () => {
+    it('should update corresponding state.devices groupName', () => {
+      const group = { name: 'new group' };
+      const devices = [{ deviceId: 'deviceAAA', type: 'camera' }];
+      const state = {
+        deviceMap: {
+          camera: new Map([
+            [
+              'deviceAAA',
+              {
+                groupName: 'group',
+              },
+            ],
+            [
+              'deviceBBB',
+              {
+                groupName: 'group',
+              },
+            ],
+          ]),
+        },
+      };
+
+      mutations.updateDevicesGroupName(state, { group, devices });
+      const aaa = state.deviceMap.camera.get('deviceAAA');
+      const bbb = state.deviceMap.camera.get('deviceBBB');
+      expect(aaa.groupName).toBe('new group');
+      expect(bbb.groupName).toBe('group');
+    });
+    it('should not update state.devices groupName', () => {
+      const group = { name: 'new group' };
+      const devices = [];
+      const state = {
+        devices: {
+          deviceAAA: {
+            groupName: 'group',
+          },
+          deviceBBB: {
+            groupName: 'group',
+          },
+        },
+      };
+
+      mutations.updateDevicesGroupName(state, { group, devices });
+
+      expect(state.devices.deviceAAA.groupName).toBe('group');
+      expect(state.devices.deviceBBB.groupName).toBe('group');
+    });
+  });
+});

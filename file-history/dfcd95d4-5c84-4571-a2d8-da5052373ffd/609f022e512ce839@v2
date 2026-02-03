@@ -1,0 +1,348 @@
+import './matchMedia.mock';
+import './ResizeObserver.mock';
+import shallowMount from '@/utils/testHelper';
+
+import { LocalStorageManager } from '@vivotek/lib-utility';
+
+import group from '@/store/group';
+
+import GroupIndex from './index.vue';
+
+function Device(options) {
+  this.options = { ...options };
+}
+
+vi.mock('@/components/PlayerWrapper.vue', () => {
+  return { default: {} };
+});
+
+vi.mock('@/components/ExportArchiveVideo/PlaybackExportArchiveModal.vue', () => {
+  return { default: {} };
+});
+
+vi.mock('@/components/StreamingControlPanel/index.vue', () => {
+  return { default: {} };
+});
+
+vi.mock('./components/GroupDeviceList.vue', () => {
+  return { default: {} };
+});
+
+vi.mock('@vivotek/device/streaming', () => {
+  return {
+    default: {},
+  };
+});
+
+const activeGroup = {
+  id: 'testActiveGroup',
+  name: 'Ungrouping Cameras',
+};
+
+const activeGroupPages = [
+  {
+    layout: '2x2',
+    view: [
+      new Device({
+        id: 'test1',
+        mac: '1111111',
+        name: '111111111',
+        deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+        ip: 'unknow',
+        model: 'unknow',
+        online: false,
+        groupName: 'Ungrouping Cameras',
+      }),
+      new Device({
+        id: 'test2',
+        mac: '0002D193FC05',
+        name: ' Camera 3',
+        deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+        ip: '10.16.105.30',
+        model: 'FD9167-HT-v2',
+        online: true,
+        groupName: 'Ungrouping Cameras',
+      }),
+      new Device({
+        id: 'e7903a82-1f0a-41be-872a-d6f279f2cc92',
+        mac: '222222222',
+        name: '2222222222',
+        deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+        ip: 'unknow',
+        model: 'unknow',
+        online: false,
+        groupName: 'Ungrouping Cameras',
+      }),
+      new Device(),
+    ],
+  },
+];
+const createWrapper = (props, options, { storeModules } = {}) =>
+  shallowMount(GroupIndex, {
+    stubs: {
+      SideMenusLayout: {
+        template: `
+        <div>
+          <slot name="left-menu"/>
+          <slot name="center"/>
+          <slot name="footer"/>
+        </div>
+        `,
+      },
+    },
+    storeModules: {
+      group: {
+        namespaced: true,
+        ...group,
+        state: {
+          activeViewIndex: options?.activeViewIndex ?? -1,
+          activePageIndex: options?.activePageIndex ?? 0,
+        },
+        actions: {
+          changeLayout: vi.fn(),
+          initialAvailableDeviceUiSettings: vi.fn(),
+          resetGroupStatus: vi.fn(),
+        },
+        getters: {
+          activeGroup: () => activeGroup,
+          activeGroupPages: () => storeModules?.group?.getters?.activeGroupPages || activeGroupPages,
+          activePageLayoutInfo: vi.fn(),
+          activeDeviceView: vi.fn(),
+          activeGroupCurrentPageDevices: () =>
+            storeModules?.group?.getters?.activeGroupCurrentPageDevices || [
+              { services: { stream: { isActiveInRotation: false } } },
+            ],
+        },
+      },
+      ui: {
+        namespaced: true,
+        state: {
+          overlay: {
+            displayArchiveModal: false,
+          },
+        },
+      },
+      permission: {},
+    },
+    props,
+    ...options,
+  });
+
+describe('GroupIndex', () => {
+  describe('mounted', () => {
+    describe('resetLayout', () => {
+      it('should called resetLayout', () => {
+        const spy = vi.spyOn(GroupIndex.methods, 'resetLayout');
+        createWrapper();
+        expect(spy).toHaveBeenCalled();
+      });
+    });
+    describe('updateAvailableDeviceUiSettingsFromLocalStorage', () => {
+      it('should called updateAvailableDeviceUiSettingsFromLocalStorage', () => {
+        const spy = vi.spyOn(GroupIndex.methods, 'updateAvailableDeviceUiSettingsFromLocalStorage');
+        createWrapper();
+        expect(spy).toHaveBeenCalled();
+      });
+    });
+    describe('exitFullscreen event', () => {
+      it('should call handleExitFullscreen when exitFullscreen event is emitted', () => {
+        const handleExitFullscreenSpy = vi.spyOn(GroupIndex.methods, 'handleExitFullscreen');
+        const wrapper = createWrapper();
+
+        wrapper.vm.footerControlsModel.emit('exitFullscreen');
+
+        expect(handleExitFullscreenSpy).toHaveBeenCalled();
+      });
+    });
+  });
+  describe('beforeDestroy', () => {
+    it('should remove exitFullscreen event listener beforeDestroy', () => {
+      const wrapper = createWrapper({}, {});
+      wrapper.vm.footerControlsModel.removeListener = vi.fn();
+
+      wrapper.unmount();
+
+      expect(wrapper.vm.footerControlsModel.removeListener).toHaveBeenCalledWith(
+        'exitFullscreen',
+        wrapper.vm.handleExitFullscreen,
+      );
+    });
+  });
+  describe('methods', () => {
+    describe('onLayoutChange', () => {
+      afterEach(() => {
+        sessionStorage.removeItem('layout');
+      });
+      it('should called changeLayout and pass param value', () => {
+        const wrapper = createWrapper();
+        wrapper.vm.changeLayout = vi.fn();
+        wrapper.vm.onLayoutChange('2x2');
+        expect(wrapper.vm.changeLayout).toHaveBeenCalledWith({
+          layout: '2x2',
+        });
+      });
+      it('should called changeLayout and pass nextLayout value', () => {
+        const wrapper = createWrapper();
+        wrapper.vm.changeLayout = vi.fn();
+        wrapper.vm.nextLayout = 'nextLayout';
+        wrapper.vm.onLayoutChange();
+        expect(wrapper.vm.changeLayout).toHaveBeenCalledWith({ layout: 'nextLayout' });
+      });
+    });
+    describe('getShowTimeline', () => {
+      afterEach(() => {
+        vi.clearAllMocks();
+      });
+
+      it('should return hasActiveDevice value when LocalStorageManager.get("showTimeline") is null', () => {
+        vi.spyOn(LocalStorageManager, 'get').mockReturnValue(null);
+
+        const wrapper = createWrapper(
+          {},
+          {
+            activeViewIndex: -1,
+          },
+        );
+
+        expect(wrapper.vm.getShowTimeline()).toBe(false);
+      });
+      it('should return hasActiveDevice value when LocalStorageManager.get("showTimeline") is null', () => {
+        vi.spyOn(LocalStorageManager, 'get').mockReturnValue(null);
+
+        const wrapper = createWrapper(
+          {},
+          {
+            activeViewIndex: 1,
+          },
+        );
+        expect(wrapper.vm.getShowTimeline()).toBe(true);
+      });
+      it('should return false even LocalStorageManager.get("showTimeline") is true and hasActiveDevice is false', () => {
+        vi.spyOn(LocalStorageManager, 'get').mockReturnValue(true);
+
+        const wrapper = createWrapper(
+          {},
+          {
+            activeViewIndex: -1,
+          },
+        );
+
+        expect(wrapper.vm.hasActiveDevice).toBe(false);
+        expect(wrapper.vm.getShowTimeline()).toBe(false);
+      });
+    });
+    describe('unsetFullscreen', () => {
+      it('should call getShowTimeline and unsetFullscreen with correct parameters', () => {
+        const wrapper = createWrapper();
+        const showTimelineValue = true;
+        wrapper.vm.getShowTimeline = vi.fn().mockReturnValue(showTimelineValue);
+        wrapper.vm.footerControlsModel.unsetFullscreen = vi.fn();
+
+        wrapper.vm.unsetFullscreen();
+
+        expect(wrapper.vm.getShowTimeline).toHaveBeenCalled();
+        expect(wrapper.vm.footerControlsModel.unsetFullscreen).toHaveBeenCalledWith({ collapsed: !showTimelineValue });
+      });
+    });
+    describe('stopRotate', () => {
+      it('should call getShowTimeline and stopRotate with correct parameters', () => {
+        const wrapper = createWrapper();
+        const showTimelineValue = true;
+        wrapper.vm.getShowTimeline = vi.fn().mockReturnValue(showTimelineValue);
+        wrapper.vm.footerControlsModel.stopRotate = vi.fn();
+
+        wrapper.vm.stopRotate();
+
+        expect(wrapper.vm.getShowTimeline).toHaveBeenCalled();
+        expect(wrapper.vm.footerControlsModel.stopRotate).toHaveBeenCalledWith({ collapsed: !showTimelineValue });
+      });
+    });
+    describe('handleExitFullscreen', () => {
+      it('should set defaultStopRotate to false and call stopRotate', () => {
+        const wrapper = createWrapper();
+        wrapper.vm.stopRotate = vi.fn();
+
+        wrapper.vm.handleExitFullscreen();
+
+        expect(wrapper.vm.footerControlsModel.defaultStopRotate).toBe(false);
+        expect(wrapper.vm.stopRotate).toHaveBeenCalled();
+      });
+    });
+    describe('resetLayout', () => {
+      afterEach(() => {
+        vi.clearAllMocks();
+      });
+      it('should called changeLayout with layout 2x2")', () => {
+        const wrapper = createWrapper();
+        wrapper.vm.changeLayout = vi.fn();
+        wrapper.vm.resetLayout();
+        expect(wrapper.vm.changeLayout).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('preConnectDevices', () => {
+      it('should call requestStreamingConnection for next page when device online', async () => {
+        const requestStreamingConnection = vi.fn();
+        const secondPage = {
+          layout: '2x2',
+          view: [
+            {
+              services: {
+                connection: {
+                  requestStreamingConnection,
+                },
+              },
+              online: true,
+            },
+          ],
+        };
+        const mockActiveGroupPages = [...activeGroupPages, secondPage];
+        const mockActiveGroupCurrentPageDevices = [{ services: { stream: { isActiveInRotation: false } } }];
+        const wrapper = createWrapper(
+          {},
+          { activeViewIndex: 0, activePageIndex: 0 },
+          {
+            storeModules: {
+              group: {
+                getters: {
+                  activeGroupPages: [...mockActiveGroupPages],
+                  activeGroupCurrentPageDevices: mockActiveGroupCurrentPageDevices,
+                },
+              },
+            },
+          },
+        );
+        wrapper.vm.preConnectDevices();
+        await wrapper.vm.$nextTick();
+        expect(mockActiveGroupCurrentPageDevices[0].services.stream.isActiveInRotation).toBe(true);
+        expect(requestStreamingConnection).toHaveBeenCalled();
+      });
+    });
+  });
+  describe('computed', () => {
+    describe('currentGroup', () => {
+      it('should return activeGroup', () => {
+        const wrapper = createWrapper();
+        wrapper.vm.$nextTick();
+        expect(wrapper.vm.currentGroup).toStrictEqual(activeGroup);
+      });
+    });
+    describe('currentLayout', () => {
+      it('should return layout', () => {
+        const wrapper = createWrapper();
+        expect(wrapper.vm.currentLayout).toStrictEqual(activeGroupPages[0].layout);
+      });
+    });
+    describe('disabledLayouts', () => {
+      it('should return []', () => {
+        const wrapper = createWrapper();
+        expect(wrapper.vm.disabledLayouts).toStrictEqual([]);
+      });
+    });
+    describe('hiddenLayouts', () => {
+      it('should return LAYOUT_COUNT value > 4', () => {
+        const wrapper = createWrapper();
+        expect(wrapper.vm.hiddenLayouts).toStrictEqual([]);
+      });
+    });
+  });
+});

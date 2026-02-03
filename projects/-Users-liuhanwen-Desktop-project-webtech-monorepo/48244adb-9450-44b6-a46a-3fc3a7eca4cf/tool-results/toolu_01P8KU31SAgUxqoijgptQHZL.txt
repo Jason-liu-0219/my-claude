@@ -1,0 +1,29 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-37-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-38-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-39-  // ============================================================
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-40-  // User Detail
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-41-  // ============================================================
+packages/app-vsaas-portal/src/store/user/getters.js:42:  detailDeviceOverview(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-43-    return state.detail.deviceOverview;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-44-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-45-  detailIsLoading(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-46-    return state.detail.isLoading;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/getters.js-47-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-158-      Log.error('updateOrganizationUsername failed', error);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-159-      throw error.generalize();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-160-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-161-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-162-
+packages/app-vsaas-portal/src/store/user/actions.js:163:  async fetchUserGrantedDevices({ commit, rootState }, { userSub }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-164-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-165-      commit('setDetailLoading', true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-166-      const response = await rootState.apiService.getUserGrantedDevices({ userSub });
+packages/app-vsaas-portal/src/store/user/actions.js:167:      commit('setDetailDeviceOverview', response.grantedDevices || []);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-168-    } catch (error) {
+packages/app-vsaas-portal/src/store/user/actions.js:169:      Log.error('fetchUserGrantedDevices failed', error);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-170-      commit('setDetailDeviceOverview', []);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-171-    } finally {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-172-      commit('setDetailLoading', false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-173-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-174-  },

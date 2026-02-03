@@ -1,0 +1,360 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-164-      if (this.device.type === DEVICE_TYPE.NVR_CHANNEL) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-165-        const routeData = this.$router.resolve({
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-166-          name: 'DeviceSettingsSystemMaintenance',
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-167-          params: { deviceId: this.device.nvr.deviceId },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-168-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-169-        window.open(routeData.href, '_blank');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-170-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-171-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-172-  },
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-173-  computed: {
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:174:    ...mapState('externalDevice', ['poeSwitches']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-175-    ...mapState('permission', ['aiControlPermissionManager']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-176-    ...mapGetters('device', ['allDevicesMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-177-    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-178-    ...mapGetters('organization', ['supportList']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-179-    device() {
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:180:      if (this.poeSwitches[this.$route.params.deviceId]) {
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:181:        return this.poeSwitches[this.$route.params.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-182-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-183-
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:184:      return this.allDevicesMap[this.$route.params.deviceId] || this.poeSwitches[this.$route.params.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-185-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-186-    isDeviceOnline() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-187-      return this.device?.online;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-188-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-189-    parseCurrentSelection() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-190-      return this.$route.path.replace(`${this.rootPath}/`, '').split('/');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-191-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-192-    currentGroupPath() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-193-      return this.parseCurrentSelection[0];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-194-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-38-      },
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-39-      permission: {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-40-        namespaced: true,
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-41-        getters: {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-42-          canUpdate: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-43-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-44-      },
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-45-      externalDevice: {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-46-        namespaced: true,
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-47-        state: {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js:48:          poeSwitches: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-49-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-50-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-51-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-52-    ...options,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-53-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-54-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-55-  return wrapper;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-56-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-57-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.test.js-58-describe('DeviceSettings', () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-209-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-210-      }
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-211-      this.$router.push({ name: 'DeviceSettingsSystemInformation', params: { deviceId: this.deviceId } });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-212-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-213-    onSettingLoaded(loaded = true) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-214-      this.isLoading = !loaded;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-215-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-216-  },
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-217-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-218-    ...mapGetters('device', ['allDevicesMap']),
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue:219:    ...mapState('externalDevice', ['poeSwitches']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-220-    device() {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue:221:      if (this.poeSwitches[this.deviceId]) {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue:222:        return this.poeSwitches[this.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-223-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-224-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-225-      return this.allDevicesMap[this.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-226-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-227-    deviceName() {
+packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-228-      return this.device ? this.device.displayName : this.deviceId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-229-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-230-    isDeviceOnline() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-231-      return this.device?.online;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/DeviceSettings.vue-232-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-31-      const w = await createWrapper(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-32-        {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-33-        {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-34-          device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-35-            auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-36-            mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-37-            services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-38-              system: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-39-                updateConfiguration: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-40-              },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:41:              poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-42-                queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-43-                closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-44-                setPoEPortEnable: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-45-                queryPortCycleAll: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-46-                poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-47-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-48-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-49-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-50-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-51-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-52-      w.vm.queryPortInfo = vi.fn().mockResolvedValue();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-53-      expect(w.vm.queryPortInfo).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-54-      expect(w.vm.$emit).toHaveBeenCalledWith('loaded', true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-55-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-56-      await w.destroy();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:57:      expect(w.vm.poeSwitchService.closeConnection).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-58-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-59-    it('should call queryPortInfo and emit error', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-60-      const w = await createWrapper({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-61-        device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-62-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-63-          mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-64-          services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-65-            system: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-66-              updateConfiguration: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-67-            },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:68:            poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-69-              queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-70-              closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-71-              setPoEPortEnable: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-72-              queryPortCycleAll: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-73-              poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-74-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-75-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-76-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-77-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-78-
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:79:      expect(w.vm.poeSwitchService.queryPortInfo).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-80-      await w.unmount();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:81:      expect(w.vm.poeSwitchService.closeConnection).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-82-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-83-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-84-  describe('methods', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-85-    it('queryPortCycleAll -> should call queryPortCycleAll success on onPortCycleAllClick trigger', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-86-      const w = await createWrapper({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-87-        device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-88-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-89-          mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-90-          services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:91:            poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-92-              queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-93-              closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-94-              setPoEPortEnable: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-95-              queryPortCycleAll: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-96-              poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-97-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-98-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-99-        },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-100-        services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-101-          system: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-102-            updateConfiguration: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-103-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-104-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-105-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-106-      w.vm.handleError = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-107-      w.vm.isCycleAllProcessing = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-108-      await w.vm.onPortCycleAllClick();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:109:      expect(w.vm.poeSwitchService.queryPortCycleAll).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-110-        payload: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-111-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-112-          mac: '00AAAAAAAAAA',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-113-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-114-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-115-      expect(w.vm.isCycleAllProcessing).toBeDefined(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-116-      expect(w.vm.isCycleAllProcessing).toBeDefined(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-117-      expect(w.vm.handleError).toBeCalledTimes(0);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-118-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-119-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-120-    it('queryPortCycleAll -> should call queryPortCycleAll failed', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-121-      const w = await createWrapper({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-122-        device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-123-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-124-          mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-125-          services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:126:            poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-127-              queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-128-              closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-129-              setPoEPortEnable: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-130-              queryPortCycleAll: vi.fn().mockRejectedValue(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-131-              poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-132-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-133-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-134-        },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-135-        services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-136-          system: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-137-            updateConfiguration: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-138-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-139-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-140-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-141-      w.vm.handleError = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-142-      w.vm.isCycleAllProcessing = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-143-      await w.vm.onPortCycleAllClick();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:144:      expect(w.vm.poeSwitchService.queryPortCycleAll).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-145-        payload: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-146-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-147-          mac: '00AAAAAAAAAA',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-148-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-149-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-150-      expect(w.vm.isCycleAllProcessing).toBeDefined(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-151-      expect(w.vm.isCycleAllProcessing).toBeDefined(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-152-      expect(w.vm.handleError).toBeCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-153-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-154-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-155-    it('onPoEPortToggleEnable -> should call onPoEPortToggleEnable success', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-156-      const w = await createWrapper({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-157-        device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-158-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-159-          mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-160-          services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:161:            poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-162-              queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-163-              closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-164-              setPoEPortEnable: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-165-              queryPortCycleAll: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-166-              poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-167-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-168-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-169-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-170-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-171-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-177-      await w.vm.onPoEPortToggleEnable(portInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-178-      expect(w.vm.processingMap[1]).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-179-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-180-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-181-    it('onPoEPortToggleEnable -> should call onPoEPortToggleEnable failed', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-182-      const w = await createWrapper({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-183-        device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-184-          auth: 'auth',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-185-          mac: '00AAAAAAAAAA',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-186-          services: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js:187:            poeSwitch: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-188-              queryPortInfo: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-189-              closeConnection: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-190-              setPoEPortEnable: vi.fn().mockReturnValue(true),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-191-              queryPortCycleAll: vi.fn(),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-192-              poePortInfoList: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-193-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-194-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-195-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-196-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.test.js-197-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-98-  },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-99-  props: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-100-    device: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-101-      type: Object,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-102-      default: () => {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-103-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-104-  },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-105-  emits: ['loaded', 'error'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-106-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-107-    return {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:108:      deviceType: EXTERNAL_DEVICE.TYPE.POE_SWITCH,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-109-      processingMap: {},
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-110-      statusIconMap: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-111-        ON: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-112-          status: 'PoE turned ON',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-113-          text: this.$t('ON'),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-114-          class: 'power-on',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-115-        },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-116-        OFF: {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-117-          status: '',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-118-          text: this.$t('OFF'),
+--
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-131-  methods: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-132-    async onPoEPortToggleEnable(portInfo) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-133-      const payload = {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-134-        enable: !portInfo.enable,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-135-        ports: [portInfo.port],
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-136-        auth: this.device.auth,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-137-        mac: this.device.mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-138-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-139-      this.processingMap[portInfo.port] = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-140-
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:141:      const error = await this.poeSwitchService.setPoEPortEnable({ payload });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-142-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-143-      if (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-144-        this.handleError();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-145-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-146-      this.processingMap[portInfo.port] = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-147-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-148-    async onPortCycleAllClick() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-149-      this.isCycleAllProcessing = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-150-      const payload = {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-151-        auth: this.device.auth,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-152-        mac: this.device.mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-153-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-154-      try {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:155:        await this.poeSwitchService.queryPortCycleAll({ payload });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-156-      } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-157-        this.handleError();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-158-      } finally {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-159-        this.isCycleAllProcessing = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-160-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-161-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-162-    editDeviceName() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-163-      this.$refs.editNameDialogue.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-164-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-165-    async updateDeviceName(config, resolve, reject) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-175-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-176-    getPowerStatus(portStatus) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-177-      const currentState = Object.entries(this.statusIconMap).find(([key, value]) => value.status === portStatus);
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-178-      return currentState ? currentState[1] : this.statusIconMap.OFF;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-179-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-180-    async queryPortInfo() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-181-      this.isRefreshProcessing = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-182-      const { auth, mac } = this.device;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-183-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-184-      try {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:185:        await this.poeSwitchService.queryPortInfo({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-186-          payload: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-187-            mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-188-            auth,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-189-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-190-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-191-      } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-192-        this.$emit('error', ERROR_MESSAGE.DEVICE_DISCONNECT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-193-      } finally {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-194-        this.isRefreshProcessing = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-195-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-196-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-197-  },
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-198-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-199-    ...mapGetters('device', ['getDeviceByMac']),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:200:    poeSwitchService() {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:201:      return this.device.services.poeSwitch;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-202-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-203-    rowData() {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:204:      const tableDataInstance = this.poeSwitchService.poePortInfoList.map((item) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-205-        return {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-206-          name: this.getDeviceByMac(item.mac)?.displayName || '-',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-207-          powerStatus: this.getPowerStatus(item.status),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-208-          ...item,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-209-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-210-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-211-      return tableDataInstance;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-212-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-213-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-214-  async mounted() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-215-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-216-      await this.queryPortInfo();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-217-      this.$emit('loaded', true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-218-    } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-219-      this.$emit('error', ERROR_MESSAGE.DEVICE_DISCONNECT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-220-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-221-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-222-  beforeUnmount() {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue:223:    this.poeSwitchService.closeConnection();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-224-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-225-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-226-</script>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-227-<style lang="less" scoped>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-228-.external-device-table-wrapper {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-229-  padding-left: 194px;
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-230-  padding-top: 40px;
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-231-  padding-right: 216px;
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-232-  padding-bottom: 40px;
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemPOESwitchSettings.vue-233-  box-sizing: border-box;

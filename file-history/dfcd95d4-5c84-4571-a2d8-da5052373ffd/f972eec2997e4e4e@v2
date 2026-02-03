@@ -1,0 +1,1180 @@
+<template>
+  <SideMenusLayout
+    ref="sideMenuLayout"
+    :class="['floor-plan-edit-page', { 'no-sidebar-transition': hasEnteredFloorplanFeature }]"
+    :leftBasis="280"
+    :defaultCollapsedLeftWidth="19"
+    :defaultOpenLeft="true"
+    :rightBasis="0"
+    @toggleLeft="handleToggleLeft"
+  >
+    <template #left-menu>
+      <!-- Left Sidebar: Floorplan Navigation -->
+      <SiteFloorPlanList
+        :currentFloorPlanId="floorPlanId"
+        :selectedDeviceSerialNumber="selectedDeviceSerialNumber"
+        @floorPlanSelected="handleFloorplanSelect"
+        @deviceSelected="handleSidebarDeviceSelected"
+        @addFloorplan="handleAddFloorplan"
+      />
+    </template>
+
+    <template #center>
+      <!-- Center Panel: Canvas Area -->
+      <div class="center-panel">
+        <!-- Top Bar: View Mode Toggle -->
+        <div class="top-bar">
+          <ViewModeToggle
+            viewMode="edit"
+            :hasFloorPlan="!!currentFloorPlan"
+            @modeChange="handleViewModeChange"
+            @settings="handleSettings"
+            @delete="handleDelete"
+          />
+        </div>
+
+        <!-- Content Area: Canvas + Device Panel -->
+        <div class="content-area">
+          <!-- Canvas Container -->
+          <div class="canvas-container">
+            <div
+              v-if="error"
+              class="error-container"
+            >
+              <p class="error-message">{{ error.detail || error.message }}</p>
+            </div>
+
+            <div
+              v-else
+              class="canvas-wrapper"
+            >
+              <!-- Status Legend (overlay on canvas) -->
+              <div class="canvas-overlay-top">
+                <StatusLegend />
+
+                <!-- Unsaved Indicator -->
+                <div
+                  v-if="hasUnsavedChanges"
+                  class="unsaved-indicator"
+                >
+                  <span class="unsaved-dot" />
+                  <span class="unsaved-text">{{ $t('Unsaved') }}</span>
+                </div>
+              </div>
+
+              <FloorPlanCanvas
+                :imageUrl="currentFloorPlan?.imageUrl"
+                :devicePositions="filteredDevicePositions"
+                :isEditMode="true"
+                :selectedDeviceId="selectedDeviceId"
+                :draggedDevice="draggedDevice"
+                @deviceClick="handleDeviceClick"
+                @devicePositionChange="handleDevicePositionChange"
+                @fovChange="handleFOVChange"
+                @canvasClick="handleCanvasClick"
+                @deviceDelete="handleDeleteDeviceFromCanvas"
+                @deviceDrop="handleDeviceDrop"
+              />
+            </div>
+          </div>
+
+          <!-- Right Sidebar: Device Panel -->
+          <DevicePanel
+            :availableDevices="availableDevices"
+            :placedDevices="placedDevicesList"
+            :selectedDeviceId="selectedDeviceId"
+            @deviceDragStart="handleDeviceDragStart"
+            @deviceClick="handleDevicePanelClick"
+            @removeDevice="handleRemoveDevice"
+            @categoryClick="handleCategoryClick"
+          />
+        </div>
+      </div>
+
+      <!-- Floor Plan Form Dialog (for create) -->
+      <FloorPlanFormDialog
+        ref="uploadDialogue"
+        mode="create"
+        :availableSites="availableSites"
+        :defaultSiteId="siteId"
+        @submit="handleUploadSubmit"
+      />
+
+      <!-- Floor Plan Form Dialog (for edit/basic settings) -->
+      <FloorPlanFormDialog
+        ref="settingsDialogue"
+        mode="edit"
+        :availableSites="availableSites"
+        :initialData="currentFloorPlanData"
+        @submit="handleSettingsSubmit"
+      />
+
+      <!-- Floor Plan Remove Dialog -->
+      <FloorPlanRemoveDialogue
+        ref="removeDialogue"
+        @deleted="handleDeleteSuccess"
+      />
+
+      <!-- Device Remove Confirmation Dialog -->
+      <DeviceRemoveDialogue
+        ref="deviceRemoveDialogue"
+        @confirmed="handleDeviceRemoveConfirmed"
+      />
+
+      <!-- Placed Camera Confirmation Dialog -->
+      <PlacedCameraConfirmDialogue
+        ref="placedCameraConfirmDialogue"
+        @confirmed="handlePlacedCameraConfirmed"
+        @cancelled="handlePlacedCameraCancelled"
+      />
+    </template>
+  </SideMenusLayout>
+</template>
+
+<script setup>
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import SideMenusLayout from '@vivotek/advanced-vue-components/components/SideMenusLayout.vue';
+import { FLOORPLAN, DEVICE_TYPE } from '@vivotek/const-vsaas';
+
+import DevicePanel from '../components/DevicePanel.vue';
+import DeviceRemoveDialogue from '../components/DeviceRemoveDialogue.vue';
+import FloorPlanCanvas from '../components/FloorPlanCanvas.vue';
+import FloorPlanFormDialog from '../components/FloorPlanFormDialog.vue';
+import FloorPlanRemoveDialogue from '../components/FloorPlanRemoveDialogue.vue';
+import PlacedCameraConfirmDialogue from '../components/PlacedCameraConfirmDialogue.vue';
+import SiteFloorPlanList from '../components/SiteFloorPlanList.vue';
+import StatusLegend from '../components/StatusLegend.vue';
+import ViewModeToggle from '../components/ViewModeToggle.vue';
+import { useDevicePositions } from '../composables/useDevicePositions';
+import { useFloorplanNavigation } from '../composables/useFloorplanNavigation';
+import { useFloorplanAnalytics } from '../utils/userAnalytics';
+
+const store = useStore();
+const router = useRouter();
+
+// Analytics
+const {
+  trackDeviceSelected,
+  trackDeviceDeselected,
+  trackDeviceRepositioned,
+  trackFovAdjusted,
+  trackDeviceAdded,
+  trackDeviceRemoved,
+  trackFloorplanCreated,
+  trackFloorplanUpdated,
+  trackFloorplanImageUploaded,
+  trackModeSwitched,
+} = useFloorplanAnalytics();
+
+// Local state
+const floorPlanName = ref('');
+const selectedDeviceId = ref(null);
+const uploadDialogue = ref(null);
+const settingsDialogue = ref(null);
+const removeDialogue = ref(null);
+const deviceRemoveDialogue = ref(null);
+const placedCameraConfirmDialogue = ref(null);
+const draggedDevice = ref(null);
+const pendingDeviceDrop = ref(null);
+const sideMenuLayout = ref(null);
+
+// Drag tracking state
+const dragTimer = ref(null);
+// Map<devicePositionId, { positionX, positionY, fovDirection, fovAngle, fovDepth }>
+const originalPositions = ref(new Map());
+
+// Unsaved changes indicator
+const hasUnsavedChanges = ref(false);
+
+// Helper: Validate FOV angle (30-360°)
+const validateFOV = (angle) => {
+  return Math.max(FLOORPLAN.FOV.MIN_ANGLE, Math.min(FLOORPLAN.FOV.MAX_ANGLE, angle));
+};
+
+// Real available sites from group store (excluding organization group)
+const availableSites = computed(() => store.getters['group/validGroupsExcludingOrganization'] || []);
+
+// Helper function to get site name from site ID
+const getSiteName = (targetSiteId) => {
+  const site = availableSites.value.find((s) => s.id === targetSiteId);
+  return site?.name || '';
+};
+
+// Helper: Filter devices by site/group ID
+const getSiteDevices = (allDevices, targetSiteId) => {
+  return allDevices.filter((device) => device.options?.deviceGroupID === targetSiteId);
+};
+
+// Helper: Get set of placed device serial numbers for a floor plan
+const getPlacedSerials = (positions, targetFloorPlanId) => {
+  return new Set(
+    (positions || []).filter((pos) => pos.floorPlanId === targetFloorPlanId).map((pos) => pos.deviceSerialNumber),
+  );
+};
+
+// Helper: Map device to available device format
+const mapToAvailableDevice = (device) => {
+  const serialNumber = getDeviceSerialNumber(device);
+
+  if (!device.options?.thingName || !device.options?.derivant) {
+    // eslint-disable-next-line no-console
+    console.warn('[FloorPlanEdit] Device missing thingName or derivant:', {
+      deviceId: device.deviceId,
+      name: device.displayName || device.name,
+    });
+  }
+
+  return {
+    id: device.deviceId,
+    name: device.displayName || device.name,
+    serialNumber,
+    status: device.online ? FLOORPLAN.DEVICE_ONLINE_STATUS.ONLINE : FLOORPLAN.DEVICE_ONLINE_STATUS.OFFLINE,
+    instance: device,
+  };
+};
+
+// Computed: Available devices from device store (not yet placed on canvas)
+const availableDevices = computed(() => {
+  if (!siteId.value) {
+    return [];
+  }
+
+  const allCameraDevices = store.getters['device/availableCameraDevices'] || [];
+  const targetSiteId = currentFloorPlan.value?.siteId || siteId.value;
+
+  const siteDevices = getSiteDevices(allCameraDevices, targetSiteId);
+  const placedSerials = getPlacedSerials(devicePositions.value, floorPlanId.value);
+
+  return siteDevices.map(mapToAvailableDevice).filter((device) => !placedSerials.has(device.serialNumber));
+});
+
+// Navigation context for sidebar animation
+const hasEnteredFloorplanFeature = computed(() => store.getters['floorPlan/hasEnteredFloorplanFeature']);
+
+// Store state
+const error = computed(() => store.getters['floorPlan/error']);
+const currentFloorPlan = computed(() => store.getters['floorPlan/currentFloorPlan']);
+const devicePositions = computed(() => store.getters['floorPlan/devicePositions']);
+const allCameraDevices = computed(() => store.getters['device/availableCameraDevices'] || []);
+
+// Use navigation composable for route params and navigation handlers
+const {
+  siteId,
+  floorPlanId,
+  isCreateMode,
+  handleFloorplanSelect,
+  handleSidebarDeviceSelected,
+  navigateToViewMode,
+  navigateToSiteDefault,
+} = useFloorplanNavigation({
+  routeName: 'FloorplanEdit',
+  devicePositions,
+  selectedDeviceId,
+});
+
+// Use composable for device position enrichment (reduces duplication with view page)
+const { filteredDevicePositions, placedDevicesList, getDeviceSerialNumber } = useDevicePositions({
+  floorPlanId,
+  devicePositions,
+  allCameraDevices,
+});
+
+const currentFloorPlanData = computed(() => {
+  if (!currentFloorPlan.value) {
+    return {};
+  }
+  return {
+    id: currentFloorPlan.value.id,
+    name: currentFloorPlan.value.name,
+    siteId: currentFloorPlan.value.siteId,
+    imageUrl: currentFloorPlan.value.imageUrl || '',
+    fileName: currentFloorPlan.value.imageUrl ? currentFloorPlan.value.imageUrl.split('/').pop() : '',
+  };
+});
+
+// Computed - Get serial number of currently selected device (for sidebar highlighting)
+const selectedDeviceSerialNumber = computed(() => {
+  if (!selectedDeviceId.value) {
+    return null;
+  }
+  // Find the device position by ID and return its serial number
+  const devicePosition = devicePositions.value.find((pos) => pos.id === selectedDeviceId.value);
+  return devicePosition?.deviceSerialNumber || null;
+});
+
+// Methods
+const loadFloorPlan = async () => {
+  try {
+    await store.dispatch('floorPlan/getFloorPlan', floorPlanId.value);
+    // Note: Device positions are already fetched by SiteFloorPlanList component
+    // via fetchAllDevicePositions. No need to fetch again here.
+
+    // Initialize local state with loaded data
+    if (currentFloorPlan.value) {
+      floorPlanName.value = currentFloorPlan.value.name;
+    }
+  } catch (err) {
+    console.error('Failed to load floor plan:', err);
+  }
+};
+
+// Sidebar event handlers (handleFloorplanSelect and handleSidebarDeviceSelected from useFloorplanNavigation)
+
+const handleAddFloorplan = () => {
+  uploadDialogueMode.value = 'create';
+  if (uploadDialogue.value) {
+    uploadDialogue.value.show();
+  } else {
+    console.error('[FloorPlan:Edit] uploadDialogue ref is null');
+  }
+};
+
+// View mode toggle handler
+const handleViewModeChange = (mode) => {
+  if (mode === 'view') {
+    // Track mode switch before navigation
+    trackModeSwitched({
+      floorplanId: floorPlanId.value,
+      siteId: currentFloorPlan.value?.siteId || siteId.value,
+      fromMode: FLOORPLAN.VIEW_MODE.EDIT,
+      toMode: FLOORPLAN.VIEW_MODE.VIEW,
+      deviceCount: filteredDevicePositions.value?.length || 0,
+    });
+
+    navigateToViewMode();
+  }
+};
+
+// Canvas interaction handlers
+const handleDeviceClick = (device) => {
+  selectedDeviceId.value = device.id;
+
+  // Track device selection on canvas
+  trackDeviceSelected({
+    floorplanId: floorPlanId.value,
+    siteId: currentFloorPlan.value?.siteId || siteId.value,
+    viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+    deviceSerial: device.deviceSerialNumber,
+    deviceType: device.deviceType || DEVICE_TYPE.CAMERA,
+    deviceStatus: device.status || FLOORPLAN.DEVICE_ONLINE_STATUS.UNKNOWN,
+    interactionType: FLOORPLAN.INTERACTION_TYPE.CLICK,
+  });
+
+  // Auto-expand sidebar for this device
+  // 1. Expand the site accordion
+  if (currentFloorPlan.value?.siteId) {
+    store.commit('floorPlan/setExpandedSiteId', currentFloorPlan.value.siteId);
+  }
+
+  // 2. Expand the floor plan's device list
+  if (device.floorPlanId) {
+    const isExpanded = store.getters['floorPlan/isFloorPlanExpanded'](device.floorPlanId);
+    if (!isExpanded) {
+      store.commit('floorPlan/setExpandedFloorPlanId', device.floorPlanId);
+    }
+  }
+};
+
+const handleDevicePositionChange = ({ devicePositionId, positionX, positionY }) => {
+  // Find current device position from store
+  const currentPosition = devicePositions.value.find((p) => p.id === devicePositionId);
+
+  if (!currentPosition) {
+    return;
+  }
+
+  // Store original values if this is the start of a drag
+  if (!originalPositions.value.has(devicePositionId)) {
+    originalPositions.value.set(devicePositionId, {
+      positionX: currentPosition.positionX,
+      positionY: currentPosition.positionY,
+      fovDirection: currentPosition.fovDirection,
+      fovAngle: currentPosition.fovAngle,
+      fovDepth: currentPosition.fovDepth,
+    });
+  }
+
+  // Update store immediately for visual feedback (optimistic update)
+  store.commit('floorPlan/updateDevicePosition', {
+    ...currentPosition,
+    positionX,
+    positionY,
+  });
+
+  // Show unsaved indicator
+  hasUnsavedChanges.value = true;
+
+  // Clear existing timer
+  if (dragTimer.value) {
+    clearTimeout(dragTimer.value);
+  }
+
+  // Set timer to detect drag end
+  dragTimer.value = setTimeout(async () => {
+    const original = originalPositions.value.get(devicePositionId);
+
+    // Check if position actually changed
+    const positionChanged = original.positionX !== positionX || original.positionY !== positionY;
+
+    if (positionChanged) {
+      try {
+        // Call API to persist changes
+        await store.dispatch('floorPlan/updateDevicePosition', {
+          floorPlanId: floorPlanId.value,
+          devicePositionId,
+          position: {
+            positionX,
+            positionY,
+          },
+        });
+
+        // Note: No need to reload floor plan since we use optimistic updates
+        // The UI is already updated via store.commit in lines 496-500
+        // Reloading would cause unnecessary image reload and loading state
+
+        // Track device repositioned after successful API call
+        trackDeviceRepositioned({
+          floorplanId: floorPlanId.value,
+          siteId: currentFloorPlan.value?.siteId || siteId.value,
+          viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+          deviceSerial: currentPosition.deviceSerialNumber,
+          deviceType: currentPosition.deviceType || DEVICE_TYPE.CAMERA,
+          positionX,
+          positionY,
+          interactionType: FLOORPLAN.INTERACTION_TYPE.DRAG,
+        });
+
+        // Hide unsaved indicator after successful save
+        hasUnsavedChanges.value = false;
+      } catch (err) {
+        console.error('[FloorPlan:Edit] Failed to update device position:', err);
+      }
+    } else {
+      // No changes, hide unsaved indicator
+      hasUnsavedChanges.value = false;
+    }
+
+    // Clean up
+    originalPositions.value.delete(devicePositionId);
+  }, FLOORPLAN.INTERACTION.DRAG_END_DELAY);
+};
+
+const handleFOVChange = ({ devicePositionId, fovDirection, fovAngle, fovDepth }) => {
+  // Validate FOV angle
+  const validatedAngle = validateFOV(fovAngle);
+
+  // Find current device position from store
+  const currentPosition = devicePositions.value.find((p) => p.id === devicePositionId);
+
+  if (!currentPosition) {
+    return;
+  }
+
+  // Store original values if this is the start of a drag
+  if (!originalPositions.value.has(devicePositionId)) {
+    originalPositions.value.set(devicePositionId, {
+      positionX: currentPosition.positionX,
+      positionY: currentPosition.positionY,
+      fovDirection: currentPosition.fovDirection,
+      fovAngle: currentPosition.fovAngle,
+      fovDepth: currentPosition.fovDepth,
+    });
+  }
+
+  // Update store immediately for visual feedback (optimistic update)
+  store.commit('floorPlan/updateDevicePosition', {
+    ...currentPosition,
+    fovDirection,
+    fovAngle: validatedAngle,
+    fovDepth,
+  });
+
+  // Show unsaved indicator
+  hasUnsavedChanges.value = true;
+
+  // Clear existing timer
+  if (dragTimer.value) {
+    clearTimeout(dragTimer.value);
+  }
+
+  // Set timer to detect drag end
+  dragTimer.value = setTimeout(async () => {
+    const original = originalPositions.value.get(devicePositionId);
+
+    // Check if FOV actually changed
+    const fovChanged =
+      original.fovDirection !== fovDirection || original.fovAngle !== validatedAngle || original.fovDepth !== fovDepth;
+
+    if (fovChanged) {
+      try {
+        // Call API to persist changes
+        await store.dispatch('floorPlan/updateDevicePosition', {
+          floorPlanId: floorPlanId.value,
+          devicePositionId,
+          position: {
+            fovDirection,
+            fovAngle: validatedAngle,
+            fovDepth,
+          },
+        });
+
+        // Note: No need to reload floor plan since we use optimistic updates
+        // The UI is already updated via store.commit in lines 573-578
+        // Reloading would cause unnecessary image reload and loading state
+
+        // Determine which FOV property changed and track appropriately
+        const directionChanged = original.fovDirection !== fovDirection;
+        const angleChanged = original.fovAngle !== validatedAngle;
+        const depthChanged = original.fovDepth !== fovDepth;
+
+        // Track the most significant change (prioritize direction > angle > depth)
+        let adjustmentType;
+        if (directionChanged) {
+          adjustmentType = 'direction';
+        } else if (angleChanged) {
+          adjustmentType = 'angle';
+        } else if (depthChanged) {
+          adjustmentType = 'depth';
+        }
+
+        if (adjustmentType) {
+          trackFovAdjusted({
+            floorplanId: floorPlanId.value,
+            siteId: currentFloorPlan.value?.siteId || siteId.value,
+            viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+            deviceSerial: currentPosition.deviceSerialNumber,
+            deviceType: currentPosition.deviceType || DEVICE_TYPE.CAMERA,
+            adjustmentType,
+            fovDirection,
+            fovAngle: validatedAngle,
+            fovDepth,
+            interactionType: FLOORPLAN.INTERACTION_TYPE.DRAG,
+          });
+        }
+
+        // Hide unsaved indicator after successful save
+        hasUnsavedChanges.value = false;
+      } catch (err) {
+        console.error('[FloorPlan:Edit] Failed to update FOV:', err);
+      }
+    } else {
+      // No changes, hide unsaved indicator
+      hasUnsavedChanges.value = false;
+    }
+
+    // Clean up
+    originalPositions.value.delete(devicePositionId);
+  }, FLOORPLAN.INTERACTION.DRAG_END_DELAY);
+};
+
+const handleCanvasClick = () => {
+  // Track device deselection if a device was selected
+  if (selectedDeviceId.value) {
+    const devicePosition = filteredDevicePositions.value.find((pos) => pos.id === selectedDeviceId.value);
+    if (devicePosition) {
+      trackDeviceDeselected({
+        floorplanId: floorPlanId.value,
+        siteId: currentFloorPlan.value?.siteId || siteId.value,
+        viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+        deviceSerial: devicePosition.deviceSerialNumber,
+        deviceType: devicePosition.deviceType || DEVICE_TYPE.CAMERA,
+        interactionType: FLOORPLAN.INTERACTION_TYPE.CANVAS_CLICK,
+      });
+    }
+  }
+
+  selectedDeviceId.value = null;
+};
+
+const handleDeleteDeviceFromCanvas = (deviceId) => {
+  if (!deviceId) {
+    return;
+  }
+
+  // Find the device position to get the device name
+  const devicePosition = filteredDevicePositions.value.find((pos) => pos.id === deviceId);
+  const deviceName = devicePosition?.deviceName || 'this camera';
+
+  // Show confirmation dialog
+  if (deviceRemoveDialogue.value) {
+    deviceRemoveDialogue.value.show(deviceId, deviceName);
+  }
+};
+
+// Device panel handlers
+const handleDeviceDragStart = ({ device, event }) => {
+  // Set drag data for device placement (only serialize necessary fields, not the instance)
+  const deviceData = {
+    id: device.id,
+    name: device.name,
+    serialNumber: device.serialNumber,
+    status: device.status,
+  };
+
+  event.dataTransfer.effectAllowed = 'copy';
+  event.dataTransfer.setData('application/json', JSON.stringify(deviceData));
+  draggedDevice.value = device; // Keep full device reference locally (includes instance)
+};
+
+const handleDeviceDrop = async ({ device, normalizedX, normalizedY }) => {
+  // Use draggedDevice.value as source of truth (has full device instance)
+  const deviceToPlace = draggedDevice.value || device;
+
+  if (!deviceToPlace) {
+    console.warn('[FloorPlan:Edit] Drop rejected: missing device');
+    return;
+  }
+
+  try {
+    // Create deviceSerialNumber in correct format: thingName:derivant
+    // The device from availableDevices has the actual device instance in .instance property
+    const thingName = deviceToPlace.instance?.options?.thingName;
+    const derivant = deviceToPlace.instance?.options?.derivant;
+    const deviceSerialNumber = `${thingName}:${derivant}`;
+
+    if (!thingName || !derivant) {
+      console.error('[FloorPlan:Edit] Cannot create device position: missing thingName or derivant', {
+        thingName,
+        derivant,
+        device: deviceToPlace,
+      });
+      return;
+    }
+
+    // Check if device already exists on THIS floor plan
+    // Note: Same device can be placed on different floor plans with different positions
+    const existingPosition = devicePositions.value.find(
+      (pos) => pos.deviceSerialNumber === deviceSerialNumber && pos.floorPlanId === floorPlanId.value,
+    );
+    if (existingPosition) {
+      // Device is already placed - show confirmation dialog
+      console.warn('[FloorPlan:Edit] Device already placed on this floor plan:', deviceSerialNumber);
+
+      // Store the pending drop info
+      pendingDeviceDrop.value = {
+        device: deviceToPlace,
+        normalizedX,
+        normalizedY,
+        deviceSerialNumber,
+        existingPositionId: existingPosition.id,
+      };
+
+      // Show confirmation dialog
+      if (placedCameraConfirmDialogue.value) {
+        placedCameraConfirmDialogue.value.show(deviceToPlace);
+      }
+      return;
+    }
+
+    // Call API to create device position
+    await store.dispatch('floorPlan/createDevicePosition', {
+      floorPlanId: floorPlanId.value,
+      devicePosition: {
+        deviceSerialNumber,
+        positionX: normalizedX,
+        positionY: normalizedY,
+        fovDirection: FLOORPLAN.FOV.DEFAULT_DIRECTION,
+        fovAngle: validateFOV(FLOORPLAN.FOV.DEFAULT_ANGLE),
+        fovDepth: FLOORPLAN.FOV.DEFAULT_DEPTH,
+      },
+    });
+
+    // Track device added to floorplan
+    trackDeviceAdded({
+      floorplanId: floorPlanId.value,
+      siteId: currentFloorPlan.value?.siteId || siteId.value,
+      viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+      deviceSerial: deviceSerialNumber,
+      deviceName: deviceToPlace.name,
+      deviceType: deviceToPlace.instance?.options?.deviceType || DEVICE_TYPE.CAMERA,
+      deviceStatus: deviceToPlace.status || FLOORPLAN.DEVICE_ONLINE_STATUS.UNKNOWN,
+      positionX: normalizedX,
+      positionY: normalizedY,
+      totalDevices: (devicePositions.value?.length || 0) + 1,
+    });
+  } catch (err) {
+    console.error('[FloorPlan:Edit] Failed to create device position:', err);
+  } finally {
+    draggedDevice.value = null;
+  }
+};
+
+const handleDevicePanelClick = (device) => {
+  selectedDeviceId.value = device.id;
+};
+
+const handleRemoveDevice = (device) => {
+  // Delegate to the same logic as canvas delete
+  handleDeleteDeviceFromCanvas(device.id);
+};
+
+const handleCategoryClick = () => {
+  // Navigate to category view or open category modal
+};
+
+// Device remove confirmation handler
+const handleDeviceRemoveConfirmed = async (devicePositionId) => {
+  if (!devicePositionId) {
+    return;
+  }
+
+  // Find the device position to get details for tracking
+  const devicePosition = filteredDevicePositions.value.find((pos) => pos.id === devicePositionId);
+
+  try {
+    // Call API to delete device position
+    await store.dispatch('floorPlan/deleteDevicePosition', {
+      floorPlanId: floorPlanId.value,
+      devicePositionId,
+    });
+
+    // Track device removed from floorplan
+    if (devicePosition) {
+      trackDeviceRemoved({
+        floorplanId: floorPlanId.value,
+        siteId: currentFloorPlan.value?.siteId || siteId.value,
+        viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+        deviceSerial: devicePosition.deviceSerialNumber,
+        deviceName: devicePosition.deviceName,
+        deviceType: devicePosition.deviceType || DEVICE_TYPE.CAMERA,
+      });
+    }
+
+    // Clear selected device if it was the one deleted
+    if (selectedDeviceId.value === devicePositionId) {
+      selectedDeviceId.value = null;
+    }
+  } catch (err) {
+    console.error('[FloorPlan:Edit] Failed to remove device from floor plan:', err);
+  }
+};
+
+// Placed camera confirmation handler (update position)
+const handlePlacedCameraConfirmed = async () => {
+  if (!pendingDeviceDrop.value) {
+    return;
+  }
+
+  const { normalizedX, normalizedY, existingPositionId } = pendingDeviceDrop.value;
+
+  try {
+    // Update the existing device position
+    await store.dispatch('floorPlan/updateDevicePosition', {
+      floorPlanId: floorPlanId.value,
+      devicePositionId: existingPositionId,
+      position: {
+        positionX: normalizedX,
+        positionY: normalizedY,
+      },
+    });
+  } catch (err) {
+    console.error('[FloorPlan:Edit] Failed to update device position:', err);
+  } finally {
+    pendingDeviceDrop.value = null;
+    draggedDevice.value = null;
+  }
+};
+
+// Placed camera cancellation handler
+const handlePlacedCameraCancelled = () => {
+  // Clear pending drop
+  pendingDeviceDrop.value = null;
+  draggedDevice.value = null;
+};
+
+// Settings handler
+const handleSettings = () => {
+  if (settingsDialogue.value) {
+    settingsDialogue.value.show();
+  }
+};
+
+// Delete handler
+const handleDelete = () => {
+  if (!currentFloorPlan.value || !removeDialogue.value) {
+    return;
+  }
+
+  // Show confirmation dialogue with additional tracking data
+  removeDialogue.value.show(
+    currentFloorPlan.value.id,
+    currentFloorPlan.value.name,
+    currentFloorPlan.value.siteId,
+    devicePositions.value?.length || 0,
+  );
+};
+
+// Delete success handler
+const handleDeleteSuccess = () => {
+  // Navigate to the default floor plan page (no floor plan selected)
+  navigateToSiteDefault();
+};
+
+// Upload dialogue handlers
+const uploadDialogueMode = ref('create'); // 'create' or 'change-image'
+
+// Commented out - no longer needed without Upload Image button
+// const openUploadDialogue = () => {
+//   uploadDialogueMode.value = 'change-image';
+//   if (uploadDialogue.value) {
+//     uploadDialogue.value.show();
+//   }
+// };
+
+// Unified handler that delegates based on mode
+const handleUploadSubmit = async (formData, resolve, reject, progressCallback) => {
+  if (uploadDialogueMode.value === 'create') {
+    // Creating new floorplan from sidebar/empty state
+    await handleCreateFloorplan(formData, resolve, reject, progressCallback);
+  } else {
+    // Changing image of existing floorplan
+    await handleImageUpload(formData, resolve, reject, progressCallback);
+  }
+};
+
+// Handler for creating new floorplan
+const handleCreateFloorplan = async (formData, resolve, reject, progressCallback) => {
+  try {
+    // Step 1: Create the floor plan metadata
+    const newFloorPlan = await store.dispatch('floorPlan/createFloorPlan', {
+      siteId: formData.siteId,
+      name: formData.name,
+    });
+
+    // Step 2: Upload the floor plan image (only if file is provided)
+    if (formData.file) {
+      await store.dispatch('floorPlan/uploadFloorPlanImage', {
+        floorPlanId: newFloorPlan.id,
+        file: formData.file,
+      });
+
+      // Track image upload
+      trackFloorplanImageUploaded({
+        floorplanId: newFloorPlan.id,
+        floorplanName: formData.name,
+        siteId: formData.siteId,
+        viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+        imageSizeBytes: formData.file.size,
+        imageFormat: formData.file.type?.split('/')[1],
+        uploadContext: FLOORPLAN.UPLOAD_CONTEXT.CREATE,
+      });
+    }
+
+    // Track floorplan creation
+    trackFloorplanCreated({
+      floorplanId: newFloorPlan.id,
+      floorplanName: formData.name,
+      siteId: formData.siteId,
+      siteName: getSiteName(formData.siteId),
+      createdFrom: FLOORPLAN.CREATED_FROM.EDIT_PAGE,
+      imageSizeBytes: formData.file?.size,
+      imageFormat: formData.file?.type?.split('/')[1],
+    });
+
+    // Step 3: Auto-expand the site accordion for the newly created floor plan
+    store.commit('floorPlan/setExpandedSiteId', formData.siteId);
+
+    resolve();
+
+    // Step 4: Navigate to the newly created floor plan in edit mode
+    router.push({
+      name: 'FloorplanEdit',
+      params: {
+        siteId: formData.siteId,
+        floorplanId: newFloorPlan.id,
+      },
+    });
+  } catch (err) {
+    console.error('Failed to create floorplan:', err);
+    reject(err);
+  }
+};
+
+// Handler for changing image of existing floorplan
+const handleImageUpload = async (formData, resolve, reject, progressCallback) => {
+  try {
+    // Simulate upload with progress
+    const simulateProgress = async () => {
+      for (let i = 0; i <= 100; i += 10) {
+        // eslint-disable-next-line no-await-in-loop
+        await new Promise((r) => {
+          setTimeout(r, 200);
+        });
+        progressCallback(i);
+      }
+    };
+
+    await simulateProgress();
+
+    // Mock successful upload - in real implementation, dispatch to Vuex
+    // await store.dispatch('floorPlan/uploadFloorPlanImage', {
+    //   floorPlanId: floorPlanId.value,
+    //   file: formData.file,
+    //   onProgress: progressCallback
+    // });
+
+    // For now, just update the current floor plan mock data
+    if (currentFloorPlan.value) {
+      currentFloorPlan.value.imageUrl = URL.createObjectURL(formData.file);
+    }
+
+    resolve();
+  } catch (err) {
+    reject(err);
+  }
+};
+
+// Handler for Basic Settings dialog submit
+const handleSettingsSubmit = async (formData, resolve, reject, progressCallback) => {
+  try {
+    const floorPlanIdToUpdate = formData.floorPlanId || floorPlanId.value;
+    const previousName = currentFloorPlan.value?.name;
+
+    // Step 1: Update floor plan name
+    await store.dispatch('floorPlan/updateFloorPlan', {
+      floorPlanId: floorPlanIdToUpdate,
+      name: formData.name,
+    });
+
+    // Step 2: Upload new image if provided
+    if (formData.file) {
+      await store.dispatch('floorPlan/uploadFloorPlanImage', {
+        floorPlanId: floorPlanIdToUpdate,
+        file: formData.file,
+        onProgress: progressCallback,
+      });
+
+      // Track image upload
+      trackFloorplanImageUploaded({
+        floorplanId: floorPlanIdToUpdate,
+        floorplanName: formData.name,
+        siteId: currentFloorPlan.value?.siteId || siteId.value,
+        viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+        imageSizeBytes: formData.file.size,
+        imageFormat: formData.file.type?.split('/')[1],
+        uploadContext: FLOORPLAN.UPLOAD_CONTEXT.UPDATE,
+      });
+    }
+
+    // Step 3: Reload floor plan to get updated data
+    await loadFloorPlan();
+
+    // Track floorplan update
+    trackFloorplanUpdated({
+      floorplanId: floorPlanIdToUpdate,
+      floorplanName: formData.name,
+      siteId: currentFloorPlan.value?.siteId || siteId.value,
+      viewMode: FLOORPLAN.VIEW_MODE.EDIT,
+      imageUpdated: !!formData.file,
+      nameChanged: formData.name !== previousName,
+    });
+
+    resolve();
+  } catch (err) {
+    reject(err);
+  }
+};
+
+// Sidebar toggle handler
+const handleToggleLeft = () => {
+  // Trigger canvas resize when sidebar is toggled to ensure proper canvas dimensions
+  // The canvas will automatically adjust to the new available space
+};
+
+// Watch for floor plan ID changes (when user selects different floor plan)
+watch(floorPlanId, async (newFloorPlanId, oldFloorPlanId) => {
+  if (newFloorPlanId && newFloorPlanId !== oldFloorPlanId) {
+    try {
+      await loadFloorPlan();
+
+      // Auto-expand the site accordion for the newly selected floor plan
+      const loadedFloorPlan = store.getters['floorPlan/currentFloorPlan'];
+      if (loadedFloorPlan?.siteId) {
+        store.commit('floorPlan/setExpandedSiteId', loadedFloorPlan.siteId);
+      }
+
+      // Reset unsaved changes flag when switching floor plans
+      hasUnsavedChanges.value = false;
+    } catch (err) {
+      console.error('Failed to load floor plan on route change:', err);
+    }
+  }
+});
+
+// Lifecycle
+onMounted(async () => {
+  try {
+    // Mark as entered floorplan feature after entrance animation completes
+    // If not already entered, wait for animation to finish before setting flag
+    if (!hasEnteredFloorplanFeature.value) {
+      setTimeout(() => {
+        store.commit('floorPlan/setHasEnteredFloorplanFeature', true);
+      }, 300); // Match SideMenusLayout transition duration
+    }
+
+    // Groups and devices are already loaded during login (account/onAuthSuccess)
+    // - group/fetchGroupList: populates group store with site/group data
+    // - device/fetchListDeviceInfoOfOrganization: populates device store
+    // No need to fetch them again here - the getters already have access to this data
+
+    // If editing an existing floor plan, load its details
+    // Note: SiteFloorPlanList component handles its own data fetching
+    if (!isCreateMode.value && floorPlanId.value) {
+      await loadFloorPlan();
+
+      // Auto-expand the site accordion for the current floor plan
+      const loadedFloorPlan = store.getters['floorPlan/currentFloorPlan'];
+      if (loadedFloorPlan?.siteId) {
+        store.commit('floorPlan/setExpandedSiteId', loadedFloorPlan.siteId);
+      }
+    }
+  } catch (loadError) {
+    console.error('Failed to load floor plan data:', loadError);
+  }
+});
+
+onUnmounted(() => {
+  // Clear any pending drag timer
+  if (dragTimer.value) {
+    clearTimeout(dragTimer.value);
+  }
+});
+</script>
+
+<style scoped lang="less">
+.floor-plan-edit-page {
+  width: 100%;
+  height: 100vh;
+  background: @color-surface03;
+  color: @color-text05;
+  overflow: hidden;
+
+  // Conditionally disable sidebar animation for instant mode switching
+  // Only applied when .no-sidebar-transition class is present (navigating within floorplan feature)
+  &.no-sidebar-transition {
+    :deep(.left-menu) {
+      transition: none !important;
+    }
+
+    :deep(.left-menu .container) {
+      transition: none !important;
+    }
+
+    :deep(.right-menu) {
+      transition: none !important;
+    }
+  }
+
+  .center-panel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    background: @color-surface03;
+
+    .top-bar {
+      padding: 16px 20px;
+      background: @color-surface03;
+    }
+
+    .content-area {
+      flex: 1;
+      display: flex;
+      flex-direction: row;
+      min-height: 0;
+    }
+
+    .canvas-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      min-height: 0;
+      min-width: 0;
+
+      .error-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: @color-surface03;
+      }
+
+      .error-message {
+        color: #f5222d;
+        font-size: 16px;
+      }
+
+      .canvas-wrapper {
+        flex: 1;
+        min-height: 0;
+        background: @color-surface03;
+        position: relative;
+        padding: 24px;
+
+        .canvas-overlay-top {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          z-index: 10;
+          pointer-events: none;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+
+          .unsaved-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(250, 173, 20, 0.15);
+            border: 1px solid rgba(250, 173, 20, 0.4);
+            border-radius: 4px;
+            animation: fadeIn 0.2s ease-in;
+
+            .unsaved-dot {
+              width: 6px;
+              height: 6px;
+              background: #faad14;
+              border-radius: 50%;
+              animation: pulse 2s ease-in-out infinite;
+            }
+
+            .unsaved-text {
+              font-size: 13px;
+              font-weight: 500;
+              color: #faad14;
+            }
+          }
+        }
+
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-4px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

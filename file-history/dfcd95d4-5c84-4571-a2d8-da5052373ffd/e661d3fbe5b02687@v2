@@ -1,0 +1,918 @@
+<template>
+  <div class="management-wrapper">
+    <div class="title-wrapper">
+      <h4 class="bold">
+        {{ $t('Devices') }}
+      </h4>
+      <AddDeviceDropdown
+        v-if="hasCreateDevicePermission"
+        ref="AddDeviceDropdown"
+        class=""
+        :modelValue="''"
+        @onOpitonClicked="showAddDeviceDialogue"
+      >
+        <button
+          v-if="hasCreateDevicePermission"
+          v-track="trackUserBehaviorByAddDeviceOption"
+          class="medium with-icon"
+          :class="{ active: $refs.AddDeviceDropdown?.isShowAddDeviceDropdown }"
+          :data-sre-testid="SRE_TEST_ID.ADD_DEVICE_BUTTON"
+          data-testid="add-device-button"
+          @click="toggleAddDeviceDropdown"
+        >
+          {{ $t('Add Device') }}
+          <svg-icon
+            iconClass="general_plus"
+            size="20px"
+            outerSize="32px"
+          />
+        </button>
+      </AddDeviceDropdown>
+      <SetAlarmHintDialogue ref="setAlarmHintDialogue" />
+      <SetNvrWizardDialogue
+        v-if="currentSetPasswordNvr"
+        ref="SetNvrWizardDialogue"
+        :device="currentSetPasswordNvr"
+      />
+    </div>
+    <SideMenusLayout
+      ref="sideMenu"
+      class="management"
+      @toggleRight="toggleRightMenu"
+    >
+      <template #left-menu>
+        <div class="management-list left-menu-collapsed">
+          <DeviceManagementGroupList
+            :groups="groups"
+            :devices="availableDevices"
+            :modelValue="currentGroupId"
+            :shouldShowAddDeviceButton="hasCreateDevicePermission"
+            @changeGroup="changeCurrentGroup"
+            @deleteSuccess="deleteSiteSuccess"
+            @addDeviceClicked="showAddDeviceDialogue"
+          />
+        </div>
+      </template>
+      <template #center>
+        <div class="management-container">
+          <div class="content">
+            <DeviceManagementTabs
+              v-if="shouldDisplayTabs"
+              :tabsData="tabsData"
+              :defaultActiveIndex="currentTabIndex"
+              @onTabClick="onTabClick"
+            />
+            <NVRDeviceManagementTable
+              v-if="isNVRGroupList && hasCreateDevicePermission"
+              ref="deviceManagementTable"
+              :rowData="rowData"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @devicesSorted="onDevicesSorted"
+              @onSetNvrPassword="onSetNvrPassword"
+            />
+            <VSSDeviceManagementTable
+              v-else-if="isVSSGroupList && hasCreateDevicePermission"
+              ref="deviceManagementTable"
+              :rowData="rowData"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @devicesSorted="onDevicesSorted"
+            />
+            <BridgeManagementTable
+              v-else-if="isBridgeGroupList && hasCreateDevicePermission"
+              ref="deviceManagementTable"
+              :rowData="rowData"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              :currentGroupId="currentGroupId"
+              :highlightedDevice="currentSelectedDevice"
+              @deleteDevices="tryDeleteBridgeDevices"
+              @changeGroup="changeCurrentGroup"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @devicesSorted="onDevicesSorted"
+              @onSetNvrPassword="onSetNvrPassword"
+              @click:row="onDeviceRowClick"
+            />
+            <ExternalDeviceManagementTable
+              v-else-if="isNetworkSpeakerGroupList"
+              ref="deviceManagementTable"
+              :rowData="rowData"
+              :deviceType="EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :currentGroupId="currentGroupId"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              :highlightedDevice="currentSelectedDevice"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @deleteDevices="tryDeleteExternalDevice"
+              @click:row="onDeviceRowClick"
+            />
+            <ExternalDeviceManagementTable
+              v-else-if="isPoESwitchGroupList && hasCreateDevicePermission"
+              :rowData="rowData"
+              :deviceType="EXTERNAL_DEVICE.TYPE.POE_SWITCH"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :currentGroupId="currentGroupId"
+              :currentDevice="currentSelectedDevice"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @deleteDevices="tryDeleteExternalDevice"
+            />
+            <DeviceManagementTable
+              v-else
+              ref="deviceManagementTable"
+              :rowData="rowData"
+              :currentPageIndex="currentPageIndex"
+              :countPerPage="COUNT_PER_PAGE"
+              :currentGroupId="currentGroupId"
+              :groups="groups"
+              :hasManageDevicePermission="hasCreateDevicePermission"
+              @doFilter="onFilter"
+              @tableLengthChanged="onTableLengthChanged"
+              @currentPageChanged="onCurrentPageChanged"
+              @devicesSorted="onDevicesSorted"
+              @onSetNvrPassword="onSetNvrPassword"
+            />
+          </div>
+        </div>
+      </template>
+      <template
+        v-if="shouldDisplayDevicePanel"
+        #right-menu
+      >
+        <NetworkSpeakerDetailPanel
+          v-if="isNetworkSpeakerGroupList"
+          :device="currentSelectedDevice"
+          @deleteCurrentDevice="tryDeleteExternalDevice"
+        />
+        <BridgeDetailPanel
+          v-if="isBridgeGroupList"
+          :device="currentSelectedDevice"
+          :currentGroupId="currentGroupId"
+          @addExternalDevice="showAddExternalDeviceDialogue"
+          @clickExternalDevice="onClickExternalDevice"
+          @deleteDevice="tryDeleteBridgeDevices"
+        />
+      </template>
+      <template #footer="footer">
+        <CentralPanelFooter
+          ref="footer"
+          :leftOpened="footer.leftOpened"
+          :rightOpened="footer.rightOpened"
+          :shouldDisplayRightControl="shouldDisplayDevicePanel"
+          @toggleLeft="footer.toggleLeft"
+          @toggleRight="footer.toggleRight"
+        >
+          <template #center-control>
+            <FooterPagination
+              :pageCount="pageCount"
+              :currentPageIndex="currentPageIndex"
+              :rotating="false"
+              @goPreviousPage="goPreviousPage"
+              @goNextPage="goNextPage"
+            />
+          </template>
+        </CentralPanelFooter>
+      </template>
+    </SideMenusLayout>
+    <AddExternalDeviceModal ref="addExternalDeviceModal" />
+    <DeleteDeviceDialogue
+      ref="removeBridgeDeviceDialogue"
+      @confirm="removeBridgeDeviceConfirm"
+    >
+      <template #extra-content>
+        <h6>
+          {{ $t('The peripheral devices under this bridge will also be deleted.') }}
+        </h6>
+      </template>
+      <template #warning-content>
+        <h6>
+          {{ deleteBridgeDeviceWarningText }}
+        </h6>
+      </template>
+    </DeleteDeviceDialogue>
+    <DeleteExternalDeviceDialogue
+      ref="removeExternalDeviceDialogue"
+      :deleteDevices="currentDeleteItems"
+      @deleteSuccess="onDeleteDevice"
+    />
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters, mapState } from 'vuex';
+
+import { SideMenusLayout } from '@vivotek/advanced-vue-components';
+import {
+  SRE_TEST_ID,
+  EXTERNAL_DEVICE,
+  ADD_DEVICE_MENU_TYPE,
+  DEVICE_TABLE_GROUP_ID_MAP,
+  FIRMWARE_UPGRADE_STATUS,
+  TRACK_TIME_EVENT_KEY,
+  TRACK_EVENT_KEY,
+} from '@vivotek/const-vsaas';
+import { sortingUtils } from '@vivotek/lib-utility';
+import { FooterPagination, CentralPanelFooter } from '@vivotek/vue-app-layouts';
+
+import DeleteDeviceDialogue from '@/components/Dialogues/DeleteDeviceDialogue.vue';
+import SetNvrWizardDialogue from '@/components/Dialogues/SetNvrWizardDialogue.vue';
+import AddDeviceDropdown from '@/components/Dropdowns/AddDeviceDropdown.vue';
+import DeviceManagementGroupList from '@/components/Group/DeviceManagementGroupList.vue';
+import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+import BridgeTableData from '@/models/TableInterface/BridgeTableData';
+import CameraTableData from '@/models/TableInterface/CameraTableData';
+import ExternalDeviceTableData from '@/models/TableInterface/ExternalDeviceTableData';
+import NVRTableData from '@/models/TableInterface/NVRTableData';
+import VSSTableData from '@/models/TableInterface/VSSTableData';
+
+import AddExternalDeviceModal from './components/AddExternalDeviceModal.vue';
+import BridgeDetailPanel from './components/BridgeDetailPanel.vue';
+import BridgeManagementTable from './components/BridgeManagementTable.vue';
+import DeleteExternalDeviceDialogue from './components/DeleteExternalDeviceDialogue.vue';
+import DeviceManagementTable from './components/DeviceManagementTable.vue';
+import DeviceManagementTabs from './components/DeviceManagementTabs.vue';
+import ExternalDeviceManagementTable from './components/ExternalDeviceManagementTable.vue';
+import NetworkSpeakerDetailPanel from './components/NetworkSpeakerDetailPanel.vue';
+import NVRDeviceManagementTable from './components/NVRDeviceManagementTable.vue';
+import SetAlarmHintDialogue from './components/SetAlarmHintDialogue.vue';
+import VSSDeviceManagementTable from './components/VSSDeviceManagementTable.vue';
+
+export default {
+  name: 'DeviceManagement',
+  components: {
+    AddExternalDeviceModal,
+    DeviceManagementGroupList,
+    DeviceManagementTabs,
+    DeviceManagementTable,
+    NVRDeviceManagementTable,
+    VSSDeviceManagementTable,
+    BridgeManagementTable,
+    ExternalDeviceManagementTable,
+    BridgeDetailPanel,
+    NetworkSpeakerDetailPanel,
+    SideMenusLayout,
+    FooterPagination,
+    CentralPanelFooter,
+    DeleteDeviceDialogue,
+    DeleteExternalDeviceDialogue,
+    AddDeviceDropdown,
+    SetAlarmHintDialogue,
+    SetNvrWizardDialogue,
+  },
+  data() {
+    return {
+      currentPageIndex: 1,
+      currentTabIndex: 0,
+      currentGroupId: DEVICE_TABLE_GROUP_ID_MAP.CAMERA,
+      currentTableLength: 0,
+      currentSetPasswordNvr: null,
+      currentSelectedDevice: null,
+      currentDeleteItems: [],
+      COUNT_PER_PAGE: 15,
+      DEVICE_TABLE_GROUP_ID_MAP,
+      EXTERNAL_DEVICE,
+      sortedRowData: [],
+      trackUserBehaviorByAddDeviceOption: {
+        eventName: TRACK_TIME_EVENT_KEY.DEV_ADD_DEVICE,
+        trackTime: true,
+      },
+      SRE_TEST_ID,
+      permissions: null,
+    };
+  },
+  methods: {
+    ...mapActions('device', ['batchDeleteDevice', 'fetchListDeviceInfoOfOrganization']),
+    ...mapActions('externalDevice', ['batchDeleteExternalDevice', 'deleteNetworkSpeakers']),
+    goPreviousPage() {
+      if (this.currentPageIndex === 1) {
+        return;
+      }
+
+      this.currentPageIndex -= 1;
+    },
+    goNextPage() {
+      if (this.currentPageIndex >= this.pageCount) {
+        return;
+      }
+
+      this.currentPageIndex += 1;
+    },
+    toggleAddDeviceDropdown() {
+      if (this.isFreePlan) {
+        this.$router.push({ name: 'AddDeviceEnterDeviceId' });
+        return;
+      }
+      this.$refs.AddDeviceDropdown.toggleAddDeviceDropdown();
+    },
+    showAddDeviceDialogue(type = ADD_DEVICE_MENU_TYPE.DEFAULT_DEVICE) {
+      switch (type) {
+        case ADD_DEVICE_MENU_TYPE.POE_SWITCH:
+        case ADD_DEVICE_MENU_TYPE.NETWORK_SPEAKER:
+          this.showAddExternalDeviceDialogue({ externalDeviceTypeFilter: type });
+          break;
+        default:
+          this.$router.push({ name: 'AddDeviceEnterDeviceId' });
+          break;
+      }
+    },
+    showAddExternalDeviceDialogue({ externalDeviceTypeFilter, preselectedBridgeDevice }) {
+      this.$refs.addExternalDeviceModal.show({ externalDeviceTypeFilter, preselectedBridgeDevice });
+    },
+    showSetAlarmHintDialogue() {
+      this.$refs.setAlarmHintDialogue.show();
+    },
+    tryDeleteBridgeDevices(devices) {
+      this.currentDeleteItems = Array.isArray(devices) ? devices : [devices];
+      this.$refs.removeBridgeDeviceDialogue.show();
+    },
+    tryDeleteExternalDevice(devices) {
+      this.currentDeleteItems = Array.isArray(devices) ? devices : [devices];
+      this.$nextTick(() => {
+        this.$refs.removeExternalDeviceDialogue.show();
+      });
+    },
+    removeBridgeDeviceConfirm(isCancel) {
+      if (isCancel) {
+        return;
+      }
+      this.batchDeleteDevice(this.currentDeleteItems).then(
+        () => {
+          this.$refs.removeBridgeDeviceDialogue.onDeleteSuccess();
+          this.onDeleteDevice();
+        },
+        () => {
+          this.$refs.removeBridgeDeviceDialogue.onDeleteFail();
+        },
+      );
+    },
+    onTabClick(tabActiveIndex) {
+      this.currentTabIndex = tabActiveIndex;
+
+      const { trackEventKey } = this.tabsData[this.currentTabIndex];
+      this.$mixpanel.track(trackEventKey);
+
+      this.currentPageIndex = 1;
+    },
+    onFilter() {
+      this.currentPageIndex = 1;
+    },
+    onTableLengthChanged(tableLength) {
+      this.currentTableLength = tableLength;
+    },
+    onCurrentPageChanged(index) {
+      this.currentPageIndex = index;
+    },
+    onDeviceRowClick(device) {
+      if (device.deviceId === this.currentSelectedDevice?.deviceId) {
+        this.currentSelectedDevice = null;
+        return;
+      }
+      this.expendRightMenu(device);
+    },
+    onDeleteDevice() {
+      if (this.currentDeleteItems.find((item) => item.deviceId === this.currentSelectedDevice?.deviceId)) {
+        this.currentSelectedDevice = null;
+      }
+      this.currentDeleteItems = [];
+      this.$refs.footer.openRight(false);
+      if (this.rowDataLength === 0) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      } else {
+        const pageSize = Math.ceil(this.rowData.length / this.countPerPage) || 1;
+        if (this.currentPageIndex >= pageSize) {
+          this.onCurrentPageChanged(pageSize);
+        }
+      }
+    },
+    onClickExternalDevice(device) {
+      if (device.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+        const { deviceId } = device;
+        this.$router.push({
+          name: 'DeviceSettingsSystemPOESwitchSettings',
+          params: { deviceId },
+          state: {
+            groupId: DEVICE_TABLE_GROUP_ID_MAP.BRIDGE,
+          },
+        });
+      } else if (device.type === EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER);
+        this.expendRightMenu(device);
+      }
+    },
+    expendRightMenu(device) {
+      this.currentSelectedDevice = device;
+      this.$nextTick(() => {
+        this.$refs.footer.openRight(true);
+      });
+    },
+    toggleRightMenu(opened) {
+      if (!opened) {
+        this.currentSelectedDevice = null;
+      }
+    },
+    changeCurrentGroup(id) {
+      this.currentGroupId = id;
+      this.currentPageIndex = 1;
+      this.currentSelectedDevice = null;
+    },
+    unSelectAllDevices() {
+      this.$refs.deviceManagementTable?.unSelectAllDevices();
+    },
+    onDevicesSorted(list) {
+      this.sortedRowData = list;
+    },
+    onSetNvrPassword(nvr) {
+      this.currentSetPasswordNvr = nvr;
+      this.$nextTick(() => {
+        this.$refs.SetNvrWizardDialogue.show();
+      });
+    },
+    deleteSiteSuccess() {
+      this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      this.fetchListDeviceInfoOfOrganization();
+    },
+  },
+  computed: {
+    ...mapState(['device']),
+    ...mapGetters('device', [
+      'availableDevices',
+      'availableCameraDevices',
+      'availableNVRDevices',
+      'availableVSSDevices',
+      'availableBridgeDevices',
+      'allDevicesMap',
+    ]),
+    ...mapGetters('group', ['sortedGroups']),
+    ...mapGetters('organization', ['currentOrganization', 'isFreePlan']),
+    ...mapGetters('externalDevice', [
+      'availableExternalDevices',
+      'availablePoESwitchDevices',
+      'availableNetworkSpeakers',
+    ]),
+    ...mapGetters('permission', ['canDoOrg']),
+    groupListDevices() {
+      return [...this.availableCameraDevices, ...this.availableNVRDevices];
+    },
+    pageCount() {
+      const pageSize = Math.ceil(this.currentTableLength / this.COUNT_PER_PAGE);
+
+      return pageSize === 0 ? 1 : pageSize;
+    },
+    nvrRowData() {
+      return (
+        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.NVR]?.devices
+          .filter((device) => {
+            switch (this.currentTabIndex) {
+              case 1:
+                return device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              case 2:
+                return !device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              case 3:
+                return device.fwUpgradeState === FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              default:
+                return device;
+            }
+          })
+          .map((nvr, index) => new NVRTableData(nvr, index))
+          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+      );
+    },
+    vssRowData() {
+      return (
+        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.VSS]?.devices
+          .filter((device) => {
+            switch (this.currentTabIndex) {
+              case 1:
+                return device.online;
+              case 2:
+                return !device.online;
+              default:
+                return device;
+            }
+          })
+          .map((vss, index) => new VSSTableData(vss, index))
+          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+      );
+    },
+    bridgeRowData() {
+      return (
+        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.BRIDGE]?.devices
+          .filter((device) => {
+            switch (this.currentTabIndex) {
+              case 1:
+                return device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              case 2:
+                return !device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              case 3:
+                return device.fwUpgradeState === FIRMWARE_UPGRADE_STATUS.UPGRADING;
+              default:
+                return device;
+            }
+          })
+          .map((bridge, index) => new BridgeTableData(bridge, index))
+          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+      );
+    },
+    poeSwitchRowData() {
+      return (
+        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH]?.devices
+          .map((externalDevice, index) => new ExternalDeviceTableData(externalDevice, index))
+          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+      );
+    },
+    networkSpeakerRowData() {
+      return (
+        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER]?.devices
+          .map((externalDevice, index) => new ExternalDeviceTableData(externalDevice, index))
+          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+      );
+    },
+    rowData() {
+      if (!this.groupsMap[this.currentGroupId]) {
+        return [];
+      }
+
+      if (this.isNVRGroupList) {
+        return this.nvrRowData.length ? this.nvrRowData : [];
+      }
+
+      if (this.isVSSGroupList) {
+        return this.vssRowData.length ? this.vssRowData : [];
+      }
+
+      if (this.isBridgeGroupList) {
+        return this.bridgeRowData.length ? this.bridgeRowData : [];
+      }
+
+      if (this.isPoESwitchGroupList) {
+        return this.poeSwitchRowData.length ? this.poeSwitchRowData : [];
+      }
+
+      if (this.isNetworkSpeakerGroupList) {
+        return this.networkSpeakerRowData.length ? this.networkSpeakerRowData : [];
+      }
+
+      const result = this.groupsMap[this.currentGroupId].devices
+        .filter((device) => {
+          switch (this.currentTabIndex) {
+            case 1:
+              return device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            case 2:
+              return !device.online && device.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            case 3:
+              return device.fwUpgradeState === FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            case 0:
+            default:
+              return device;
+          }
+        })
+        .map(
+          (device, index) =>
+            new CameraTableData(device, index, this.$t.bind(this), this.$vendor.getVendorConfig().PRODUCT_NAME),
+        )
+        .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name'));
+
+      return result;
+    },
+    rowDataLength() {
+      return this.rowData.length;
+    },
+    tabsData() {
+      const baseTabs = [
+        {
+          text: (t) => (t === 'en' ? 'Overview' : this.$t('Overview')),
+          icon: this.currentGroupTabsIconMap.overview,
+          length: this.groupsMap[this.currentGroupId]?.devices.length || 0,
+          tabDataSRETestId: SRE_TEST_ID.DEVICE_OVERVIEW_TAB,
+          trackEventKey: TRACK_EVENT_KEY.DEV_OVERVIEW_TAB,
+        },
+        {
+          text: (t) => (t === 'en' ? 'Online' : this.$t('Online')),
+          icon: this.currentGroupTabsIconMap.online,
+          length:
+            this.groupsMap[this.currentGroupId]?.devices.filter((item) => {
+              if (this.isVSSGroupList) {
+                return item.online;
+              }
+              return item.online && item.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            }).length || 0,
+          trackEventKey: TRACK_EVENT_KEY.DEV_ONLINE_TAB,
+          spanDataSRETestId: SRE_TEST_ID.DEVICE_ONLINE_COUNT,
+          tabDataSRETestId: SRE_TEST_ID.DEVICE_ONLINE_TAB,
+        },
+        {
+          text: (t) => (t === 'en' ? 'Offline' : this.$t('Offline')),
+          icon: this.currentGroupTabsIconMap.offline,
+          length:
+            this.groupsMap[this.currentGroupId]?.devices.filter((item) => {
+              if (this.isVSSGroupList) {
+                return !item.online;
+              }
+              return !item.online && item.fwUpgradeState !== FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            }).length || 0,
+          trackEventKey: TRACK_EVENT_KEY.DEV_OFFLINE_TAB,
+          tabDataSRETestId: SRE_TEST_ID.DEVICE_OFFLINE_TAB,
+        },
+      ];
+
+      if (this.isVSSGroupList) {
+        return baseTabs;
+      }
+
+      return [
+        ...baseTabs,
+        {
+          text: (t) => (t === 'en' ? 'Updating' : this.$t('Updating')),
+          icon: this.currentGroupTabsIconMap.updating,
+          length:
+            this.groupsMap[this.currentGroupId]?.devices.filter((item) => {
+              return item.fwUpgradeState === FIRMWARE_UPGRADE_STATUS.UPGRADING;
+            }).length || 0,
+          trackEventKey: TRACK_EVENT_KEY.DEV_UPDATING_TAB,
+          tabDataSRETestId: SRE_TEST_ID.DEVICE_UPDATING_TAB,
+        },
+      ];
+    },
+    groupsMap() {
+      return Object.values(this.groups).reduce((acc, item) => {
+        acc[item.id] = item;
+        return acc;
+      }, {});
+    },
+    groups() {
+      const sortedGroups = this.sortedGroups();
+
+      const networkSpeakerGroup = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER,
+        name: this.$t('Network speaker'),
+        icon: 'general_speaker_solid',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER,
+        devices: this.availableNetworkSpeakers,
+      };
+
+      const poeSwitchGroup = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+        name: this.$t('PoE Switch'),
+        icon: 'general_poe_solid',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+        devices: this.availablePoESwitchDevices,
+      };
+
+      const nvrGroup = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.NVR,
+        name: this.$t('NVR'),
+        icon: 'general_device_group_solid',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.NVR,
+        devices: this.availableNVRDevices,
+      };
+
+      const vssGroup = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.VSS,
+        name: this.$t('VSS'),
+        icon: 'general_device_group_solid',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.VSS,
+        devices: this.availableVSSDevices,
+      };
+
+      const bridgeGroup = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.BRIDGE,
+        name: this.$t('Bridge'),
+        icon: 'general_RX_solid',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.BRIDGE,
+        devices: this.availableBridgeDevices,
+      };
+
+      const allDeviceGroups = {
+        id: DEVICE_TABLE_GROUP_ID_MAP.CAMERA,
+        name: this.$t('All cameras'),
+        icon: 'general_multi_group',
+        organizationID: DEVICE_TABLE_GROUP_ID_MAP.CAMERA,
+        devices: this.availableCameraDevices,
+      };
+
+      return [
+        ...(this.availableNVRDevices.length ? [nvrGroup] : []),
+        ...(this.availableVSSDevices.length ? [vssGroup] : []),
+        ...(this.availableBridgeDevices.length ? [bridgeGroup] : []),
+        ...(this.availablePoESwitchDevices.length ? [poeSwitchGroup] : []),
+        ...(this.availableNetworkSpeakers.length ? [networkSpeakerGroup] : []),
+        allDeviceGroups,
+        ...sortedGroups.map((group) => ({ icon: 'general_group_solid', ...group })),
+      ];
+    },
+    currentGroupTabsIconMap() {
+      const deviceType = Object.entries(DEVICE_TABLE_GROUP_ID_MAP).find(
+        ([key, value]) => value === this.currentGroupId,
+      )?.[0];
+
+      const iconMap = {
+        CAMERA: {
+          overview: 'general_cameras_solid',
+          online: 'general_camera_solid',
+          offline: 'general_camera_offline_solid',
+          updating: 'general_camera_updating_solid',
+        },
+        NVR: {
+          overview: 'general_device_group_solid',
+          online: 'general_device_solid',
+          offline: 'general_device_disconnected_solid',
+          updating: 'status_device_solid_updating',
+        },
+        VSS: {
+          overview: 'general_device_group_solid',
+          online: 'general_device_solid',
+          offline: 'general_device_disconnected_solid',
+        },
+        BRIDGE: {
+          overview: 'general_RX_solid',
+          online: 'general_RX_solid',
+          offline: 'general_RX_disconnected_solid',
+          updating: 'general_RX_updating_solid',
+        },
+      };
+
+      return iconMap[deviceType] ?? iconMap.CAMERA;
+    },
+    isNVRGroupList() {
+      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.NVR;
+    },
+    isVSSGroupList() {
+      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.VSS;
+    },
+    isBridgeGroupList() {
+      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.BRIDGE;
+    },
+    isPoESwitchGroupList() {
+      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH;
+    },
+    isNetworkSpeakerGroupList() {
+      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER;
+    },
+    shouldDisplayTabs() {
+      return !this.isNetworkSpeakerGroupList && !this.isPoESwitchGroupList;
+    },
+    shouldDisplayDevicePanel() {
+      return this.isNetworkSpeakerGroupList || this.isBridgeGroupList;
+    },
+    hasCreateDevicePermission() {
+      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+    },
+    currentDeviceGroupId() {
+      const { groupId, deviceId } = this.$router.options.history.state;
+
+      if (groupId) {
+        return groupId;
+      }
+
+      if (!deviceId) {
+        return DEVICE_TABLE_GROUP_ID_MAP.CAMERA;
+      }
+
+      const device = this.allDevicesMap[deviceId];
+
+      if (device.options.type === 'nvr') {
+        return DEVICE_TABLE_GROUP_ID_MAP.NVR;
+      }
+
+      if (device.options.type === 'bridge') {
+        return DEVICE_TABLE_GROUP_ID_MAP.BRIDGE;
+      }
+
+      if (device.options.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+        return DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH;
+      }
+
+      if (device.options?.type === EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER) {
+        return DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER;
+      }
+
+      return device.deviceGroupID;
+    },
+    deleteBridgeDeviceWarningText() {
+      return this.$t('Once you delete the device, all its data on { product } platform will be permanently erased.', {
+        product: this.productName,
+      });
+    },
+    productName() {
+      return this.$vendor.getVendorConfig().PRODUCT_NAME;
+    },
+  },
+  watch: {
+    currentGroupId(newV, oldV) {
+      this.$refs.sideMenu?.closeRightMenu();
+      if (oldV === DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH || oldV === DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER) {
+        return;
+      }
+      this.unSelectAllDevices();
+    },
+    currentTabIndex() {
+      this.unSelectAllDevices();
+    },
+    nvrRowData() {
+      if (this.availableNVRDevices.length === 0 && this.isNVRGroupList) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      }
+    },
+    vssRowData() {
+      if (this.availableVSSDevices.length === 0 && this.isVSSGroupList) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      }
+    },
+    poeSwitchRowData() {
+      if (this.availablePoESwitchDevices.length === 0 && this.isPoESwitchGroupList) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      }
+    },
+    networkSpeakerRowData() {
+      if (this.availableNetworkSpeakers.length === 0 && this.isNetworkSpeakerGroupList) {
+        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+      }
+    },
+    rowDataLength() {
+      this.currentTableLength = this.rowDataLength;
+    },
+  },
+  created() {
+    this.changeCurrentGroup(this.currentDeviceGroupId);
+  },
+
+  mounted() {
+    const { deviceId } = this.$router.options.history.state || {};
+    if (deviceId) {
+      const rowData = this.sortedRowData.length ? this.sortedRowData : this.rowData;
+      const deviceIndex = rowData.findIndex(
+        (device) => device.deviceId === deviceId || !!device.cameras?.find((camera) => camera.deviceId === deviceId),
+      );
+      if (deviceIndex >= 0) {
+        this.currentPageIndex = 1 + Math.floor(deviceIndex / this.COUNT_PER_PAGE);
+        this.expendRightMenu(rowData[deviceIndex]);
+      }
+    }
+    this.currentTableLength = this.rowData.length;
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.management-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: @color-surface01;
+  height: 100%;
+
+  .title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 62px;
+    flex-basis: 62px;
+    padding-left: 18px;
+    padding-right: 36px;
+    background-color: @color-surface03;
+    border: 1px solid @color-outline11;
+
+    button {
+      width: 160px;
+    }
+
+    .active {
+      background-color: @color-primary-active;
+      border: 1px solid @color-primary-active;
+      color: @color-text01;
+    }
+  }
+
+  .management-list {
+    height: 100%;
+
+    :deep(.search-group-input-wrapper) {
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+  }
+}
+</style>

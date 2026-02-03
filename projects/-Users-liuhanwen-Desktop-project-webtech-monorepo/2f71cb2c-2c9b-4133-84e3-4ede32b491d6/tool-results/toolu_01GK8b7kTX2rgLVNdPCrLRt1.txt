@@ -1,0 +1,6 @@
+Found 5 files
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue
+packages/app-vsaas-portal/src/components/Group/MoveGroupOfDevicesDialogue.vue

@@ -1,0 +1,31 @@
+2026-01-18T07:28:48.710Z [DEBUG] Watching for changes in setting files /Users/liuhanwen/.claude, /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude...
+2026-01-18T07:28:48.713Z [DEBUG] [init] configureGlobalMTLS starting
+2026-01-18T07:28:48.713Z [DEBUG] [init] configureGlobalMTLS complete
+2026-01-18T07:28:48.713Z [DEBUG] [init] configureGlobalAgents starting
+2026-01-18T07:28:48.713Z [DEBUG] [init] configureGlobalAgents complete
+2026-01-18T07:28:48.717Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-01-18T07:28:48.717Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-01-18T07:28:48.717Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-01-18T07:28:48.719Z [DEBUG] Applying permission update: Adding 43 allow rule(s) to destination 'localSettings': ["WebSearch","WebFetch(domain:simonbs.dev)","WebFetch(domain:www.anthropic.com)","WebFetch(domain:wendyliga.com)","WebFetch(domain:peterfriese.dev)","WebFetch(domain:medium.com)","WebFetch(domain:apidog.com)","WebFetch(domain:ronnierocha.dev)","WebFetch(domain:blog.akring.com)","WebFetch(domain:openrouter.ai)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/core/device/streaming/**)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/core/device/**)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/**)","Read(//Users/liuhanwen/Library/**)","Bash(test -f:*)","Read(//Users/liuhanwen/.config/**)","Bash(claude mcp list:*)","Bash(cat:*)","Bash(curl:*)","Bash(sh)","Bash(export PATH=\"$HOME/.local/bin:$PATH\")","Bash(uvx:*)","Read(//Users/liuhanwen/**)","Bash(pnpm list:*)","Bash(pnpm test:unit:*)","mcp__serena__find_symbol","mcp__serena__activate_project","mcp__serena__get_current_config","Bash(nvm install:*)","Bash(nvm alias:*)","Bash(nvm current:*)","Bash(source ~/.nvm/nvm.sh)","Bash(nvm use:*)","mcp__chrome-devtools__list_pages","mcp__chrome-devtools__navigate_page","mcp__chrome-devtools__list_console_messages","mcp__chrome-devtools__list_network_requests","mcp__chrome-devtools__take_screenshot","mcp__chrome-devtools__take_snapshot","Bash(rm:*)","Bash(git config:*)","Bash(~/.gitignore_global)","Bash(claude /plugin marketplace list:*)"]
+2026-01-18T07:28:48.720Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-01-18T07:28:48.735Z [DEBUG] Loading plugin serena from source: "./external_plugins/serena"
+2026-01-18T07:28:48.746Z [DEBUG] Using git SHA for serena@claude-plugins-official: 96276205880a
+2026-01-18T07:28:48.746Z [DEBUG] Plugin serena@claude-plugins-official version 96276205880a already cached at /Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/serena/96276205880a
+2026-01-18T07:28:48.746Z [DEBUG] Copied local plugin serena to versioned cache: /Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/serena/96276205880a
+2026-01-18T07:28:48.746Z [DEBUG] Found 1 plugins (1 enabled, 0 disabled)
+2026-01-18T07:28:48.747Z [DEBUG] [STARTUP] MCP configs loaded in 27ms
+2026-01-18T07:28:48.748Z [DEBUG] Total LSP servers loaded: 0
+2026-01-18T07:28:48.748Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-01-18T07:28:48.748Z [DEBUG] LSP manager initialized with 0 servers
+2026-01-18T07:28:48.748Z [DEBUG] LSP server manager initialized successfully
+2026-01-18T07:28:48.748Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-01-18T07:38:44.262Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:51:57.057Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:52:14.787Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:52:27.252Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:52:34.306Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:54:06.829Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T07:55:42.702Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T08:08:45.300Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T08:09:00.939Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json
+2026-01-18T08:10:30.117Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude/settings.local.json

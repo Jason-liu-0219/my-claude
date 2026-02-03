@@ -1,0 +1,67 @@
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+import { SD_CARD_STATUS_TEXT, TIME_ZONE, PLAN } from '@vivotek/const-vsaas';
+import { getSdCardStorageCapacityDays } from '@vivotek/lib-utility';
+
+import { useI18nHelper } from '@/composables/useI18nHelper/useI18nHelper';
+import { getLabels, DEVICE_INFO_MENU_TYPE } from '@/utils/DeviceInfoLabel';
+
+const useDeviceRelatedHelper = ({ device }) => {
+  const { t } = useI18nHelper();
+  const store = useStore();
+  // internal
+  const sortedGroups = computed(() => {
+    return store.getters['group/sortedGroups']();
+  });
+
+  const currentOrganizationPlan = computed(() => {
+    return store.getters['organization/isFreePlan'] ? PLAN.FREE : PLAN.PAID;
+  });
+
+  // export
+  const groups = computed(() => {
+    return sortedGroups.value.map((group) => ({ icon: 'general_group_solid', ...group }));
+  });
+
+  const groupId = computed(() => {
+    return device.value.options.deviceGroupID;
+  });
+
+  const deviceInfoLabels = computed(() => {
+    const labels = getLabels(device.value.options.type, currentOrganizationPlan.value, t);
+    return labels;
+  });
+
+  const getDeviceInfo = (key) => {
+    switch (key) {
+      case DEVICE_INFO_MENU_TYPE.NVR:
+        return device.value.nvrName;
+      case DEVICE_INFO_MENU_TYPE.VSS:
+        return device.value.vssName;
+      case DEVICE_INFO_MENU_TYPE.CITY:
+        return device.value.city ? TIME_ZONE.CITY_MAP[device.value.city]?.text(t) : '-';
+      case DEVICE_INFO_MENU_TYPE.SD_CARD_STATUS: {
+        const sdCardState = device.value.services?.sdcard?.state;
+        if (!sdCardState || !SD_CARD_STATUS_TEXT[sdCardState.status]) {
+          return '-';
+        }
+        return SD_CARD_STATUS_TEXT[sdCardState.status](t);
+      }
+      case DEVICE_INFO_MENU_TYPE.SD_CARD_STORAGE_CAPACITY:
+        return getSdCardStorageCapacityDays(t, device.value);
+      default:
+        return device.value[key] || '-';
+    }
+  };
+
+  return {
+    groups,
+    groupId,
+    deviceInfoLabels,
+    getDeviceInfo,
+  };
+};
+
+export default useDeviceRelatedHelper;
+export { useDeviceRelatedHelper };

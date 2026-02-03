@@ -1,0 +1,104 @@
+import { reactive } from 'vue';
+
+import { GROUP_ROLE, USER_ROLE } from '@vivotek/const-vsaas';
+
+const mutations = {
+  // ============================================================
+  // Users (Common)
+  // ============================================================
+  setUsers(state, { items }) {
+    state.users = state.users?.length ? [...state.users, ...items] : items;
+  },
+  resetUsers(state) {
+    state.users = [];
+  },
+  addUser(state, user) {
+    state.users.push(user);
+  },
+  deleteUser(state, user) {
+    state.users = state.users.filter((item) => item.email !== user.email);
+  },
+  updateUser(state, user) {
+    const index = state.users.findIndex((item) => item.email === user.email);
+    if (index !== -1) {
+      state.users[index] = user;
+    }
+  },
+  updateUserOrganizationRole(state, { userSub, role }) {
+    const target = state.users.find((item) => item.userSub === userSub);
+    if (target) {
+      const roleName = role.name || '';
+      target.role = role;
+      target.isAdmin = roleName.toUpperCase() === USER_ROLE.ADMIN;
+      target.isOwner = roleName.toUpperCase() === USER_ROLE.OWNER;
+    }
+  },
+
+  // ============================================================
+  // User Management
+  // ============================================================
+  setSearchStatus(state, status) {
+    state.management.searchStatus = status;
+  },
+  setUpdateUserLoading(state, loading) {
+    state.updateUserLoading = loading;
+  },
+
+  // ============================================================
+  // User Detail
+  // ============================================================
+  updateUserName(state, { userEmail, name }) {
+    const index = state.users.findIndex((item) => item.email === userEmail);
+    if (index !== -1) {
+      state.users[index].name = name;
+    }
+  },
+  setDetailDeviceOverview(state, deviceOverview) {
+    state.detail.deviceOverview = deviceOverview;
+  },
+  setDetailLoading(state, isLoading) {
+    state.detail.isLoading = isLoading;
+  },
+
+  // ============================================================
+  // Group Role
+  // ============================================================
+  setUserGroupRole(state, data) {
+    const target = state.users.find((item) => item.email === data.email);
+    const result = data.groups.filter((groups) => groups.groupID !== target.organizationID);
+
+    target.groupsRole = reactive(result);
+  },
+  updateUserGroupRole(state, data) {
+    const target = state.users.find((item) => item.email === data.email);
+
+    target.groupsRole.forEach((targetGroupRole) => {
+      const updateGroup = data.groups.find((group) => group.groupID === targetGroupRole.groupID);
+      targetGroupRole.role = updateGroup ? updateGroup.role : GROUP_ROLE.NONE;
+    });
+  },
+
+  // ============================================================
+  // Select User Roles
+  // ============================================================
+  addSelectDefaultRoles(state, roles) {
+    state.selectUserRoles.defaultRoles = [...roles];
+  },
+  addSelectUserRoles(state, roles) {
+    state.selectUserRoles.roles = [...state.selectUserRoles.roles, ...roles];
+  },
+  setSelectUserRolesLoading(state, isLoading) {
+    state.selectUserRoles.loading = isLoading;
+  },
+  setSelectUserRolesLoadError(state, hasError) {
+    state.selectUserRoles.loadError = hasError;
+  },
+  setSelectUserRolesPage(state, page) {
+    state.selectUserRoles.page = page;
+  },
+  setSelectUserRolesHasMore(state, hasMore) {
+    state.selectUserRoles.hasMore = hasMore;
+  },
+};
+
+export default mutations;

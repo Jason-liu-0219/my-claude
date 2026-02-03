@@ -1,0 +1,171 @@
+import { ref, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+const VIRTUAL_SITE_ID = {
+  IPSPEAKER: 'virtual-ipspeaker',
+  POESWITCH: 'virtual-poeswitch',
+};
+
+const VIRTUAL_SITE_ICON = {
+  [VIRTUAL_SITE_ID.IPSPEAKER]: 'general_speaker_solid',
+  [VIRTUAL_SITE_ID.POESWITCH]: 'general_poe_solid',
+};
+
+/**
+ * Device Access related logic
+ * @param {import('vue').Ref} currentUser - The user being viewed
+ */
+export default function useDeviceAccessHelper(currentUser) {
+  const store = useStore();
+  const { t } = useI18n();
+
+  const selectedSites = ref([]);
+
+  const deviceOverview = computed(() => store.getters['user/detailDeviceOverview']);
+  const isLoading = computed(() => store.getters['user/detailIsLoading']);
+  const myDevices = computed(() => [
+    ...(store.getters['device/availableDevices'] || []),
+    ...(store.getters['externalDevice/availableExternalDevices'] || []),
+  ]);
+  const mySites = computed(() => store.getters['group/groupsList'] || []);
+  const currentOrgId = computed(() => store.getters['organization/currentOrganization']?.organizationID);
+
+  const findMyDeviceInfo = (thingName, derivant) => {
+    return myDevices.value.find(
+      (device) => device.thingName === thingName && (device.options?.derivant === derivant || derivant === 'none'),
+    );
+  };
+
+  const findSiteName = (siteId) => {
+    const group = mySites.value.find((g) => g.id === siteId);
+    return group?.name || '-';
+  };
+
+  const getVirtualSiteId = (type) => {
+    if (type === 'ipspeaker') {
+      return VIRTUAL_SITE_ID.IPSPEAKER;
+    }
+    if (type === 'poeSwitch') {
+      return VIRTUAL_SITE_ID.POESWITCH;
+    }
+    return null;
+  };
+
+  const getVirtualSiteName = (virtualSiteId) => {
+    if (virtualSiteId === VIRTUAL_SITE_ID.IPSPEAKER) {
+      return t('Network Speaker');
+    }
+    if (virtualSiteId === VIRTUAL_SITE_ID.POESWITCH) {
+      return t('PoE Switch');
+    }
+    return '-';
+  };
+
+  /**
+   * Transform API raw data (grantedDevices) into sites structure
+   */
+  const sites = computed(() => {
+    const grantedDevices = deviceOverview.value || [];
+    if (grantedDevices.length === 0) {
+      return [];
+    }
+
+    const siteMap = new Map();
+
+    grantedDevices.forEach((grantedDevice) => {
+      const { thingName, derivant, siteId, roleId, roleName } = grantedDevice;
+
+      const myDeviceInfo = findMyDeviceInfo(thingName, derivant);
+      const deviceType = myDeviceInfo?.type || 'camera';
+
+      // ipspeaker and poeswitch go to virtual sites
+      const virtualSiteId = getVirtualSiteId(deviceType);
+      const targetSiteId = virtualSiteId || siteId;
+
+      if (!siteMap.has(targetSiteId)) {
+        siteMap.set(targetSiteId, {
+          id: targetSiteId,
+          name: virtualSiteId ? getVirtualSiteName(virtualSiteId) : findSiteName(siteId),
+          icon: virtualSiteId ? VIRTUAL_SITE_ICON[virtualSiteId] : null,
+          isUngrouped: !virtualSiteId && siteId === currentOrgId.value,
+          devices: [],
+        });
+      }
+
+      siteMap.get(targetSiteId).devices.push({
+        id: `${thingName}-${derivant}`,
+        thingName,
+        derivant,
+        name: myDeviceInfo?.displayName || thingName,
+        type: deviceType,
+        role: roleName,
+        roleId,
+      });
+    });
+
+    return Array.from(siteMap.values());
+  });
+
+  const initSelectedSites = () => {
+    selectedSites.value = sites.value.map((site) => site.id);
+  };
+
+  const totalAccess = computed(() => {
+    return sites.value.reduce((total, site) => total + site.devices.length, 0);
+  });
+
+  const siteOptions = computed(() => {
+    return sites.value.map((site) => ({
+      value: site.id,
+      text: site.name,
+    }));
+  });
+
+  const filteredSites = computed(() => {
+    return sites.value.filter((site) => selectedSites.value.includes(site.id));
+  });
+
+  const tableSearchStatus = computed(() => {
+    if (isLoading.value) {
+      return 'loading';
+    }
+    if (filteredSites.value.length === 0) {
+      return 'no-device-group';
+    }
+    return '';
+  });
+
+  const filterTitle = computed(() => {
+    if (selectedSites.value.length === sites.value.length) {
+      return t('All');
+    }
+    if (selectedSites.value.length === 0) {
+      return t('None');
+    }
+    return selectedSites.value
+      .map((id) => sites.value.find((site) => site.id === id)?.name)
+      .filter(Boolean)
+      .join(', ');
+  });
+
+  const fetchDeviceAccess = async () => {
+    if (!currentUser.value?.userSub) {
+      return;
+    }
+    await store.dispatch('user/fetchUserGrantedDevices', { userSub: currentUser.value.userSub });
+    initSelectedSites();
+  };
+
+  return {
+    selectedSites,
+    sites,
+    totalAccess,
+    isLoading,
+    siteOptions,
+    filteredSites,
+    filterTitle,
+    tableSearchStatus,
+    fetchDeviceAccess,
+  };
+}

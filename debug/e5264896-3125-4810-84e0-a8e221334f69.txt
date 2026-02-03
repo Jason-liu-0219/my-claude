@@ -1,0 +1,6 @@
+2026-01-31T04:54:46.321Z [INFO] Bridge URL: none (using native socket)
+2026-01-31T04:54:46.323Z [DEBUG] [Claude in Chrome] Starting MCP server
+2026-01-31T04:54:46.325Z [DEBUG] [Claude in Chrome] MCP server started
+2026-01-31T04:54:46.371Z [INFO] [Claude in Chrome] Executing tool: set_permission_mode
+2026-01-31T04:54:47.714Z [INFO] [Claude in Chrome] Executing tool: set_permission_mode
+2026-01-31T04:57:14.480Z [INFO] [Claude in Chrome] Executing tool: set_permission_mode

@@ -1,0 +1,5 @@
+packages/app-vsaas-portal/src/constants/Page.js:160:    deviceScope: [PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS],
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:11:    const hasVcaPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS });
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:417:        scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:463:      if (!this.canDoDevice({ deviceId: item.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS })) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:592:                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS,

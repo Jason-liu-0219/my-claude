@@ -1,0 +1,130 @@
+     1→const ACTIONS = {
+     2→  CREATE: 'create',
+     3→  UPDATE: 'update',
+     4→  READ: 'read',
+     5→  DELETE: 'delete',
+     6→};
+     7→
+     8→const OBJECTS = {
+     9→  ORGANIZATION: 'org',
+    10→  GROUP: 'group',
+    11→  SI: 'si',
+    12→  USER: 'user',
+    13→  DEVICE: 'device',
+    14→  DEEPSEARCH: 'deepsearch',
+    15→  MESSAGE: 'message',
+    16→  ARCHIVE: 'archive',
+    17→  REPORTFALSEALARM: 'reportfalsealarm',
+    18→};
+    19→
+    20→const OBJECT_CATEGORY_MAPPING = {
+    21→  [OBJECTS.ORGANIZATION]: () => '/org',
+    22→  [OBJECTS.SI]: () => '/org/si',
+    23→  [OBJECTS.USER]: () => '/org/user',
+    24→  [OBJECTS.GROUP]: (gid) => '/org/group'.concat(gid ? `/${gid}` : ''),
+    25→  [OBJECTS.DEVICE]: (gid) => `/org/group/${gid}/device`,
+    26→  [OBJECTS.DEEPSEARCH]: (gid) => `/org/group/${gid}/device/deepsearch`,
+    27→  [OBJECTS.MESSAGE]: (gid) => `/org/group/${gid}/device/message`,
+    28→  [OBJECTS.ARCHIVE]: (gid) => `/org/group/${gid}/device/archive`,
+    29→  [OBJECTS.REPORTFALSEALARM]: (gid) => `/org/group/${gid}/device/reportfalsealarm`,
+    30→};
+    31→
+    32→const PERMISSION_ORG_SCOPE = {
+    33→  // Every one can access
+    34→  ORG_ALL_USERS: '/org/all-users',
+    35→
+    36→  // Admin & Owner Only
+    37→  ORG_ADMIN_RESTRICTED: '/org/admin-restricted',
+    38→
+    39→  // Organization Management
+    40→  ORG_DELETE: '/org/delete',
+    41→  ORG_TRANSFER_OWNER: '/org/transfer-owner',
+    42→
+    43→  // System
+    44→  ORG_SYSTEM_ALARM: '/org/system/alarm/*',
+    45→  ORG_SYSTEM_3RD_PARTY: '/org/system/3rd-integration/*',
+    46→
+    47→  // User Management
+    48→  ORG_USER_READ: '/org/user/read',
+    49→  ORG_USER_UPDATE: '/org/user/update',
+    50→  ORG_USER_INVITE: '/org/user/invite',
+    51→  ORG_USER_DELETE: '/org/user/delete',
+    52→
+    53→  // Role Management
+    54→  ORG_ROLE_READ: '/org/role/read',
+    55→  ORG_ROLE_CREATE: '/org/role/create',
+    56→  ORG_ROLE_UPDATE: '/org/role/update',
+    57→  ORG_ROLE_DELETE: '/org/role/delete',
+    58→  ORG_ROLE_ASSIGN: '/org/role/assign',
+    59→
+    60→  // AI Profile
+    61→  ORG_AI_PROFILE_READ: '/org/ai/profile/read',
+    62→  ORG_AI_PROFILE_CREATE: '/org/ai/profile/create',
+    63→  ORG_AI_PROFILE_UPDATE: '/org/ai/profile/update',
+    64→  ORG_AI_PROFILE_DELETE: '/org/ai/profile/delete',
+    65→
+    66→  // AI Case Vault
+    67→  ORG_AI_CASE_VAULT: '/org/ai/case-vault/*',
+    68→};
+    69→
+    70→const PERMISSION_DEVICE_SCOPE = {
+    71→  // Access Control
+    72→  DEVICE_ALL_USERS: '/device/all-users',
+    73→  DEVICE_ADMIN_RESTRICTED: '/device/admin-restricted',
+    74→
+    75→  // Core View
+    76→  DEVICE_LIVE: '/device/live',
+    77→  DEVICE_PLAYBACK: '/device/playback',
+    78→  DEVICE_EXPORT_VIDEO: '/device/export-video',
+    79→
+    80→  // Archive
+    81→  DEVICE_ARCHIVE_READ: '/device/archive/read',
+    82→  DEVICE_ARCHIVE_CREATE: '/device/archive/create',
+    83→  DEVICE_ARCHIVE_UPDATE: '/device/archive/update',
+    84→  DEVICE_ARCHIVE_PLAY: '/device/archive/play',
+    85→  DEVICE_ARCHIVE_DOWNLOAD: '/device/archive/download',
+    86→  DEVICE_ARCHIVE_DELETE: '/device/archive/delete',
+    87→  DEVICE_ARCHIVE_SHARE: '/device/archive/share',
+    88→
+    89→  // Device Control
+    90→  DEVICE_TALKDOWN: '/device/talkdown',
+    91→  DEVICE_LOCK: '/device/lock',
+    92→  DEVICE_UNLOCK: '/device/unlock',
+    93→  DEVICE_SHARE: '/device/share',
+    94→
+    95→  // Settings
+    96→  DEVICE_SETTINGS: '/device/settings',
+    97→  DEVICE_VCA_SETTINGS: '/device/vca-settings',
+    98→
+    99→  // AI & Search
+   100→  DEVICE_AI_SEARCH: '/device/ai/search',
+   101→  DEVICE_AI_SEARCH_FEEDBACK: '/device/ai/search/feedback',
+   102→  DEVICE_AI_EVENT_INSIGHT: '/device/ai/event-insight',
+   103→  DEVICE_AI_CASEVAULT: '/device/ai/case-vault/*',
+   104→
+   105→  // Event
+   106→  DEVICE_EVENT_READ: '/device/event/read',
+   107→  DEVICE_EVENT_FEEDBACK: '/device/event/feedback',
+   108→  DEVICE_EVENT_SNOOZE_FOR_ORG: '/device/event/snooze-for-org',
+   109→};
+   110→
+   111→export default {
+   112→  ACTIONS,
+   113→  OBJECTS,
+   114→  OBJECT_CATEGORY_MAPPING,
+   115→  PERMISSION_ORG_SCOPE,
+   116→  PERMISSION_DEVICE_SCOPE
+   117→};
+   118→
+   119→export {
+   120→  ACTIONS,
+   121→  OBJECTS,
+   122→  OBJECT_CATEGORY_MAPPING,
+   123→  PERMISSION_ORG_SCOPE,
+   124→  PERMISSION_DEVICE_SCOPE
+   125→};
+   126→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

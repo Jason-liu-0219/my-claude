@@ -1,0 +1,414 @@
+<template>
+  <div class="smart-sensor">
+    <div class="smart-sensor-header">
+      <div
+        class="go-back-button"
+        @click="goBackThirdPartyIntegration"
+      >
+        <SvgIcon
+          class="icon"
+          iconClass="general_arrow_left"
+          size="28px"
+          outerSize="62px"
+        />
+      </div>
+      <h4 class="bold">
+        {{ providerName }}
+      </h4>
+    </div>
+    <div
+      class="smart-sensor-wrapper management"
+      data-testid="smart-sensor-page"
+    >
+      <div
+        v-if="isLoading"
+        class="loading-container"
+      >
+        <SvgIcon
+          class="spinning"
+          iconClass="status_loading_1st_solid_dark"
+          size="60px"
+        />
+      </div>
+      <SideMenusLayout v-else>
+        <template #center>
+          <div class="management-container">
+            <div class="content">
+              <div class="title-wrapper">
+                <h6 class="title">
+                  {{ $t('Smart sensor provider') }}
+                </h6>
+              </div>
+              <div class="provider">
+                <div class="provider-content">
+                  <ThirdPartyProviderLogo
+                    class="provider-logo"
+                    :provider="provider"
+                  />
+                </div>
+                <AppMoreButtonDropdown
+                  data-testid="more-action-dropdown"
+                  :actions="moreActionArray"
+                  :hideDropdownOnClick="true"
+                  class="action-selector"
+                />
+              </div>
+              <SmartSensorTable
+                class="management-table"
+                :rowData="rowData"
+                :currentSelectedSmartSensor="selectedSmartSensor"
+                :currentPageIndex="currentPageIndex"
+                :searchStatus="searchStatus"
+                :countPerPage="COUNT_PER_PAGE"
+                @doFilter="doFilter"
+                @clickAddSmartSensor="onClickAddSmartSensor"
+                @clickSmartSensorObject="onClickSmartSensorObject"
+                @clickEditAssociatedDevices="onClickEditAssociatedDevices"
+              />
+            </div>
+          </div>
+        </template>
+        <template #right-menu>
+          <SmartSensorDetailPanel
+            :device="selectedSmartSensor"
+            :hasInvalidDevices="selectedSmartSensorHasInvalidDevices"
+            @clickEditAssociatedDevices="onClickEditAssociatedDevices"
+            @deleteSuccess="onDeleteSensorSuccess"
+          />
+        </template>
+        <template #footer="footer">
+          <CentralPanelFooter
+            ref="footerPanelRef"
+            :rightOpened="footer.rightOpened"
+            :shouldDisplayRightControl="true"
+            @toggleRight="footer.toggleRight"
+          >
+            <template #center-control>
+              <FooterPagination
+                :pageCount="pageCount"
+                :currentPageIndex="currentPageIndex"
+                :rotating="false"
+                @goPreviousPage="goPreviousPage"
+                @goNextPage="goNextPage"
+              />
+            </template>
+          </CentralPanelFooter>
+        </template>
+      </SideMenusLayout>
+    </div>
+    <RemoveSmartSensorIntegrationDialogue
+      ref="removeIntegrationDialogueRef"
+      :provider="provider"
+      @removeSuccess="onRemoveSuccess"
+    />
+    <AddSmartSensorDialogue
+      v-if="integration"
+      ref="addSmartSensorDialogueRef"
+      :integration="integration"
+    />
+    <DeviceSelectModal
+      ref="deviceSelectModalRef"
+      :filterUnknownDevice="true"
+      :selectedDevices="selectedSmartSensorAssociatedDeviceIds"
+      :availableDevices="devicesWithSettingsPermission"
+      :closeOnSelect="false"
+      :allowEmptySelection="true"
+      :maximumSelectedCount="maximumAssociatedDeviceCount"
+      :maximumSelectionHint="maximumSelectionHint"
+      :errorMessage="$t('Failed to add device.')"
+      @confirm="handleAssociatedDeviceSelected"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, nextTick, onMounted, getCurrentInstance, useTemplateRef } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { SideMenusLayout, DeviceSelectModal } from '@vivotek/advanced-vue-components';
+import { SMART_SENSOR } from '@vivotek/const-vsaas';
+import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+import { CentralPanelFooter, FooterPagination } from '@vivotek/vue-app-layouts';
+
+import ThirdPartyProviderLogo from '@/components/Logos/ThirdPartyProviderLogo.vue';
+import usePagination from '@/composables/usePagination/usePagination';
+import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
+
+import AddSmartSensorDialogue from './AddSmartSensorDialogue.vue';
+import RemoveSmartSensorIntegrationDialogue from './RemoveSmartSensorIntegrationDialogue.vue';
+import SmartSensorDetailPanel from './SmartSensorDetailPanel.vue';
+import SmartSensorTable from './SmartSensorTable.vue';
+
+defineOptions({ name: 'SmartSensor' });
+
+const { proxy } = getCurrentInstance();
+const router = useRouter();
+const store = useStore();
+
+// Constants
+const COUNT_PER_PAGE = 50;
+const { MAXIMUM_ASSOCIATED_DEVICE_COUNT } = SMART_SENSOR;
+
+// Refs
+const footerPanelRef = useTemplateRef('footerPanelRef');
+const removeIntegrationDialogueRef = useTemplateRef('removeIntegrationDialogueRef');
+const addSmartSensorDialogueRef = useTemplateRef('addSmartSensorDialogueRef');
+const deviceSelectModalRef = useTemplateRef('deviceSelectModalRef');
+
+const isLoading = ref(true);
+const provider = ref(SMART_SENSOR.PROVIDERS.HALO);
+const selectedSmartSensor = ref(null);
+const searchKeyword = ref('');
+
+// Computed & Getters
+const isProviderIntegrated = (prov) => store.getters['smartSensor/isProviderIntegrated'](prov);
+const getIntegration = (prov) => store.getters['smartSensor/getIntegration'](prov);
+const allDevicesMap = computed(() => store.getters['device/allDevicesMap']);
+const integration = computed(() => getIntegration(provider.value));
+const hasInvalidDevices = (devices) =>
+  store.getters['device/hasInvalidDevicesInScope']({
+    devices,
+    scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+  });
+const getAvailableCameraDevicesWithPermission = store.getters['device/getAvailableCameraDevicesWithPermission'];
+
+const devicesWithSettingsPermission = computed(() =>
+  getAvailableCameraDevicesWithPermission(PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS),
+);
+
+/**
+ * Check if any smart sensor has devices without DEVICE_SETTINGS permission
+ * Used to control Remove integration button visibility
+ */
+const hasAnyInvalidDevices = computed(
+  () => integration.value?.smartSensors?.some((item) => hasInvalidDevices(item.associatedDeviceIds)) ?? false,
+);
+
+const moreActionArray = computed(() => {
+  if (hasAnyInvalidDevices.value) {
+    return [];
+  }
+  return [
+    {
+      name: proxy.$t('Remove'),
+      classList: ['danger'],
+      action: openRemoveDialogue,
+    },
+  ];
+});
+
+const maximumAssociatedDeviceCount = MAXIMUM_ASSOCIATED_DEVICE_COUNT;
+
+const maximumSelectionHint = computed(() => SMART_SENSOR.MAXIMUM_ASSOCIATED_DEVICE_HINT(proxy.$t.bind(proxy)));
+
+const searchStatus = computed(() => {
+  if (isLoading.value) {
+    return APP_TABLE_STATUS.LOADING;
+  }
+  return !rowData.value.length ? APP_TABLE_STATUS.NO_SMART_SENSORS : APP_TABLE_STATUS.SEARCHED;
+});
+
+const rowData = computed(() => {
+  return (
+    integration.value?.smartSensors?.filter((item) => {
+      const array = [
+        item.objectName,
+        ...item.associatedDeviceIds.map((deviceId) => allDevicesMap.value[deviceId]?.displayName),
+      ];
+      return array.filter((value) => value?.toLowerCase().includes(searchKeyword.value.toLowerCase())).length;
+    }) || []
+  );
+});
+
+const selectedSmartSensorAssociatedDeviceIds = computed(() => selectedSmartSensor.value?.associatedDeviceIds || []);
+
+const selectedSmartSensorHasInvalidDevices = computed(() =>
+  hasInvalidDevices(selectedSmartSensor.value?.associatedDeviceIds),
+);
+
+const providerName = computed(() => SMART_SENSOR.PROVIDER_NAME[provider.value]);
+
+const { currentPageIndex, pageCount, goPreviousPage, goNextPage, resetPageIndex } = usePagination(
+  computed(() => rowData.value?.length || 0),
+  { perPage: COUNT_PER_PAGE, initialPage: 1 },
+);
+
+// Methods
+async function fetchAndInitializeIntegration() {
+  if (!integration.value) {
+    await store.dispatch('smartSensor/fetchIntegrations');
+  }
+
+  if (!isProviderIntegrated(provider.value)) {
+    goBackThirdPartyIntegration();
+  }
+  await integration.value.querySmartSensors();
+}
+
+async function handleAssociatedDeviceSelected(deviceIdList) {
+  if (!selectedSmartSensor.value) {
+    return;
+  }
+  const associatedDevices = deviceIdList.map((id) => {
+    const { thingName, derivationDescriptor: derivant } = allDevicesMap.value[id];
+    return { thingName, derivant };
+  });
+  try {
+    await selectedSmartSensor.value?.updateAssociatedDevices(associatedDevices);
+    deviceSelectModalRef.value?.onSelectSuccess();
+  } catch {
+    deviceSelectModalRef.value?.onSelectFailed();
+  }
+}
+
+// Methods (pagination via composable)
+
+function expendRightMenu(object) {
+  selectedSmartSensor.value = object;
+  nextTick(() => {
+    footerPanelRef.value?.openRight(true);
+  });
+}
+
+function openRemoveDialogue() {
+  removeIntegrationDialogueRef.value?.show();
+}
+
+function doFilter(keyword) {
+  resetPageIndex();
+  searchKeyword.value = keyword;
+}
+
+function onClickAddSmartSensor() {
+  addSmartSensorDialogueRef.value?.show();
+}
+
+function onClickSmartSensorObject(object) {
+  if (object.mac === selectedSmartSensor.value?.mac && !footerPanelRef.value?.rightOpened) {
+    footerPanelRef.value?.openRight(true);
+  } else if (object.mac === selectedSmartSensor.value?.mac) {
+    selectedSmartSensor.value = null;
+  } else {
+    expendRightMenu(object);
+  }
+}
+
+function onClickEditAssociatedDevices(object) {
+  selectedSmartSensor.value = object;
+  nextTick(() => {
+    deviceSelectModalRef.value?.openDialogue();
+  });
+}
+
+function onDeleteSensorSuccess() {
+  selectedSmartSensor.value = null;
+}
+
+function onRemoveSuccess() {
+  goBackThirdPartyIntegration();
+}
+
+function goBackThirdPartyIntegration() {
+  router.push({ name: 'ThirdPartyIntegration' });
+}
+
+onMounted(async () => {
+  try {
+    await fetchAndInitializeIntegration();
+  } finally {
+    isLoading.value = false;
+  }
+});
+</script>
+
+<style lang="less" scoped>
+.smart-sensor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  > .smart-sensor-header {
+    max-height: 62px;
+    background-color: @color-surface03;
+    border-bottom: 1px solid @color-line01;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    > .go-back-button {
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: @color-icon03;
+      cursor: pointer;
+
+      &hover,
+      &active {
+        background: @color-surface04;
+      }
+    }
+  }
+}
+.smart-sensor-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .loading-container {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    background-color: @color-surface01;
+  }
+
+  &.management {
+    .management-container {
+      width: 100%;
+      .title-wrapper {
+        background-color: transparent;
+        height: 40px;
+        padding: 5px 0px;
+        h6 {
+          color: @color-text05;
+        }
+      }
+      .content {
+        padding-top: 45px;
+        padding-left: 36px;
+        padding-right: 36px;
+      }
+      .provider {
+        .provider-content {
+          display: flex;
+          gap: 24px;
+          .provider-logo {
+            height: 64px;
+          }
+        }
+        display: flex;
+        padding: 24px 18px;
+        background-color: @color-surface03;
+        margin-bottom: 20px;
+        align-items: center;
+        justify-content: space-between;
+        .add-button {
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  :deep(.select-device-modal) {
+    .hint h6.error {
+      color: @color-alert;
+    }
+  }
+}
+</style>

@@ -1,0 +1,367 @@
+<template>
+  <div class="management-table">
+    <div class="table-control-wrapper">
+      <div
+        :class="{
+          'search-input-wrapper': true,
+          'push-right': selectedItems.length === 0,
+        }"
+      >
+        <AppInputFields
+          id="user-list-search-input"
+          v-model.trim="searchKeyword"
+          class="search-input"
+          type="search"
+          :placeholder="placeholderText"
+        />
+        <AppButtonDropdown
+          v-model="currentSortTypes"
+          class="sort-button"
+          iconClass="general_custom_solid"
+          iconSize="20px"
+          :options="sortTypeOptions"
+          :autoInitialize="false"
+        />
+      </div>
+    </div>
+    <AppTable
+      v-model:selectedArray="selectedItems"
+      :bodyList="columnData"
+      :currentPageIndex="currentPageIndex - 1"
+      :defaultSortIndex="0"
+      :headerList="tableHeaderList"
+      :keyword="searchKeyword"
+      :keywordFilterRule="keywordFilterRule"
+      :pageCount="countPerPage"
+      :searchStatus="searchStatus"
+      disablePlay
+      scroll
+      sort
+    >
+      <template #table-content-row="{ item }">
+        <template v-for="option in columnOptions">
+          <td
+            v-if="option.value === 'name'"
+            :key="`name-${item[option.value].toLowerCase()}`"
+            :class="{ disabled: !item.onBoard }"
+            :title="item.name"
+            @click="onClickUser(item)"
+          >
+            <div :class="['avatar-name', { disabled: !item.onBoard }]">
+              <AppAvatar
+                :name="item.name"
+                :role="item.isOwner ? USER_ROLE.OWNER : item.isAdmin ? USER_ROLE.ADMIN : USER_ROLE.USER"
+                :showBorder="item.isCurrentUser"
+                roleIconStyle="smaller"
+                :data-testid="`user-avatar-${item.name}`"
+              />
+              <h6
+                :title="item.name"
+                v-text="item.name"
+              />
+            </div>
+          </td>
+          <td
+            v-else-if="option.value === 'onBoard'"
+            :key="`${option.value}-${item.name}`"
+            class="status-wrapper"
+            :class="{ disabled: !item.onBoard }"
+            @click="onClickUser(item)"
+          >
+            <div :class="['status', { onBoard: item.onBoard }]">
+              <h6 class="tag">
+                {{ item.onBoard ? $t('Onboard') : $t('Pending') }}
+              </h6>
+            </div>
+            <div
+              v-if="!item.onBoard && hasInviteUserPermission"
+              class="invite-again"
+              :data-testid="`invite-again-${item.name}`"
+            >
+              <h6
+                @click.stop="resendInvitation(item)"
+                v-text="$t('Invite again')"
+              />
+            </div>
+          </td>
+          <td
+            v-else-if="option.value === 'role'"
+            :key="`${option.value}-${item.name}-role`"
+            :title="item.name"
+            class="role-cell"
+          >
+            <div class="role-wrapper">
+              <OrganizationRoleFormDropdown
+                :modelValue="item.role?.id"
+                :initialDisplayText="item.role?.name"
+                :disabled="isRoleDropdownDisabled(item)"
+                @update:modelValue="(roleId) => handleSwitchRole(item, roleId)"
+              />
+            </div>
+          </td>
+          <td
+            v-else
+            :key="`normal-${option.value}-${item.name}`"
+            :title="item[option.value] || '-'"
+            @click="onClickUser(item)"
+            v-text="item[option.value] || '-'"
+          />
+        </template>
+      </template>
+    </AppTable>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { USER_ROLE } from '@vivotek/const-vsaas';
+import { sortingUtils } from '@vivotek/lib-utility';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+import OrganizationRoleFormDropdown from '@/components/Dropdowns/OrganizationRoleFormDropdown.vue';
+
+// ===init user management table state===
+const props = defineProps({
+  countPerPage: {
+    type: Number,
+    default: 15,
+  },
+  currentPageIndex: {
+    type: Number,
+    default: 0,
+  },
+  rowData: {
+    type: Array,
+    required: true,
+  },
+  searchStatus: {
+    type: String,
+    required: true,
+  },
+  isUpdateUserLoading: {
+    type: Boolean,
+    required: true,
+  },
+  hasUpdateUserPermission: {
+    type: Boolean,
+    default: false,
+  },
+  hasInviteUserPermission: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(['search', 'resendInvitation', 'updateOrganizationRoleOfUser']);
+
+const { t } = useI18n();
+const router = useRouter();
+const store = useStore();
+
+const isFreePlan = computed(() => store.getters['organization/isFreePlan']);
+
+const selectedItems = ref([]);
+const currentSortTypes = ref([]);
+const searchKeyword = ref('');
+const tableHeaderList = computed(() => [
+  {
+    type: 'name',
+    name: t('Name'),
+    sort: (a, b) => sortingUtils.sortByLocalCompare(a, b, 'name'),
+    defaultArrowDirection: 'up',
+  },
+  {
+    type: 'email',
+    name: t('Email'),
+    sort: (a, b) => sortingUtils.sortByLocalCompare(a, b, 'email'),
+    defaultArrowDirection: 'up',
+  },
+  {
+    type: 'role',
+    name: t('Organization Role'),
+    sort: (a, b) => {
+      return a.role.name.localeCompare(b.role.name);
+    },
+    defaultArrowDirection: 'up',
+  },
+  {
+    type: 'onBoard',
+    name: t('Status'),
+    sort: (a, b) => sortingUtils.sortByASC(a, b, 'onBoard'),
+    defaultArrowDirection: 'up',
+  },
+]);
+const columnOptions = computed(() => tableHeaderList.value.map((item) => ({ text: item.name, value: item.type })));
+const columnData = computed(() => props.rowData);
+const sortTypeOptions = computed(() =>
+  tableHeaderList.value
+    .filter((item) => item.type !== 'onBoard')
+    .map((item) => ({ text: item.name, value: item.type })),
+);
+const placeholderText = computed(() => {
+  if (currentSortTypes.value.length !== 1) {
+    return t('Search');
+  }
+  const currentTypeText = tableHeaderList.value.find(({ type }) => type === currentSortTypes.value[0])?.name;
+  return `${t('Search')} "${currentTypeText}"`;
+});
+
+function isRoleDropdownDisabled(user) {
+  return (
+    isFreePlan.value ||
+    !props.hasUpdateUserPermission ||
+    !user.isAssignable ||
+    props.isUpdateUserLoading ||
+    user.isCurrentUser
+  );
+}
+
+function keywordFilterRule(rowData, keyword) {
+  return rowData.filter((listItem) => {
+    const array = currentSortTypes.value.map((type) => listItem[type]);
+    return array.find((value) => value?.toLowerCase().includes(keyword.toLowerCase()));
+  });
+}
+
+function onClickUser(user) {
+  router.push({ name: 'UserDetail', params: { userEmail: user.email } });
+}
+
+function resendInvitation(user) {
+  emit('resendInvitation', user);
+}
+
+function handleSwitchRole(user, roleId) {
+  emit('updateOrganizationRoleOfUser', { user, roleId });
+}
+
+watch([() => currentSortTypes.value, () => searchKeyword.value], ([newSortTypes, newSearchKeyword], [oldSortTypes]) => {
+  if (newSortTypes !== oldSortTypes) {
+    searchKeyword.value = '';
+    return;
+  }
+  emit('search', newSearchKeyword);
+});
+
+onMounted(() => {
+  currentSortTypes.value = sortTypeOptions.value.map((item) => item.value);
+});
+</script>
+
+<style lang="less" scoped>
+.management-table {
+  .search-input-wrapper {
+    .search-input {
+      :deep(.app-input-wrapper.searchable) {
+        padding-right: 38px;
+      }
+    }
+  }
+  :deep(tr.table-row) {
+    th,
+    td {
+      flex: none;
+      &:first-child,
+      &:nth-child(2) {
+        width: 30%;
+      }
+      &:nth-child(3) {
+        width: 20%;
+      }
+      &:last-child {
+        width: 20%;
+      }
+    }
+    td {
+      &:last-child {
+        padding-right: 24px;
+      }
+    }
+  }
+
+  td.disabled {
+    color: @color-text06;
+  }
+
+  .avatar-name {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    h6 {
+      .text-ellipsis;
+    }
+    .app-avatar {
+      width: 28px;
+      height: 28px;
+      margin-right: 10px;
+    }
+  }
+  .status-wrapper {
+    display: flex;
+    align-items: center;
+    .status {
+      display: flex;
+      align-items: center;
+      .tag {
+        display: inline-block;
+        padding: 2px 6px;
+        color: @color-text04;
+        text-decoration: none;
+        background-color: @color-surface06;
+        border-radius: 4px;
+      }
+      &.onBoard {
+        .tag {
+          color: @color-success;
+          background-color: @color-success-bk;
+        }
+      }
+    }
+
+    .invite-again {
+      margin-left: 10px;
+      h6 {
+        color: @color-primary;
+        &:hover {
+          text-decoration: underline;
+          color: @color-primary-hover;
+        }
+        &:active {
+          text-decoration: underline;
+          color: @color-primary-active;
+        }
+      }
+    }
+  }
+
+  .role-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+
+    :deep(.app-dropdown-wrapper) {
+      width: 100%;
+    }
+  }
+
+  :deep(tr.table-row td) {
+    overflow: initial !important;
+
+    div {
+      overflow: initial !important;
+    }
+    .multiselect__content-wrapper {
+      overflow: auto !important;
+    }
+  }
+
+  :deep(.options) {
+    cursor: pointer;
+  }
+}
+</style>

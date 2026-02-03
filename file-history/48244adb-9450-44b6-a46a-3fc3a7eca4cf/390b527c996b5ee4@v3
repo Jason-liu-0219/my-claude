@@ -1,0 +1,278 @@
+<template>
+  <div class="select-recipient-modal">
+    <AppDialogue
+      ref="modal"
+      data-testid="select-recipient-modal"
+      name="selectRecipientModal"
+      width="828px"
+      :title="$t('Select recipient')"
+      :primaryText="$t('Select')"
+      :closeWhenClickButton="true"
+      :buttonIconStatusMapping="buttonIconStatusMapping"
+      @confirm="handleSelect"
+    >
+      <template #header>
+        <h3 :class="['bold', 'select-hint', { 'no-select': !selectedCount }]">
+          {{ selectedCountHint }}
+        </h3>
+      </template>
+      <template #content>
+        <div class="dialog-content">
+          <div class="recipient-search-content">
+            <AppInputFields
+              id="search-device-fields"
+              v-model.lazy="searchName"
+              class="search-input"
+              type="search"
+            />
+            <AppCheckBox
+              v-model.lazy="isSelectingAll"
+              class="select-all-checkbox"
+              :label="$t('All recipients')"
+              :indeterminate="isIndeterminateSelection"
+              :disabled="!recipients.length"
+              @click.prevent="toggleAllRecipientsSelection"
+            />
+            <div
+              v-show="!recipients.length"
+              class="empty-block"
+            >
+              <template v-if="searchName">
+                <svg-icon
+                  iconClass="search_failed"
+                  iconPrefix="illustration"
+                  :iconTheme="$theme.value"
+                  size="100px"
+                  stateless
+                />
+                <h6>{{ $t('No search results') }}</h6>
+              </template>
+              <template v-else>
+                <div class="icon no-si-icon" />
+                <h6>{{ $t('No recipient') }}</h6>
+                <span v-if="recipientType === 'SI'">
+                  {{ $t('Add reseller to your organization in reseller management') }}
+                </span>
+              </template>
+            </div>
+            <div
+              v-for="(user, index) in recipients"
+              :key="index"
+              class="user-wrapper"
+            >
+              <AppCheckBox
+                v-model="selectedRecipients"
+                :trueValue="user.email"
+                :value="user.email"
+                @click.stop=""
+              />
+              <AppAvatar
+                :name="avatarName(user)"
+                :role="user.role?.name?.toUpperCase()"
+                roleIconStyle="smaller"
+              />
+              <div class="user">
+                <h6
+                  class="bold user-name"
+                  v-text="userName(user)"
+                />
+                <span
+                  class="user-email"
+                  v-text="userEmail(user)"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </AppDialogue>
+  </div>
+</template>
+
+<script>
+import { mapGetters, mapState } from 'vuex';
+
+import { DIALOGUE, USER_ROLE } from '@vivotek/const-vsaas';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+
+export default {
+  name: 'RecipientSelectModal',
+  components: {
+    AppAvatar,
+  },
+  props: {
+    currentSelectedRecipients: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  emits: ['select'],
+  data() {
+    return {
+      recipientType: 'Member', // ['Member', 'SI']
+      searchName: '',
+      selectedRecipients: [],
+    };
+  },
+  methods: {
+    avatarName(user) {
+      return user?.name || user?.email;
+    },
+    userName(user) {
+      return user?.name || '';
+    },
+    userEmail(user) {
+      return user?.email || '';
+    },
+    handleSelect(confirm) {
+      if (!confirm) {
+        return;
+      }
+      this.$emit(
+        'select',
+        this.selectedRecipients.map((email) => this.availableRecipients.find((recipient) => recipient.email === email)),
+      );
+    },
+    toggleAllRecipientsSelection() {
+      this.selectedRecipients = this.isSelectingAll ? [] : this.recipients.map(({ email }) => email);
+    },
+    show(type) {
+      this.recipientType = type;
+      this.selectedRecipients = this.currentSelectedRecipients.map(({ email, sub }) => {
+        if (sub) {
+          const info = this.availableRecipients.find(
+            (recipient) => recipient.email.toLowerCase() === email.toLowerCase(),
+          );
+          return info?.email;
+        }
+        return email;
+      });
+      this.$refs.modal.show();
+    },
+    hide() {
+      this.searchName = '';
+      this.recipientType = 'Member';
+      this.selectedRecipients = [];
+      this.$refs.modal.hide();
+    },
+  },
+  computed: {
+    ...mapState('si', ['systemIntegrators']),
+    ...mapGetters('user', ['onBoardUsers']),
+    selectedCount() {
+      return this.selectedRecipients.length;
+    },
+    selectedCountHint() {
+      return this.$t('No recipient is selected | 1 recipient is selected | {count} recipient are selected', {
+        count: this.selectedCount,
+      });
+    },
+    isSelectingAll() {
+      if (this.selectedCount === 0) {
+        return false;
+      }
+      return this.selectedCount >= this.recipients.length;
+    },
+    isIndeterminateSelection() {
+      if (this.selectedCount === 0) {
+        return false;
+      }
+      return this.selectedCount < this.recipients.length;
+    },
+    buttonIconStatusMapping() {
+      return {
+        [DIALOGUE.STATE.DEFAULT]: [
+          { status: this.selectedCount === 0 ? 'disabled' : '', icon: '' },
+          { status: '', icon: '' },
+        ],
+      };
+    },
+    availableRecipients() {
+      return this.recipientType === 'SI' ? this.systemIntegrators : this.onBoardUsers;
+    },
+    recipients() {
+      return this.availableRecipients.filter((user) => {
+        const { email, name } = user;
+        const { searchName } = this;
+        return (
+          email?.toLowerCase().indexOf(searchName.toLowerCase()) !== -1 ||
+          name?.toLowerCase().indexOf(searchName.toLowerCase()) !== -1
+        );
+      });
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.main-wrapper > div:not(.header) {
+  padding-right: 0px;
+}
+.select-hint {
+  margin-bottom: 20px;
+  color: @color-primary;
+  &.no-select {
+    color: @color-text03;
+  }
+}
+
+.main-wrapper > div.dialog-content {
+  border-top: 1px solid @color-outline03;
+  padding: 15px 0px 0px 42px;
+  .recipient-search-content {
+    height: 407px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .search-input {
+    width: 300px;
+    margin-bottom: 15px;
+  }
+  .select-all-checkbox {
+    margin-bottom: 10px;
+    .text {
+      color: @color-text05;
+      font-weight: 700;
+    }
+  }
+  .empty-block {
+    flex: 1;
+  }
+  .user-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 14px 10px;
+    background-color: @color-surface02;
+    width: calc(100% - 50px);
+    &:not(:last-child) {
+      border-bottom: 1px solid @color-outline05;
+    }
+    h6 {
+      .text-ellipsis;
+      color: @color-text02;
+      &.user-name {
+        width: 178px;
+        margin-right: 42px;
+        color: @color-text01;
+      }
+    }
+    span {
+      .text-ellipsis;
+      &.user-email {
+        color: @color-text05;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 130%;
+      }
+    }
+    .app-avatar {
+      width: 32px;
+      height: 32px;
+      margin: 0 14px;
+    }
+  }
+}
+</style>

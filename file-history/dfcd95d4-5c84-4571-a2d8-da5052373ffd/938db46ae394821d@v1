@@ -1,0 +1,398 @@
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+import { ADD_DEVICE_INSPECT_STATUS } from '@vivotek/const-vsaas';
+import Context from '@vivotek/context';
+import { VsaasNVR, composeVsaasDeviceId as ComposeVsaasDeviceId, VsaasBridge, VsaasVSS } from '@vivotek/device';
+import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+import { getTagged } from '@vivotek/lib-utility';
+import { chunk } from 'lodash-es';
+
+import DeviceFactory from '@/models/Device/DeviceFactory';
+
+const BATCH_UPDATE_LIMIT = 10;
+const Log = getTagged('store/device/action');
+
+const actions = {
+  async instantiateDevice({ state }, payload) {
+    // payload is from already created device instance
+    const device = DeviceFactory(payload).injectDependencies(state.dependencies);
+    return device;
+  },
+  async fetchListDeviceInfoOfDeviceGroup({ rootGetters, commit, state, rootState, dispatch }, deviceGroupID) {
+    const { organizationID } = rootGetters['organization/currentOrganization'];
+    const plan = rootGetters['organization/currentVortexPlan'];
+    const groupsMap = rootGetters['group/groupsMap'];
+
+    try {
+      const items = await rootState.apiService.listDeviceInfoOfDeviceGroup({
+        deviceGroupID,
+        organizationID,
+      });
+
+      commit('setDevices', {
+        items,
+        groupsMap,
+        plan,
+        dependencies: state.dependencies,
+      });
+
+      commit('setSearchStatus', APP_TABLE_STATUS.NO_DEVICES);
+    } catch (error) {
+      throw new Error(error.status);
+    }
+  },
+  async fetchListDeviceInfoOfOrganization({ state, commit, rootGetters, dispatch, rootState }) {
+    if (state.isFetchingData) {
+      return;
+    }
+    commit('setIsFetchingData', true);
+    const { organizationID } = rootGetters['organization/currentOrganization'];
+    const plan = rootGetters['organization/currentVortexPlan'];
+
+    try {
+      await rootState.apiService.listDeviceInfoOfOrganization(
+        { organizationID, limit: 200 },
+        {
+          callback: ({ items, nextToken }) => {
+            const groupsMap = rootGetters['group/groupsMap'];
+            commit('setIsFetchingData', nextToken);
+            commit('setDevices', { items, groupsMap, plan, dependencies: state.dependencies });
+            dispatch('externalDevice/setNetworkSpeakers', { items }, { root: true });
+            dispatch('externalDevice/setPoESwitches', { items }, { root: true });
+            if (!nextToken) {
+              dispatch('externalDevice/setBridgeDeviceToExternalDevice', null, { root: true });
+            }
+          },
+        },
+      );
+
+      commit('setSearchStatus', APP_TABLE_STATUS.NO_DEVICES);
+    } catch (error) {
+      throw new Error(error.status);
+    }
+  },
+  async createDevice(
+    { dispatch, commit, rootGetters, rootState },
+    { mac, organizationID, siteID, name, city },
+  ) {
+    try {
+      const currentData = await rootState.apiService.createDevice({
+        mac,
+        organizationID,
+        siteID,
+        name,
+        city,
+      });
+      const groupName = rootGetters['group/groupsMap'][currentData.siteID]?.name;
+      const plan = rootGetters['organization/currentVortexPlan'];
+
+      commit('updateDevice', { device: currentData, groupName, plan });
+      commit('updateDeviceIdForAddDevice', currentData.thingName);
+      dispatch('account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+      return currentData;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async updateDeviceConfiguration({ commit, rootGetters }, { device, config }) {
+    await device.services.system.updateConfiguration(config);
+    const plan = rootGetters['organization/currentVortexPlan'];
+    const groupName = rootGetters['group/groupsMap'][device.deviceGroupID]?.name;
+
+    commit('updateDevice', { device: device.options, groupName, plan });
+  },
+
+  async batchDeleteDevice({ state, commit, dispatch, rootState }, devices) {
+    if (devices.length === 0) {
+      return;
+    }
+    const items = devices.map((device) => ({
+      mac: device.options.mac,
+      derivant: device.options.derivant,
+    }));
+    try {
+      const response = await rootState.apiService.batchDeleteDevice({ items });
+      const { failedItems, res } = response;
+      const failedItemsMAC = failedItems?.map((item) => item.mac) || [];
+      const deletedItems = devices.filter((device) => !failedItemsMAC.includes(device.mac));
+
+      deletedItems.forEach((device) => {
+        if (device instanceof VsaasNVR) {
+          for (const key of state.deviceMap.nvrchannel.keys()) {
+            if (key.includes(device.deviceId)) {
+              commit('deleteDevice', state.deviceMap.nvrchannel.get(key));
+            }
+          }
+          dispatch('externalDevice/deleteExternalDeviceWithNvr', device, { root: true });
+        } else if (device instanceof VsaasBridge) {
+          dispatch('externalDevice/deleteExternalDeviceWithBrdige', device, { root: true });
+        } else if (device instanceof VsaasVSS) {
+          for (const key of state.deviceMap.vsschannel.keys()) {
+            if (key.includes(device.deviceId)) {
+              commit('deleteDevice', state.deviceMap.vsschannel.get(key));
+            }
+          }
+        }
+        commit('deleteDevice', device);
+        dispatch('ui/removeDeviceFromUISettings', device.deviceId, { root: true });
+      });
+
+      dispatch('account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+
+      if (!res) {
+        throw new Error('Batch operation has an error.');
+      }
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async getDeviceRemoteSupport({ dispatch, commit, rootState }, mac) {
+    try {
+      const response = await rootState.apiService.getDeviceRemoteSupport({
+        mac,
+      });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async setDeviceRemoteSupport({ commit, rootState }, { mac, enable }) {
+    try {
+      const response = await rootState.apiService.setDeviceRemoteSupport({ mac, enable });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async updateDeviceInfo({ commit, rootState, rootGetters, getters }, { device }) {
+    const { mac, derivant } = device;
+    const updatedDeviceId = ComposeVsaasDeviceId(device);
+    const currentDevice = getters.allDevicesMap?.[updatedDeviceId];
+    if (currentDevice === undefined) {
+      return;
+    }
+    try {
+      const params = derivant === 'none' ? { mac } : { mac, derivant };
+      const items = await rootState.apiService.getDeviceInfo(params);
+      const plan = rootGetters['organization/currentVortexPlan'];
+
+      items.forEach((item) => {
+        if (item.type === 'ipspeaker' || item.type === 'poeSwitch') {
+          return;
+        }
+        const groupName = rootGetters['group/groupsMap'][item.deviceGroupID]?.name;
+        commit('updateDevice', { device: item, groupName, plan });
+      });
+    } catch (error) {
+      Log.error('updateDeviceInfo', error);
+      throw error.generalize();
+    }
+  },
+  async fetchSingleDevice({ rootGetters, commit, state, rootState }, { mac, derivant }) {
+    const plan = rootGetters['organization/currentVortexPlan'];
+    const groupsMap = rootGetters['group/groupsMap'];
+
+    try {
+      const params = derivant === 'none' ? { mac } : { mac, derivant };
+      const items = await rootState.apiService.getDeviceInfo(params);
+
+      commit('setDevices', {
+        items,
+        groupsMap,
+        plan,
+        dependencies: state.dependencies,
+      });
+    } catch (error) {
+      Log.error('getDeviceInfo', error);
+      throw error.generalize();
+    }
+  },
+  async queryFirmwareMaintenanceWindow({ rootGetters, rootState }) {
+    try {
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+
+      const response = await rootState.apiService.queryFirmwareMaintenanceWindow({
+        organizationID,
+      });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async updateFirmwareMaintenanceWindow({ rootGetters, rootState }, scheduleBitwise) {
+    try {
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+      await rootState.apiService.updateFirmwareMaintenanceWindow({
+        organizationID,
+        scheduleBitwise,
+      });
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async queryOutdatedFirmwareDevice({ state, commit, rootGetters, rootState, dispatch }) {
+    const isOutdatedFirmwareFeatureEnabled = RemoteConfigService.getConfiguration(
+      PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+    );
+
+    if (!isOutdatedFirmwareFeatureEnabled) {
+      return;
+    }
+
+    try {
+      if (state.isFetchedOutdatedFirmwareDevice) {
+        return;
+      }
+
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+      const response = await rootState.apiService.queryOutdatedFirmwareDevice({
+        organizationID,
+      });
+      commit('setOutdatedFirmwareDeviceList', response);
+      commit('setIsFetchedOutdatedFirmwareDevice', true);
+
+      if (response.length <= 0) {
+        return;
+      }
+      commit('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+  async upgradeDevicesFirmware({ getters, commit }) {
+    const chunkDevices = chunk(getters.firmwareUpdateRequiredDevices, BATCH_UPDATE_LIMIT);
+    // eslint-disable-next-line no-shadow
+    for (const chunk of chunkDevices) {
+      await Promise.allSettled(
+        chunk.map(async (device) => {
+          try {
+            const { targetVersion } = await device.services.ota.checkFirmwareVersion();
+            if (targetVersion === 'none') {
+              throw new Error('The current version is the latest.');
+            }
+            await device.services.ota.upgradeToLatestFirmware();
+          } catch (error) {
+            commit('ui/setIsUpdateFirmwareError', true, { root: true });
+            commit('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+          }
+          device.services.connection.releaseConnection();
+        }),
+      );
+    }
+  },
+  updateOutdatedFirmwareDevices({ state, commit }, currentDeleteItems) {
+    const outdatedFirmwareDevices = state.outdatedFirmwareDeviceList.filter((outdatedDevice) => {
+      return !currentDeleteItems.some((item) => item.deviceId === outdatedDevice.thingName);
+    });
+    commit('setOutdatedFirmwareDeviceList', outdatedFirmwareDevices);
+    if (!outdatedFirmwareDevices.length) {
+      commit('ui/setShowUpdateFirmwareBanner', false, { root: true });
+    }
+  },
+  async updateNvrWizardFinished({ commit, state, rootState }, { device, value }) {
+    commit('updateNvrWizardFinished', { device, value });
+  },
+  async getSharedDeviceInfo({ state, commit, rootState }, { sharedToken, password }) {
+    const { token, deviceInfo, canPlayback } = await rootState.apiService.getSharedDeviceInfo({
+      sharedToken,
+      password,
+    });
+
+    commit('setSharedDevice', {
+      deviceInfo,
+      dependencies: state.dependencies,
+      canPlayback,
+    });
+
+    Context.inject({ sharedDeviceViewerToken: token });
+  },
+  async clearSharedDeviceViewerToken() {
+    Context.inject({ sharedDeviceViewerToken: null });
+  },
+  async createDeviceSharedLink({ rootState, commit }, { thingName, derivant, deviceId, deviceType, sharedLinkInfo }) {
+    try {
+      const response = await rootState.apiService.createDeviceSharedLink({
+        thingName,
+        derivant,
+        deviceId,
+        sharedLinkInfo,
+      });
+
+      commit('setDeviceSharedLink', {
+        deviceType,
+        deviceId,
+        sharedLink: response,
+      });
+
+      return response;
+    } catch (error) {
+      throw new Error(error.status);
+    }
+  },
+  async updateDeviceSharedLink(
+    { rootState, commit },
+    { thingName, derivant, deviceId, deviceType, sharedLinkId, sharedLinkInfo },
+  ) {
+    try {
+      const response = await rootState.apiService.updateDeviceSharedLink({
+        thingName,
+        derivant,
+        deviceId,
+        sharedLinkId,
+        sharedLinkInfo,
+      });
+
+      commit('setDeviceSharedLink', {
+        deviceType,
+        deviceId,
+        sharedLink: response,
+      });
+
+      return response;
+    } catch (error) {
+      throw new Error(error.status);
+    }
+  },
+  async revokeDeviceSharedLink({ rootState, commit }, { deviceId, deviceType, sharedLinkId }) {
+    try {
+      await rootState.apiService.revokeDeviceSharedLink({
+        deviceId,
+        sharedLinkId,
+      });
+      commit('deleteDeviceSharedLink', { deviceId, deviceType });
+    } catch (error) {
+      throw new Error(error.status);
+    }
+  },
+  async getDeviceInspect({ rootState, commit }, deviceId) {
+    const response = await rootState.apiService.getDeviceInspect({ deviceId });
+    commit('setCurrentAddedDeviceType', response);
+
+    if (response.status === ADD_DEVICE_INSPECT_STATUS.ACTIVE) {
+      // NOTE: when create device success, the deviceIdForAddDevice will be updated to truly thingName
+      commit('updateDeviceIdForAddDevice', deviceId);
+    }
+
+    return response;
+  },
+  updateRetainOriginalSettingsForAddDevice({ commit }, retainOriginalSettings) {
+    commit('updateRetainOriginalSettingsForAddDevice', retainOriginalSettings);
+  },
+  updateCacheForAddDevice({ commit }, cache) {
+    commit('updateCacheForAddDevice', cache);
+  },
+  clearAddDeviceStore({ commit }) {
+    commit('clearAddDeviceStore');
+  },
+  async getDeviceAiLicense({ rootState, commit }, deviceId) {
+    const response = await rootState.apiService.getDeviceAiLicense({ deviceId });
+    return response;
+  },
+  async updateDeviceModelStatus({ rootState }, { deviceId, data }) {
+    const response = await rootState.apiService.updateDeviceAiLicense({ deviceId, data });
+    return response;
+  },
+};
+
+export default actions;

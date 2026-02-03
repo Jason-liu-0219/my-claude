@@ -1,0 +1,325 @@
+packages/app-vsaas-portal/src/store/device/getters.test.js-97-  name: 'name',
+packages/app-vsaas-portal/src/store/device/getters.test.js-98-  city: 'city',
+packages/app-vsaas-portal/src/store/device/getters.test.js-99-  mac: 'deviceNVR',
+packages/app-vsaas-portal/src/store/device/getters.test.js:100:  deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/getters.test.js-101-  thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/getters.test.js-102-  type: 'nvr',
+packages/app-vsaas-portal/src/store/device/getters.test.js-103-  plan: 'paid',
+--
+packages/app-vsaas-portal/src/store/device/getters.test.js-108-  name: 'name',
+packages/app-vsaas-portal/src/store/device/getters.test.js-109-  city: 'city',
+packages/app-vsaas-portal/src/store/device/getters.test.js-110-  mac: 'deviceA',
+packages/app-vsaas-portal/src/store/device/getters.test.js:111:  deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/getters.test.js-112-  thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/getters.test.js-113-  type: 'camera',
+packages/app-vsaas-portal/src/store/device/getters.test.js-114-  plan: 'paid',
+--
+packages/app-vsaas-portal/src/store/device/getters.test.js-119-  name: 'name1',
+packages/app-vsaas-portal/src/store/device/getters.test.js-120-  city: 'city',
+packages/app-vsaas-portal/src/store/device/getters.test.js-121-  mac: 'deviceChannel',
+packages/app-vsaas-portal/src/store/device/getters.test.js:122:  deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/getters.test.js-123-  thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/getters.test.js-124-  type: 'nvrchannel',
+packages/app-vsaas-portal/src/store/device/getters.test.js-125-  nvrMac: 'deviceNVR',
+--
+packages/app-vsaas-portal/src/store/device/getters.test.js-234-        allDevicesMap: getters.allDevicesMap(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-235-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-236-      const result = getters.getDeviceGroupId(state, $_getters)(mockCamera.deviceId);
+packages/app-vsaas-portal/src/store/device/getters.test.js:237:      expect(result).toEqual(mockCamera.deviceGroupID);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-238-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-239-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-240-  describe('getDeviceByMac', () => {
+--
+packages/app-vsaas-portal/src/store/device/getters.test.js-261-        availableCameraDevices: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-262-          {
+packages/app-vsaas-portal/src/store/device/getters.test.js-263-            options: {
+packages/app-vsaas-portal/src/store/device/getters.test.js:264:              deviceGroupID: 'group2',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-265-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-266-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-267-          {
+packages/app-vsaas-portal/src/store/device/getters.test.js-268-            options: {
+packages/app-vsaas-portal/src/store/device/getters.test.js:269:              deviceGroupID: 'group1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-270-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-271-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.test.js-272-        ],
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-100-          deviceId: 'deviceAAA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-101-          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-102-          name: 'jasonTestGroup1',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:103:          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-104-          type: 'camera',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-105-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-106-      ];
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-118-          deviceId: 'deviceAAA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-119-          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-120-          name: 'jasonTestGroup1',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:121:          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-122-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-123-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-124-    });
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-130-          deviceId: 'deviceAAA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-131-          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-132-          name: 'jasonTestGroup1',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:133:          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-134-          type: 'camera',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-135-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-136-      ];
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-148-          deviceId: 'deviceAAA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-149-          mac: '5d502acb-27c1-4f2a-b860-7e04f8c4256d',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-150-          name: 'jasonTestGroup1',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:151:          deviceGroupID: 'e19a1fdd-b799-48d6-ab5a-7be21543437e',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-152-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-153-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-154-    });
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-216-        name: 'name',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-217-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-218-        mac: 'deviceA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:219:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-220-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-221-        type: 'camera',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-222-        plan: 'paid',
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-246-        name: 'name',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-247-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-248-        mac: 'deviceA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:249:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-250-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-251-        type: 'camera',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-252-        plan: 'paid',
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-273-        name: 'name',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-274-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-275-        mac: 'deviceA',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:276:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-277-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-278-        type: 'camera',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-279-      };
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-300-        name: 'name',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-301-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-302-        mac: 'deviceNVR',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:303:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-304-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-305-        type: 'nvr',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-306-        plan: 'paid',
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-311-        name: 'name1',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-312-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-313-        mac: 'deviceChannel',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:314:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-315-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-316-        type: 'nvrchannel',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-317-        nvrMac: 'deviceNVR',
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-324-        name: 'name2',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-325-        city: 'city',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-326-        mac: 'deviceChannel',
+packages/app-vsaas-portal/src/store/device/mutations.test.js:327:        deviceGroupID: 'groupId',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-328-        thingName: 'thing',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-329-        type: 'nvrchannel',
+packages/app-vsaas-portal/src/store/device/mutations.test.js-330-        nvrMac: 'deviceNVR',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-15-    const map = new Map();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-16-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-17-    getters.availableCameraDevices.forEach((device) => {
+packages/app-vsaas-portal/src/store/device/getters.js:18:      const groupId = device.options.deviceGroupID;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-19-      if (!map.has(groupId)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-20-        map.set(groupId, []);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-21-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-102-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-103-  getDeviceGroupId(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-104-    return (deviceId) => {
+packages/app-vsaas-portal/src/store/device/getters.js:105:      return getters.allDevicesMap[deviceId]?.options.deviceGroupID;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-106-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-107-  },
+packages/app-vsaas-portal/src/store/device/getters.js-108-  getDeviceByMac: (state, getters) => (mac) => getters.availableDevices.find((device) => device.mac === mac),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-51-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-52-  async createDevice(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-53-    { dispatch, commit, rootGetters, rootState },
+packages/app-vsaas-portal/src/store/device/actions.js:54:    { mac, organizationID, siteID, deviceGroupID, name, city },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-55-  ) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-56-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-57-      const currentData = await rootState.apiService.createDevice({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-58-        mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-59-        organizationID,
+packages/app-vsaas-portal/src/store/device/actions.js:60:        siteID: siteID ?? deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-61-        name,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-62-        city,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-63-      });
+packages/app-vsaas-portal/src/store/device/actions.js:64:      const groupName = rootGetters['group/groupsMap'][currentData.deviceGroupID]?.name;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-65-      const plan = rootGetters['organization/currentVortexPlan'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-66-
+packages/app-vsaas-portal/src/store/device/actions.js-67-      commit('updateDevice', { device: currentData, groupName, plan });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-75-  async updateDeviceConfiguration({ commit, rootGetters }, { device, config }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-76-    await device.services.system.updateConfiguration(config);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-77-    const plan = rootGetters['organization/currentVortexPlan'];
+packages/app-vsaas-portal/src/store/device/actions.js:78:    const groupName = rootGetters['group/groupsMap'][device.deviceGroupID]?.name;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-79-
+packages/app-vsaas-portal/src/store/device/actions.js-80-    commit('updateDevice', { device: device.options, groupName, plan });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-81-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-158-        if (item.type === 'ipspeaker' || item.type === 'poeSwitch') {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-159-          return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-160-        }
+packages/app-vsaas-portal/src/store/device/actions.js:161:        const groupName = rootGetters['group/groupsMap'][item.deviceGroupID]?.name;
+packages/app-vsaas-portal/src/store/device/actions.js-162-        commit('updateDevice', { device: item, groupName, plan });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-163-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-164-    } catch (error) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-42-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-43-      state.deviceMap?.[item.type]?.set(device.deviceId, device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-44-
+packages/app-vsaas-portal/src/store/device/mutations.js:45:      const groupName = groupsMap?.[item.deviceGroupID]?.name;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-46-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-47-      if (groupName) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-48-        device.groupName = groupName;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-163-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-164-  setInitialDeviceGroupName(state, { groupsMap }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-165-    Object.values(state.uninitializedDevices).forEach((device) => {
+packages/app-vsaas-portal/src/store/device/mutations.js:166:      const groupName = groupsMap[device.deviceGroupID]?.name;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-167-      if (!groupName) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-168-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-169-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-60-    it('should call createDevice API', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-61-      const mac = 'mac1';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-62-      const organizationID = 'organizationID1';
+packages/app-vsaas-portal/src/store/device/actions.test.js:63:      const deviceGroupID = 'deviceGroupID1';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-64-      const name = 'camera 1';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-65-      const city = 'NTP';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-66-      const groupsMap = {
+packages/app-vsaas-portal/src/store/device/actions.test.js:67:        deviceGroupID1: {
+packages/app-vsaas-portal/src/store/device/actions.test.js:68:          id: deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-69-          organizationID,
+packages/app-vsaas-portal/src/store/device/actions.test.js-70-          name: '123',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-71-        },
+--
+packages/app-vsaas-portal/src/store/device/actions.test.js-76-        'group/groupsMap': groupsMap,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-77-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-78-      const data = {
+packages/app-vsaas-portal/src/store/device/actions.test.js:79:        deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-80-        organizationID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-81-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-82-      const spy = vi.spyOn(ApiServiceInterface, 'createDevice').mockResolvedValue(data);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-93-        {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-94-          mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-95-          organizationID,
+packages/app-vsaas-portal/src/store/device/actions.test.js:96:          deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-97-          name,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-98-          city,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-99-        },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-103-      expect(spy).toBeCalledWith({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-104-        mac,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-105-        organizationID,
+packages/app-vsaas-portal/src/store/device/actions.test.js:106:        siteID: deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-107-        name,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-108-        city,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-109-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-110-      expect(commit).toBeCalledWith('updateDevice', {
+packages/app-vsaas-portal/src/store/device/actions.test.js-111-        device: {
+packages/app-vsaas-portal/src/store/device/actions.test.js:112:          deviceGroupID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-113-          organizationID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-114-        },
+packages/app-vsaas-portal/src/store/device/actions.test.js:115:        groupName: rootGetters['group/groupsMap'][deviceGroupID].name,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-116-      });
+packages/app-vsaas-portal/src/store/device/actions.test.js-117-      expect(dispatch).toHaveBeenNthCalledWith(1, 'account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-118-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-251-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-252-      const rootGetters = {
+packages/app-vsaas-portal/src/store/device/actions.test.js-253-        'group/groupsMap': {
+packages/app-vsaas-portal/src/store/device/actions.test.js:254:          deviceGroupID1: {
+packages/app-vsaas-portal/src/store/device/actions.test.js:255:            id: 'deviceGroupID1',
+packages/app-vsaas-portal/src/store/device/actions.test.js:256:            name: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-257-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-258-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-259-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-260-      const mockDevice = {
+packages/app-vsaas-portal/src/store/device/actions.test.js-261-        derivant: 'none',
+packages/app-vsaas-portal/src/store/device/actions.test.js:262:        deviceGroupID: 'deviceGroupID1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-263-        thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-264-        mac: 'mac1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-265-      };
+packages/app-vsaas-portal/src/store/device/actions.test.js:266:      const mockResponse = [{ mac: 'mac1', thingName: 'thingName1', deviceGroupID: 'deviceGroupID1' }];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-267-      const spy = vi.spyOn(ApiServiceInterface, 'getDeviceInfo').mockResolvedValue(mockResponse);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-268-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-269-      await actions.updateDeviceInfo(
+--
+packages/app-vsaas-portal/src/store/device/actions.test.js-284-      expect(spy).toBeCalledWith({ mac: mockDevice.mac });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-285-      expect(commit).toHaveBeenNthCalledWith(1, 'updateDevice', {
+packages/app-vsaas-portal/src/store/device/actions.test.js-286-        device: mockResponse[0],
+packages/app-vsaas-portal/src/store/device/actions.test.js:287:        groupName: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-288-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-289-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-290-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-299-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-300-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-301-      const mockDevice = {
+packages/app-vsaas-portal/src/store/device/actions.test.js:302:        deviceGroupID: 'deviceGroupID1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-303-        thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-304-        mac: 'mac1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-305-        derivant: 'none',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-306-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-307-      const rootGetters = {
+packages/app-vsaas-portal/src/store/device/actions.test.js-308-        'group/groupsMap': {
+packages/app-vsaas-portal/src/store/device/actions.test.js:309:          deviceGroupID1: {
+packages/app-vsaas-portal/src/store/device/actions.test.js:310:            id: 'deviceGroupID1',
+packages/app-vsaas-portal/src/store/device/actions.test.js:311:            name: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-312-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-313-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-314-      };
+--
+packages/app-vsaas-portal/src/store/device/actions.test.js-317-          mac: 'mac1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-318-          derivant: 'derivant1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-319-          thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js:320:          deviceGroupID: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-321-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-322-        {
+packages/app-vsaas-portal/src/store/device/actions.test.js-323-          mac: 'mac1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-324-          derivant: 'derivant2',
+packages/app-vsaas-portal/src/store/device/actions.test.js-325-          thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js:326:          deviceGroupID: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-327-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-328-        {
+packages/app-vsaas-portal/src/store/device/actions.test.js-329-          mac: 'mac1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-330-          derivant: 'none',
+packages/app-vsaas-portal/src/store/device/actions.test.js-331-          thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js:332:          deviceGroupID: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-333-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-334-      ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-335-      const spy = vi.spyOn(ApiServiceInterface, 'getDeviceInfo').mockResolvedValue(mockResponse);
+--
+packages/app-vsaas-portal/src/store/device/actions.test.js-352-      expect(spy).toBeCalledWith({ mac: mockDevice.mac });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-353-      expect(commit).toHaveBeenNthCalledWith(1, 'updateDevice', {
+packages/app-vsaas-portal/src/store/device/actions.test.js-354-        device: mockResponse[0],
+packages/app-vsaas-portal/src/store/device/actions.test.js:355:        groupName: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-356-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-357-      expect(commit).toHaveBeenNthCalledWith(2, 'updateDevice', {
+packages/app-vsaas-portal/src/store/device/actions.test.js-358-        device: mockResponse[1],
+packages/app-vsaas-portal/src/store/device/actions.test.js:359:        groupName: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-360-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-361-      expect(commit).toHaveBeenNthCalledWith(3, 'updateDevice', {
+packages/app-vsaas-portal/src/store/device/actions.test.js-362-        device: mockResponse[2],
+packages/app-vsaas-portal/src/store/device/actions.test.js:363:        groupName: 'deviceGroupID1',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-364-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-365-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-366-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-371-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-372-      const mockDevice = {
+packages/app-vsaas-portal/src/store/device/actions.test.js-373-        derivant: 'none',
+packages/app-vsaas-portal/src/store/device/actions.test.js:374:        deviceGroupID: 'deviceGroupID1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-375-        thingName: 'thingName1',
+packages/app-vsaas-portal/src/store/device/actions.test.js-376-        mac: 'mac54001',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-377-      };

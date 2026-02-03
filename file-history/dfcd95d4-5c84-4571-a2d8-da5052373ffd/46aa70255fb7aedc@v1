@@ -1,0 +1,350 @@
+<template>
+  <SideMenusLayout
+    :rightBasis="0"
+    :leftBasis="0"
+  >
+    <template #center>
+      <div
+        v-if="currentUser"
+        class="user-detail"
+      >
+        <div class="user-detail-header">
+          <div
+            class="go-back-button"
+            @click="$router.go(-1)"
+          >
+            <SvgIcon
+              class="icon"
+              iconClass="general_arrow_left"
+              size="28px"
+              outerSize="62px"
+            />
+          </div>
+          <h4 class="bold">
+            {{ $t('User') }}
+          </h4>
+        </div>
+        <div class="user-detail-container">
+          <UserProfile :user="currentUser" />
+          <div class="access">
+            <div
+              v-if="!userIsAdminOrOwner"
+              class="header"
+            >
+              <h6 class="title">
+                {{ $t('Device access ({totalAccess})', { totalAccess }) }}
+              </h6>
+              <button
+                v-if="showAccessSettingsButton"
+                class="access-settings-button"
+                :disabled="isLoading"
+                data-testid="access-settings-button"
+                @click="openDeviceSelectModal"
+              >
+                <SvgIcon
+                  size="20px"
+                  outerSize="32px"
+                  iconClass="general_settings_line"
+                />
+                {{ $t('Manage Device Access') }}
+              </button>
+              <div class="divider" />
+              <div class="filter-title">{{ $t('Filter:') }}</div>
+              <AppButtonDropdown
+                v-model="selectedSites"
+                class="column-menu-button"
+                :title="filterTitle"
+                :hasCheckBox="true"
+                :options="siteOptions"
+                :isIconLeft="false"
+                :disabled="isLoading"
+                iconClass="general_arrow_bottom"
+                iconSize="12px"
+              />
+            </div>
+            <div class="access-container">
+              <h6 v-if="userIsAdminOrOwner">
+                {{ adminAccessMessage }}
+              </h6>
+              <DeviceAccessTable
+                v-else
+                :sites="filteredSites"
+                :searchStatus="tableSearchStatus"
+                :showManageButton="showAccessSettingsButton"
+                @manageAccess="openDeviceSelectModal"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <DeviceAccessDialogue
+        ref="deviceAccessDialogueRef"
+        :multiple="true"
+        :userId="currentUser?.userSub"
+        @success="fetchDeviceAccess"
+      />
+    </template>
+    <template #footer>
+      <FooterPagination
+        :pageCount="pageCount"
+        :currentPageIndex="currentPageIndex"
+        :rotating="false"
+        @goPreviousPage="goPreviousPage"
+        @goNextPage="goNextPage"
+      />
+    </template>
+  </SideMenusLayout>
+</template>
+<script setup>
+import { getCurrentInstance, onBeforeMount, nextTick, onMounted, computed, useTemplateRef } from 'vue';
+import { useRouter } from 'vue-router';
+
+import { SideMenusLayout } from '@vivotek/advanced-vue-components';
+import { TRACK_TIME_EVENT_KEY } from '@vivotek/const-vsaas';
+import AppButtonDropdown from '@vivotek/generic-vue-components/components/AppButtonDropdown/AppButtonDropdown.vue';
+import { FooterPagination } from '@vivotek/vue-app-layouts';
+
+import usePagination from '@/composables/usePagination/usePagination';
+import { DEFAULT_PAGE_SIZE } from '@/constants/Pagination';
+import DeviceAccessDialogue from '@/pages/user/detail/components/DeviceAccessDialogue.vue';
+
+import DeviceAccessTable from './components/DeviceAccessTable/DeviceAccessTable.vue';
+import UserProfile from './components/UserProfile/UserProfile.vue';
+import { useCurrentUserHelper } from './composables/useCurrentUserHelper';
+import useDeviceAccessHelper from './composables/useDeviceAccessHelper';
+import { useUserPermissionHelper } from './composables/useUserPermissionHelper';
+
+const router = useRouter();
+const { proxy } = getCurrentInstance();
+const mixpanel = proxy.$mixpanel;
+
+const deviceAccessDialogueRef = useTemplateRef('deviceAccessDialogueRef');
+
+// ============================================================
+// User
+// ============================================================
+const { currentUser } = useCurrentUserHelper();
+const { userIsAdminOrOwner, showAccessSettingsButton } = useUserPermissionHelper(currentUser);
+
+const adminAccessMessage = computed(() => {
+  return currentUser.value.isOwner
+    ? proxy.$t('Owner has access to all sites in the organization.')
+    : proxy.$t('Organization admin has access to all sites in the organization.');
+});
+
+// ============================================================
+// Device Access
+// ============================================================
+const {
+  selectedSites,
+  sites,
+  totalAccess,
+  isLoading,
+  siteOptions,
+  filteredSites,
+  filterTitle,
+  fetchDeviceAccess,
+} = useDeviceAccessHelper(currentUser);
+
+const tableSearchStatus = computed(() => {
+  if (isLoading.value) {
+    return 'loading';
+  }
+  if (sites.value.length === 0) {
+    return 'no-device-group';
+  }
+  return '';
+});
+
+const openDeviceSelectModal = () => {
+  mixpanel.time_event(TRACK_TIME_EVENT_KEY.USERS_SETUP_ACCESS);
+  deviceAccessDialogueRef.value?.openDialogue();
+};
+
+onMounted(async () => {
+  await fetchDeviceAccess();
+
+  if (history.state.openAccessSettings) {
+    await nextTick();
+    openDeviceSelectModal();
+  }
+});
+
+// ============================================================
+// Pagination
+// ============================================================
+const sitesCount = computed(() => sites.value.length);
+const { currentPageIndex, pageCount, goPreviousPage, goNextPage } = usePagination(sitesCount, {
+  perPage: DEFAULT_PAGE_SIZE,
+});
+
+onBeforeMount(() => {
+  if (!currentUser.value) {
+    router.replace('/user/management');
+  }
+});
+</script>
+
+<style scoped lang="less">
+.user-detail {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background-color: @color-surface02;
+}
+
+.user-detail-header {
+  display: flex;
+  align-items: center;
+  background-color: @color-surface03;
+  border-bottom: 1px solid @color-outline11;
+
+  .go-back-button {
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      background: @color-surface04;
+    }
+  }
+}
+
+.user-detail-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 48px;
+
+  > div {
+    width: 80%;
+    max-width: 1404px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .user-profile {
+    margin: 40px auto;
+  }
+}
+
+.access {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    h6 {
+      color: @color-text02;
+    }
+
+    h6.title {
+      color: @color-text01;
+      font-weight: 700;
+      line-height: 40px;
+      flex: 1;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+
+      &:hover {
+        background-color: @color-surface03;
+      }
+    }
+
+    .filter-title {
+      font-size: 14px;
+      color: @color-text05;
+    }
+
+    .divider {
+      margin: 0 12px;
+      width: 2px;
+      height: 32px;
+      border-left: 1px solid var(--color-outline14);
+    }
+
+    .access-settings-button {
+      width: 200px;
+      position: relative;
+
+      .general_settings_line {
+        margin-right: 12px;
+      }
+
+      &:disabled {
+        color: @color-text06;
+      }
+    }
+
+    .column-menu-button {
+      margin: 0 8px;
+
+      :deep(.button) {
+        padding: 0 8px;
+
+        &:active,
+        &:hover,
+        &[active='true'] {
+          color: @color-icon04;
+          background: @color-surface03;
+
+          > span {
+            color: @color-text01;
+          }
+        }
+      }
+
+      :deep(.dropdown) {
+        width: 250px;
+
+        // 只針對 divider 之後的 options（排除 All）
+        .divider ~ .options .check-box .text {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
+
+.access-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+
+  > h6 {
+    padding: 20px 18px;
+    background: @color-surface03;
+  }
+
+  .access-device-group-table {
+    padding: 20px;
+    background: @color-surface03;
+    overflow: hidden;
+
+    :deep(.device-group-table) {
+      height: 100%;
+      padding: 0;
+    }
+  }
+}
+
+:deep(.footer) {
+  display: flex;
+  justify-content: center;
+}
+</style>

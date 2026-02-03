@@ -1,0 +1,52 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-20-export { default as HINT_ID } from './Hint';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-21-export { default as MESSAGE_CENTER_TIME_RANGE } from './MessageCenterTimeRange';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-22-export { default as MFA } from './MFA';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-23-export { default as NVR_SETUP_WIZARD } from './NvrSetupWizardConstant';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-24-export {
+packages/const-vsaas/index.js:25:  default as PERMISSION, PERMISSION_DEVICE_SCOPE, PERMISSION_ORG_SCOPE
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-26-} from './Permission';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-27-export { default as PLAN } from './Plan';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-28-export { default as PRIVACY_MASK } from './PrivacyMask';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-29-export { default as RECORDING } from './Recording';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/index.js-30-export { default as RTSP_ACCESS } from './RtspAccess';
+--
+packages/const-vsaas/Permission.js-27-  [OBJECTS.MESSAGE]: (gid) => `/org/group/${gid}/device/message`,
+packages/const-vsaas/Permission.js-28-  [OBJECTS.ARCHIVE]: (gid) => `/org/group/${gid}/device/archive`,
+packages/const-vsaas/Permission.js-29-  [OBJECTS.REPORTFALSEALARM]: (gid) => `/org/group/${gid}/device/reportfalsealarm`,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-30-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-31-
+packages/const-vsaas/Permission.js:32:const PERMISSION_ORG_SCOPE = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-33-  // Every one can access
+packages/const-vsaas/Permission.js-34-  ORG_ALL_USERS: '/org/all-users',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-35-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-36-  // Admin & Owner Only
+packages/const-vsaas/Permission.js-37-  ORG_ADMIN_RESTRICTED: '/org/admin-restricted',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-65-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-66-  // AI Case Vault
+packages/const-vsaas/Permission.js-67-  ORG_AI_CASE_VAULT: '/org/ai/case-vault/*',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-68-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-69-
+packages/const-vsaas/Permission.js:70:const PERMISSION_DEVICE_SCOPE = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-71-  // Access Control
+packages/const-vsaas/Permission.js-72-  DEVICE_ALL_USERS: '/device/all-users',
+packages/const-vsaas/Permission.js-73-  DEVICE_ADMIN_RESTRICTED: '/device/admin-restricted',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-74-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-75-  // Core View
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-110-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-111-export default {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-112-  ACTIONS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-113-  OBJECTS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-114-  OBJECT_CATEGORY_MAPPING,
+packages/const-vsaas/Permission.js:115:  PERMISSION_ORG_SCOPE,
+packages/const-vsaas/Permission.js:116:  PERMISSION_DEVICE_SCOPE
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-117-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-118-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-119-export {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-120-  ACTIONS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-121-  OBJECTS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-122-  OBJECT_CATEGORY_MAPPING,
+packages/const-vsaas/Permission.js:123:  PERMISSION_ORG_SCOPE,
+packages/const-vsaas/Permission.js:124:  PERMISSION_DEVICE_SCOPE
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/Permission.js-125-};

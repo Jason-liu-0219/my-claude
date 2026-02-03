@@ -1,0 +1,412 @@
+import shallowMount from '@/utils/testHelper';
+
+import Device from '@vivotek/device/vsaasCamera';
+import { getSdCardStorageCapacityDays } from '@vivotek/lib-utility';
+
+import device from '@/store/device';
+import group from '@/store/group';
+import organization from '@/store/organization';
+
+import index from './index.vue';
+
+vi.mock('@vivotek/device/streaming');
+
+const availableCameraDevices = [
+  new Device({
+    generalIconClass: 'icon1',
+    groupName: 'groupName1',
+    siteID: 'groupName1',
+    name: 'deviceName1',
+    mac: 'mac1',
+    model: 'model1',
+    ip: 'ip1',
+    firmware: 'fw1',
+    online: true,
+    thingName: 'thing1',
+    fwUpgradeState: 0,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant1',
+    modelType: 'Premium',
+    recording: true,
+    recordingCapacityDays: 30,
+  }),
+  new Device({
+    generalIconClass: 'icon2',
+    name: 'deviceName2',
+    groupName: 'groupName2',
+    siteID: 'groupName2',
+    mac: 'mac2',
+    model: 'model2',
+    ip: 'ip2',
+    firmware: 'fw2',
+    online: true,
+    thingName: 'thing2',
+    fwUpgradeState: 0,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant2',
+    modelType: 'Premium',
+    recordingCapacityDays: 30,
+  }),
+  new Device({
+    generalIconClass: 'icon3',
+    name: 'deviceName3',
+    groupName: 'groupName3',
+    siteID: 'groupName3',
+    mac: 'mac3',
+    model: 'model3',
+    ip: 'ip3',
+    firmware: 'fw3',
+    online: false,
+    thingName: 'thing3',
+    fwUpgradeState: 0,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant3',
+    modelType: 'Premium',
+    recordingCapacityDays: 30,
+  }),
+  new Device({
+    generalIconClass: 'icon4',
+    name: 'deviceName4',
+    groupName: 'groupName4',
+    siteID: 'groupName4',
+    mac: 'mac4',
+    model: 'model4',
+    ip: 'ip4',
+    firmware: 'fw4',
+    online: false,
+    thingName: 'thing4',
+    fwUpgradeState: 0,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant4',
+    modelType: 'Premium',
+    recordingCapacityDays: 30,
+  }),
+  new Device({
+    generalIconClass: 'icon5',
+    name: 'deviceName5',
+    groupName: 'groupName5',
+    siteID: 'groupName5',
+    mac: 'mac5',
+    model: 'model5',
+    ip: 'ip5',
+    firmware: 'fw5',
+    online: true,
+    thingName: 'thing5',
+    fwUpgradeState: 3,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant5',
+    modelType: 'Premium',
+    recordingCapacityDays: 30,
+  }),
+  new Device({
+    generalIconClass: 'icon6',
+    name: 'deviceName6',
+    groupName: 'groupName6',
+    siteID: 'groupName6',
+    mac: 'mac6',
+    model: 'model6',
+    ip: 'ip6',
+    firmware: 'fw6',
+    online: false,
+    thingName: 'thing6',
+    fwUpgradeState: 10,
+    fwUpgradeVersion: 'fw',
+    derivant: 'derivant6',
+    modelType: 'Premium',
+    recordingCapacityDays: 30,
+    plan: 'paid',
+  }),
+];
+
+const groupDevicesMap = {
+  groupName1: [availableCameraDevices[0]],
+  groupName2: [availableCameraDevices[1]],
+  groupName3: [availableCameraDevices[2]],
+  groupName4: [availableCameraDevices[3]],
+  groupName5: [availableCameraDevices[4]],
+  groupName6: [availableCameraDevices[5]],
+};
+
+const sortedGroups = [
+  {
+    id: 'groupName1',
+    name: 'groupName1',
+    organizationID: 'groupName1',
+    devices: [availableCameraDevices[0]],
+  },
+  {
+    id: 'groupName2',
+    name: 'groupName2',
+    organizationID: 'groupName2',
+    devices: [availableCameraDevices[1]],
+  },
+  {
+    id: 'groupName3',
+    name: 'groupName3',
+    organizationID: 'groupName3',
+    devices: [availableCameraDevices[2]],
+  },
+  {
+    id: 'groupName4',
+    name: 'groupName4',
+    organizationID: 'groupName4',
+    devices: [availableCameraDevices[3]],
+  },
+  {
+    id: 'groupName5',
+    name: 'groupName5',
+    organizationID: 'groupName5',
+    devices: [availableCameraDevices[4]],
+  },
+  {
+    id: 'groupName6',
+    name: 'groupName6',
+    organizationID: 'groupName6',
+    devices: [availableCameraDevices[5]],
+  },
+];
+
+const createWrapper = (props, options) =>
+  shallowMount(index, {
+    storeModules: {
+      device: {
+        ...device,
+        getters: {
+          ...device.getters,
+          availableCameraDevices: () => availableCameraDevices,
+          groupDevicesMap: () => groupDevicesMap,
+        },
+      },
+      group: {
+        ...group,
+        getters: {
+          ...group.getters,
+          sortedGroups: () => () => sortedGroups,
+        },
+      },
+      organization,
+      permission: {
+        namespaced: true,
+        actions: {
+          batchAuthorizeOrganization: vi.fn(),
+        },
+        getters: {
+          canDoDevice: () => () => true,
+          canDoOrg: () => () => true,
+        },
+      },
+      externalDevice: {
+        namespaced: true,
+        getters: {
+          availableExternalDevices: () => [],
+          availableNetworkSpeakers: () => [],
+          availablePoESwitchDevices: () => [],
+        },
+      },
+    },
+    stubs: {
+      SideMenusLayout: {
+        template: `
+        <div>
+          <slot name="left-menu"/>
+          <slot name="center"/>
+          <slot name="footer"/>
+        </div>
+        `,
+      },
+      DeviceManagementTable: {
+        template: `
+        <div>
+          <slot name="left-menu"/>
+          <slot name="center"/>
+          <slot name="footer"/>
+        </div>
+        `,
+        methods: {
+          unSelectAllDevices: vi.fn(),
+        },
+      },
+      NVRDeviceManagementTable: {
+        template: `
+        <div>
+          <slot name="left-menu"/>
+          <slot name="center"/>
+          <slot name="footer"/>
+        </div>
+        `,
+        methods: {
+          unSelectAllDevices: vi.fn(),
+        },
+      },
+      ExternalDeviceManagementTable: {
+        template: `
+        <div>
+          <slot name="left-menu"/>
+          <slot name="center"/>
+          <slot name="footer"/>
+        </div>
+        `,
+        methods: {
+          unSelectAllDevices: vi.fn(),
+        },
+      },
+    },
+    props,
+    ...options,
+  });
+
+describe('DeviceManagementIndex', () => {
+  describe('methods', () => {
+    describe('goPreviousPage', () => {
+      it('should return when currentPageIndex <= pageCount', () => {
+        const w = createWrapper();
+        w.vm.currentPageIndex = 1;
+        w.vm.goPreviousPage();
+        expect(w.vm.currentPageIndex).toBe(1);
+      });
+      it('should this.currentPageIndex - 1', () => {
+        const w = createWrapper();
+        w.vm.currentPageIndex = 2;
+        w.vm.goPreviousPage();
+        expect(w.vm.currentPageIndex).toBe(1);
+      });
+    });
+    describe('goNextPage', () => {
+      it('should return when currentPageIndex >= pageCount', () => {
+        const w = createWrapper();
+        w.vm.currentPageIndex = 1;
+        w.vm.goNextPage();
+        expect(w.vm.currentPageIndex).toBe(1);
+      });
+      it('should this.currentPageIndex + 1', () => {
+        const w = createWrapper();
+        w.vm.currentPageIndex = 0;
+        w.vm.goNextPage();
+        expect(w.vm.currentPageIndex).toBe(1);
+      });
+    });
+    describe('onTabClick', () => {
+      it('should currentTabIndex = tabActiveIndex', () => {
+        const w = createWrapper();
+        const tabActiveIndex = 2;
+
+        w.vm.onTabClick(tabActiveIndex);
+        expect(w.vm.currentTabIndex).toBe(tabActiveIndex);
+      });
+    });
+    describe('unSelectAllDevices', () => {
+      it('should called deviceManagementTable.unSelectAllDevices', () => {
+        const w = createWrapper();
+        w.vm.$refs.deviceManagementTable.unSelectAllDevices = vi.fn();
+
+        w.vm.unSelectAllDevices();
+
+        expect(w.vm.$refs.deviceManagementTable.unSelectAllDevices).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
+  describe('computed', () => {
+    describe('pageCount', () => {
+      it('should pageCount = 1 when availableCameraDevices length < 15', () => {
+        const w = createWrapper({
+          availableCameraDevices: () => availableCameraDevices,
+          countPerPage: () => 15,
+        });
+
+        expect(w.vm.pageCount).toBe(1);
+      });
+    });
+    describe('rowData', () => {
+      it('should return data.length = availableCameraDevices.length when currentTabIndex = 0', () => {
+        const w = createWrapper();
+
+        expect(w.vm.rowData[0].icon).toBe(availableCameraDevices[0].generalIconClass);
+        expect(w.vm.rowData[0].id).toBe(0);
+        expect(w.vm.rowData[0].name).toBe(availableCameraDevices[0].displayName);
+        expect(w.vm.rowData[0].nvr).toBe(null);
+        expect(w.vm.rowData[0].group).toBe(availableCameraDevices[0].groupName);
+        expect(w.vm.rowData[0].groupId).toBe(availableCameraDevices[0].options.deviceGroupID);
+        expect(w.vm.rowData[0].model).toBe(availableCameraDevices[0].model);
+        expect(w.vm.rowData[0].modelType).toBe(availableCameraDevices[0].modelType);
+        expect(w.vm.rowData[0].mac).toBe(availableCameraDevices[0].mac);
+        expect(w.vm.rowData[0].ip).toBe(availableCameraDevices[0].localIP);
+        expect(w.vm.rowData[0].deviceId).toBe(availableCameraDevices[0].deviceId);
+        expect(w.vm.rowData[0].storageCapacity).toBe('');
+        expect(w.vm.rowData[0].firmware).toBe(availableCameraDevices[0].firmware);
+        expect(w.vm.rowData[0].instance).toStrictEqual(availableCameraDevices[0]);
+        expect(w.vm.rowData[0].isUnknownDevice).toBe(availableCameraDevices[0].isUnknownDevice);
+        expect(w.vm.rowData[0].isNVRCamera).toBe(false);
+        expect(w.vm.rowData[0].tooltip).toBe('deviceName1');
+        expect(w.vm.rowData[0].iconTooltip).toBe('deviceName1');
+        expect(w.vm.rowData[0].recording).toBe(true);
+        expect(w.vm.rowData[0].tableButtons).toEqual([]);
+        expect(w.vm.rowData[0].nvrName).toBe('');
+        expect(w.vm.rowData[0].displayName).toBe('deviceName1');
+        expect(w.vm.rowData[0].wizardFinished).toBe(true);
+        expect(w.vm.rowData[0].sdCardStorageCapacity).toBe(
+          getSdCardStorageCapacityDays((key) => key, availableCameraDevices[0]),
+        );
+        expect(w.vm.rowData).toHaveLength(6);
+      });
+
+      it('should return online device, when currentTabIndex = 1', () => {
+        const w = createWrapper();
+        w.vm.currentTabIndex = 1;
+        expect(w.vm.rowData).toHaveLength(2);
+      });
+
+      it('should return offline device, when currentTabIndex = 2', () => {
+        const w = createWrapper();
+        w.vm.currentTabIndex = 2;
+        expect(w.vm.rowData).toHaveLength(2);
+      });
+
+      it('should return updating device, when currentTabIndex = 2', () => {
+        const w = createWrapper();
+        w.vm.currentTabIndex = 3;
+        expect(w.vm.rowData).toHaveLength(2);
+      });
+    });
+    describe('tabsData', () => {
+      it('should return tabsData', () => {
+        const w = createWrapper();
+
+        w.vm.currentTabIndex = 2;
+        expect(w.vm.tabsData[0].text()).toBe('Overview');
+        expect(w.vm.tabsData[0].length).toBe(6);
+        expect(w.vm.tabsData[1].text()).toBe('Online');
+        expect(w.vm.tabsData[1].length).toBe(2);
+        expect(w.vm.tabsData[2].text()).toBe('Offline');
+        expect(w.vm.tabsData[2].length).toBe(2);
+        expect(w.vm.tabsData[3].text()).toBe('Updating');
+        expect(w.vm.tabsData[3].length).toBe(2);
+      });
+    });
+  });
+  describe('watch', () => {
+    describe('currentGroupId', () => {
+      it('should call unSelectAllDevices', async () => {
+        const w = createWrapper();
+        w.vm.$refs.deviceManagementTable.unSelectAllDevices = vi.fn();
+        w.vm.$refs.sideMenu.closeRightMenu = vi.fn();
+        w.vm.currentGroupId = 'groupName1';
+        await w.vm.$nextTick();
+
+        expect(w.vm.$refs.sideMenu.closeRightMenu).toHaveBeenCalled();
+        expect(w.vm.$refs.deviceManagementTable.unSelectAllDevices).toHaveBeenCalledTimes(1);
+      });
+    });
+    describe('currentTabIndex', () => {
+      it('should call unSelectAllDevices', async () => {
+        const w = createWrapper();
+        w.vm.$refs.deviceManagementTable.unSelectAllDevices = vi.fn();
+
+        w.vm.currentTabIndex = '2';
+        await w.vm.$nextTick();
+
+        expect(w.vm.$refs.deviceManagementTable.unSelectAllDevices).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+});

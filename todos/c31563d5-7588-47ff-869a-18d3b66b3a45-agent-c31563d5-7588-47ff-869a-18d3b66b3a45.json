@@ -1,0 +1,42 @@
+[
+  {
+    "content": "完善 vsaas-alarm skill",
+    "status": "in_progress",
+    "activeForm": "撰寫 vsaas-alarm skill"
+  },
+  {
+    "content": "完善 vsaas-archive skill",
+    "status": "completed",
+    "activeForm": "完善 vsaas-archive skill"
+  },
+  {
+    "content": "完善 vsaas-auth skill",
+    "status": "pending",
+    "activeForm": "完善 vsaas-auth skill"
+  },
+  {
+    "content": "完善 vsaas-floorplan skill",
+    "status": "completed",
+    "activeForm": "完善 vsaas-floorplan skill"
+  },
+  {
+    "content": "完善 vsaas-group skill",
+    "status": "pending",
+    "activeForm": "完善 vsaas-group skill"
+  },
+  {
+    "content": "完善 vsaas-notification skill",
+    "status": "pending",
+    "activeForm": "完善 vsaas-notification skill"
+  },
+  {
+    "content": "完善 vsaas-timelapse skill",
+    "status": "pending",
+    "activeForm": "完善 vsaas-timelapse skill"
+  },
+  {
+    "content": "完善 vsaas-view skill",
+    "status": "pending",
+    "activeForm": "完善 vsaas-view skill"
+  }
+]

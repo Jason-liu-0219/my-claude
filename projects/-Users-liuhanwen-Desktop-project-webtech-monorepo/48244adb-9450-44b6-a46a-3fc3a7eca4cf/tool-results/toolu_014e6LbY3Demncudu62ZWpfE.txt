@@ -1,0 +1,189 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-89-        service = new DeviceUserBehaviorTrackingService(mockReference);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-90-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-91-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:92:      it('should return true when NVR MAC is in group config without channel restriction', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-93-        service.state.allowTrackSuccessConnectionMap = {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-94-          'org-1': {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-95-            'group-1': {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-103-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-104-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-105-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:106:      it('should return true when NVR MAC is in group config and channel is allowed', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-107-        service.state.allowTrackSuccessConnectionMap = {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-108-          'org-1': {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-109-            'group-1': {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-119-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-120-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-121-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:122:      it('should return false when NVR MAC is in group config but channel is not allowed', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-123-        service.state.allowTrackSuccessConnectionMap = {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-124-          'org-1': {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-125-            'group-1': {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-135-        expect(result).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-136-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-137-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:138:      it('should return false when NVR MAC is not in group config', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-139-        service.state.allowTrackSuccessConnectionMap = {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-140-          'org-1': {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-141-            'group-1': {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-200-      return true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-201-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-202-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js:203:    const targetNVR = trackGroupMap?.[nvrMac];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-204-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-205-    switch (this.reference.type) {
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-206-      case DEVICE_TYPE.NVR_CHANNEL:
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-35-      @wheel="handleScrollbar"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-36-      @scroll="handleScrollbar"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-37-    >
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:38:      <template v-if="!!nvrGroup">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-39-        <div
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-40-          v-if="!hideTitle"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-41-          class="group-title"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-45-        <div
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-46-          :class="{
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-47-            'group-block': true,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:48:            active: currentSelectedGroupId === nvrGroup.id,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-49-            select: selectMode,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-50-          }"
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-51-          :title="$t('NVR')"
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:52:          @click="selectMode ? selectGroup(nvrGroup.id) : changeActiveGroup(nvrGroup.id)"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-53-        >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-54-          <svg-icon
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:55:            :iconClass="nvrGroup.icon || 'general_device_group_solid'"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-56-            size="32px"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-57-          />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-58-          <div class="group-name">
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-66-              v-if="!selectMode"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-67-              class="group-count"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-68-            >
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:69:              ({{ nvrGroup.devices.length }})
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-70-            </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-71-          </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-72-        </div>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-423-        this.selectGroup(value);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-424-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-425-    },
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:426:    nvrGroup() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-427-      return this.filteredGroups.find((group) => group.id === DEVICE_TABLE_GROUP_ID_MAP.NVR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-428-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-429-    vssGroup() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-136-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-137-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-138-      if (includeNVR) {
+packages/app-vsaas-portal/src/store/group/getters.js:139:        const nvrGroup = {
+packages/app-vsaas-portal/src/store/group/getters.js-140-          devices: rootGetters['device/availableDevices'].filter((device) => device instanceof VsaasNVR),
+packages/app-vsaas-portal/src/store/group/getters.js-141-          id: 'nvr',
+packages/app-vsaas-portal/src/store/group/getters.js-142-          index: 999,
+packages/app-vsaas-portal/src/store/group/getters.js-143-          name: 'NVR',
+packages/app-vsaas-portal/src/store/group/getters.js-144-          type: GROUP_TYPES.NVR,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-145-        };
+packages/app-vsaas-portal/src/store/group/getters.js:146:        groups = [nvrGroup, ...groups];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-147-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-148-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-149-      if (excludeUnknownDevice) {
+--
+packages/app-vsaas-portal/src/store/device/mutations.test.js-340-          unknownDevice: new Map(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-341-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-342-      };
+packages/app-vsaas-portal/src/store/device/mutations.test.js:343:      mutations.updateDevice(state, { device: nvrDevice, groupsMap, plan: 'paid' });
+packages/app-vsaas-portal/src/store/device/mutations.test.js-344-      mutations.updateDevice(state, { device: channelDevice1, groupsMap, plan: 'paid' });
+packages/app-vsaas-portal/src/store/device/mutations.test.js-345-      mutations.updateDevice(state, { device: channelDevice2, groupsMap, plan: 'paid' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-346-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-349-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-350-      nvrDevice.name = 'aaaaa';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-351-      nvrDevice.city = 'bbbbb';
+packages/app-vsaas-portal/src/store/device/mutations.test.js:352:      mutations.updateDevice(state, { device: nvrDevice, groupsMap });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-353-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-354-      expect(state.deviceMap.nvrchannel.size).toBe(2);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.test.js-355-      expect(state.deviceMap.nvr.size).toBe(1);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-11-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-12-export default {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-13-  groupDevicesMap(state, getters) {
+packages/app-vsaas-portal/src/store/device/getters.js:14:    // NOTE: NVR does not belong to any group
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-15-    const map = new Map();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-16-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-17-    getters.availableCameraDevices.forEach((device) => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-827-          ...item,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-828-          groupValues: item.groupValues.map((groupValue) => ({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-829-            ...groupValue,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:830:            displayIcon: groupValue.displayIcon && !commonNvrVssEvents.has(groupValue.value),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-831-          })),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-832-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-833-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-63-              @onTabClick="onTabClick"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-64-            />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-65-            <NVRDeviceManagementTable
+packages/app-vsaas-portal/src/pages/device/management/index.vue:66:              v-if="isNVRGroupList && hasCreateDevicePermission"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-67-              ref="deviceManagementTable"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-68-              :rowData="rowData"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-69-              :currentPageIndex="currentPageIndex"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-555-        return [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-556-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-557-
+packages/app-vsaas-portal/src/pages/device/management/index.vue:558:      if (this.isNVRGroupList) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue-559-        return this.nvrRowData.length ? this.nvrRowData : [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-560-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-561-
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-681-        devices: this.availablePoESwitchDevices,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-682-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-683-
+packages/app-vsaas-portal/src/pages/device/management/index.vue:684:      const nvrGroup = {
+packages/app-vsaas-portal/src/pages/device/management/index.vue-685-        id: DEVICE_TABLE_GROUP_ID_MAP.NVR,
+packages/app-vsaas-portal/src/pages/device/management/index.vue-686-        name: this.$t('NVR'),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-687-        icon: 'general_device_group_solid',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-714-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-715-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-716-      return [
+packages/app-vsaas-portal/src/pages/device/management/index.vue:717:        ...(this.availableNVRDevices.length ? [nvrGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-718-        ...(this.availableVSSDevices.length ? [vssGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-719-        ...(this.availableBridgeDevices.length ? [bridgeGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-720-        ...(this.availablePoESwitchDevices.length ? [poeSwitchGroup] : []),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-756-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-757-      return iconMap[deviceType] ?? iconMap.CAMERA;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-758-    },
+packages/app-vsaas-portal/src/pages/device/management/index.vue:759:    isNVRGroupList() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-760-      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.NVR;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-761-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-762-    isVSSGroupList() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-832-      this.unSelectAllDevices();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-833-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-834-    nvrRowData() {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:835:      if (this.availableNVRDevices.length === 0 && this.isNVRGroupList) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-836-        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-837-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-838-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-118-    ...mapGetters('group', ['sortedGroups']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-119-    groups() {
+packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-120-      const { displayNVR: includeNVR, displayBridge: includeBridge, displayVSS: includeVSS } = this;
+packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue:121:      return this.sortedGroups({ includeNVR, includeBridge, includeVSS }).filter((group) =>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-122-        group.devices.some((device) => this.selectedDevices.includes(device.deviceId)),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-123-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue-124-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-261-        const { nvrThingName } = device.value;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-262-        router.push({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-263-          name: 'DeviceSettings',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:264:          params: { deviceId: nvrThingName, currentGroupId: DEVICE_TABLE_GROUP_ID_MAP.NVR },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-265-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-266-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue-267-    },

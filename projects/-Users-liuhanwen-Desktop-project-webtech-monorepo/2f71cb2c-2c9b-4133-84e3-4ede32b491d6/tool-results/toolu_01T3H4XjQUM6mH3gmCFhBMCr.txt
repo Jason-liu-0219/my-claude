@@ -1,0 +1,5 @@
+f8da796d65 feat(vsaas-portal): remove rbac code (#6358)
+3ca2a9c55c Oursky merge code (#6235)
+ec55da3061 fix(vsaas-portal): fix reset user mfa option
+f442ea4317 fix(vsaas-portal): fix user page reactive (#4490)
+117bcc425b refactor(vsaas-portal): refactor UserDetails (#4485)

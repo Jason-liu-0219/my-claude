@@ -1,0 +1,424 @@
+<template>
+  <AppDialogue
+    ref="dialogueRef"
+    data-testid="invite-user-dialogue"
+    name="inviteUserDialogue"
+    class="invite-user-dialogue"
+    :state="dialogueState"
+    :buttons="dialogueButtons"
+    :buttonIconStatusMapping="buttonIconStatusMapping"
+    :title="$t('Invite user to organization')"
+    :primaryText="$t('Invite')"
+    :closeWhenSuccess="false"
+    :onClose="onDialogueClose"
+    overflowY="visible"
+  >
+    <template #content>
+      <div :class="[{ error: isError }, 'invite-form-content']">
+        <!-- First Row: Name and User Email -->
+        <div class="form-row">
+          <div
+            v-if="!isResendInvitation"
+            class="form-field"
+          >
+            <label class="field-label">{{ $t('Name') }}<span class="required">*</span></label>
+            <AppInputFields
+              id="invite-name-input"
+              ref="inviteNameInputRef"
+              v-model.trim="userName"
+              data-testid="invite-name-input"
+              :disabled="isResendInvitation || isProcessing"
+              :placeholder="$t('Enter user name')"
+              :validateRules="NAME_VALIDATE_RULES"
+              @focus="resetDialogueState"
+            />
+          </div>
+          <div class="form-field">
+            <label class="field-label">{{ $t('User Email') }}<span class="required">*</span></label>
+            <AppInputFields
+              id="invite-email-input"
+              ref="inviteEmailInputRef"
+              v-model.trim="email"
+              data-testid="invite-email-input"
+              :disabled="isResendInvitation || isProcessing"
+              :placeholder="$t('Enter user email')"
+              :validateRules="EMAIL_VALIDATE_RULES"
+              @focus="resetDialogueState"
+            />
+          </div>
+        </div>
+
+        <!-- Second Row: Organization Role and User Preferred Language -->
+        <div
+          v-if="!isResendInvitation"
+          class="form-row"
+        >
+          <div class="form-field">
+            <label class="field-label">{{ $t('Organization Role') }}</label>
+            <OrganizationRoleFormDropdown
+              v-model="selectedOrgRoleID"
+              data-testid="invite-org-role-dropdown"
+              :placeholder="$t('Select role')"
+              :isError="shouldShowSelectRoleHint"
+              :showErrorMessage="false"
+              :disabled="isRoleDropdownDisabled"
+            />
+            <h6
+              v-show="shouldShowSelectRoleHint"
+              class="alert-message"
+            >
+              {{ requiredHint }}
+            </h6>
+          </div>
+          <div class="form-field">
+            <label class="field-label">{{ $t('User Preferred Language') }}</label>
+            <AppDropdown
+              v-model="locale"
+              data-testid="invite-locale-dropdown"
+              :options="LANG_LIST"
+              :placeholder="$t('Select language')"
+              :isError="shouldShowSelectLocaleHint"
+              :showErrorMessage="false"
+              :disabled="isProcessing"
+              @update:modelValue="validateLocale"
+            />
+            <h6
+              v-show="shouldShowSelectLocaleHint"
+              class="alert-message"
+            >
+              {{ requiredHint }}
+            </h6>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template
+      v-if="isError"
+      #errorMessage
+    >
+      <AppFormErrorMessage :message="serverErrorMessage" />
+    </template>
+  </AppDialogue>
+</template>
+
+<script setup>
+import { ref, computed, useTemplateRef, getCurrentInstance } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { USER, DIALOGUE } from '@vivotek/const-vsaas';
+import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+
+import OrganizationRoleFormDropdown from '@/components/Dropdowns/OrganizationRoleFormDropdown.vue';
+import languageHelper from '@/i18n/languageHelper';
+import LANG_LIST from '@/i18n/languageList';
+
+// ============================================================
+// Constants
+// ============================================================
+const SUCCESS_DELAY_MS = 2000;
+const ADMIN_ROLE_NAME = 'Admin';
+const EMAIL_VALIDATE_RULES = [VALIDATE_RULE_MAP.Required, VALIDATE_RULE_MAP.Email];
+const NAME_VALIDATE_RULES = [VALIDATE_RULE_MAP.Required];
+
+defineOptions({
+  name: 'InviteUserDialogue',
+});
+
+const emit = defineEmits(['onProceedToSetup']);
+
+const { t } = useI18n();
+const store = useStore();
+const { proxy } = getCurrentInstance();
+
+// ============================================================
+// Refs
+// ============================================================
+const dialogueRef = useTemplateRef('dialogueRef');
+const inviteNameInputRef = useTemplateRef('inviteNameInputRef');
+const inviteEmailInputRef = useTemplateRef('inviteEmailInputRef');
+
+// ============================================================
+// Form State
+// ============================================================
+const dialogueState = ref(DIALOGUE.STATE.DEFAULT);
+const email = ref('');
+const userName = ref('');
+const locale = ref('');
+const selectedOrgRoleID = ref(null);
+const isResendInvitation = ref(false);
+const setInviteeAsAdmin = ref(false);
+const clickedButtonIndex = ref(null);
+const serverErrorMessage = ref('');
+const shouldShowSelectLocaleHint = ref(false);
+const shouldShowSelectRoleHint = ref(false);
+
+// ============================================================
+// Store Getters
+// ============================================================
+const isFreePlan = computed(() => store.getters['organization/isFreePlan']);
+const allSelectUserRoles = computed(() => store.getters['user/allSelectUserRoles']);
+const adminRoleId = computed(() => {
+  const adminRole = allSelectUserRoles.value.find((role) => role.name === ADMIN_ROLE_NAME);
+  return adminRole?.id || null;
+});
+
+// ============================================================
+// Computed - UI State
+// ============================================================
+const isProcessing = computed(() => dialogueState.value === DIALOGUE.STATE.PROCESSING);
+const isError = computed(() => dialogueState.value === DIALOGUE.STATE.ERROR);
+const isSuccess = computed(() => dialogueState.value === DIALOGUE.STATE.SUCCESS);
+const isButtonDisabled = computed(() => isProcessing.value || isSuccess.value);
+const isRoleDropdownDisabled = computed(() => isProcessing.value || setInviteeAsAdmin.value || isFreePlan.value);
+const requiredHint = computed(() => VALIDATE_RULE_MAP.Required.errorMessage(t));
+
+// ============================================================
+// Computed - Dialogue Buttons
+// ============================================================
+const dialogueButtons = computed(() => {
+  const sendInviteButton = {
+    class: isFreePlan.value ? 'solid' : 'ghost',
+    text: t('Send Invite'),
+    clickHandler: isButtonDisabled.value ? () => {} : () => handleInvite(false),
+  };
+
+  if (isFreePlan.value) {
+    return [sendInviteButton];
+  }
+
+  return [
+    sendInviteButton,
+    {
+      class: 'solid',
+      text: t('Invite & Setup'),
+      clickHandler: isButtonDisabled.value ? () => {} : () => handleInvite(true),
+    },
+  ];
+});
+
+const buttonIconStatusMapping = computed(() => {
+  const { DEFAULT, LOADING, SUCCESS } = DIALOGUE.BUTTON_STATUS;
+  const defaultStatus = { status: DEFAULT, icon: '' };
+  const loadingStatus = { status: LOADING, icon: 'status_loading_2nd_solid', iconTheme: true };
+  const successStatus = { status: SUCCESS, icon: 'general_success_line' };
+
+  if (isFreePlan.value) {
+    return {
+      [DIALOGUE.STATE.DEFAULT]: [defaultStatus],
+      [DIALOGUE.STATE.PROCESSING]: [loadingStatus],
+      [DIALOGUE.STATE.SUCCESS]: [successStatus],
+    };
+  }
+
+  const getButtonStatuses = (activeStatus) => {
+    return clickedButtonIndex.value === 0 ? [activeStatus, defaultStatus] : [defaultStatus, activeStatus];
+  };
+
+  return {
+    [DIALOGUE.STATE.DEFAULT]: [defaultStatus, defaultStatus],
+    [DIALOGUE.STATE.PROCESSING]: getButtonStatuses(loadingStatus),
+    [DIALOGUE.STATE.SUCCESS]: getButtonStatuses(successStatus),
+  };
+});
+
+// ============================================================
+// Validation
+// ============================================================
+function validateLocale() {
+  const hasError = !locale.value;
+  shouldShowSelectLocaleHint.value = hasError;
+  return hasError;
+}
+
+function validateRole() {
+  const hasError = !selectedOrgRoleID.value;
+  shouldShowSelectRoleHint.value = hasError;
+  return hasError;
+}
+
+function hasInputsError() {
+  const hasEmailError = inviteEmailInputRef.value?.checkError().length > 0;
+  // isResendInvitation 時 inviteNameInputRef 不存在
+  const hasNameError = inviteNameInputRef.value?.checkError().length > 0;
+
+  return validateLocale() || validateRole() || hasEmailError || hasNameError;
+}
+
+// ============================================================
+// Dialogue Actions
+// ============================================================
+function resetDialogueState() {
+  dialogueState.value = DIALOGUE.STATE.DEFAULT;
+}
+
+function resetForm() {
+  userName.value = '';
+  email.value = '';
+  locale.value = LANG_LIST[0].value;
+  selectedOrgRoleID.value = null;
+  shouldShowSelectLocaleHint.value = false;
+  shouldShowSelectRoleHint.value = false;
+  setInviteeAsAdmin.value = false;
+  clickedButtonIndex.value = null;
+  serverErrorMessage.value = '';
+}
+
+function onDialogueClose() {
+  resetDialogueState();
+  resetForm();
+}
+
+function initDialogue(options = {}) {
+  isResendInvitation.value = options.isResend || false;
+  email.value = options.email || '';
+  setInviteeAsAdmin.value = options.isAdmin || false;
+  locale.value = LANG_LIST[0].value;
+
+  if (isFreePlan.value) {
+    selectedOrgRoleID.value = adminRoleId.value;
+  }
+
+  dialogueRef.value?.show();
+}
+
+function show(user) {
+  initDialogue({
+    isResend: user?.email != null,
+    email: user?.email,
+    isAdmin: user?.isAdmin,
+  });
+}
+
+function showPrefill(prefillEmail) {
+  initDialogue({ email: prefillEmail });
+}
+
+function hide() {
+  dialogueRef.value?.hide();
+}
+
+// ============================================================
+// Invite Logic
+// ============================================================
+function handleInvite(proceedToSetup) {
+  clickedButtonIndex.value = proceedToSetup ? 1 : 0;
+  inviteUser(proceedToSetup);
+}
+
+async function inviteUser(proceedToSetup = false) {
+  if (!isResendInvitation.value && hasInputsError()) {
+    return;
+  }
+
+  dialogueState.value = DIALOGUE.STATE.PROCESSING;
+
+  try {
+    const standardLocale = languageHelper.USER_LOCALE_MAP[locale.value];
+    const inviteData = {
+      email: email.value,
+      userName: userName.value,
+      locale: standardLocale,
+      organizationRoleId: selectedOrgRoleID.value,
+      isResendInvitation: isResendInvitation.value,
+      asAdmin: setInviteeAsAdmin.value,
+    };
+
+    await store.dispatch('user/inviteUserToOrganization', inviteData);
+
+    dialogueState.value = DIALOGUE.STATE.SUCCESS;
+
+    setTimeout(() => {
+      if (proceedToSetup) {
+        proxy.$mixpanel.time_event('users:setup_access');
+        emit('onProceedToSetup', email.value);
+      }
+      hide();
+    }, SUCCESS_DELAY_MS);
+  } catch (error) {
+    serverErrorMessage.value = USER.I18N.INVITE_FAILED(t);
+    const errorType = error.code || error.message;
+
+    if (USER.I18N?.[errorType]) {
+      serverErrorMessage.value = USER.I18N[errorType](t);
+    }
+
+    dialogueState.value = DIALOGUE.STATE.ERROR;
+  }
+}
+
+// ============================================================
+// Expose
+// ============================================================
+defineExpose({
+  show,
+  showPrefill,
+  hide,
+});
+</script>
+
+<style lang="less" scoped>
+.invite-form-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 16px 0 24px 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.form-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0;
+}
+
+.alert-message {
+  margin-top: 5px;
+  color: @color-alert;
+  font-size: 12px;
+}
+</style>
+
+<style lang="less">
+.invite-user-dialogue {
+  .header {
+    padding-top: 0 !important;
+    margin-bottom: 0 !important;
+
+    .title {
+      padding-top: 30px !important;
+      padding-bottom: 24px !important;
+    }
+  }
+
+  .control {
+    padding-top: 9px !important;
+  }
+
+  .dialogue-button {
+    &.width-auto {
+      width: auto !important;
+      min-width: 120px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+}
+</style>

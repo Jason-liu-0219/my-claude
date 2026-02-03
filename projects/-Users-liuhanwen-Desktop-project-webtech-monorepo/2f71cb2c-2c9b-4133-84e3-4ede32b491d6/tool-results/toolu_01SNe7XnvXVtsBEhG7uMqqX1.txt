@@ -1,0 +1,165 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-529-    ],
+packages/const-vsaas/AccessControl.js-530-    [PROVIDERS.PDK]: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-531-      OBJECT_TYPE.LOCK,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-532-      OBJECT_TYPE.ELEVATOR
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-533-    ],
+packages/const-vsaas/AccessControl.js-534-    [PROVIDERS.BRIVO]: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-535-      OBJECT_TYPE.DOOR,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-536-      OBJECT_TYPE.CONTROL_PANEL
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-537-    ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-538-  },
+packages/const-vsaas/AccessControl.js:539:  PROVIDER_BINDABLE_ACCESS_POINT_TYPE: {
+packages/const-vsaas/AccessControl.js-540-    [PROVIDERS.KISI]: [OBJECT_TYPE.LOCK],
+packages/const-vsaas/AccessControl.js-541-    [PROVIDERS.PDK]: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-542-      OBJECT_TYPE.LOCK,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-543-      OBJECT_TYPE.ELEVATOR
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-544-    ],
+packages/const-vsaas/AccessControl.js-545-    [PROVIDERS.BRIVO]: [OBJECT_TYPE.DOOR],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-546-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-547-  OBJECT_TYPE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-548-  OBJECT_TYPE_NAME,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/const-vsaas/AccessControl.js-549-  OBJECT_TYPE_LABEL_ALL,
+--
+packages/lib-medama/dist/medama.min.js-7-License at http://www.apache.org/licenses/LICENSE-2.0
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-8-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-9-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-10-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-11-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-12-MERCHANTABLITY OR NON-INFRINGEMENT.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-13-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-14-See the Apache Version 2.0 License for specific language governing permissions
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-15-and limitations under the License.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-medama/dist/medama.min.js-16-***************************************************************************** */
+packages/lib-medama/dist/medama.min.js:17:[Omitted long matching line]
+--
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-109-  emits: ['confirm'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-110-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-111-    return {
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-112-      selectedAccessPoints: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-113-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-114-  },
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-115-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-116-    ...mapGetters('accessControl', ['availableAccessPoints', 'currentProvider']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-117-    accessPointGroups() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-118-      const allAccessPointTypes = ACCESS_CONTROL.PROVIDER_ACCESS_POINT_TYPE[this.currentProvider];
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue:119:      const bindableAccessPointTypes = ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[this.currentProvider];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-120-      return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-121-        allAccessPointTypes?.map((type) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-122-          const groupItems = this.availableAccessPoints.filter(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-123-            ({ groupType, objectId }) => !!objectId && groupType === type,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-124-          );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-125-          return {
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-126-            groupType: type,
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-127-            label: ACCESS_CONTROL.OBJECT_TYPE_LABEL_ALL[type](this.$t.bind(this)),
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-128-            selectable: bindableAccessPointTypes.includes(type),
+packages/advanced-vue-components/components/AccessPointSelector/AccessPointSelectModal.vue-129-            ...(groupItems.length ? { items: groupItems } : {}),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-10-  availableAccessPoints(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-11-    if (!getters.hasProviderIntegrated) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-12-      return [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-13-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-14-    const availableBindingObjects = state.integration?.availableBindingObjects || [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-15-    const nonBindableObjects = state.integration?.nonBindableObjects?.length
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-16-      ? state.integration?.nonBindableObjects
+packages/app-vsaas-portal/src/store/accessControl/getters.js-17-      : Object.values(ACCESS_CONTROL.PROVIDER_ACCESS_POINT_TYPE[getters.currentProvider])
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-18-          .filter(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-19-            (objectType) =>
+packages/app-vsaas-portal/src/store/accessControl/getters.js:20:              !ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[getters.currentProvider].includes(objectType),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-21-          )
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-22-          .map((objectType) => ({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-23-            objectType,
+packages/app-vsaas-portal/src/store/accessControl/getters.js-24-            groupType: objectType,
+packages/app-vsaas-portal/src/store/accessControl/getters.js-25-            objectId: undefined,
+packages/app-vsaas-portal/src/store/accessControl/getters.js-26-            objectName: undefined,
+packages/app-vsaas-portal/src/store/accessControl/getters.js-27-            devices: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-28-          }));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-29-    return [...availableBindingObjects, ...nonBindableObjects];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/accessControl/getters.js-30-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-328- * @param {Object} groupsMap - Map of group IDs to group objects
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-329- * @param {string} provider - Provider name
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-330- * @returns {Object} API-compatible filter object
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-331- */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-332-function generateEventQueryFilter(params, groupsMap, provider) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-333-  if (isLegacyProvider(provider)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-334-    return _generateLegacyEventFilter(params, groupsMap, provider);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-335-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-336-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-337-  const sourceType = Array.from(new Set(params.accessPoint.map((item) => item.objectType)));
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js:338:  const bindableTypes = ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[provider] || [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-339-  const includeUnassociated = sourceType.some((type) => !bindableTypes.includes(type));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-340-  const filter = {
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-341-    sourceObjectId: params.accessPoint.map((item) => item.objectId),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-342-    sourceType,
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-343-    eventType: params.triggerType,
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-344-    siteId: params.group,
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-345-    createdAt: {
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-346-      ge: new Date(params.time.start * 1000).toISOString(),
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-347-      le: new Date(params.time.end * 1000).toISOString(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlHelper.js-348-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-346-  /**
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-347-   * Create AccessControlObject instances from parsed items
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-348-   * - Create all objects from latest items (with device bindings merged from boundItems)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-349-   * - Add non-bindable objects from boundItems (they are never in latest items)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-350-   * @private
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-351-   * @param {Array} items - Latest access control objects from API
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-352-   * @param {Array} boundItems - Current bound items with device associations
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-353-   * @returns {Array<AccessControlObject>} Array of AccessControlObject instances
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-354-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-355-  _createAccessControlObjects(items, boundItems) {
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js:356:    const bindableTypes = ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[this.provider] || [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-357-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-358-    const latestObjects = items.map((item) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-359-      const boundItem = boundItems.find((bound) => bound[this.objectKey] === item[this.objectKey]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-360-      return this[Symbol.context].provide(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-361-        AccessControlObject,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-362-        {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-363-          ...item,
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-364-          ...(boundItem && { objectId: boundItem.objectId, devices: boundItem.devices }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-365-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlIntegration.js-366-        this,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-25-  // Identifier used in AccessControlTable
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-26-  get id() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-27-    return this[this.integration.objectKey];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-28-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-29-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-30-  get provider() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-31-    return this.integration.provider;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-32-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-33-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-34-  get isBindable() {
+packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js:35:    return ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[this.provider].includes(this.objectType);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-36-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-37-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-38-  /**
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-39-   * Bind devices to this access control object
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-40-   * @param {Array} devices - Array of devices to bind
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-41-   * @param {Function} updateAssociationsFn - Function to update associations (for new providers)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-42-   * @throws {Error} If binding fails
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-43-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-44-  async bindingDevices(devices, updateAssociationsFn) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AccessControl/AccessControlObject.js-45-    if (this.integration.isLegacyProvider) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-477-        return null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-478-      }
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-479-      const data = await fetchMethod({ id: this.$route.params.id, provider: this.$route.params.provider });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-480-      return data;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-481-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-482-    checkSelectorDisabled(selectorName, selectedObjects) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-483-      if (selectorName === SEARCH_FILTER.TYPE.GROUP && this.currentTabType === MESSAGE_TYPE.ACCESS) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-484-        const { selectedAccessPoints } = selectedObjects;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-485-        return !selectedAccessPoints?.find(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-486-          (item) =>
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:487:            ACCESS_CONTROL.PROVIDER_BINDABLE_ACCESS_POINT_TYPE[this.accessControlProvider]?.indexOf(item.groupType) >=
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-488-            0,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-489-        );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-490-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-491-      return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-492-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-493-    setCurrentSnoozeRules(item) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-494-      const { thingName, deviceId } = item.device;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-495-      const { derivant } = item.device.options;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-496-      const { type, ruleName, messageTypeID } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-497-      const payload = {

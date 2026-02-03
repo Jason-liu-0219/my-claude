@@ -1,0 +1,157 @@
+packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-302-            volume: this.networkSpeakerConfig.DEFAULT_VOLUME[model],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-303-          });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-304-        },
+packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue:305:        [EXTERNAL_DEVICE.TYPE.POE_SWITCH]: () => this.createPoESwitch(info),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-306-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-307-      return handlerMap[this.selectedExternalDeviceType] ?? null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-308-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-535-        return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.NETWORK_SPEAKER;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-536-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-537-
+packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue:538:      if (this.externalDeviceTypeFilter === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue:539:        return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.POE_SWITCH;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-540-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-541-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-542-      return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.DEFAULT;
+--
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-208-        case EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER:
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-209-          this.$emit('click:row', this.networkSpeakers[item.mac]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-210-          break;
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:211:        case EXTERNAL_DEVICE.TYPE.POE_SWITCH:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-212-          this.onClickSetting(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-213-          break;
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-214-        default:
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-224-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-225-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-226-
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:227:      if (item.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-228-        const { deviceId } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-229-        this.$router.push({
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-230-          name: 'DeviceSettingsSystemPOESwitchSettings',
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-231-          params: { deviceId },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-232-          state: {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:233:            groupId: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-234-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-235-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-236-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-300-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-301-      ].filter((action) => action.hasPermission);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-302-
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:303:      if (device.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-304-        return defaultTableButtons;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-305-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-306-      return [];
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-378-                ]
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-379-              : []),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-380-          ];
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:381:        case EXTERNAL_DEVICE.TYPE.POE_SWITCH:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-382-          return [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-383-            {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-384-              type: 'name',
+--
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-282-  methods: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-283-    ...mapActions('group', ['batchMoveDeviceToGroup']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-284-    onClickRow(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:285:      if (item.type === DEVICE_TYPE.POE_SWITCH) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-286-        if (this.isRenewalOverdue) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-287-          return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-288-        }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-128-            <ExternalDeviceManagementTable
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-129-              v-else-if="isPoESwitchGroupList && hasCreateDevicePermission"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-130-              :rowData="rowData"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:131:              :deviceType="EXTERNAL_DEVICE.TYPE.POE_SWITCH"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-132-              :currentPageIndex="currentPageIndex"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-133-              :countPerPage="COUNT_PER_PAGE"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-134-              :currentGroupId="currentGroupId"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-329-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-330-    showAddDeviceDialogue(type = ADD_DEVICE_MENU_TYPE.DEFAULT_DEVICE) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-331-      switch (type) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:332:        case ADD_DEVICE_MENU_TYPE.POE_SWITCH:
+packages/app-vsaas-portal/src/pages/device/management/index.vue-333-        case ADD_DEVICE_MENU_TYPE.NETWORK_SPEAKER:
+packages/app-vsaas-portal/src/pages/device/management/index.vue-334-          this.showAddExternalDeviceDialogue({ externalDeviceTypeFilter: type });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-335-          break;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-408-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-409-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-410-    onClickExternalDevice(device) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:411:      if (device.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-412-        const { deviceId } = device;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-413-        this.$router.push({
+packages/app-vsaas-portal/src/pages/device/management/index.vue-414-          name: 'DeviceSettingsSystemPOESwitchSettings',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-536-          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-537-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-538-    },
+packages/app-vsaas-portal/src/pages/device/management/index.vue:539:    poeSwitchRowData() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-540-      return (
+packages/app-vsaas-portal/src/pages/device/management/index.vue:541:        this.groupsMap[DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH]?.devices
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-542-          .map((externalDevice, index) => new ExternalDeviceTableData(externalDevice, index))
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-543-          .sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'name')) || []
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-544-      );
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-568-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-569-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-570-      if (this.isPoESwitchGroupList) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:571:        return this.poeSwitchRowData.length ? this.poeSwitchRowData : [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-572-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-573-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-574-      if (this.isNetworkSpeakerGroupList) {
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-673-        devices: this.availableNetworkSpeakers,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-674-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-675-
+packages/app-vsaas-portal/src/pages/device/management/index.vue:676:      const poeSwitchGroup = {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:677:        id: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+packages/app-vsaas-portal/src/pages/device/management/index.vue-678-        name: this.$t('PoE Switch'),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-679-        icon: 'general_poe_solid',
+packages/app-vsaas-portal/src/pages/device/management/index.vue:680:        organizationID: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+packages/app-vsaas-portal/src/pages/device/management/index.vue-681-        devices: this.availablePoESwitchDevices,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-682-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-683-
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-717-        ...(this.availableNVRDevices.length ? [nvrGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-718-        ...(this.availableVSSDevices.length ? [vssGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-719-        ...(this.availableBridgeDevices.length ? [bridgeGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue:720:        ...(this.availablePoESwitchDevices.length ? [poeSwitchGroup] : []),
+packages/app-vsaas-portal/src/pages/device/management/index.vue-721-        ...(this.availableNetworkSpeakers.length ? [networkSpeakerGroup] : []),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-722-        allDeviceGroups,
+packages/app-vsaas-portal/src/pages/device/management/index.vue-723-        ...sortedGroups.map((group) => ({ icon: 'general_group_solid', ...group })),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-766-      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.BRIDGE;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-767-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-768-    isPoESwitchGroupList() {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:769:      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-770-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-771-    isNetworkSpeakerGroupList() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-772-      return this.currentGroupId === DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-801-        return DEVICE_TABLE_GROUP_ID_MAP.BRIDGE;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-802-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-803-
+packages/app-vsaas-portal/src/pages/device/management/index.vue:804:      if (device.options.type === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:805:        return DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-806-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-807-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-808-      if (device.options?.type === EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER) {
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-823-  watch: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-824-    currentGroupId(newV, oldV) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-825-      this.$refs.sideMenu?.closeRightMenu();
+packages/app-vsaas-portal/src/pages/device/management/index.vue:826:      if (oldV === DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH || oldV === DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-827-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-828-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-829-      this.unSelectAllDevices();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-841-        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-842-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-843-    },
+packages/app-vsaas-portal/src/pages/device/management/index.vue:844:    poeSwitchRowData() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-845-      if (this.availablePoESwitchDevices.length === 0 && this.isPoESwitchGroupList) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-846-        this.changeCurrentGroup(DEVICE_TABLE_GROUP_ID_MAP.CAMERA);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-847-      }

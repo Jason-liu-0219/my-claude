@@ -1,0 +1,176 @@
+     1→import { PERMISSION } from '@vivotek/const-vsaas';
+     2→
+     3→const PERMISSION_EFFECT = {
+     4→  ALLOW: 'allow',
+     5→  DENY: 'deny',
+     6→};
+     7→
+     8→const PERMISSION_TYPES = {
+     9→  ORGANIZATION: 'org',
+    10→  DEVICE: 'device',
+    11→};
+    12→
+    13→const PERMISSION_SETTING_MODE = {
+    14→  CUSTOM: 'custom',
+    15→  DEFAULT: 'default',
+    16→};
+    17→
+    18→const PERMISSION_CONTROL_OPTION_TYPES = {
+    19→  GROUP: 'group',
+    20→  PERMISSION: 'permission',
+    21→};
+    22→
+    23→const USER_MANAGEMENT_PERMISSION = 'user_management';
+    24→
+    25→const ORGANIZATION_PERMISSION_KEYS = {
+    26→  ALARM_MANAGEMENT: 'alarm-management',
+    27→  THIRD_PARTY_INTEGRATION: '3rd-party-integration',
+    28→  USER: 'users',
+    29→  ROLES: 'roles-management',
+    30→  CREATE_EDIT_PROFILE: 'create-edit-profile',
+    31→};
+    32→
+    33→const DEVICE_PERMISSION_KEYS = {
+    34→  VIEW: 'view',
+    35→  PLAYBACK: 'playback',
+    36→  EXPORT_VIDEO: 'export-video',
+    37→  ARCHIVE_VIDEO: 'archive-video',
+    38→  PLAY_ARCHIVE_VIDEO: 'play-archive-video',
+    39→  DOWNLOAD_ARCHIVE_VIDEO: 'download-archive-video',
+    40→  DELETE_ARCHIVE_VIDEO: 'delete-archive-video',
+    41→  SHARE_ARCHIVE: 'share-archive',
+    42→  INTEGRATION_REMOTE_CONTROL: 'integration-remote-control',
+    43→  SHARE_DEVICE: 'share-device',
+    44→  DEVICE_SETTINGS: 'device-settings',
+    45→  AI_HUB: 'ai-hub',
+    46→  BROWSE_EVENT_MESSAGE: 'browse-event-message',
+    47→  SNOOZE_RULE_FOR_ORG: 'snooze-rule-for-org',
+    48→};
+    49→/**
+    50→ * Hierarchical Resource Permission Map
+    51→ * Defines the structure of all resource permissions with their relationships
+    52→ *
+    53→ * Structure:
+    54→ * - id: Unique identifier for the permission
+    55→ * - name: Display name for the permission
+    56→ * - type: 'group' or 'permission'
+    57→ * - action: The DEVICE_PERMISSION_KEYS constant (for permissions only)
+    58→ * - children: Array of child permissions (optional)
+    59→ */
+    60→const RESOURCE_PERMISSION_HIERARCHY = [
+    61→  // TBD: All of the below permissions need to be confirmed with backend
+    62→  {
+    63→    id: 'core-view-access',
+    64→    name: ($t) => $t('Core view access'),
+    65→    type: PERMISSION_CONTROL_OPTION_TYPES.GROUP,
+    66→    children: [
+    67→      {
+    68→        id: DEVICE_PERMISSION_KEYS.VIEW,
+    69→        name: ($t) => $t('View'),
+    70→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+    71→        action: DEVICE_PERMISSION_KEYS.VIEW,
+    72→        children: [
+    73→          {
+    74→            id: DEVICE_PERMISSION_KEYS.PLAYBACK,
+    75→            name: ($t) => $t('Playback'),
+    76→            type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+    77→            action: DEVICE_PERMISSION_KEYS.PLAYBACK,
+    78→            children: [
+    79→              {
+    80→                id: DEVICE_PERMISSION_KEYS.ARCHIVE_VIDEO,
+    81→                name: ($t) => $t('Archive video'),
+    82→                type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+    83→                action: DEVICE_PERMISSION_KEYS.ARCHIVE_VIDEO,
+    84→                children: [],
+    85→              },
+    86→            ],
+    87→          },
+    88→        ],
+    89→      },
+    90→      {
+    91→        id: DEVICE_PERMISSION_KEYS.PLAY_ARCHIVE_VIDEO,
+    92→        name: ($t) => $t('Play archive video'),
+    93→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+    94→        action: DEVICE_PERMISSION_KEYS.PLAY_ARCHIVE_VIDEO,
+    95→        children: [],
+    96→      },
+    97→      {
+    98→        id: DEVICE_PERMISSION_KEYS.DOWNLOAD_ARCHIVE_VIDEO,
+    99→        name: ($t) => $t('Download archive video'),
+   100→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   101→        action: DEVICE_PERMISSION_KEYS.DOWNLOAD_ARCHIVE_VIDEO,
+   102→        children: [],
+   103→      },
+   104→      {
+   105→        id: DEVICE_PERMISSION_KEYS.DELETE_ARCHIVE_VIDEO,
+   106→        name: ($t) => $t('Delete archive video'),
+   107→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   108→        action: DEVICE_PERMISSION_KEYS.DELETE_ARCHIVE_VIDEO,
+   109→        children: [],
+   110→      },
+   111→    ],
+   112→  },
+   113→  {
+   114→    id: 'device-management',
+   115→    name: ($t) => $t('Device management'),
+   116→    type: PERMISSION_CONTROL_OPTION_TYPES.GROUP,
+   117→    children: [
+   118→      {
+   119→        id: DEVICE_PERMISSION_KEYS.DEVICE_SETTINGS,
+   120→        name: ($t) => $t('Device settings'),
+   121→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   122→        action: DEVICE_PERMISSION_KEYS.DEVICE_SETTINGS,
+   123→        children: [],
+   124→      },
+   125→    ],
+   126→  },
+   127→  {
+   128→    id: 'event-and-data',
+   129→    name: ($t) => $t('Event & Data'),
+   130→    type: PERMISSION_CONTROL_OPTION_TYPES.GROUP,
+   131→    children: [
+   132→      {
+   133→        id: DEVICE_PERMISSION_KEYS.AI_HUB,
+   134→        name: ($t) => $t('AI Hub'),
+   135→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   136→        action: DEVICE_PERMISSION_KEYS.AI_HUB,
+   137→        children: [],
+   138→      },
+   139→      {
+   140→        id: DEVICE_PERMISSION_KEYS.BROWSE_EVENT_MESSAGE,
+   141→        name: ($t) => $t('Browse event message (Message center/Event insight)'),
+   142→        type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   143→        action: DEVICE_PERMISSION_KEYS.BROWSE_EVENT_MESSAGE,
+   144→        children: [
+   145→          {
+   146→            id: DEVICE_PERMISSION_KEYS.SNOOZE_RULE_FOR_ORG,
+   147→            name: ($t) => $t('Snooze rule for organization (Message center/Event insight)'),
+   148→            type: PERMISSION_CONTROL_OPTION_TYPES.PERMISSION,
+   149→            action: DEVICE_PERMISSION_KEYS.SNOOZE_RULE_FOR_ORG,
+   150→            children: [],
+   151→          },
+   152→        ],
+   153→      },
+   154→    ],
+   155→  },
+   156→];
+   157→
+   158→const { PERMISSION_DEVICE_SCOPE, PERMISSION_ORG_SCOPE } = PERMISSION;
+   159→
+   160→export {
+   161→  PERMISSION_EFFECT,
+   162→  PERMISSION_TYPES,
+   163→  PERMISSION_SETTING_MODE,
+   164→  PERMISSION_CONTROL_OPTION_TYPES,
+   165→  RESOURCE_PERMISSION_HIERARCHY,
+   166→  USER_MANAGEMENT_PERMISSION,
+   167→  PERMISSION_DEVICE_SCOPE,
+   168→  PERMISSION_ORG_SCOPE,
+   169→  ORGANIZATION_PERMISSION_KEYS,
+   170→  DEVICE_PERMISSION_KEYS,
+   171→};
+   172→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

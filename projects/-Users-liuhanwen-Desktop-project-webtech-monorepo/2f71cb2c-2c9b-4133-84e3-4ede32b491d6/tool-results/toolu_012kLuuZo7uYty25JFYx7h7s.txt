@@ -1,0 +1,111 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-88-      const input = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-89-        organizationID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-90-        email,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-91-        locale,
+packages/app-vsaas-portal/src/store/user/actions.js-92-        ...(isResendInvitation ? {} : { username: userName, organizationRoleID: organizationRole.id, join: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-93-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-94-      let response;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-95-      if (isResendInvitation) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-96-        response = await rootState.apiService.inviteAgain(input);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-97-      } else {
+packages/app-vsaas-portal/src/store/user/actions.js:98:        response = await rootState.apiService.setUserOfOrganization(input);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-99-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-100-      const targetUser = getters.getUserByEmail(email);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-101-      if (targetUser) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-102-        commit('updateUser', translateToUserObject(targetUser, rootState, rootGetters));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-103-      } else {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-104-        commit(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-105-          'addUser',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-106-          translateToUserObject(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-107-            {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-108-              email,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-119-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-120-      await dispatch('getUsersByOrganizationV2');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-121-      return response;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-122-    } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-123-      throw error.generalize();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-124-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-125-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-126-  async removeUserFromOrganization({ commit, rootGetters, rootState }, email) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-127-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-128-      const { organizationID } = rootGetters['organization/currentOrganization'];
+packages/app-vsaas-portal/src/store/user/actions.js:129:      const response = await rootState.apiService.setUserOfOrganization({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-130-        organizationID,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-131-        email,
+packages/app-vsaas-portal/src/store/user/actions.js-132-        join: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-133-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-134-      commit('deleteUser', { email });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-135-      return response;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-136-    } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-137-      throw error.generalize();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-138-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-139-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-41-  startWorkingInOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-42-  joinOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-43-  createOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-44-  deleteOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-45-  updateOrganizationName,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-46-  transferOrganizationOwner,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-47-  addSIUserToOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-48-  removeSIUserFromOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-49-  setSIUserRemoteAccess,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-50-  deleteSSOConfig,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js:51:  setUserOfOrganization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-52-  inviteAgain,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-53-  setGroupsRoleOfUser,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-54-  setOrganizationRoleOfUser,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-55-  pauseOrganizationAlarmSetting,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-56-  createExternalDevice,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-57-  upgradeFirmware,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-58-  discoverExternalDevice,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-59-  setUserMFA,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-60-  setOrganizationMFA,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-61-  disableUserMFA,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-165-    return ApiService.graphQLRequest(createExternalDevice, { input }).then((res) => res.data.createExternalDevice);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-166-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-167-  pauseOrganizationAlarmSetting: async (input) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-168-    return ApiService.graphQLRequest(pauseOrganizationAlarmSetting, { input }).then(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-169-      (res) => res.data.pauseOrganizationAlarmSetting.pauseUntil,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-170-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-171-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-172-  inviteAgain: async (input) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-173-    return ApiService.graphQLRequest(inviteAgain, { input });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-174-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js:175:  setUserOfOrganization: async (input) => {
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js:176:    return ApiService.graphQLRequest(setUserOfOrganization, { input });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-177-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-178-  getUserGroupRole: async (...args) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-179-    return ApiService.graphQLRequest(getUserGroupRole, ...args).then((res) => res.data.getUserGroupRole);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-180-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-181-  setGroupsRoleOfUser: async (...args) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-182-    return ApiService.graphQLRequest(setGroupsRoleOfUser, ...args);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-183-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-184-  setOrganizationRoleOfUser: async (...args) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-185-    return ApiService.graphQLRequest(setOrganizationRoleOfUser, ...args);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-186-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-108-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-109-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-110-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-111-
+packages/app-vsaas-portal/src/graphql/mutations.gql-112-mutation genMp4($input: GenMp4Input!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-113-    genMp4(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-114-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-115-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-116-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-117-
+packages/app-vsaas-portal/src/graphql/mutations.gql:118:mutation setUserOfOrganization($input: SetUserOfOrganizationInput!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql:119:    setUserOfOrganization(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-120-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-121-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-122-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-123-
+packages/app-vsaas-portal/src/graphql/mutations.gql-124-mutation inviteAgain($input: InviteAgainInput!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-125-    inviteAgain(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-126-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-127-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-128-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-129-

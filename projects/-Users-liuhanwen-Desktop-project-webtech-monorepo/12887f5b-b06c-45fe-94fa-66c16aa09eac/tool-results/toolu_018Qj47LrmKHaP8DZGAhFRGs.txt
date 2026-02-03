@@ -1,0 +1,1229 @@
+packages/app-vsaas-portal/src/main.js-44-import 'virtual:svg-icons-register';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-45-import './registerSW';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-46-
+packages/app-vsaas-portal/src/main.js:47:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY, URL_CONFIG_MAP } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-48-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-49-const app = createApp(App);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-50-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-67-  reactive,
+packages/app-vsaas-portal/src/main.js-68-  $mixpanel: VueUserBehaviorTracker,
+packages/app-vsaas-portal/src/main.js-69-  sharedDeviceViewerToken: null,
+packages/app-vsaas-portal/src/main.js:70:  remoteConfig: {
+packages/app-vsaas-portal/src/main.js:71:    service: RemoteConfigService,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-72-    PORTAL_FEATURE_CONFIG_KEY,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-73-    URL_CONFIG_MAP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/main.js-74-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-115-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-116-import { ViewcellPageLayout, DisplayStreamingBlock, PlayerControl, Timeline } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-117-import { RECORDING, TIMELINE_CONTROL } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:118:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-119-import { exitFullScreen, KeyboardEventParser, CODE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-120-import { debounce, throttle } from 'lodash-es';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-121-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-500-      return this.activeDeviceView.services?.stream?.state.eventOnlyMode;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-501-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-502-    isNextFrameEnabled() {
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:503:      return RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.FRAME_BY_FRAME);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-504-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-505-    twoWayAudioFeatureToggle() {
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:506:      return RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.TWO_WAY_AUDIO);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-507-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-508-  },
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-509-  watch: {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-525-    this.hotKeyUnRegisterHandler();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-526-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-527-  async created() {
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:528:    this.isTalkDownEnabled = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.TALK_DOWN);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-529-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-530-    if (this.isTalkDownEnabled) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-531-      await this.queryNetworkSpeakers();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-40-import { ref, computed, onBeforeMount } from 'vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-41-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-42-
+packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue:43:import RemoteConfigService, { URL_CONFIG_MAP } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-44-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-45-const store = useStore();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-46-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-51-const resellerPhoneNumber = computed(() => store.getters['si/getResellerInformation']?.phoneNumber);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-52-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-53-onBeforeMount(() => {
+packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue:54:  resellerRequestUrl.value = RemoteConfigService.getConfiguration(URL_CONFIG_MAP.RESELLER_REQUEST_URL);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-55-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-56-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Modal/ContactResellerModal.vue-57-function show() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-25-import { useRouter } from 'vue-router';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-26-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-27-
+packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue:28:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-29-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-30-import UpgradeButton from '@/components/reskin/Buttons/UpgradeButton.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-31-import AppLogo from '@/components/reskin/Logos/AppLogo.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-46-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-47-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-48-const shouldDisplayAddResellerHint = computed(() => {
+packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue:49:  const featureConfig = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ADD_RESELLER_HINT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-50-  const hasReseller = store.getters['si/hasReseller'];
+packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-51-  const hasPermission = true; / TODO: replace with actual permission check, isOwner or isAdmin
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Headers/Header.vue-52-  return featureConfig && !hasReseller && hasPermission;
+--
+packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js:1:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-2-
+packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-3-/ routerName: [featureAPI]
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-4-const FEATURE_TOGGLE_SERVICES_MAP = {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-15-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-16-  const results = await Promise.allSettled(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-17-    services.map((key) => {
+packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js:18:      return RemoteConfigService.getConfiguration(key);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-19-    }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-20-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/featureToggleRouteHelper.js-21-  return results.every(({ status, value }) => status === 'fulfilled' && value === true);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-28-import { directive as onClickaway } from 'vue3-click-away';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-29-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-30-import { ADD_DEVICE_MENU_TYPE, ADD_DEVICE_MENU_LABEL, SRE_TEST_ID } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue:31:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-32-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-33-export default {
+packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-34-  name: 'AddDeviceDropdown',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-58-  },
+packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-59-  emits: ['onOpitonClicked'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-60-  data() {
+packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue:61:    const allowVssPrompt = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-62-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-63-    return {
+packages/app-vsaas-portal/src/components/Dropdowns/AddDeviceDropdown.vue-64-      isShowAddDeviceDropdown: false,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-1-import { onBeforeUnmount, onMounted, computed } from 'vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-3-import { TIMELINE_CONTROL } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js:4:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-5-import { KeyboardEventParser, CODE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-6-import { debounce, throttle } from 'lodash-es';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-7-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-11-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-12-  const isEventOnlyMode = computed(() => activeDevice.value.services?.stream?.state.eventOnlyMode);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-13-  const isNextFrameEnabled = computed(() => {
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js:14:    return RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.FRAME_BY_FRAME);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-15-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-16-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.js-17-  const canHandleHotkey = computed(() => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-5-import Mfa from './index.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-7-vi.mock('firebase/remote-config', () => ({
+packages/app-vsaas-portal/src/pages/account/mfa/index.test.js:8:  getRemoteConfig: vi.fn().mockReturnValue({
+packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-9-    settings: {
+packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-10-      minimumFetchIntervalMillis: 0,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/mfa/index.test.js-11-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-1-/* eslint-disable no-shadow */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-2-import { TIMELINE_CONTROL } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js:3:import RemoteConfigService from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-4-import { KeyboardEventParser, CODE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-5-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-6-import { useTimelineHotkey } from './useTimelineHotkey';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-209-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-210-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-211-    it('should handle keydown event with arrow right and modifier for next frame', async () => {
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js:212:      RemoteConfigService.getConfiguration.mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-213-      const { keyDownHandler } = useTimelineHotkey({
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-214-        activeDevice: mockActiveDevice,
+packages/app-vsaas-portal/src/composables/useTimelineHotkey/useTimelineHotkey.test.js-215-        timelineRef: mockTimelineRef,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-48-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-49-import { DeleteSnoozeRuleDialogue } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-50-import { SNOOZE_TYPE, HINT_ID } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue:51:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-52-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-53-import AppUpgradeButton from '@/components/Buttons/AppUpgradeButton.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-54-import SnoozeNotificationsDialogue from '@/components/Dialogues/SnoozeNotificationsDialogue.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-159-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-160-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-161-  async created() {
+packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue:162:    this.shouldDisplayAddResellerHint = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-163-      PORTAL_FEATURE_CONFIG_KEY.ADD_RESELLER_HINT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-164-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-165-    await this.fetchDisplaySnoozeAllForMe();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-93-import { mapState, mapGetters } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-94-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-95-import { NAVIGATION_TRACKING_MAP } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:96:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-97-import VendorHelper from '@vivotek/lib-vendor-helper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-98-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-99-import AppUpgradeButton from '@/components/Buttons/AppUpgradeButton.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-247-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-248-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-249-  async created() {
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:250:    this.isCustomizeViewEnabled = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.CUSTOMIZED_VIEW);
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:251:    this.isResellerShow = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ADD_RESELLER_HINT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-252-    this.isFloorplanDarkReleaseEnabled = this.supportList.includes('FloorPlan');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-253-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-254-};
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-101-import { mapActions } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-102-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-103-import { DIALOGUE, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue:104:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-105-import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-106-import { debounce } from 'lodash-es';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-107-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-363-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-364-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-365-  created() {
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue:366:    this.isSiteLocationFeatureEnable = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SITE_LOCATION);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-367-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-368-    if (!this.isSiteLocationFeatureEnable) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.vue-369-      this.hideMap();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-1-import { USER_ROLE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-2-import Context from '@vivotek/context';
+packages/app-vsaas-portal/src/store/account/actions.js:3:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-4-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-5-import { StorageServiceManager } from '@vivotek/lib-vsaas-storage';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-6-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-198-      await Promise.all([
+packages/app-vsaas-portal/src/store/account/actions.js-199-        dispatch('subscription/setSubscribeOnLogin', null, { root: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-200-        accessControlPromise,
+packages/app-vsaas-portal/src/store/account/actions.js:201:        RemoteConfigService.getAll(),
+packages/app-vsaas-portal/src/store/account/actions.js-202-        dispatch('permission/getPlanPermission', currentOrganization?.isFreePlan, { root: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-203-        dispatch('setStorageLocation', currentOrganization),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-204-        dispatch('setUserName', currentOrganization),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-214-      await Promise.all([
+packages/app-vsaas-portal/src/store/account/actions.js-215-        dispatch('si/getSIOfOrganization', null, { root: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-216-        aiControlPermissionManager.getAIControlSettings(),
+packages/app-vsaas-portal/src/store/account/actions.js:217:        aiControlPermissionManager.getVcaEventRemoteConfigSettings(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-218-        aiControlPermissionManager.getAIControlSettingsAvailable(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-219-      ]).catch(() => {});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-220-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-291-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-292-  async fetchDisplaySnoozeAllForMe({ commit, dispatch }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-293-    try {
+packages/app-vsaas-portal/src/store/account/actions.js:294:      const shouldDisplaySnoozeAllForMe = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-295-        PORTAL_FEATURE_CONFIG_KEY.SNOOZE_ALL_FOR_ME,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-296-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-297-      commit('setShouldDisplaySnoozeAllForMe', shouldDisplaySnoozeAllForMe);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-47-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-48-import { FeatureBlockSideMenusLayout } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-49-import { BLOCK_FEATURE_TYPES } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/account/index.vue:50:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-51-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-52-const { t } = useI18n();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-53-const store = useStore();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-55-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-56-// ----- remote config -----
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-57-const shouldDisplayAPIKeyManagement = ref(false);
+packages/app-vsaas-portal/src/pages/account/index.vue:58:shouldDisplayAPIKeyManagement.value = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.API_KEY);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-59-// ----- remote config -----
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-60-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/account/index.vue-61-const isLicenseGranted = computed(() => store.getters['organization/isLicenseGranted']);
+--
+packages/app-vsaas-portal/src/store/account/actions.test.js:1:import RemoteConfigService from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-3-import LanguageHelper from '@/i18n/languageHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-4-import AuthenticationService, {
+--
+packages/app-vsaas-portal/src/store/account/actions.test.js-396-            permission: {
+packages/app-vsaas-portal/src/store/account/actions.test.js-397-              aiControlPermissionManager: {
+packages/app-vsaas-portal/src/store/account/actions.test.js-398-                getAIControlSettings: vi.fn(),
+packages/app-vsaas-portal/src/store/account/actions.test.js:399:                getVcaEventRemoteConfigSettings: vi.fn(),
+packages/app-vsaas-portal/src/store/account/actions.test.js-400-                getAIControlSettingsAvailable: vi.fn(),
+packages/app-vsaas-portal/src/store/account/actions.test.js-401-                initIsShowAIControlSettingsDialogue: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-402-              },
+--
+packages/app-vsaas-portal/src/store/account/actions.test.js-409-        { nextPage: '/group' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-410-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.test.js-411-
+packages/app-vsaas-portal/src/store/account/actions.test.js:412:      expect(RemoteConfigService.getAll).toHaveBeenCalled();
+packages/app-vsaas-portal/src/store/account/actions.test.js-413-      expect(dispatch).toHaveBeenCalledWith('organization/fetchUserOrganizations', null, { root: true });
+packages/app-vsaas-portal/src/store/account/actions.test.js-414-      / Verify fetchUserPermissions is called with force: true to ensure fresh permissions on every login
+packages/app-vsaas-portal/src/store/account/actions.test.js-415-      / expect(dispatch).toHaveBeenCalledWith('permission/fetchUserPermissions', { force: true }, { root: true });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-1-import shallowMount from '@/utils/testHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-2-
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js:3:import RemoteConfigService from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-5-import SiteInformationDialogue from './SiteInformationDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-6-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-288-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-289-  describe('created', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-290-    it('should call hideMap when fetchFeatureOfSiteLocation is false', () => {
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js:291:      RemoteConfigService.getConfiguration = vi.fn().mockReturnValue(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-292-      const wrapper = createWrapper({
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-293-        propsData: mockPropsData,
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-294-        storeModules: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-295-      });
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-296-      wrapper.vm.defaultDialogueLayout = { width: 100, height: 80 };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-297-
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js:298:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-299-      expect(wrapper.vm.isSiteLocationFeatureEnable).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-300-      expect(wrapper.vm.displayMap).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-301-      expect(wrapper.vm.dialogueWidth).toBe('50px');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-302-      expect(wrapper.vm.dialogueHeight).toBe('56px');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-303-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-304-    it('should not call hideMap when fetchFeatureOfSiteLocation is true', async () => {
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js:305:      RemoteConfigService.getConfiguration = vi.fn().mockResolvedValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-306-      const wrapper = createWrapper({
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-307-        propsData: mockPropsData,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-308-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-311-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-312-      await wrapper.vm.$nextTick();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-313-
+packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js:314:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-315-      expect(wrapper.vm.hideMap).toHaveBeenCalledTimes(0);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-316-      expect(wrapper.vm.dialogueWidth).toBe('100px');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/SiteInformationDialogue.test.js-317-      expect(wrapper.vm.dialogueHeight).toBe('80px');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-70-import { useRouter } from 'vue-router';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-71-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-72-import { SRE_TEST_ID } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue:73:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-74-import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-75-import VendorHelper from '@vivotek/lib-vendor-helper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-76-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-88-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-89-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-90-const productName = computed(() => VendorHelper.getVendorConfig().PRODUCT_NAME);
+packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue:91:const allowVssPrompt = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-92-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-93-const { clearAddDeviceStore } = useAddDeviceStoreHelper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/AddDevice/EnterDeviceId/EnterDeviceId.vue-94-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-195-     * LPR/FR options should be displayed if remote config of support vca event is enabled
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-196-     */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-197-    displayFacialFeature() {
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue:198:      return this.aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.FACE_RECOGNITION_EVENT];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-199-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-200-    displayLicensePlateFeature() {
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue:201:      return this.aiControlPermissionManager.vcaEventRemoteConfigSettings?.[
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-202-        VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-203-      ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.vue-204-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-1-import { EVENT_TYPE } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/store/notification/actions.js:2:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-3-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-4-import { v4 as uuidv4 } from 'uuid';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-5-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-222-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-223-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-224-  async fetchShouldDisplaySnoozeRule({ commit, dispatch }) {
+packages/app-vsaas-portal/src/store/notification/actions.js:225:    const shouldDisplaySnoozeRule = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SNOOZE_MESSAGE);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-226-    commit('setShouldDisplaySnoozeRule', shouldDisplaySnoozeRule);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-227-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.js-228-};
+--
+packages/app-vsaas-portal/src/store/notification/actions.test.js:1:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-3-import ApiServiceInterface from '@/singletons/ApiServiceInterface';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-4-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-348-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-349-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-350-  describe('fetchShouldDisplaySnoozeRule', () => {
+packages/app-vsaas-portal/src/store/notification/actions.test.js:351:    it('should call RemoteConfigService.getConfiguration with correct parameters', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-352-      const commit = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-353-      const dispatch = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-354-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-355-      await actions.fetchShouldDisplaySnoozeRule({ commit, dispatch });
+packages/app-vsaas-portal/src/store/notification/actions.test.js:356:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(PORTAL_FEATURE_CONFIG_KEY.SNOOZE_MESSAGE);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-357-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-358-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/notification/actions.test.js-359-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-4-import Context from '@vivotek/context';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-5-import { VsaasNVR, composeVsaasDeviceId as ComposeVsaasDeviceId, VsaasBridge, VsaasVSS } from '@vivotek/device';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-6-import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+packages/app-vsaas-portal/src/store/device/actions.js:7:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-8-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-9-import { chunk } from 'lodash-es';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-10-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-209-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-210-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-211-  async queryOutdatedFirmwareDevice({ state, commit, rootGetters, rootState, dispatch }) {
+packages/app-vsaas-portal/src/store/device/actions.js:212:    const isOutdatedFirmwareFeatureEnabled = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-213-      PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-214-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-215-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-13-  VsaasVSS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-14-  VsaasVSSCamera as VSSCamera,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-15-} from '@vivotek/device';
+packages/app-vsaas-portal/src/store/device/mutations.js:16:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-17-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-18-import DeviceFactory from '@/models/Device/DeviceFactory';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-19-import { convertMainLicense, convertCloudBackupLicense, convertAILicenseExpired } from '@/utils/LicenseHelper';
+--
+packages/app-vsaas-portal/src/store/device/mutations.js-22-  setDevices(state, { items: devices, groupsMap, plan, dependencies }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-23-    const excludedDeviceTypes = ['ipspeaker', 'poeSwitch'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-24-    const devicesWithoutExternalDevice = devices.filter((device) => !excludedDeviceTypes.includes(device.type));
+packages/app-vsaas-portal/src/store/device/mutations.js:25:    const disableSpeedDomeModels = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.DISABLE_SPEED_DOMES);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-26-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-27-    devicesWithoutExternalDevice.forEach((item) => {
+packages/app-vsaas-portal/src/store/device/mutations.js-28-      const device = reactive(DeviceFactory({ options: { ...item, plan } }).injectDependencies(dependencies));
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-8-} from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-9-import { VivotekDeviceServiceInterface as VDSI, VsaasCamera } from '@vivotek/device';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-10-import { AreaSelector, DragLine } from '@vivotek/lib-ptz-selector';
+packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js:11:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-12-import { throttle } from 'lodash-es';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-13-import { v4 as uuidv4 } from 'uuid';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-14-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-126-  get isPTZV3() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-127-    return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-128-      this.reference.services?.configurator?.checkSupportFromOptions(DEVICE_SUPPORT_FEATURES.PTZV3) &&
+packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js:129:      RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.PATROL)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-130-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-131-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/Joystick/JoystickService.js-132-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-1-import VsaasNVR from '@vivotek/device/vsaasNVR';
+packages/app-vsaas-portal/src/store/device/actions.test.js:2:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-3-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-4-import ApiServiceInterface from '@/singletons/ApiServiceInterface';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-5-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-441-      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', data);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-442-      expect(commit).toHaveBeenCalledWith('setIsFetchedOutdatedFirmwareDevice', true);
+packages/app-vsaas-portal/src/store/device/actions.test.js-443-      expect(commit).toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+packages/app-vsaas-portal/src/store/device/actions.test.js:444:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-445-        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-446-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-447-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-464-
+packages/app-vsaas-portal/src/store/device/actions.test.js-465-      expect(spy).toBeCalledWith({ organizationID: 'organizationID1' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-466-      expect(spy).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/store/device/actions.test.js:467:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-468-        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-469-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-470-      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', []);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-496-      expect(commit).not.toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', data);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-497-      expect(commit).not.toHaveBeenCalledWith('setIsFetchedOutdatedFirmwareDevice', true);
+packages/app-vsaas-portal/src/store/device/actions.test.js-498-      expect(commit).not.toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+packages/app-vsaas-portal/src/store/device/actions.test.js:499:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-500-        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-501-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.test.js-502-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-142-import { AppSingleDevice } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-143-import { EXTERNAL_DEVICE, DEVICE_TABLE_GROUP_ID_MAP } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-144-import { composeVsaasDeviceId as ComposeVsaasDeviceId } from '@vivotek/device';
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:145:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-146-import { sortingUtils } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-147-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-148-import { PERMISSION_DEVICE_SCOPE, PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-456-  async mounted() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-457-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-458-      await this.queryNetworkSpeakers();
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:459:      this.shouldDisplayAssociatedCameras = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.TALK_DOWN);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-460-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-461-      this.currentSortTypes = this.sortTypeOptions.map((item) => item.value);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-462-      const defaultColumnTypes = this.columnOptions.filter((item) => !item.defaultHide).map((item) => item.value);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-196-import { AppSingleDevice, DeviceSelectModal } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-197-import { EXTERNAL_DEVICE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-198-import { composeVsaasDeviceId as ComposeVsaasDeviceId } from '@vivotek/device';
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:199:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-200-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-201-import ContactResellerModal from '@/components/Modal/ContactResellerModal.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-202-import { LICENSE_STATE, LICENSE_TYPE } from '@/constants/License';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-395-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-396-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-397-  async created() {
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:398:    this.featureOfTalkDownSupported = await RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.TALK_DOWN);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-399-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-400-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-401-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.test.js-20-      return {
+packages/app-vsaas-portal/src/store/ui/getters.test.js-21-        permission: {
+packages/app-vsaas-portal/src/store/ui/getters.test.js-22-          aiControlPermissionManager: {
+packages/app-vsaas-portal/src/store/ui/getters.test.js:23:            vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/store/ui/getters.test.js-24-              [VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT]: true,
+packages/app-vsaas-portal/src/store/ui/getters.test.js-25-              [VCA_CAPABILITY_TYPE.FACE_RECOGNITION_EVENT]: true,
+packages/app-vsaas-portal/src/store/ui/getters.test.js-26-              [VCA_CAPABILITY_TYPE.SPOT_OCCUPANCY_EVENT]: true,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.test.js-38-      return {
+packages/app-vsaas-portal/src/store/ui/getters.test.js-39-        permission: {
+packages/app-vsaas-portal/src/store/ui/getters.test.js-40-          aiControlPermissionManager: {
+packages/app-vsaas-portal/src/store/ui/getters.test.js:41:            vcaEventRemoteConfigSettings: remoteSettings,
+packages/app-vsaas-portal/src/store/ui/getters.test.js-42-            isOrganizationReleaseFeature: (type) => darkReleaseSettings[type],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.test.js-43-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.test.js-44-        },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-109-<script>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-110-import { DisplayStreamingBlock } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-111-import { EXPOSURE } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue:112:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-113-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-114-import { DeviceSettingsLayout } from '@vivotek/vue-app-layouts';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-115-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-183-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-184-    async initializeDayNightSettings() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-185-      try {
+packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue:186:        this.isDayNightSettingsEnabled = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-187-          PORTAL_FEATURE_CONFIG_KEY.CAMERA_DAY_NIGHT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-188-        );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceSettingsImageSettings.vue-189-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-12-  excludeVcaEvents(state, $getters, rootState) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-13-    const { aiControlPermissionManager } = rootState.permission;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-14-
+packages/app-vsaas-portal/src/store/ui/getters.js:15:    const remoteConfigEventMap = {
+packages/app-vsaas-portal/src/store/ui/getters.js-16-      [VCA_EVENT_TYPE.LICENSE_PLATE_RECOGNITION]:
+packages/app-vsaas-portal/src/store/ui/getters.js:17:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-18-      [VCA_EVENT_TYPE.FACE_RECOGNITION]:
+packages/app-vsaas-portal/src/store/ui/getters.js:19:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.FACE_RECOGNITION_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-20-      [VCA_EVENT_TYPE.SPOT_OCCUPANCY]:
+packages/app-vsaas-portal/src/store/ui/getters.js:21:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.SPOT_OCCUPANCY_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-22-      [VCA_EVENT_TYPE.PPE_DETECTION]:
+packages/app-vsaas-portal/src/store/ui/getters.js:23:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.PPE_DETECTION_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-24-      [VCA_EVENT_TYPE.FALL_DETECTION]:
+packages/app-vsaas-portal/src/store/ui/getters.js:25:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.FALL_DETECTION_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-26-      [VCA_EVENT_TYPE.THINK_ALERT]:
+packages/app-vsaas-portal/src/store/ui/getters.js:27:        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.THINK_ALERT_EVENT],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-28-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-29-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-30-    const darkReleaseEventMap = {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-40-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-41-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-42-    const eventConfigs = Object.values(VCA_EVENT_TYPE).flatMap((vcaEvent) => {
+packages/app-vsaas-portal/src/store/ui/getters.js:43:      const shouldShowRemoteConfig = remoteConfigEventMap[vcaEvent];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-44-      const shouldShowDarkRelease = darkReleaseEventMap[vcaEvent];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-45-
+packages/app-vsaas-portal/src/store/ui/getters.js:46:      if (shouldShowRemoteConfig === undefined && shouldShowDarkRelease === undefined) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-47-        return [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-48-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-49-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-50-      return [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-51-        {
+packages/app-vsaas-portal/src/store/ui/getters.js-52-          eventType: vcaEvent,
+packages/app-vsaas-portal/src/store/ui/getters.js:53:          shouldShowRemoteConfig: shouldShowRemoteConfig ?? false,
+packages/app-vsaas-portal/src/store/ui/getters.js-54-          shouldShowDarkRelease: shouldShowDarkRelease ?? true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-55-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-56-      ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-57-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-58-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-59-    return eventConfigs
+packages/app-vsaas-portal/src/store/ui/getters.js:60:      .filter((config) => !config.shouldShowRemoteConfig || !config.shouldShowDarkRelease)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-61-      .map((config) => config.eventType);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-62-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-63-  shouldDisplaySwitchButton(state, $getters, rootState, rootGetters) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-1-import { COUNTRY as countryList, BACKUP_LOCATION_I18N } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-2-import Context from '@vivotek/context';
+packages/app-vsaas-portal/src/store/organization/actions.js:3:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-4-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-5-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-6-const Log = getTagged('store/organization/action');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-123-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-124-  async fetchStorageLocationOptions({ rootState }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-125-    try {
+packages/app-vsaas-portal/src/store/organization/actions.js:126:      const locations = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.STORAGE_LOCATIONS);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-127-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-128-      return countryList()
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/organization/actions.js-129-        .filter(({ value }) => Object.keys(locations).includes(value))
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-88-import { mapState, mapGetters } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-89-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-90-import { DEVICE_TYPE, DEVICE_SETTINGS_MENU_TRACKING_MAP } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:91:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-92-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-93-import OpenCameraSettingsDialogue from '@/components/Dialogues/OpenCameraSettingsDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-94-import OpenFirmwareManagementDialogue from '@/components/Dialogues/OpenFirmwareManagementDialogue.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-195-    currentOptionPath() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-196-      return this.parseCurrentSelection[1];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-197-    },
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:198:    remoteConfig() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-199-      return {
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:200:        isVideoStreamSettingsEnabled: RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-201-          PORTAL_FEATURE_CONFIG_KEY.DEVICE_SETTINGS_VIDEO_STREAM,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-202-        ),
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:203:        isNvrChannelFirmwareManuallyUpdate: RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-204-          PORTAL_FEATURE_CONFIG_KEY.NVR_CHANNEL_FIRMWARE_MANUALLY_UPDATE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-205-        ),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-206-      };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-222-        },
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-223-        canDoDevice: this.canDoDevice,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-224-        supportList: this.supportList,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:225:        remoteConfig: this.remoteConfig,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-226-      }).filter((category) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-227-        category.options = category.options.filter((opt) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-228-          return (
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-1-import { VCA_UI_SETTINGS, DEFAULT_VIEW_DISPLAY_UI_SETTINGS } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/store/ui/actions.js:2:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-3-import { LocalStorageManager } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-5-function isDefaultUISettings(settings) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-138-  setShowShareDeviceDialogue({ commit }, value) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-139-    commit('setShowShareDeviceDialogue', value);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-140-  },
+packages/app-vsaas-portal/src/store/ui/actions.js:141:  fetchDeviceSharingRemoteConfig({ commit }) {
+packages/app-vsaas-portal/src/store/ui/actions.js:142:    const isDeviceSharingEnabled = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.DEVICE_SHARING);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-143-    commit('setShowDeviceSharingButton', isDeviceSharingEnabled);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-144-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/actions.js-145-};
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-180-  MESSAGE_CENTER_TIME_RANGE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-181-} from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-182-import { composeVsaasDeviceId as ComposeVsaasDeviceId } from '@vivotek/device';
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:183:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-184-import { formatDate as DateFormatter } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-185-import { FooterControlsModel, RightControls, CentralPanelFooter, FooterPagination } from '@vivotek/vue-app-layouts';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-186-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-235-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-236-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-237-  data() {
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:238:    const allowVssPrompt = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-239-    return {
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-240-      footerControlsModel: new FooterControlsModel(),
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-241-      currentPageIndex: 1,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-741-    deviceEventTypeOptions() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-742-      /**
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-743-       * - `LICENSE_PLATE_RECOGNITION` & `FACE_RECOGNITION` are always excluded due to belong to independent tabs.
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:744:       * - remoteConfigAndDarkReleaseEvents is excluded if present in `this.excludeVcaEvents`.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-745-       */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-746-      const filterOutEvents = [VCA_EVENT_TYPE.LICENSE_PLATE_RECOGNITION, VCA_EVENT_TYPE.FACE_RECOGNITION];
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:747:      const remoteConfigAndDarkReleaseEvents = [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-748-        VCA_EVENT_TYPE.SPOT_OCCUPANCY,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-749-        VCA_EVENT_TYPE.PPE_DETECTION,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-750-        VCA_EVENT_TYPE.FALL_DETECTION,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-751-        VCA_EVENT_TYPE.THINK_ALERT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-752-      ];
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:753:      remoteConfigAndDarkReleaseEvents.forEach((event) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-754-        if (this.excludeVcaEvents.includes(event)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-755-          filterOutEvents.push(event);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-756-        }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1000-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1001-  beforeRouteEnter(to, from, next) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1002-    next(async (vm) => {
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:1003:      vm.shouldDisplaySensorEvent = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1004-      if (!vm.isSingleEvent) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1005-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-1006-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-1-import { DARK_RELEASE_FEATURES, EVENT_TYPE, AI_CONSENT_FEATURES_MAP } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-2-import Context from '@vivotek/context';
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:3:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-5-const { VCA_CAPABILITY_TYPE } = EVENT_TYPE;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-6-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-17-export default Context.withContext(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-18-  class AIControlPermissionManager {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-19-    constructor() {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:20:      this.vcaEventRemoteConfigSettings = {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-21-      this.aiControlSettings = {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-22-      this.darkReleaseFeatures = {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-23-      this.aiControlSettingsRequestId = '';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-65-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-66-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-67-
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:68:    getVcaEventRemoteConfigSettings() {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:69:      const response = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SUPPORT_VCA_EVENT);
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:70:      this.vcaEventRemoteConfigSettings = response;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-71-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-72-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-73-    getAIControlSettingsAvailable() {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:74:      const response = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SUPPORT_AI_CONTROL_SETTINGS);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-75-      this.aiControlSettingsAvailable = response;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-76-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-77-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-124-    // Check if dark release feature and remote config of support vca event is enabled
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-125-    get isShowAIControlFeature() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-126-      return (capabilityType) =>
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:127:        this.isOrganizationReleaseFeature(capabilityType) && this.vcaEventRemoteConfigSettings[capabilityType];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-128-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-129-
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:130:    get hasVcaRemoteConfigSupport() {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:131:      return (capabilityType) => this.vcaEventRemoteConfigSettings[capabilityType];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-132-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-133-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-134-    // Check if dark release feature, remote config of support vca event and ai control settings is enabled
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-144-      const licensePlateRecognitionEmail = this.aiControlSettings?.options?.licensePlateRecognition?.email;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-145-      return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-146-        this.aiControlSettingsAvailable &&
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js:147:        this.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT] &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-148-        enableAgreement &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-149-        licensePlateRecognitionEmail === ''
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.js-150-      );
+--
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:1:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-3-import AIControlPermissionManager from './AIControlPermissionManager';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-4-
+--
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-18-  aiControlSettings = { termsAgreement: null, options: { facialRecognition: { enable: false } } },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-19-  aiControlSettingsAvailable = true,
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-20-  darkReleaseFeatures = { FaceRecognitionEvent: true },
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:21:  vcaEventRemoteConfigSettings = { FaceRecognitionEvent: true },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-22-} = {}) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-23-  const aiControlPermissionManager = new AIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-24-  Object.assign(aiControlPermissionManager, {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-25-    aiControlSettings,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-26-    aiControlSettingsAvailable,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-27-    darkReleaseFeatures,
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:28:    vcaEventRemoteConfigSettings,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-29-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-30-  return aiControlPermissionManager;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-31-}
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-34-  beforeEach(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-35-    vi.clearAllMocks();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-36-  });
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:37:  describe('getVcaEventRemoteConfigSettings', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:38:    it('should call RemoteConfigService.getConfiguration with supportVcaEvent when AIControlPermissionManager get vca event remote config settings', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-39-      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:40:      await aiControlPermissionManager.getVcaEventRemoteConfigSettings();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:41:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(PORTAL_FEATURE_CONFIG_KEY.SUPPORT_VCA_EVENT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-42-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-43-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-44-  describe('getAIControlSettingsAvailable', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:45:    it('should call RemoteConfigService.getConfiguration with supportAiControlSettings when AIControlPermissionManager get ai control settings available', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-46-      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-47-      await aiControlPermissionManager.getAIControlSettingsAvailable();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:48:      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-49-        PORTAL_FEATURE_CONFIG_KEY.SUPPORT_AI_CONTROL_SETTINGS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-50-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-51-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-84-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-85-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-86-  describe('isShowAIControlFeature', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:87:    it('should return true when isOrganizationReleaseFeature and vcaEventRemoteConfigSettings of FaceRecognitionEvent is true', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-88-      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-89-      expect(aiControlPermissionManager.isShowAIControlFeature('FaceRecognitionEvent')).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-90-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-96-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-97-      expect(aiControlPermissionManager.isShowAIControlFeature('FaceRecognitionEvent')).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-98-    });
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:99:    it('should return false when vcaEventRemoteConfigSettings of FaceRecognitionEvent is false', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-100-      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:101:        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-102-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-103-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-104-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-116-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-117-      expect(aiControlPermissionManager.hasVcaEventPermission('FaceRecognitionEvent')).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-118-    });
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:119:    it('should return false when vcaEventRemoteConfigSettings of facialRecognition event is false', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-120-      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:121:        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-122-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-123-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-124-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-165-    it('should return false when aiControlSettingsAvailable is false and isShowAIControlFeature is false', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-166-      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-167-        aiControlSettingsAvailable: false,
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:168:        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-169-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-170-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-171-      });
+--
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-8-  requestToAIServer: vi.fn().mockImplementation(() => Promise.resolve()),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-9-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-10-
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js:11:const MockRemoteConfig = {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-12-  service: {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-13-    getConfiguration: vi.fn().mockReturnValue('https://example.com/data-donation-info'),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-14-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-27-  const defaultMocks = {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-28-    $context: {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-29-      provide: vi.fn((serviceName) => {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js:30:        if (serviceName === 'remoteConfig') {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js:31:          return MockRemoteConfig;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-32-        }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-33-        if (serviceName === 'ApiService') {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.test.js-34-          return MockApiService;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-1-import { describe, it, expect, beforeEach, vi } from 'vitest';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-2-import { STREAM_CONNECTION_STATUS as STATUS, DEVICE_TYPE } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:3:import RemoteConfigService from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-5-// eslint-disable-next-line import/extensions
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-6-import DeviceUserBehaviorTrackingService from './DeviceUserBehaviorTrackingService.js';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-39-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-40-    service = new DeviceUserBehaviorTrackingService(mockReference);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-41-
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js:42:    RemoteConfigService.getConfiguration.mockReturnValue({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-43-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-44-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js-45-  describe('canTrack', () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-5-  DEVICE_TYPE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-6-} from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-7-import { VivotekDeviceServiceInterface as VDSI } from '@vivotek/device';
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js:8:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-9-import { getTagged } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-10-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-11-const Log = getTagged('DeviceUserBehaviorTrackingService');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-33-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-34-  initialTracking(channel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-35-    const allowGroupList =
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js:36:      RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_CONNECTION_TRACKING_MAP) || {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-37-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-38-    this.state.isTracked = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js-39-    this.state.channel = channel;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-5-const { VCA_CAPABILITY_TYPE } = EVENT_TYPE;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-7-const SIDE_MENU_OF_DEVICE_TYPE_MAP = {
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:8:  camera: ({ device, t, supportVcaEvents, canDoDevice, supportList = [], remoteConfig = {} }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-9-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-10-    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-11-    const hasVcaPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS });
+--
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-50-            isSupport:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-51-              hasSettingsPermission &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-52-              device?.services.configurator?.checkSupportFromOptions(DEVICE_SUPPORT_FEATURES.VIDEO_STREAM) &&
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:53:              remoteConfig.isVideoStreamSettingsEnabled &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-54-              supportList.includes(DARK_RELEASE_FEATURES.SETTING_H265),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-55-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-56-          {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-240-    ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-241-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-242-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:243:  nvrchannel: ({ device, t, canDoDevice, remoteConfig = {} }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-244-    const deviceId = device?.deviceId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-245-    const nvrDeviceId = device?.nvr?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-246-    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+--
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-269-            isSupport:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-270-              hasNvrSettingsPermission &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-271-              device?.nvr?.options?.support?.includes(DEVICE_SUPPORT_FEATURES.CHANNEL_FIRMWARE_UPGRADE) &&
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:272:              remoteConfig.isNvrChannelFirmwareManuallyUpdate,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-273-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-274-          {
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-275-            label: t('Camera settings webpage'),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-108-  ADD_DEVICE_MENU_TYPE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-109-  ADD_DEVICE_MENU_LABEL,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-110-} from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue:111:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-112-import { getSdCardStorageCapacityDays } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-113-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-114-import DeleteDeviceDialogue from '@/components/Dialogues/DeleteDeviceDialogue.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-578-/* loading */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-579-const isLoading = ref(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-580-onMounted(() => {
+packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue:581:  allowVssPrompt.value = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-582-  filterSite.value = filterSiteOptions.value.map((group) => group.value);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-583-  isLoading.value = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/reskin/management/index.vue-584-});
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/testHelper.js-8-vi.mock('firebase/app');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/testHelper.js-9-vi.mock('@vivotek/lib-remote-config');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/testHelper.js-10-vi.mock('firebase/remote-config', () => ({
+packages/app-vsaas-portal/src/utils/testHelper.js:11:  getRemoteConfig: vi.fn().mockReturnValue({
+packages/app-vsaas-portal/src/utils/testHelper.js-12-    settings: {
+packages/app-vsaas-portal/src/utils/testHelper.js-13-      minimumFetchIntervalMillis: 0,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/testHelper.js-14-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-115-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-116-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-117-    dataDonationInfoUrl() {
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue:118:      const remoteConfig = this.$context.provide('remoteConfig');
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue:119:      if (!remoteConfig) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-120-        return '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-121-      }
+packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue:122:      const { service, URL_CONFIG_MAP } = remoteConfig;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-123-      return service.getConfiguration(URL_CONFIG_MAP.DATA_DONATION_INFO_URL);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-124-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SendFalseAlarmDialogue.vue-125-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-135-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-136-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-137-import { ViewcellPageLayout, DisplayStreamingBlock, PlayerControl, Timeline } from '@vivotek/advanced-vue-components';
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue:138:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-139-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-140-import RemoteLockControlPopper from '@/components/Poppers/RemoteLockControlPopper.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-141-import SpeakerTalkDownController from '@/components/Speakers/SpeakerTalkDownController.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-246-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-247-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-248-const isNextFrameEnabled = computed(() => {
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue:249:  return RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.FRAME_BY_FRAME);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-250-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-251-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-252-//  ===component composable===
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-76-import { useRouter } from 'vue-router';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-77-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-78-
+packages/app-vsaas-portal/src/pages/upgradePlan/index.vue:79:import RemoteConfigService, { URL_CONFIG_MAP, PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-80-import VendorHelper from '@vivotek/lib-vendor-helper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-81-import { ThemeObserver } from '@vivotek/vue-theme-observer';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-82-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-187-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-188-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-189-onBeforeMount(() => {
+packages/app-vsaas-portal/src/pages/upgradePlan/index.vue:190:  resellerRequestUrl.value = RemoteConfigService.getConfiguration(URL_CONFIG_MAP.RESELLER_REQUEST_URL);
+packages/app-vsaas-portal/src/pages/upgradePlan/index.vue:191:  allowVssPrompt.value = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-192-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-193-</script>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/upgradePlan/index.vue-194-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-1-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-2-import { ref } from 'vue';
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js:3:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-5-import useDeviceDisplay from './useDeviceDisplay';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-6-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-111-    vi.clearAllMocks();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-112-    vi.useFakeTimers();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-113-    mockStore = createMockStore();
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js:114:    RemoteConfigService.getConfiguration.mockImplementation((key) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-115-      if (key === PORTAL_FEATURE_CONFIG_KEY.TALK_DOWN) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-116-        return Promise.resolve(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-117-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-206-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-207-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-208-  it('should not display speaker talk down controller when disabled', async () => {
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js:209:    RemoteConfigService.getConfiguration.mockImplementation((key) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-210-      return Promise.resolve(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-211-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-212-    const { formatedCurrentViewPageDevices } = useDeviceDisplay({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-221-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-222-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-223-  it('should dispatch queryNetworkSpeakers when talk down is enabled', async () => {
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js:224:    RemoteConfigService.getConfiguration.mockResolvedValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-225-    useDeviceDisplay({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-226-      currentView,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-227-      currentCellIndex,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-2-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-3-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-4-import { RECORDING } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js:5:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-7-import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-8-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-94-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-95-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-96-  onBeforeMount(async () => {
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js:97:    isTalkDownEnabled.value = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.TALK_DOWN);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-98-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-99-    if (isTalkDownEnabled.value) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-100-      await store.dispatch('externalDevice/queryNetworkSpeakers');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-10-</template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-11-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-12-<script>
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue:13:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-14-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-15-import v1 from './DeviceSettingsSystemNVRSettings/v1.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-16-import v2 from './DeviceSettingsSystemNVRSettings/v2.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-50-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-51-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-52-  created() {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue:53:    this.capability = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.NVR_FIRMWARE_CAPABILITY);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-54-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-55-    this.isLoading = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemNVRSettingsWrapper.vue-56-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-27-import { computed, onMounted } from 'vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-28-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-29-import { DEVICE_TYPE, DEVICE_SUPPORT_FEATURES } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue:30:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-31-import { DeviceSettingsLayout } from '@vivotek/vue-app-layouts';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-32-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-33-import ChannelFirmwareManagementTable from '@/pages/device/settings/components/ChannelFirmwareManagementTable.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-51-  const isSupportChannelFirmwareUpgrade = props.device.options.support.includes(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-52-    DEVICE_SUPPORT_FEATURES.CHANNEL_FIRMWARE_UPGRADE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-53-  );
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue:54:  const isChannelFirmwareManuallyUpdate = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-55-    PORTAL_FEATURE_CONFIG_KEY.NVR_CHANNEL_FIRMWARE_MANUALLY_UPDATE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-56-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-57-  return isNVR && isSupportChannelFirmwareUpgrade && isChannelFirmwareManuallyUpdate;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-1-import shallowMount from '@/utils/testHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-2-
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js:3:import RemoteConfigService from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-5-import DeviceSettingsSystemMaintenance from './DeviceSettingsSystemMaintenance.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-6-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-45-describe('DeviceSettingsSystemMaintenance', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-46-  beforeEach(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-47-    vi.clearAllMocks();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js:48:    RemoteConfigService.getConfiguration.mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-49-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-50-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.test.js-51-  it('should emit loaded event on mount', () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-109-</template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-110-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-111-<script>
+packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue:112:import RemoteConfigService, { URL_CONFIG_MAP, PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-113-import { LocalTime } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-114-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-115-import SIManagementSendSystemEventEmailTooltip from './SIManagementSendSystemEventEmailTooltip.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-204-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-205-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-206-  created() {
+packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue:207:    this.displayAutoSendSystemEvent = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-208-      PORTAL_FEATURE_CONFIG_KEY.AUTO_SEND_SYSTEM_EVENT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-209-    );
+packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue:210:    this.resellerRequestUrl = RemoteConfigService.getConfiguration(URL_CONFIG_MAP.RESELLER_REQUEST_URL);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-211-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-212-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/SIManagementTable.vue-213-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-127-import { mapState, mapGetters } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-128-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-129-import { DeviceSelectModal, SmartSensorSelectModal, DEVICE_TYPE_CONFIGS } from '@vivotek/advanced-vue-components';
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue:130:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-131-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-132-import DynamicDeviceList from '@/pages/system/components/DynamicDeviceList.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-133-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-220-    this.selectedGroups = this.currentSelectedGroups;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-221-    this.selectedAccessPoints = this.currentSelectedAccessPoints;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-222-    this.selectedSensors = this.currentSelectedSensors;
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue:223:    this.shouldDisplaySensorSources = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-224-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-225-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSource.vue-226-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-308-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-309-import { DeviceEventIndicator } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-310-import { EVENT_TYPE, ACCESS_CONTROL, SMART_SENSOR, DEVICE_TYPE } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:311:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-312-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-313-import AppHint from '@/components/Hints/AppHint.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-314-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-341-  },
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-342-  emits: ['updateSelectedEvents'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-343-  data() {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:344:    const allowVssPrompt = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-345-    return {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-346-      selectedEvents: [],
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-347-      isSelectAllMap: {},
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-476-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-477-      /**
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-478-       * - `LICENSE_PLATE_RECOGNITION` & `FACE_RECOGNITION` are always excluded due to belong to independent tabs.
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:479:       * - remoteConfigAndDarkReleaseEvents is excluded if present in `this.excludeVcaEvents`.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-480-       */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-481-      const filterOutEvents = [VCA_EVENT_TYPE.LICENSE_PLATE_RECOGNITION, VCA_EVENT_TYPE.FACE_RECOGNITION];
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:482:      const remoteConfigAndDarkReleaseEvents = [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-483-        VCA_EVENT_TYPE.SPOT_OCCUPANCY,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-484-        VCA_EVENT_TYPE.PPE_DETECTION,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-485-        VCA_EVENT_TYPE.FALL_DETECTION,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-486-        VCA_EVENT_TYPE.THINK_ALERT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-487-      ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-488-
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:489:      remoteConfigAndDarkReleaseEvents.forEach((event) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-490-        if (this.excludeVcaEvents.includes(event)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-491-          filterOutEvents.push(event);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-492-        }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-633-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-634-  created() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-635-    this.selectedEvents = this.currentSelectedEvents.filter((event) => this.allEvents.includes(event));
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue:636:    this.shouldDisplaySensorEvents = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-637-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-638-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepEvent.vue-639-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-304-  DEVICE_TYPE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-305-  EXTERNAL_DEVICE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-306-} from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue:307:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-308-import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-309-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-310-import ScheduleTable from '@/components/Schedule/index.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-387-  },
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-388-  emits: ['updateAlarmName'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-389-  data() {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue:390:    const allowVssPrompt = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_VSS_PROMPT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-391-    return {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-392-      alarmName: '',
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepSummary.vue-393-      displayScheduleBitwise: null,
+--
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-44-      state: {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-45-        permission: {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-46-          aiControlPermissionManager: {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:47:            hasVcaRemoteConfigSupport: vi.fn(() => true),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-48-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-49-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-50-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-144-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-145-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-146-  it('should exclude Fall and Think from licenseCount when VCA remote config is not supported', () => {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:147:    store.state.permission.aiControlPermissionManager.hasVcaRemoteConfigSupport.mockReturnValue(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-148-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-149-    const { licenseInformationList } = useLicenseInformation();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-150-    const list = licenseInformationList.value;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-85-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-86-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-87-import { THIRD_PARTY_INTEGRATION, SMART_SENSOR, ACCESS_CONTROL } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue:88:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-89-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-90-import ProviderCard from './ProviderCard.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-91-import AddAccessControlIntegrationDialogue from '../AccessControl/AddAccessControlIntegrationDialogue.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-102-const addAccessControlIntegrationDialogueRef = useTemplateRef('addAccessControlIntegrationDialogueRef');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-103-const addSmartSensorIntegrationDialogueRef = useTemplateRef('addSmartSensorIntegrationDialogueRef');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-104-
+packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue:105:const providers = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ACCESS_CONTROL_PROVIDERS);
+packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-106-const supportedAccessControlProviders = ref(providers ? providers.split(',') : Object.values(ACCESS_CONTROL.PROVIDERS));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-107-const shouldDisplaySmartSensor = ref(
+packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue:108:  RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR) || false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-109-);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-110-const isLoading = ref(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/ThirdPartyIntegration/index.vue-111-const selectedIntegrationType = ref('ALL');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-135-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-136-import { SideMenusLayout, FeatureBlockerOverlay, FeatureBlockSideMenusLayout } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-137-import { BLOCK_FEATURE_TYPES } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/system/index.vue:138:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-139-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-140-import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-141-import AuthenticationService from '@/models/Authentication/AuthenticationService';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-366-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-367-  async created() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-368-    this.isFetching = true;
+packages/app-vsaas-portal/src/pages/system/index.vue:369:    this.shouldDisplayAddResellerHint = RemoteConfigService.getConfiguration(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-370-      PORTAL_FEATURE_CONFIG_KEY.ADD_RESELLER_HINT,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-371-    );
+packages/app-vsaas-portal/src/pages/system/index.vue:372:    this.shouldDisplaySmartSensor = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-373-
+packages/app-vsaas-portal/src/pages/system/index.vue-374-    const hasWebhookPermission = !this.isFreePlan && this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_SYSTEM_ALARM });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-375-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-3-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-5-import { EVENT_TYPE } from '@vivotek/const-vsaas';
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:6:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-7-import VendorHelper from '@vivotek/lib-vendor-helper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-8-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-9-import cameraLicenseImage from '@/assets/license_info_1.png';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-78-  };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-79-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-80-  const licenseDataList = computed(() => {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:81:    const aiLicenseRemoteConfigData = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-82-    const advancedAiBundleData = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-83-    let aiLicenseTotalCount = store.getters['license/aiLicensePPECount'] + store.getters['license/aiLicenseLPRCount'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-84-
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:85:    if (RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ADVANCED_AI_BUNDLE)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-86-      advancedAiBundleData.push({
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-87-        type: AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-88-        total: store.getters['license/aiLicenseAdvancedAiBundleCount'],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-92-      aiLicenseTotalCount += store.getters['license/aiLicenseAdvancedAiBundleCount'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-93-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-94-
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:95:    if (aiControlPermissionManager?.value.hasVcaRemoteConfigSupport(VCA_CAPABILITY_TYPE.FALL_DETECTION_EVENT)) {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:96:      aiLicenseRemoteConfigData.push({
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-97-        type: AI_LICENSE_TYPE.FALL,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-98-        label: AI_LICENSE_TYPE.FALL,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-99-        total: store.getters['license/aiLicenseFallCount'],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-103-      aiLicenseTotalCount += store.getters['license/aiLicenseFallCount'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-104-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-105-
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:106:    if (aiControlPermissionManager?.value.hasVcaRemoteConfigSupport(VCA_CAPABILITY_TYPE.THINK_ALERT_EVENT)) {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:107:      aiLicenseRemoteConfigData.push({
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-108-        type: AI_LICENSE_TYPE.THINK_ALERT,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-109-        label: 'Think Alert',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-110-        total: store.getters['license/aiLicenseThinkCount'],
+--
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-263-            total: store.getters['license/aiLicenseLPRCount'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-264-            licenseState: convertHintState(store.getters['license/isAILicenseLPRExpiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-265-          },
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:266:          ...aiLicenseRemoteConfigData,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-267-        ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-268-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-269-    ];
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-7-import { useI18n } from 'vue-i18n';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-8-import { useStore } from 'vuex';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-9-
+packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue:10:import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-11-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-12-import SidebarMenu from '@/components/reskin/SidebarMenu/SidebarMenu.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-13-import { useMixpanel } from '@/composables/useMixpanel/useMixpanel';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-95-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-96-const shouldDisplaySmartSensor = ref(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-97-onBeforeMount(() => {
+packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue:98:  shouldDisplaySmartSensor.value = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.SMART_SENSOR);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-99-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-100-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-212- * LPR/FR options should be displayed if remote config of support vca event is enabled
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-213- */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-214-const displayFacialFeature = computed(() => {
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue:215:  return aiControlPermissionManager.value.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.FACE_RECOGNITION_EVENT];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-216-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-217-const displayLicensePlateFeature = computed(() => {
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue:218:  return aiControlPermissionManager.value.vcaEventRemoteConfigSettings?.[
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-219-    VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-220-  ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-221-});

@@ -1,0 +1,384 @@
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800   1) <template>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800   2)   <div
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800   3)     class="left-navigation-bar"
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800   4)     :class="{ hover: showNavigationBar }"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800   5)     @mouseenter="setShowNavigationBar(true)"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800   6)     @mouseleave="setShowNavigationBar(false)"
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800   7)   >
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800   8)     <div class="navigation-content-wrapper">
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800   9)       <div class="top-button-list">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  10)         <OrganizationNavDropdown ref="OrganizationNavDropdown" />
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  11)         <template
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  12)           v-for="page in pages"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  13)           :key="page"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  14)         >
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  15)           <component
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  16)             :is="getNavigationComponent(page)"
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800  17)             v-if="shouldDisplayLink(page)"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  18)             v-track="getTrackingConfig(page)"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  19)             class="navigation-link"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  20)             :class="page"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  21)             :to="getNavigationLink(page)"
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800  22)           >
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  23)             <div :class="['navigation-button', { disabled: shouldDisableLink(page) }]">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  24)               <SvgIcon
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  25)                 :iconClass="`general_${icons[page]}`"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  26)                 :data-testid="page"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  27)                 size="32px"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  28)                 :disabled="!isLicenseGranted(page)"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  29)               />
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  30)               <div class="label">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  31)                 <h5>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  32)                   {{ pageLabelMap[page] }}
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  33)                 </h5>
+5498f22d72b packages/app-vsaas-portal/src/components/Navigation.vue             (sinjie.wang   2022-11-07 07:36:33 +0000  34)               </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  35)             </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  36) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  37)             <SvgIcon
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  38)               v-if="page === 'system' && shouldShowSystemHintIcon"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  39)               class="warning-icon"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  40)               iconClass="general_hint_solid"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  41)               size="20px"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  42)             />
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  43)           </component>
+5498f22d72b packages/app-vsaas-portal/src/components/Navigation.vue             (sinjie.wang   2022-11-07 07:36:33 +0000  44)         </template>
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800  45)       </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  46) 
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800  47)       <div class="bottom-button-list">
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800  48)         <div
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  49)           v-if="shouldShowUpgradeInfo"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  50)           class="upgrade-info"
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  51)         >
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  52)           <h5 class="upgrade-info-title">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  53)             {{ upgradeInfo.title }}
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  54)           </h5>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  55) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  56)           <div class="upgrade-info-description">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  57)             {{ upgradeInfo.description }}
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  58)           </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  59) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  60)           <div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  61)             <AppUpgradeButton
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  62)               :text="upgradeInfo.buttonText"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  63)               class="upgrade-info-button"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  64)               @click="goToUpgradePlan"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  65)             />
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  66)           </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  67)         </div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  68) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  69)         <div>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  70)           <div
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  71)             v-for="(button, index) in bottomButtons"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  72)             :key="index"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  73)             class="navigation-button"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  74)             @click="buttonClickedCallbackMap[button]()"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  75)           >
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  76)             <SvgIcon
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  77)               :iconClass="translateButtonIcon(button)"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  78)               size="32px"
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  79)             />
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  80)             <div class="label">
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  81)               <h5>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  82)                 {{ buttomLabelMap[button] }}
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  83)               </h5>
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  84)             </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  85)           </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  86)         </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  87)       </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  88)     </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  89)   </div>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  90) </template>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  91) 
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800  92) <script>
+43e5498c523 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Jason.lu      2025-09-10 14:53:56 +0800  93) import { mapState, mapGetters } from 'vuex';
+fb9a46e93b0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Jason.lu      2025-06-13 15:24:43 +0800  94) 
+cda1551dc2b packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-06-11 09:26:11 +0800  95) import { NAVIGATION_TRACKING_MAP } from '@vivotek/const-vsaas';
+fb9a46e93b0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Jason.lu      2025-06-13 15:24:43 +0800  96) import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  97) import VendorHelper from '@vivotek/lib-vendor-helper';
+fb9a46e93b0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Jason.lu      2025-06-13 15:24:43 +0800  98) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800  99) import AppUpgradeButton from '@/components/Buttons/AppUpgradeButton.vue';
+ab2cc0cabeb packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (JasonLiu      2025-06-12 18:24:01 +0800 100) import OrganizationNavDropdown from '@/components/Dropdowns/OrganizationNavDropdown.vue';
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 101) import { PAGES, PAGE_LIST } from '@/constants/Page';
+09e7b9b9012 packages/app-vsaas-portal/src/components/Navigation.vue             (jason.lu      2022-05-06 16:43:28 +0800 102) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 103) export default {
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 104)   name: 'Navigation',
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 105)   components: {
+79ccdeaf01e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2024-02-22 11:51:32 +0800 106)     OrganizationNavDropdown,
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 107)     AppUpgradeButton,
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 108)   },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 109)   data() {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 110)     return {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 111)       indexPage: 'liveview',
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 112)       bottomButtons: ['themes'],
+79ccdeaf01e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2024-02-22 11:51:32 +0800 113)       showNavigationBar: false,
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 114)       isResellerShow: false,
+de62f31011a packages/app-vsaas-portal/src/components/Navigation.vue             (carol.yr.yang 2025-04-07 10:03:11 +0800 115)       isCustomizeViewEnabled: false,
+93e64f7bc67 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-21 16:37:09 +0800 116)       isFloorplanDarkReleaseEnabled: false,
+8db742ffee3 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-03-11 16:57:40 +0800 117)       NAVIGATION_TRACKING_MAP,
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 118)     };
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 119)   },
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 120)   methods: {
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 121)     shouldDisableLink(page) {
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 122)       return !this.isLicenseGranted(page) || !this.canPlanUpdate(`/${page}`);
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 123)     },
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 124)     shouldDisplayLink(page) {
+54f207a9c43 packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-10 11:38:29 +0800 125)       /**
+df6c06ddefb packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-17 13:03:21 +0800 126)        * profile search depends on ai control settings, if user never update FR it should be enabled
+df6c06ddefb packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-17 13:03:21 +0800 127)        * and if user update FR it should according to ai control settings enable or disable
+54f207a9c43 packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-10 11:38:29 +0800 128)        */
+54f207a9c43 packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-10 11:38:29 +0800 129)       if (page === 'profile-search') {
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 130)         return (
+f679e0904e8 packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-09 14:45:09 +0800 131)           this.aiControlPermissionManager.isFacialRecognitionEnable &&
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 132)           this.hasPlanPermission(`/${page}`) &&
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 133)           this.hasPagePermission(`/${page}`)
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 134)         );
+54f207a9c43 packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-03-10 11:38:29 +0800 135)       }
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 136)       return this.hasPlanPermission(`/${page}`) && this.hasPagePermission(`/${page}`);
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 137)     },
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 138)     switchTheme() {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 139)       if (document.body.classList.contains('light')) {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 140)         this.$theme.set('dark');
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 141)       } else {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 142)         this.$theme.set('light');
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 143)       }
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 144)     },
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 145)     setShowNavigationBar(value) {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 146)       if (this.showNavigationBar === value) {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 147)         return;
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 148)       }
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 149)       if (!value) {
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 150)         this.$refs.OrganizationNavDropdown.onDropdownClickaway();
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 151)       }
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 152)       this.showNavigationBar = value;
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 153)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 154)     goToUpgradePlan() {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 155)       this.$router.push({ name: 'UpgradePlan' });
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 156)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 157)     getNavigationLink(page) {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 158)       return this.isLicenseGranted(page) ? `/${page}` : null;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 159)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 160)     getNavigationComponent(page) {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 161)       return this.isLicenseGranted(page) ? 'router-link' : 'div';
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 162)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 163)     getTrackingConfig(page) {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 164)       return this.isLicenseGranted(page) ? { eventName: NAVIGATION_TRACKING_MAP[page] } : {};
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 165)     },
+21c8f17ba12 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-12 00:29:21 +0800 166)   },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 167)   computed: {
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 168)     ...mapState('permission', ['aiControlPermissionManager']),
+9c4c99ccd2e packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-04 17:34:14 +0800 169)     ...mapGetters('permission', ['hasPagePermission', 'hasPlanPermission', 'canPlanUpdate']),
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 170)     ...mapGetters('organization', ['isLicenseGranted', 'isFreePlan']),
+ee1a37c566d packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-08-06 16:36:57 +0800 171)     ...mapGetters('license', ['shouldShowLicenseInformationHint']),
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 172)     ...mapGetters('si', ['getResellerInformation']),
+ee089ab6f58 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-08-05 22:52:03 +0800 173)     ...mapGetters('account', ['isOwner', 'isAdmin']),
+93e64f7bc67 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-21 16:37:09 +0800 174)     ...mapGetters('organization', ['supportList']),
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 175)     pageList() {
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 176)       return PAGE_LIST.filter((page) => {
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 177)         if (page === 'VIEW' && !this.isCustomizeViewEnabled) {
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 178)           return false;
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 179)         }
+93e64f7bc67 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-21 16:37:09 +0800 180)         if (page === 'FLOORPLAN' && !this.isFloorplanDarkReleaseEnabled) {
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 181)           return false;
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 182)         }
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 183)         return true;
+fa0de0a68d0 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-17 11:40:39 +0800 184)       });
+de62f31011a packages/app-vsaas-portal/src/components/Navigation.vue             (carol.yr.yang 2025-04-07 10:03:11 +0800 185)     },
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 186)     shouldShowSystemHint() {
+34dd37905c1 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-08-07 11:07:35 +0800 187)       return (
+34dd37905c1 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-08-07 11:07:35 +0800 188)         (this.isResellerShow && !this.getResellerInformation) ||
+34dd37905c1 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-08-07 11:07:35 +0800 189)         (!this.isFreePlan && this.shouldShowLicenseInformationHint)
+34dd37905c1 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-08-07 11:07:35 +0800 190)       );
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 191)     },
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 192)     shouldShowSystemHintIcon() {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 193)       return this.showNavigationBar && this.shouldShowSystemHint;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 194)     },
+de62f31011a packages/app-vsaas-portal/src/components/Navigation.vue             (carol.yr.yang 2025-04-07 10:03:11 +0800 195)     icons() {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 196)       return this.pageList.reduce((obj, cur) => {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 197)         if (PAGES[cur].path === 'system' && !this.showNavigationBar && this.shouldShowSystemHint) {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 198)           return { ...obj, [PAGES[cur].path]: 'settings_hint_solid' };
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 199)         }
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 200)         return { ...obj, [PAGES[cur].path]: PAGES[cur].icon };
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 201)       }, {});
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 202)     },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 203)     pageLabelMap() {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 204)       const $t = this.$t.bind(this);
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 205)       return PAGE_LIST.reduce((obj, cur) => ({ ...obj, [PAGES[cur].path]: PAGES[cur].i18n($t) }), {});
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 206)     },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 207)     pages() {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 208)       return this.pageList.map((pageName) => PAGES[pageName].path);
+9109a00ca0e packages/app-vsaas-portal/src/components/Navigation.vue             (jason.lu      2022-06-08 18:33:19 +0800 209)     },
+828217fe4c3 packages/app-vsaas-portal/src/components/Navigation.vue             (carol.yr.yang 2024-06-18 11:50:54 +0800 210)     buttonClickedCallbackMap() {
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800 211)       return {
+79ccdeaf01e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2024-02-22 11:51:32 +0800 212)         themes: this.switchTheme,
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800 213)       };
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800 214)     },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 215)     buttomLabelMap() {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 216)       return {
+79ccdeaf01e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2024-02-22 11:51:32 +0800 217)         themes: this.$t('Themes'),
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 218)       };
+ad484d621c9 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2021-05-26 19:03:16 +0800 219)     },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 220)     translateButtonIcon() {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 221)       return (icon) => {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 222)         if (icon === 'themes') {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 223)           return this.$theme.value === 'light' ? 'general_mode_dark' : 'general_mode_light';
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 224)         }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 225)         return `general_${this.icons[icon]}`;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 226)       };
+79ccdeaf01e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2024-02-22 11:51:32 +0800 227)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 228)     shouldShowUpgradeInfo() {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 229)       return this.showNavigationBar && this.isFreePlan && !VendorHelper.isMarchNetworks;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 230)     },
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 231)     upgradeInfo() {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 232)       return {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 233)         title: this.$t('Upgrade your license plan!'),
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 234)         description: this.$t('Explore {productName} license plans and latest package with features', {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 235)           productName: VendorHelper.getVendorConfig().PRODUCT_NAME,
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 236)         }),
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 237)         buttonText: this.$t('Explore plans'),
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 238)       };
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 239)     },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 240)   },
+ee089ab6f58 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-08-05 22:52:03 +0800 241)   async created() {
+62033e764ef packages/app-vsaas-portal/src/components/Navigation.vue             (marco lin     2025-04-09 21:39:05 +0800 242)     this.isCustomizeViewEnabled = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.CUSTOMIZED_VIEW);
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 243)     this.isResellerShow = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ADD_RESELLER_HINT);
+93e64f7bc67 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (WalterWu      2025-11-21 16:37:09 +0800 244)     this.isFloorplanDarkReleaseEnabled = this.supportList.includes('FloorPlan');
+de62f31011a packages/app-vsaas-portal/src/components/Navigation.vue             (carol.yr.yang 2025-04-07 10:03:11 +0800 245)   },
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 246) };
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 247) </script>
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 248) 
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 249) <style lang="less" scoped>
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 250) .left-navigation-bar {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 251)   width: 64px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 252)   box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+4f3850ba61f packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2024-02-07 14:25:32 +0800 253)   margin-right: 2px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 254)   overflow: hidden;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 255)   &.hover {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 256)     overflow: visible;
+718b346ca6a packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Jason.lu      2025-10-29 15:39:22 +0800 257)     z-index: @z-index-navigation;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 258)   }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 259)   .navigation-content-wrapper {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 260)     background-color: @color-navi-surface01;
+e22fc491823 packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-11-09 12:41:33 +0800 261)     box-shadow: 2px 0 6px rgba(0, 0, 0, 0.3);
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 262)     width: 300px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 263)     height: 100%;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 264)     display: flex;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 265)     flex-direction: column;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 266)     justify-content: space-between;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 267)     .top-button-list {
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 268)       display: flex;
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 269)       flex-direction: column;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 270)     }
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 271) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 272)     .bottom-button-list {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 273)       align-items: flex-end;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 274)     }
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 275) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 276)     .top-button-list {
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 277)       > :deep(a) {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 278)         &:hover {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 279)           color: @color-icon04;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 280)           background-color: @color-navi-surface02;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 281)           h5 {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 282)             color: @color-text01;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 283)             font-weight: 600; // semi-bold // 影響不了內部的 h5
+622aa991c9d packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2022-08-18 14:15:04 +0800 284)           }
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 285)           :deep(.svg-icon) {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 286)             color: @color-icon04;
+622aa991c9d packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2022-08-18 14:15:04 +0800 287)           }
+ce1437e7fa2 packages/app-vsaas-portal/src/components/Navigation.vue             (joyce.lan     2021-09-29 14:53:39 +0800 288)         }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 289)         &.active,
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 290)         &.router-link-active,
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 291)         &:active {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 292)           h5 {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 293)             color: @color-text09;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 294)             font-weight: 600; // semi-bold // 影響不了內部的 h5
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 295)           }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 296)           background-color: @color-primary;
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 297)           :deep(.svg-icon) {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 298)             color: @color-icon05;
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 299)           }
+87dde9aacd6 packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2023-09-07 18:23:56 +0800 300)         }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 301)       }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 302)     }
+87dde9aacd6 packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2023-09-07 18:23:56 +0800 303) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 304)     .navigation-button {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 305)       height: 48px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 306)       display: flex;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 307)       align-items: center;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 308)       box-sizing: border-box;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 309)       cursor: pointer;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 310)       .org-icon {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 311)         width: 32px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 312)         height: 32px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 313)         padding: 8px 16px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 314)       }
+622aa991c9d packages/app-vsaas-portal/src/components/Navigation.vue             (pei.hsieh     2022-08-18 14:15:04 +0800 315) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 316)       &.disabled {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 317)         pointer-events: none;
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 318)         .label {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 319)           color: @color-text06;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 320)         }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 321)         .svg-icon {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 322)           color: @color-icon01;
+b90f1bc3951 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2023-12-08 11:23:06 +0800 323)         }
+ce1437e7fa2 packages/app-vsaas-portal/src/components/Navigation.vue             (joyce.lan     2021-09-29 14:53:39 +0800 324)       }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 325) 
+a9ec0af3147 packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-10-19 21:07:40 +0800 326)       :deep(.svg-icon) {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 327)         padding: 8px 16px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 328)         color: @color-icon18;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 329)       }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 330) 
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 331)       .label {
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 332)         cursor: pointer;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 333)         margin-left: 8px;
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 334)       }
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 335)     }
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 336) 
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 337)     .svg-icon.warning-icon {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 338)       margin-right: 16px;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 339)       margin-left: auto;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 340)       color: @color-alert;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 341)     }
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 342)     .navigation-link {
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 343)       display: flex;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 344)       align-items: center;
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 345)     }
+f4132b2b9ac packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Dino Chang    2025-07-30 15:57:21 +0800 346) 
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 347)     .navigation-link:active,
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 348)     .router-link-active {
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 349)       .navigation-button {
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 350)         :deep(.svg-icon) {
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 351)           color: @color-icon05;
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 352)         }
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 353)       }
+34618522928 packages/app-vsaas-portal/src/components/Navigation.vue             (Jan.JE.Lee    2025-01-08 16:42:13 +0800 354)     }
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 355) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 356)     .upgrade-info {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 357)       margin: 16px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 358)       padding: 20px 24px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 359)       background-color: @color-surface27;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 360)       border-radius: 8px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 361) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 362)       &-title {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 363)         font-size: 16px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 364)         font-weight: 600;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 365)         line-height: 100%;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 366)         color: @color-text01;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 367)       }
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 368) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 369)       &-description {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 370)         margin-top: 12px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 371)         font-size: 14px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 372)         font-weight: 400;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 373)         line-height: 130%;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 374)         color: @color-text01;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 375)       }
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 376) 
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 377)       &-button {
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 378)         width: 100%;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 379)         margin-top: 16px;
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 380)       }
+c356da49349 packages/app-vsaas-portal/src/components/Navigations/Navigation.vue (Marco.PH.Lin  2025-09-30 20:24:59 +0800 381)     }
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 382)   }
+863656e56fd packages/app-vsaas-portal/src/components/Navigation.vue             (Jason.lu      2024-02-02 17:11:02 +0800 383) }
+c83e87eaa3e packages/app-vsaas-portal/src/components/Navigation.vue             (Alive.Kuo     2021-05-20 09:58:14 +0800 384) </style>

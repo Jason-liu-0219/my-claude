@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "a42732b8-c8f9-43d3-8cfb-2863db169170",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/a42732b8-c8f9-43d3-8cfb-2863db169170.jsonl",
+      "fileMtime": 1768719407109,
+      "firstPrompt": "No prompt",
+      "messageCount": 2,
+      "created": "2026-01-18T06:56:13.261Z",
+      "modified": "2026-01-18T06:56:47.086Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "0fe16208-0173-4e48-b0bb-6b5f4729dbb0",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/0fe16208-0173-4e48-b0bb-6b5f4729dbb0.jsonl",
+      "fileMtime": 1768719612876,
+      "firstPrompt": "ls",
+      "messageCount": 6,
+      "created": "2026-01-18T06:57:29.793Z",
+      "modified": "2026-01-18T07:00:12.840Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "46130ba2-b7ed-45e0-88b6-475c365b9d80",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/46130ba2-b7ed-45e0-88b6-475c365b9d80.jsonl",
+      "fileMtime": 1768720712127,
+      "firstPrompt": "幫我導航到 youtube 搜尋 lol",
+      "messageCount": 29,
+      "created": "2026-01-18T07:01:17.867Z",
+      "modified": "2026-01-18T07:18:32.062Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "11e00291-3614-46ef-8728-429ca7385c46",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/11e00291-3614-46ef-8728-429ca7385c46.jsonl",
+      "fileMtime": 1768724796005,
+      "firstPrompt": ".serena 幫我在全局的 git 中 disable 不要改到專案",
+      "messageCount": 70,
+      "created": "2026-01-18T07:18:55.749Z",
+      "modified": "2026-01-18T08:26:35.854Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "ceb650c7-ff0f-42fa-b98d-6b95c1a84692",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/ceb650c7-ff0f-42fa-b98d-6b95c1a84692.jsonl",
+      "fileMtime": 1768724847893,
+      "firstPrompt": "幫我確認此檔案有哪些不符合 vue3",
+      "messageCount": 4,
+      "created": "2026-01-18T08:26:48.752Z",
+      "modified": "2026-01-18T08:27:27.877Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    },
+    {
+      "sessionId": "3da1e9ff-a463-4c1e-b5aa-16bedd1e559f",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-webtech-monorepo-packages/3da1e9ff-a463-4c1e-b5aa-16bedd1e559f.jsonl",
+      "fileMtime": 1768724907140,
+      "firstPrompt": "整合 ide",
+      "messageCount": 3,
+      "created": "2026-01-18T08:27:59.535Z",
+      "modified": "2026-01-18T08:28:27.117Z",
+      "gitBranch": "vor-27075",
+      "projectPath": "/Users/liuhanwen/Desktop/project/webtech-monorepo/packages",
+      "isSidechain": false
+    }
+  ]
+}

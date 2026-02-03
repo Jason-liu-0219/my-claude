@@ -1,0 +1,359 @@
+import getters from './getters';
+import mutations from './mutations';
+
+vi.mock('@vivotek/threadable-canvas', () => ({}));
+
+vi.mock('@vivotek/lib-remote-config', () => {
+  return {
+    default: {
+      getConfiguration: vi.fn().mockImplementation((key) => {
+        switch (key) {
+          case 'feature_disable_speed_dome_vca_settings_models':
+            return ['SD834-EHL', 'YOUR_DEVICE_MODEL'];
+          case 'feature_api_key':
+            return true;
+          case 'feature_audit_log':
+            return true;
+          default:
+            return true;
+        }
+      }),
+    },
+    PORTAL_FEATURE_CONFIG_KEY: {
+      DISABLE_SPEED_DOMES: 'feature_disable_speed_dome_vca_settings_models',
+      API_KEY: 'feature_api_key',
+      AUDIT_LOG: 'feature_audit_log',
+    },
+  };
+});
+
+vi.mock('@vivotek/device/vsaasCamera', () => {
+  const v = function v(o) {
+    this.options = {};
+    this.services = {};
+
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId' || key === 'mac') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.install = vi.fn().mockImplementation((services) => {
+      services.forEach((item) => {
+        this.services[item.name] = item;
+      });
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+  };
+  return {
+    default: v,
+  };
+});
+
+vi.mock('@vivotek/device/vsaasNVR', () => {
+  const v = function v(o) {
+    this.options = {};
+    this.services = {};
+
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId' || key === 'mac') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+    this.install = vi.fn().mockImplementation((services) => {
+      services.forEach((item) => {
+        this.services[item.name] = item;
+      });
+    });
+  };
+  return {
+    default: v,
+  };
+});
+
+vi.mock('@vivotek/device/vsaasNVRCamera', () => {
+  const v = function v(o) {
+    this.options = {};
+    Object.entries(o).forEach(([key, value]) => {
+      if (key === 'deviceId' || key === 'mac' || key === 'nvrMac') {
+        this[key] = value;
+      }
+      this.options[key] = value;
+    });
+    this.injectDependencies = vi.fn().mockImplementation(() => this);
+    this.nvr = o.nvr.options;
+  };
+
+  return {
+    default: v,
+  };
+});
+
+const mockNVR = {
+  deviceId: 'thing:nvr',
+  derivant: 'nvr',
+  name: 'name',
+  city: 'city',
+  mac: 'deviceNVR',
+  siteID: 'groupId',
+  thingName: 'thing',
+  type: 'nvr',
+  plan: 'paid',
+};
+const mockCamera = {
+  deviceId: 'thing:derivant',
+  derivant: 'derivant',
+  name: 'name',
+  city: 'city',
+  mac: 'deviceA',
+  siteID: 'groupId',
+  thingName: 'thing',
+  type: 'camera',
+  plan: 'paid',
+};
+const mockChannel = {
+  deviceId: 'thing:channel1',
+  derivant: 'channel1',
+  name: 'name1',
+  city: 'city',
+  mac: 'deviceChannel',
+  siteID: 'groupId',
+  thingName: 'thing',
+  type: 'nvrchannel',
+  nvrMac: 'deviceNVR',
+  nvr: mockNVR,
+  plan: 'paid',
+};
+const mockDevices = {
+  camera: mockCamera,
+  nvr: mockNVR,
+  nvrCh1: mockChannel,
+};
+
+describe('getters', () => {
+  const state = {
+    uninitializedDevices: {},
+    deviceMap: {
+      camera: new Map(),
+      nvr: new Map(),
+      nvrchannel: new Map(),
+      bridge: new Map(),
+    },
+  };
+
+  beforeAll(() => {
+    mutations.setDevices(state, { items: Object.values(mockDevices), plan: 'paid' });
+  });
+  afterEach(() => {});
+
+  describe('availableDevices', () => {
+    it('should return device value', () => {
+      const result = getters.availableDevices(state);
+      Object.values(mockDevices).forEach((device) => {
+        expect(result.some((item) => device.deviceId === item.deviceId)).toStrictEqual(true);
+      });
+    });
+  });
+  describe('availableNVRDevices', () => {
+    it('should return nvr device value', () => {
+      const mockGetters = {};
+      mockGetters.availableDevices = getters.availableDevices(state);
+      mockGetters.availableNVRCameraDevices = getters.availableNVRCameraDevices(state, mockGetters);
+
+      const availableNVRDevices = getters.availableNVRDevices(state, mockGetters);
+      expect(availableNVRDevices.length).toStrictEqual(1);
+
+      const idx = availableNVRDevices.findIndex((item) => mockNVR.deviceId === item.deviceId);
+
+      expect(idx).not.toBe(-1);
+
+      expect(availableNVRDevices[idx].channels.length).toStrictEqual(1);
+      expect(availableNVRDevices[idx].options).toStrictEqual(mockNVR);
+    });
+  });
+  describe('availableCameraDevices', () => {
+    it('should return nvr and vsaas device value', () => {
+      const mockGetters = {};
+      const rootGetters = {
+        'organization/currentOrganization': {
+          isFreePlan: false,
+        },
+      };
+
+      mockGetters.availableDevices = getters.availableDevices(state);
+
+      const result = getters.availableCameraDevices(state, mockGetters, null, rootGetters);
+      expect(result.length).toStrictEqual(2);
+      const camIdx = result.findIndex((item) => mockCamera.deviceId === item.deviceId);
+      expect(camIdx).not.toBe(-1);
+      expect(result[camIdx].options).toStrictEqual(mockCamera);
+      const channelIdx = result.findIndex((item) => mockChannel.deviceId === item.deviceId);
+      expect(channelIdx).not.toBe(-1);
+      expect(result[channelIdx].options).toStrictEqual(mockChannel);
+    });
+  });
+  describe('availableNVRCameraDevices', () => {
+    it('should return nvr channel device value', () => {
+      const mockGetters = {};
+      mockGetters.availableDevices = getters.availableDevices(state);
+
+      const result = getters.availableNVRCameraDevices(state, mockGetters);
+      expect(result.length).toStrictEqual(1);
+      const idx = result.findIndex((item) => mockChannel.deviceId === item.deviceId);
+      expect(idx).not.toBe(-1);
+      expect(result[idx].options).toStrictEqual(mockChannel);
+    });
+  });
+  describe('availableVsaasCameraDevices', () => {
+    it('should return vsaas camera device value', () => {
+      const mockGetters = {};
+      mockGetters.availableDevices = getters.availableDevices(state);
+
+      const result = getters.availableVsaasCameraDevices(state, mockGetters);
+      expect(result.length).toStrictEqual(1);
+      const idx = result.findIndex((item) => mockCamera.deviceId === item.deviceId);
+      expect(idx).not.toBe(-1);
+      expect(result[idx].options).toStrictEqual(mockCamera);
+    });
+  });
+  describe('deviceCount', () => {
+    it('should return device count of all store device', () => {
+      const mockGetters = {
+        availableDevices: getters.availableDevices(state),
+      };
+      mockGetters.deviceCount = getters.deviceCount(state, mockGetters);
+
+      expect(mockGetters.deviceCount).toEqual(Object.values(mockDevices).length);
+    });
+  });
+  describe('getDeviceGroupId', () => {
+    it('should return device group id of selected device', () => {
+      const $_getters = {
+        allDevicesMap: getters.allDevicesMap(state),
+      };
+      const result = getters.getDeviceGroupId(state, $_getters)(mockCamera.deviceId);
+      expect(result).toEqual(mockCamera.siteID);
+    });
+  });
+  describe('getDeviceByMac', () => {
+    it('should return device value of device selected by mac', () => {
+      const mockGetters = {};
+      mockGetters.availableDevices = getters.availableDevices(state);
+      const result = getters.getDeviceByMac(state, mockGetters)(mockCamera.mac);
+      expect(result.options).toEqual(mockCamera);
+    });
+  });
+  describe('filteredDevices', () => {
+    it('should return devices with display name containing searchText', () => {
+      const $_getters = {
+        availableDevices: [{ displayName: 'test11' }, { displayName: 'test12' }, { displayName: 'test33' }],
+      };
+      const result = getters.filteredDevices(null, $_getters)('test1');
+
+      expect(result).toEqual([{ displayName: 'test11' }, { displayName: 'test12' }]);
+    });
+  });
+  describe('groupDevicesMap', () => {
+    it('should return ', () => {
+      const $_getters = {
+        availableCameraDevices: [
+          {
+            options: {
+              siteID: 'group2',
+            },
+          },
+          {
+            options: {
+              siteID: 'group1',
+            },
+          },
+        ],
+      };
+      const result = getters.groupDevicesMap(null, $_getters);
+
+      expect(Object.values(result).length).toBe(2);
+      expect(result.group1.length).toBe(1);
+    });
+  });
+  describe('getDeviceByKey', () => {
+    const $_getters = {
+      availableDevices: [{ options: { mac: 'mac1', derivant: 'none' } }, { options: { mac: 'mac2', derivant: 'ch0' } }],
+    };
+
+    it('should return device which matchs input mac and derivant', () => {
+      const result = getters.getDeviceByKey(null, $_getters)('mac1', 'none');
+
+      expect(result).toEqual({ options: { mac: 'mac1', derivant: 'none' } });
+    });
+
+    it('should return undefined when finding nothing', () => {
+      const result = getters.getDeviceByKey(null, $_getters)('mac2', 'none');
+
+      expect(result).toEqual(undefined);
+    });
+  });
+  describe('firmwareUpdateRequiredDevices', () => {
+    it('should return devices that need update firmware', () => {
+      const mockGetters = {
+        availableCameraDevices: [
+          {
+            thingName: 'mockThingName1',
+            options: {
+              derivant: 'mockDerivant1',
+            },
+          },
+          {
+            thingName: 'mockThingName2',
+            options: {
+              derivant: 'mockDerivant2',
+            },
+          },
+        ],
+      };
+      const mockState = {
+        outdatedFirmwareDeviceList: [
+          {
+            thingName: 'mockThingName1',
+            derivant: 'mockDerivant1',
+          },
+        ],
+      };
+      mockGetters.firmwareUpdateRequiredDevices = getters.firmwareUpdateRequiredDevices(mockState, mockGetters);
+      expect(mockGetters.firmwareUpdateRequiredDevices.length).toStrictEqual(1);
+    });
+  });
+  describe('getDeviceAssociatedSpeakers', () => {
+    it('should return associated speakers of selected device', () => {
+      const mockAvailableNetworkSpeakers = [
+        {
+          mac: 'speakerMac1',
+          services: {
+            networkSpeakerSystem: {
+              associatedDevices: [
+                { thingName: 'thingName1', derivant: 'mockDerivant1' },
+                { thingName: 'thingName2', derivant: 'mockDerivant2' },
+              ],
+            },
+          },
+        },
+        {
+          mac: 'speakerMac2',
+          services: {
+            networkSpeakerSystem: {
+              associatedDevices: [{ thingName: 'thingName1', derivant: 'mockDerivant1' }],
+            },
+          },
+        },
+      ];
+
+      const mockRootGetters = {
+        'externalDevice/availableNetworkSpeakers': mockAvailableNetworkSpeakers,
+      };
+      const selectedDevice = { deviceId: 'thingName1:mockDerivant1' };
+      const result = getters.getDeviceAssociatedSpeakers({}, {}, {}, mockRootGetters)(selectedDevice);
+      expect(result).toEqual(mockAvailableNetworkSpeakers);
+    });
+  });
+});

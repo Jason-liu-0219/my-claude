@@ -1,0 +1,120 @@
+import { computed, getCurrentInstance, useTemplateRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { USER_ROLE, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+
+/**
+ * Helper composable for user MFA and action management
+ *
+ * @param {Object} user - User object
+ * @param {Ref<boolean>} enableMFA - Whether MFA is enabled
+ * @returns {Object} Helper methods and computed properties
+ */
+const useUserMFAHelper = (props, enableMFA) => {
+  const { proxy } = getCurrentInstance();
+  const store = useStore();
+  const { t } = useI18n();
+
+  const resetMFADialogue = useTemplateRef('resetMFADialogue');
+  const changeUsernameDialogue = useTemplateRef('changeUsernameDialogue');
+  const grantUserAdminDialogue = useTemplateRef('grantUserAdminDialogue');
+  const revokeUserAdminDialogue = useTemplateRef('revokeUserAdminDialogue');
+  const removeUserDialogue = useTemplateRef('removeUserDialogue');
+
+  const onClickRemoveUser = () => {
+    removeUserDialogue.value.show();
+  };
+  const onClickGrantUserAdmin = () => {
+    grantUserAdminDialogue.value.show();
+  };
+  const onClickRevokeUserAdmin = () => {
+    revokeUserAdminDialogue.value.show();
+  };
+  const onClickResetUserMFA = () => {
+    resetMFADialogue.value.show();
+    proxy.$mixpanel.track(TRACK_EVENT_KEY.USERS_REST_MFA);
+  };
+  const onClickEditUsername = () => {
+    changeUsernameDialogue.value.show();
+  };
+
+  const isAdmin = computed(() => {
+    return store.getters['account/isAdmin'];
+  });
+  const isOwner = computed(() => {
+    return store.getters['account/isOwner'];
+  });
+  const isFreePlan = computed(() => {
+    return store.getters['organization/isFreePlan'];
+  });
+
+  const hasUpdateUserPermission = computed(() => {
+    return store.getters['permission/canUpdate']('user');
+  });
+  const hasDeleteUserPermission = computed(() => {
+    return store.getters['permission/canDelete']('user');
+  });
+
+  const enableResetMFA = computed(() => {
+    return isAdmin.value || isOwner.value;
+  });
+
+  /**
+   * Computed property to check if user has any actions available
+   */
+  const moreActions = computed(() => {
+    const { isCurrentUser, isOwner: userIsOwner, isAdmin: userIsAdmin } = props.user;
+    const actions = [
+      {
+        name: t('Edit username'),
+        classList: [''],
+        action: onClickEditUsername,
+      },
+    ];
+
+    if (hasUpdateUserPermission.value && !userIsOwner && !isFreePlan.value) {
+      actions.push({
+        name: userIsAdmin ? t('Remove organization admin') : t('Make organization admin'),
+        classList: [''],
+        action: userIsAdmin ? onClickRevokeUserAdmin : onClickGrantUserAdmin,
+        disabled: isCurrentUser,
+      });
+    }
+    if (hasDeleteUserPermission.value && !userIsOwner) {
+      actions.push({
+        name: t('Remove this user'),
+        classList: ['danger'],
+        action: onClickRemoveUser,
+        disabled: isCurrentUser,
+      });
+    }
+    if (enableResetMFA.value) {
+      if (actions.length) {
+        actions.push({
+          classList: ['separator', 'border-separator'],
+        });
+      }
+      actions.push({
+        name: t('Reset MFA'),
+        classList: [''],
+        action: onClickResetUserMFA,
+        disabled: !enableMFA.value,
+      });
+    }
+    return actions;
+  });
+
+  const enableMoreActions = computed(() => {
+    return !!(!props.user.isCurrentUser && moreActions.value.length);
+  });
+
+  const showRoleTag = computed(() => {
+    return [USER_ROLE.OWNER, USER_ROLE.ADMIN].includes(props.user?.role);
+  });
+
+  const confirmChangeUsername = async (username) => {
+    try {
+      await store.dispatch('user/updateOrganizationUsername', { email: props.user.email, username });
+      changeUsernameDialogue.value.confirmUsernameDone();
+    } catch (error) {

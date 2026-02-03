@@ -1,0 +1,1266 @@
+2026-01-18T07:00:47.438Z [DEBUG] Watching for changes in setting files /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/.claude...
+2026-01-18T07:00:47.440Z [DEBUG] [init] configureGlobalMTLS starting
+2026-01-18T07:00:47.440Z [DEBUG] [init] configureGlobalMTLS complete
+2026-01-18T07:00:47.440Z [DEBUG] [init] configureGlobalAgents starting
+2026-01-18T07:00:47.440Z [DEBUG] [init] configureGlobalAgents complete
+2026-01-18T07:00:47.445Z [DEBUG] [LSP MANAGER] initializeLspServerManager() called
+2026-01-18T07:00:47.445Z [DEBUG] [LSP MANAGER] Created manager instance, state=pending
+2026-01-18T07:00:47.445Z [DEBUG] [LSP MANAGER] Starting async initialization (generation 1)
+2026-01-18T07:00:47.447Z [DEBUG] Applying permission update: Adding 40 allow rule(s) to destination 'localSettings': ["WebSearch","WebFetch(domain:simonbs.dev)","WebFetch(domain:www.anthropic.com)","WebFetch(domain:wendyliga.com)","WebFetch(domain:peterfriese.dev)","WebFetch(domain:medium.com)","WebFetch(domain:apidog.com)","WebFetch(domain:ronnierocha.dev)","WebFetch(domain:blog.akring.com)","WebFetch(domain:openrouter.ai)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/core/device/streaming/**)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/core/device/**)","Read(//Users/liuhanwen/Desktop/project/webtech-monorepo/**)","Read(//Users/liuhanwen/Library/**)","Bash(test -f:*)","Read(//Users/liuhanwen/.config/**)","Bash(claude mcp list:*)","Bash(cat:*)","Bash(curl:*)","Bash(sh)","Bash(export PATH=\"$HOME/.local/bin:$PATH\")","Bash(uvx:*)","Read(//Users/liuhanwen/**)","Bash(pnpm list:*)","Bash(pnpm test:unit:*)","mcp__serena__find_symbol","mcp__serena__activate_project","mcp__serena__get_current_config","Bash(nvm install:*)","Bash(nvm alias:*)","Bash(nvm current:*)","Bash(source ~/.nvm/nvm.sh)","Bash(nvm use:*)","mcp__chrome-devtools__list_pages","mcp__chrome-devtools__navigate_page","mcp__chrome-devtools__list_console_messages","mcp__chrome-devtools__list_network_requests","mcp__chrome-devtools__take_screenshot","mcp__chrome-devtools__take_snapshot","Bash(rm:*)"]
+2026-01-18T07:00:47.447Z [DEBUG] [STARTUP] Loading MCP configs...
+2026-01-18T07:00:47.458Z [DEBUG] Found 0 plugins (0 enabled, 0 disabled)
+2026-01-18T07:00:47.458Z [DEBUG] Total LSP servers loaded: 0
+2026-01-18T07:00:47.458Z [DEBUG] [LSP SERVER MANAGER] getAllLspServers returned 0 server(s)
+2026-01-18T07:00:47.458Z [DEBUG] LSP manager initialized with 0 servers
+2026-01-18T07:00:47.458Z [DEBUG] [STARTUP] MCP configs loaded in 11ms
+2026-01-18T07:00:47.458Z [DEBUG] LSP server manager initialized successfully
+2026-01-18T07:00:47.458Z [DEBUG] LSP notification handlers registered successfully for all 0 server(s)
+2026-01-18T07:00:47.459Z [DEBUG] [STARTUP] Running setup()...
+2026-01-18T07:00:47.460Z [DEBUG] Stats cache does not exist, returning empty cache
+2026-01-18T07:00:47.460Z [DEBUG] Stats cache empty, processing all historical data in background
+2026-01-18T07:00:47.463Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-01-18T07:00:47.464Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-01-18T07:00:47.467Z [DEBUG] installed_plugins.json doesn't exist, returning empty V2 object
+2026-01-18T07:00:47.478Z [DEBUG] Error log sink initialized
+2026-01-18T07:00:47.481Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude/todos/46130ba2-b7ed-45e0-88b6-475c365b9d80-agent-46130ba2-b7ed-45e0-88b6-475c365b9d80.json.tmp.19379.1768719647481
+2026-01-18T07:00:47.481Z [DEBUG] Temp file written successfully, size: 2 bytes
+2026-01-18T07:00:47.481Z [DEBUG] Renaming /Users/liuhanwen/.claude/todos/46130ba2-b7ed-45e0-88b6-475c365b9d80-agent-46130ba2-b7ed-45e0-88b6-475c365b9d80.json.tmp.19379.1768719647481 to /Users/liuhanwen/.claude/todos/46130ba2-b7ed-45e0-88b6-475c365b9d80-agent-46130ba2-b7ed-45e0-88b6-475c365b9d80.json
+2026-01-18T07:00:47.481Z [DEBUG] File /Users/liuhanwen/.claude/todos/46130ba2-b7ed-45e0-88b6-475c365b9d80-agent-46130ba2-b7ed-45e0-88b6-475c365b9d80.json written atomically
+2026-01-18T07:00:47.486Z [DEBUG] getPluginSkills: Processing 0 enabled plugins
+2026-01-18T07:00:47.486Z [DEBUG] Total plugin skills loaded: 0
+2026-01-18T07:00:47.486Z [DEBUG] Total plugin commands loaded: 0
+2026-01-18T07:00:47.486Z [DEBUG] Registered 0 hooks from 0 plugins
+2026-01-18T07:00:47.487Z [DEBUG] [STARTUP] setup() completed in 28ms
+2026-01-18T07:00:47.487Z [DEBUG] [STARTUP] Loading commands and agents...
+2026-01-18T07:00:47.491Z [DEBUG] Total plugin agents loaded: 0
+2026-01-18T07:00:47.491Z [DEBUG] Loaded 0 unique skills (managed: 0, user: 0, project: 0, legacy commands: 0)
+2026-01-18T07:00:47.491Z [DEBUG] getSkills returning: 0 skill dir commands, 0 plugin skills, 0 bundled skills
+2026-01-18T07:00:47.491Z [DEBUG] [STARTUP] Commands and agents loaded in 4ms
+2026-01-18T07:00:47.491Z [DEBUG] [STARTUP] Running showSetupScreens()...
+2026-01-18T07:00:47.492Z [DEBUG] [render] initYoga starting
+2026-01-18T07:00:47.510Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default, Profile 1, Profile 4, Profile 5
+2026-01-18T07:00:47.513Z [DEBUG] [render] initYoga complete
+2026-01-18T07:00:47.517Z [DEBUG] [keybindings] KeybindingSetup initialized with 45 bindings, 0 warnings
+2026-01-18T07:00:47.554Z [DEBUG] [Perfetto] initializePerfettoTracing called, env value: undefined
+2026-01-18T07:00:47.554Z [DEBUG] Grove: Using fresh cached config
+2026-01-18T07:00:47.554Z [DEBUG] [render] initYoga starting
+2026-01-18T07:00:47.555Z [DEBUG] [render] initYoga complete
+2026-01-18T07:00:47.557Z [DEBUG] [Claude in Chrome] Extension fcoeoabgfenejglbffodgkkbkcdhcgfn found in chrome Default
+2026-01-18T07:00:47.559Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-01-18T07:00:47.561Z [DEBUG] Ripgrep first use test: PASSED (mode=builtin, path=/Users/liuhanwen/.nvm/versions/node/v22.21.0/lib/node_modules/@anthropic-ai/claude-code/vendor/ripgrep/arm64-darwin/rg)
+2026-01-18T07:00:47.564Z [DEBUG] [keybindings] KeybindingSetup initialized with 45 bindings, 0 warnings
+2026-01-18T07:00:47.576Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-01-18T07:00:47.576Z [DEBUG] Git remote URL: git@github.com:Jason-liu-0219/webtech-monorepo.git
+2026-01-18T07:00:47.576Z [DEBUG] Parsed repository: Jason-liu-0219/webtech-monorepo from git@github.com:Jason-liu-0219/webtech-monorepo.git
+2026-01-18T07:00:47.576Z [DEBUG] Parsed repository: Jason-liu-0219/webtech-monorepo from URL: git@github.com:Jason-liu-0219/webtech-monorepo.git
+2026-01-18T07:00:47.577Z [DEBUG] Path /Users/liuhanwen/Desktop/project/webtech-monorepo/packages already tracked for repo jason-liu-0219/webtech-monorepo
+2026-01-18T07:00:47.829Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719647829
+2026-01-18T07:00:47.829Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:00:47.830Z [DEBUG] Temp file written successfully, size: 5658 bytes
+2026-01-18T07:00:47.830Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:00:47.830Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719647829 to /Users/liuhanwen/.claude.json
+2026-01-18T07:00:47.830Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:00:48.405Z [DEBUG] [STARTUP] showSetupScreens() completed in 914ms
+2026-01-18T07:00:48.406Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:00:48.406Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:00:48.406Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-01-18T07:00:48.411Z [DEBUG] MCP server "claude-in-chrome": Starting connection with timeout of 30000ms
+2026-01-18T07:00:48.414Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:00:48.414Z [DEBUG] Initialized versioned plugins system with 0 plugins
+2026-01-18T07:00:48.417Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719648417
+2026-01-18T07:00:48.417Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:00:48.417Z [DEBUG] Temp file written successfully, size: 5658 bytes
+2026-01-18T07:00:48.417Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:00:48.417Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719648417 to /Users/liuhanwen/.claude.json
+2026-01-18T07:00:48.417Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:00:48.419Z [DEBUG] Getting matching hook commands for SessionStart with query: startup
+2026-01-18T07:00:48.419Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:00:48.419Z [DEBUG] Matched 0 unique hooks for query "startup" (0 before deduplication)
+2026-01-18T07:00:48.420Z [DEBUG] [render] initYoga starting
+2026-01-18T07:00:48.420Z [DEBUG] [render] initYoga complete
+2026-01-18T07:00:48.427Z [DEBUG] [keybindings] KeybindingSetup initialized with 45 bindings, 0 warnings
+2026-01-18T07:00:48.453Z [DEBUG] [keybindings] Skipping file watcher - user customization disabled
+2026-01-18T07:00:48.453Z [DEBUG] [REPL:mount] REPL mounted, disabled=false
+2026-01-18T07:00:48.454Z [DEBUG] Official marketplace auto-install skipped: already_attempted
+2026-01-18T07:00:48.454Z [DEBUG] performStartupChecks called
+2026-01-18T07:00:48.454Z [DEBUG] Starting background plugin installations
+2026-01-18T07:00:48.454Z [DEBUG] performBackgroundPluginInstallations called
+2026-01-18T07:00:48.477Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:00:48.485Z [DEBUG] Setting installation status: 0 marketplaces, 0 installable plugins, 0 uninstallable plugins
+2026-01-18T07:00:48.486Z [DEBUG] Loaded plugins - Enabled: 0, Disabled: 0, Commands: 0, Agents: 0, Errors: 0
+2026-01-18T07:00:48.498Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default, Profile 1, Profile 4, Profile 5
+2026-01-18T07:00:48.500Z [DEBUG] [Claude in Chrome] Extension fcoeoabgfenejglbffodgkkbkcdhcgfn found in chrome Default
+2026-01-18T07:00:48.505Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719648505
+2026-01-18T07:00:48.505Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:00:48.505Z [DEBUG] Temp file written successfully, size: 5658 bytes
+2026-01-18T07:00:48.505Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:00:48.505Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719648505 to /Users/liuhanwen/.claude.json
+2026-01-18T07:00:48.505Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:00:48.941Z [DEBUG] MCP server "claude-in-chrome": Successfully connected to stdio server in 533ms
+2026-01-18T07:00:48.941Z [DEBUG] MCP server "claude-in-chrome": Connection established with capabilities: {"hasTools":true,"hasPrompts":false,"hasResources":false,"serverVersion":{"name":"Claude in Chrome","version":"1.0.0"}}
+2026-01-18T07:00:48.946Z [DEBUG] Auto tool search disabled: 0 chars (threshold: 50000, 10% of context)
+2026-01-18T07:00:48.949Z [DEBUG] Skills and commands included in Skill tool:
+2026-01-18T07:00:48.950Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:00:48.950Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:00:48.950Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:00:49.806Z [DEBUG] Successfully refreshed marketplace: claude-plugins-official
+2026-01-18T07:00:49.806Z [DEBUG] Plugin autoupdate: checking installed plugins
+2026-01-18T07:00:54.043Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.078Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.111Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.144Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.177Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.210Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.243Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.276Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.308Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.340Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.373Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.405Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.437Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.469Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.501Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.534Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.566Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.598Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.630Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.662Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.695Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.727Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.759Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:54.782Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:00:55.451Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:55.493Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:55.525Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:55.557Z [DEBUG] High write ratio: blit=540, write=674 (55.5% writes), screen=14x135
+2026-01-18T07:00:55.590Z [DEBUG] High write ratio: blit=540, write=658 (54.9% writes), screen=14x135
+2026-01-18T07:00:55.622Z [DEBUG] High write ratio: blit=540, write=658 (54.9% writes), screen=14x135
+2026-01-18T07:00:55.655Z [DEBUG] High write ratio: blit=540, write=658 (54.9% writes), screen=14x135
+2026-01-18T07:00:55.688Z [DEBUG] High write ratio: blit=540, write=658 (54.9% writes), screen=14x135
+2026-01-18T07:00:55.720Z [DEBUG] High write ratio: blit=540, write=806 (59.9% writes), screen=14x135
+2026-01-18T07:00:55.754Z [DEBUG] High write ratio: blit=540, write=806 (59.9% writes), screen=14x135
+2026-01-18T07:00:55.787Z [DEBUG] High write ratio: blit=540, write=806 (59.9% writes), screen=14x135
+2026-01-18T07:00:55.819Z [DEBUG] High write ratio: blit=540, write=806 (59.9% writes), screen=14x135
+2026-01-18T07:00:55.851Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:55.885Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:55.917Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:55.949Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:55.981Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.013Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.046Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.078Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.111Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.143Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.176Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.208Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.241Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.273Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.305Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.337Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.369Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.402Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.434Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.467Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.500Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.564Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.597Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.630Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.662Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.694Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.726Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.758Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.790Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.822Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.854Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.887Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.920Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.952Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:56.984Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:57.016Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:57.048Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:57.082Z [DEBUG] High write ratio: blit=540, write=692 (56.2% writes), screen=14x135
+2026-01-18T07:00:57.107Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:00:57.107Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:00:57.107Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default, Profile 1, Profile 4, Profile 5
+2026-01-18T07:00:57.107Z [DEBUG] [Claude in Chrome] Extension fcoeoabgfenejglbffodgkkbkcdhcgfn found in chrome Default
+2026-01-18T07:01:02.222Z [DEBUG] High write ratio: blit=671, write=784 (53.9% writes), screen=28x135
+2026-01-18T07:01:02.223Z [DEBUG] [Claude in Chrome] Detected browser: Google Chrome
+2026-01-18T07:01:02.225Z [DEBUG] [Claude in Chrome] Found chrome profiles: Default, Profile 1, Profile 4, Profile 5
+2026-01-18T07:01:02.225Z [DEBUG] [Claude in Chrome] Extension fcoeoabgfenejglbffodgkkbkcdhcgfn found in chrome Default
+2026-01-18T07:01:17.878Z [DEBUG] FileHistory: Added snapshot for cba8f7ab-9f30-46ce-8e34-0f65a14502b3, tracking 0 files
+2026-01-18T07:01:17.887Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:01:17.896Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:01:17.901Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:01:18.066Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719678066
+2026-01-18T07:01:18.066Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:01:18.066Z [DEBUG] Temp file written successfully, size: 5699 bytes
+2026-01-18T07:01:18.066Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:01:18.066Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719678066 to /Users/liuhanwen/.claude.json
+2026-01-18T07:01:18.066Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:01:18.072Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719678072
+2026-01-18T07:01:18.072Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:01:18.073Z [DEBUG] Temp file written successfully, size: 5721 bytes
+2026-01-18T07:01:18.073Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:01:18.073Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719678072 to /Users/liuhanwen/.claude.json
+2026-01-18T07:01:18.073Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:01:28.510Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:01:37.618Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:01:37.618Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:01:37.618Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:01:37.618Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:01:37.634Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:01:37.634Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:37.634Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:01:37.635Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:01:37.635Z [DEBUG] FileHistory: Making snapshot for message a5c1d0e8-4e81-43a3-b065-fc225f2f18ab
+2026-01-18T07:01:37.636Z [DEBUG] FileHistory: Added snapshot for a5c1d0e8-4e81-43a3-b065-fc225f2f18ab, tracking 0 files
+2026-01-18T07:01:37.641Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:01:37.645Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:01:37.645Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:01:37.645Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:01:37.647Z [DEBUG] Total plugin output styles loaded: 0
+2026-01-18T07:01:37.661Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:01:37.670Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:01:37.670Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:01:37.670Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:01:38.549Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:01:39.487Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:01:40.440Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:01:40.839Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:01:42.023Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__tabs_context_mcp
+2026-01-18T07:01:42.027Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__tabs_context_mcp
+2026-01-18T07:01:42.027Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:42.027Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__tabs_context_mcp" (0 before deduplication)
+2026-01-18T07:01:42.035Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: tabs_context_mcp
+2026-01-18T07:01:42.569Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:01:42.629Z [DEBUG] MCP server "claude-in-chrome": Tool 'tabs_context_mcp' completed successfully in 594ms
+2026-01-18T07:01:42.637Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__tabs_context_mcp
+2026-01-18T07:01:42.637Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:42.637Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__tabs_context_mcp" (0 before deduplication)
+2026-01-18T07:01:42.652Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:01:42.652Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:01:42.652Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:01:42.652Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:01:42.666Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:01:42.681Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:01:42.681Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:01:42.681Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:01:45.119Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:01:46.502Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__navigate
+2026-01-18T07:01:46.505Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:01:46.505Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:46.505Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:01:46.516Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: navigate
+2026-01-18T07:01:52.773Z [DEBUG] MCP server "claude-in-chrome": Tool 'navigate' completed successfully in 6s
+2026-01-18T07:01:52.779Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:01:52.779Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:52.779Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:01:52.785Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:01:52.785Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:01:52.785Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:01:52.785Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:01:52.798Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:01:52.806Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:01:52.806Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:01:52.806Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:01:55.184Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:01:56.333Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:01:56.337Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:01:56.337Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:01:56.337Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:01:56.346Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:02:01.870Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:02:02.371Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:02:02.371Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:02.371Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:02:02.376Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:02:02.376Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:02:02.376Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:02:02.376Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:02:02.389Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:02.395Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:02.395Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:02.395Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:06.527Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:11.170Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:02:11.170Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:11.170Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:02:11.171Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:11.190Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:11.190Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:11.190Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:11.200Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:02:11.358Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719731358
+2026-01-18T07:02:11.358Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:02:11.359Z [DEBUG] Temp file written successfully, size: 5755 bytes
+2026-01-18T07:02:11.359Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:02:11.359Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719731358 to /Users/liuhanwen/.claude.json
+2026-01-18T07:02:11.359Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:02:11.367Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768719731367
+2026-01-18T07:02:11.367Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:02:11.368Z [DEBUG] Temp file written successfully, size: 5774 bytes
+2026-01-18T07:02:11.368Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:02:11.368Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768719731367 to /Users/liuhanwen/.claude.json
+2026-01-18T07:02:11.368Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:02:12.442Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:13.840Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:29.214Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:02:29.214Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:02:29.214Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:02:29.214Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:02:29.225Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:02:29.225Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:29.225Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:02:29.228Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:02:29.228Z [DEBUG] FileHistory: Making snapshot for message 4b6c06e8-aa80-44bd-ad9e-554cf99d2d16
+2026-01-18T07:02:29.228Z [DEBUG] FileHistory: Added snapshot for 4b6c06e8-aa80-44bd-ad9e-554cf99d2d16, tracking 0 files
+2026-01-18T07:02:29.233Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:02:29.235Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:29.235Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:29.235Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:29.249Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:29.259Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:29.259Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:29.259Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:30.308Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:31.818Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:32.045Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:34.088Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:34.625Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__navigate
+2026-01-18T07:02:34.629Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:02:34.629Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:34.629Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:02:34.640Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: navigate
+2026-01-18T07:02:35.561Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:37.638Z [DEBUG] MCP server "claude-in-chrome": Tool 'navigate' completed successfully in 2s
+2026-01-18T07:02:37.644Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:02:37.644Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:37.644Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:02:37.650Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:02:37.650Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:02:37.650Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:02:37.650Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:02:37.661Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:37.669Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:37.669Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:37.669Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:40.757Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:41.648Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:02:41.651Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:02:41.651Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:41.651Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:02:41.661Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:02:41.912Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 251ms
+2026-01-18T07:02:41.920Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:02:41.920Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:41.920Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:02:41.926Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:02:41.926Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:02:41.926Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:02:41.926Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:02:41.980Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:41.986Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:41.989Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:41.989Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:41.989Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:43.748Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:45.981Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:02:47.612Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:53.675Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:02:53.679Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:02:53.679Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:53.679Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:02:53.689Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:02:55.723Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 2s
+2026-01-18T07:02:55.730Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:02:55.730Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:02:55.730Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:02:55.738Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:02:55.738Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:02:55.738Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:02:55.738Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:02:55.751Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:02:55.758Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:02:55.758Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:02:55.758Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:02:56.576Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:02:58.878Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:00.075Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:00.080Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:00.080Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:00.080Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:00.088Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:02.108Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 2s
+2026-01-18T07:03:02.117Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:02.117Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:02.117Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:02.125Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:02.125Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:02.125Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:02.125Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:02.141Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:02.150Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:02.150Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:02.150Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:03.960Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:05.431Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:06.216Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:06.224Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:06.224Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:06.224Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:06.234Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:06.313Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:08.283Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 2s
+2026-01-18T07:03:08.292Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:08.292Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:08.292Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:08.305Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:08.305Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:08.305Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:08.305Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:08.322Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:08.332Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:08.332Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:08.332Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:12.112Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:13.507Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:14.681Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:15.052Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:15.057Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:15.057Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:15.057Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:15.068Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:15.308Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 240ms
+2026-01-18T07:03:15.317Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:15.317Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:15.317Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:15.329Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:15.329Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:15.329Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:15.329Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:15.356Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:15.366Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:15.366Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:15.366Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:18.224Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:19.999Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:20.005Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:20.005Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:20.005Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:20.014Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:20.512Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 498ms
+2026-01-18T07:03:20.521Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:20.521Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:20.521Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:20.528Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:20.528Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:20.528Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:20.528Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:20.545Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:20.554Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:20.554Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:20.554Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:25.294Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:32.154Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:32.160Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:32.160Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:32.160Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:32.171Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:32.662Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 491ms
+2026-01-18T07:03:32.673Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:32.673Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:32.673Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:32.680Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:32.680Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:32.680Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:32.680Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:32.697Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:32.705Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:32.705Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:32.705Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:37.815Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:37.835Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:39.967Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__navigate
+2026-01-18T07:03:39.972Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:03:39.972Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:39.972Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:03:39.982Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: navigate
+2026-01-18T07:03:40.124Z [DEBUG] MCP server "claude-in-chrome": Tool 'navigate' completed successfully in 142ms
+2026-01-18T07:03:40.131Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__navigate
+2026-01-18T07:03:40.131Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:40.131Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__navigate" (0 before deduplication)
+2026-01-18T07:03:40.137Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:40.137Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:40.137Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:40.137Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:40.153Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:40.162Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:40.162Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:40.162Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:43.385Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:44.372Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:44.845Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:44.852Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:44.852Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:44.852Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:44.868Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:46.767Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:03:46.884Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 2s
+2026-01-18T07:03:46.893Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:46.893Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:46.893Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:46.901Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:46.901Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:46.901Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:46.901Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:46.916Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:46.924Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:46.924Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:46.924Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:50.075Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:03:51.016Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:03:51.023Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:51.023Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:51.023Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:51.034Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:03:51.496Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 462ms
+2026-01-18T07:03:51.507Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:03:51.507Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:03:51.507Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:03:51.515Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:03:51.515Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:03:51.515Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:03:51.515Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:03:51.527Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:03:51.535Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:03:51.535Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:03:51.535Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:03:56.071Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:03.604Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:03.612Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:03.612Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:03.612Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:03.628Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:08.860Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:04:08.875Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:08.875Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:08.875Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:08.884Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:08.884Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:08.884Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:08.884Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:08.912Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:08.925Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:08.925Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:08.925Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:09.841Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:04:12.246Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:13.428Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:13.435Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:13.435Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:13.435Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:13.450Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:13.756Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 306ms
+2026-01-18T07:04:13.767Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:13.767Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:13.767Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:13.778Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:13.778Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:13.778Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:13.778Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:13.805Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:13.833Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:13.833Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:13.833Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:18.528Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:19.104Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:04:22.177Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:22.185Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:22.185Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:22.185Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:22.196Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:25.893Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 3s
+2026-01-18T07:04:25.902Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:25.902Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:25.902Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:25.911Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:25.911Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:25.911Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:25.911Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:25.935Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:25.945Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:25.945Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:25.945Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:26.756Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:04:29.155Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:30.247Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:04:30.258Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:30.265Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:30.265Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:30.265Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:30.284Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:30.489Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 205ms
+2026-01-18T07:04:30.498Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:30.498Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:30.498Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:30.510Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:30.510Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:30.510Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:30.510Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:30.528Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:30.539Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:30.539Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:30.539Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:33.603Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:34.546Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:34.552Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:34.552Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:34.552Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:34.564Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:34.860Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 296ms
+2026-01-18T07:04:34.871Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:34.871Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:34.871Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:34.878Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:34.878Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:34.878Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:34.878Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:34.897Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:34.908Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:34.908Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:34.908Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:35.236Z [DEBUG] High write ratio: blit=0, write=1387 (100.0% writes), screen=42x135
+2026-01-18T07:04:35.237Z [DEBUG] Full reset (scrollback changes): scrollbackRows=63, changes=4684/9409, firstChangeY=4
+  prev: "                                                                                                                                       "
+  next: "───────────────────────────────────────────────── ctrl+e to show 102 previous messages ────────────────────────────────────────────────"
+2026-01-18T07:04:35.247Z [DEBUG] High write ratio: blit=0, write=1387 (100.0% writes), screen=43x135
+2026-01-18T07:04:40.642Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:04:40.655Z [DEBUG] High write ratio: blit=0, write=2411 (100.0% writes), screen=98x135
+2026-01-18T07:04:40.665Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:04:41.298Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:04:44.050Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:04:44.059Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:44.059Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:44.059Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:44.072Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:04:49.706Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:04:49.719Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:04:49.719Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:04:49.719Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:04:49.729Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:04:49.729Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:04:49.729Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:04:49.729Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:04:49.744Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:04:49.757Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:04:49.757Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:04:49.757Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:04:55.563Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:05:01.760Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:05:01.767Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:01.767Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:01.767Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:01.779Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:05:07.008Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:05:07.017Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:07.017Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:07.017Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:07.025Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:05:07.025Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:05:07.025Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:05:07.025Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:05:07.044Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:05:07.055Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:05:07.055Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:05:07.055Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:05:10.292Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:05:11.655Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:05:11.666Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:11.666Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:11.666Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:11.680Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:05:15.985Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 4s
+2026-01-18T07:05:15.999Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:15.999Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:15.999Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:16.010Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:05:16.010Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:05:16.010Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:05:16.010Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:05:16.041Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:05:16.059Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:05:16.059Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:05:16.059Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:05:16.838Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:05:19.347Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:05:20.623Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:05:20.632Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:20.632Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:20.632Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:20.648Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:05:21.013Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 365ms
+2026-01-18T07:05:21.027Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:21.027Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:21.027Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:21.039Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:05:21.039Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:05:21.039Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:05:21.039Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:05:21.061Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:05:21.076Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:05:21.076Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:05:21.076Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:05:26.149Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:05:28.861Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:05:28.871Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:28.871Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:28.871Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:28.885Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:05:34.362Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:05:34.375Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:34.375Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:34.375Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:34.404Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:05:34.404Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:05:34.404Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:05:34.404Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:05:34.445Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:05:34.461Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:05:34.461Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:05:34.461Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:05:39.843Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:05:46.871Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:05:46.877Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:46.877Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:46.877Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:46.891Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:05:52.474Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:05:52.489Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:05:52.489Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:05:52.489Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:05:52.500Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:05:52.500Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:05:52.501Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:05:52.501Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:05:52.533Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:05:52.549Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:05:52.549Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:05:52.549Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:05:58.505Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:06:00.344Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:06:00.350Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:00.350Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:00.350Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:00.368Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:06:05.608Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:06:05.623Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:05.623Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:05.623Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:05.633Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:06:05.633Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:06:05.633Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:06:05.633Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:06:05.655Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:06:05.670Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:06:05.670Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:06:05.670Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:06:09.441Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:06:09.700Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:06:10.908Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:06:10.930Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:10.930Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:10.930Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:10.969Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:06:11.229Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 260ms
+2026-01-18T07:06:11.240Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:11.240Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:11.240Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:11.250Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:06:11.250Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:06:11.250Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:06:11.250Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:06:11.274Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:06:11.287Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:06:11.287Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:06:11.287Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:06:12.012Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:06:16.353Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:06:22.704Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:06:22.714Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:22.714Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:22.714Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:22.732Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:06:28.247Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:06:28.261Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:28.261Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:28.261Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:28.275Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:06:28.275Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:06:28.275Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:06:28.275Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:06:28.300Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:06:28.315Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:06:28.315Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:06:28.315Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:06:29.231Z [DEBUG] Restarting caffeinate to maintain sleep prevention
+2026-01-18T07:06:29.231Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:06:29.237Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:06:32.263Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:06:42.192Z [DEBUG] executePreToolHooks called for tool: mcp__claude-in-chrome__computer
+2026-01-18T07:06:42.204Z [DEBUG] Getting matching hook commands for PreToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:42.204Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:42.204Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:42.224Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: computer
+2026-01-18T07:06:47.686Z [DEBUG] MCP server "claude-in-chrome": Tool 'computer' completed successfully in 5s
+2026-01-18T07:06:47.701Z [DEBUG] Getting matching hook commands for PostToolUse with query: mcp__claude-in-chrome__computer
+2026-01-18T07:06:47.701Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:06:47.701Z [DEBUG] Matched 0 unique hooks for query "mcp__claude-in-chrome__computer" (0 before deduplication)
+2026-01-18T07:06:47.711Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:06:47.711Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:06:47.711Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:06:47.711Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:06:47.731Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:06:47.748Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:06:47.748Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:06:47.748Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:06:55.898Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:07:16.186Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:07:16.186Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:07:16.186Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:07:16.187Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:07:16.204Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:07:16.204Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:07:16.204Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:07:16.357Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720036357
+2026-01-18T07:07:16.357Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:07:16.357Z [DEBUG] Temp file written successfully, size: 5794 bytes
+2026-01-18T07:07:16.357Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:07:16.357Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720036357 to /Users/liuhanwen/.claude.json
+2026-01-18T07:07:16.357Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:07:16.359Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720036359
+2026-01-18T07:07:16.359Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:07:16.359Z [DEBUG] Temp file written successfully, size: 5816 bytes
+2026-01-18T07:07:16.359Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:07:16.359Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720036359 to /Users/liuhanwen/.claude.json
+2026-01-18T07:07:16.359Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:07:20.350Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:07:28.334Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:07:28.334Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:07:28.334Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:07:28.719Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:34.397Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.564Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.589Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.605Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.622Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.643Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.664Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.684Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.729Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.744Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:07:35.761Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:08:02.965Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:08:29.948Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:08:29.948Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:08:29.948Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:08:29.948Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:08:29.970Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:08:29.970Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:29.970Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:08:29.974Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:08:29.974Z [DEBUG] FileHistory: Making snapshot for message 19b6b93b-ae3f-4b1f-9fb8-06017c9e81e6
+2026-01-18T07:08:29.974Z [DEBUG] FileHistory: Added snapshot for 19b6b93b-ae3f-4b1f-9fb8-06017c9e81e6, tracking 0 files
+2026-01-18T07:08:29.988Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:29.990Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:29.990Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:29.990Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:29.998Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:08:30.012Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:30.012Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:30.012Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:30.860Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:31.680Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:08:34.544Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:36.877Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:08:38.185Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:08:39.137Z [DEBUG] executePreToolHooks called for tool: Task
+2026-01-18T07:08:39.147Z [DEBUG] Getting matching hook commands for PreToolUse with query: Task
+2026-01-18T07:08:39.147Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:39.147Z [DEBUG] Matched 0 unique hooks for query "Task" (0 before deduplication)
+2026-01-18T07:08:39.205Z [DEBUG] Getting matching hook commands for SubagentStart with query: claude-code-guide
+2026-01-18T07:08:39.205Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:39.205Z [DEBUG] Matched 0 unique hooks for query "claude-code-guide" (0 before deduplication)
+2026-01-18T07:08:39.225Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:39.226Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:39.226Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:39.226Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:40.439Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:42.269Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:42.270Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:42.279Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:42.279Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:42.279Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:42.279Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:42.279Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:42.279Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:42.586Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:42.586Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:42.586Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:42.918Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:42.919Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:42.919Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:42.919Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:44.135Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:50.287Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:50.287Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:50.287Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:50.328Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:50.329Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:50.329Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:50.329Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:51.325Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:53.938Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:53.939Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:53.939Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:53.939Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:08:53.948Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:53.948Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:53.948Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:53.948Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:53.948Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:53.948Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:53.948Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:53.948Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:53.948Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:53.948Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:08:53.948Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:53.948Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:54.146Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:54.146Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:54.146Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:54.162Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:54.162Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:54.162Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:54.196Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:54.196Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:54.196Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:54.212Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:08:54.212Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:54.212Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:08:54.247Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:54.248Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:54.248Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:54.248Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:56.032Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:08:56.931Z [DEBUG] executePreToolHooks called for tool: Read
+2026-01-18T07:08:56.941Z [DEBUG] Getting matching hook commands for PreToolUse with query: Read
+2026-01-18T07:08:56.941Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:56.941Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-01-18T07:08:56.993Z [DEBUG] Getting matching hook commands for PostToolUse with query: Read
+2026-01-18T07:08:56.993Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:08:56.993Z [DEBUG] Matched 0 unique hooks for query "Read" (0 before deduplication)
+2026-01-18T07:08:57.024Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:08:57.025Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:08:57.025Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:08:57.025Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:08:58.253Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:09:25.035Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:09:25.035Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:09:25.035Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:09:25.055Z [DEBUG] Getting matching hook commands for PostToolUse with query: Task
+2026-01-18T07:09:25.055Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:09:25.055Z [DEBUG] Matched 0 unique hooks for query "Task" (0 before deduplication)
+2026-01-18T07:09:25.066Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:09:25.066Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:09:25.066Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:09:25.066Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:09:25.096Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:09:25.112Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:09:25.112Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:09:25.112Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:09:29.175Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:09:46.032Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:09:46.032Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:09:46.032Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:09:46.032Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:09:46.051Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:09:46.051Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:09:46.051Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:09:46.076Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:09:46.191Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720186191
+2026-01-18T07:09:46.191Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:09:46.191Z [DEBUG] Temp file written successfully, size: 5838 bytes
+2026-01-18T07:09:46.191Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:09:46.191Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720186191 to /Users/liuhanwen/.claude.json
+2026-01-18T07:09:46.191Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:09:46.209Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720186209
+2026-01-18T07:09:46.209Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:09:46.209Z [DEBUG] Temp file written successfully, size: 5856 bytes
+2026-01-18T07:09:46.209Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:09:46.209Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720186209 to /Users/liuhanwen/.claude.json
+2026-01-18T07:09:46.209Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:09:49.915Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:09:54.256Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:09:54.256Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:09:54.256Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:09:54.257Z [DEBUG] [Speculation] enabled=false
+2026-01-18T07:10:11.195Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:10:46.080Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2026-01-18T07:10:46.080Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:10:46.080Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2026-01-18T07:11:11.736Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:11:11.736Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:11:11.736Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:11:11.736Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:11:11.762Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:11:11.762Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:11:11.762Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:11:11.766Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:11:11.766Z [DEBUG] FileHistory: Making snapshot for message becdb517-6c2d-4bbc-9471-d58ed6d90482
+2026-01-18T07:11:11.767Z [DEBUG] FileHistory: Added snapshot for becdb517-6c2d-4bbc-9471-d58ed6d90482, tracking 0 files
+2026-01-18T07:11:11.783Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:11:11.785Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:11:11.785Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:11:11.785Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:11:11.793Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:11:11.808Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:11:11.808Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:11:11.808Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:11:12.657Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:11:15.288Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:11:21.313Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:11:32.458Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:11:32.458Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:11:32.458Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:11:32.458Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:11:32.493Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:11:32.493Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:11:32.493Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:11:32.521Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:11:32.621Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720292621
+2026-01-18T07:11:32.621Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:11:32.622Z [DEBUG] Temp file written successfully, size: 5877 bytes
+2026-01-18T07:11:32.622Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:11:32.622Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720292621 to /Users/liuhanwen/.claude.json
+2026-01-18T07:11:32.622Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:11:32.642Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720292642
+2026-01-18T07:11:32.642Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:11:32.642Z [DEBUG] Temp file written successfully, size: 5900 bytes
+2026-01-18T07:11:32.642Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:11:32.642Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720292642 to /Users/liuhanwen/.claude.json
+2026-01-18T07:11:32.642Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:11:36.106Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:11:39.649Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:11:39.649Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:11:39.649Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:11:39.650Z [DEBUG] [Speculation] enabled=false
+2026-01-18T07:11:44.925Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:12:32.527Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2026-01-18T07:12:32.527Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:12:32.527Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2026-01-18T07:12:53.779Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:12:53.780Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:12:53.780Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:12:53.780Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:12:53.809Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:12:53.809Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:12:53.809Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:12:53.812Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:12:53.813Z [DEBUG] FileHistory: Making snapshot for message e59d1c4d-54f5-4aa5-a61b-7cff759ccd78
+2026-01-18T07:12:53.813Z [DEBUG] FileHistory: Added snapshot for e59d1c4d-54f5-4aa5-a61b-7cff759ccd78, tracking 0 files
+2026-01-18T07:12:53.832Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:12:53.834Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:12:53.834Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:12:53.834Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:12:53.842Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:12:53.858Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:12:53.858Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:12:53.858Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:12:57.342Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:12:58.398Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:01.596Z [DEBUG] executePreToolHooks called for tool: Task
+2026-01-18T07:13:01.618Z [DEBUG] Getting matching hook commands for PreToolUse with query: Task
+2026-01-18T07:13:01.618Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:01.618Z [DEBUG] Matched 0 unique hooks for query "Task" (0 before deduplication)
+2026-01-18T07:13:01.679Z [DEBUG] Getting matching hook commands for SubagentStart with query: claude-code-guide
+2026-01-18T07:13:01.679Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:01.679Z [DEBUG] Matched 0 unique hooks for query "claude-code-guide" (0 before deduplication)
+2026-01-18T07:13:01.695Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:13:01.696Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:01.696Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:01.696Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:03.248Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:03.801Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:13:04.310Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:13:04.310Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2026-01-18T07:13:04.322Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:13:04.322Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:04.322Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:04.322Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebSearch
+2026-01-18T07:13:04.322Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:04.322Z [DEBUG] Matched 0 unique hooks for query "WebSearch" (0 before deduplication)
+2026-01-18T07:13:04.355Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:13:04.356Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:04.356Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:04.356Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:04.402Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:13:04.402Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:04.402Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:06.421Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:12.457Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:13:13.268Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebSearch
+2026-01-18T07:13:13.268Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:13.268Z [DEBUG] Matched 0 unique hooks for query "WebSearch" (0 before deduplication)
+2026-01-18T07:13:13.312Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:13:13.313Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:13.313Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:13.313Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:14.534Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:15.809Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:13:15.809Z [DEBUG] executePreToolHooks called for tool: WebFetch
+2026-01-18T07:13:15.820Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:13:15.820Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:15.820Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:15.820Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebFetch
+2026-01-18T07:13:15.820Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:15.820Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:16.024Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:13:16.024Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:16.024Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:16.043Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebFetch
+2026-01-18T07:13:16.043Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:16.044Z [DEBUG] Matched 0 unique hooks for query "WebFetch" (0 before deduplication)
+2026-01-18T07:13:16.088Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:13:16.089Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:16.089Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:16.089Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:17.689Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:30.862Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:13:30.862Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:30.862Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:13:30.893Z [DEBUG] Getting matching hook commands for PostToolUse with query: Task
+2026-01-18T07:13:30.893Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:30.893Z [DEBUG] Matched 0 unique hooks for query "Task" (0 before deduplication)
+2026-01-18T07:13:30.906Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:13:30.906Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:13:30.906Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:13:30.906Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:13:30.939Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:13:30.954Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:30.954Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:30.954Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:34.453Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:50.466Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:13:50.466Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:50.466Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:13:50.467Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:13:50.490Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:13:50.490Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:13:50.490Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:13:50.518Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:13:50.632Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.19379.1768720430632
+2026-01-18T07:13:50.632Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T07:13:50.632Z [DEBUG] Temp file written successfully, size: 5900 bytes
+2026-01-18T07:13:50.632Z [DEBUG] Applied original permissions to temp file
+2026-01-18T07:13:50.632Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.19379.1768720430632 to /Users/liuhanwen/.claude.json
+2026-01-18T07:13:50.632Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T07:13:54.751Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:13:59.650Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:13:59.650Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:13:59.650Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:13:59.650Z [DEBUG] [Speculation] enabled=false
+2026-01-18T07:14:48.033Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:15:11.801Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:15:18.218Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:15:18.218Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:15:18.218Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:15:18.218Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:15:18.267Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T07:15:18.267Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:15:18.267Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:15:18.271Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:15:18.271Z [DEBUG] FileHistory: Making snapshot for message 14d5053f-873d-4d43-aa1c-613e32a37524
+2026-01-18T07:15:18.271Z [DEBUG] FileHistory: Added snapshot for 14d5053f-873d-4d43-aa1c-613e32a37524, tracking 0 files
+2026-01-18T07:15:18.285Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T07:15:18.287Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:15:18.287Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:15:18.287Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:15:18.294Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:15:18.318Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:15:18.318Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:15:18.318Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:15:19.340Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:15:19.688Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:15:22.311Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:15:24.337Z [DEBUG] executePreToolHooks called for tool: WebSearch
+2026-01-18T07:15:24.359Z [DEBUG] Getting matching hook commands for PreToolUse with query: WebSearch
+2026-01-18T07:15:24.359Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:15:24.359Z [DEBUG] Matched 0 unique hooks for query "WebSearch" (0 before deduplication)
+2026-01-18T07:15:24.389Z [DEBUG] Tool search disabled: MCPSearchTool is not available (may have been disallowed via disallowedTools).
+2026-01-18T07:15:24.389Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:15:24.389Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:15:24.390Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:15:25.518Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:15:42.441Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:15:43.574Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:15:45.841Z [DEBUG] Getting matching hook commands for PostToolUse with query: WebSearch
+2026-01-18T07:15:45.841Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:15:45.841Z [DEBUG] Matched 0 unique hooks for query "WebSearch" (0 before deduplication)
+2026-01-18T07:15:45.855Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T07:15:45.855Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T07:15:45.855Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T07:15:45.855Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T07:15:45.893Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:15:45.909Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:15:45.909Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:15:45.909Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:15:50.011Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:16:05.989Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:16:08.024Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:16:09.102Z [DEBUG] Getting matching hook commands for Stop with query: undefined
+2026-01-18T07:16:09.102Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:16:09.102Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:16:09.102Z [DEBUG] Auto tool search disabled: 5862 chars (threshold: 50000, 10% of context)
+2026-01-18T07:16:09.127Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T07:16:09.127Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T07:16:09.127Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T07:16:09.153Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:16:12.785Z [DEBUG] Stream started - received first chunk
+2026-01-18T07:16:17.021Z [DEBUG] Getting matching hook commands for SubagentStop with query: undefined
+2026-01-18T07:16:17.021Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:16:17.021Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T07:16:17.021Z [DEBUG] [Speculation] enabled=false
+2026-01-18T07:16:31.992Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:17:09.157Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2026-01-18T07:17:09.157Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:17:09.157Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2026-01-18T07:17:46.834Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T07:17:46.840Z [DEBUG] Install counts cache does not exist
+2026-01-18T07:17:46.840Z [DEBUG] Fetching install counts from https://raw.githubusercontent.com/anthropics/claude-plugins-official/refs/heads/stats/stats/plugin-installs.json
+2026-01-18T07:17:47.037Z [DEBUG] Install counts cache saved successfully
+2026-01-18T07:18:20.150Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:18:24.803Z [DEBUG] UserCommandMessage rendering: "chrome" (args: "none", isSkillFormat: false)
+2026-01-18T07:18:32.024Z [DEBUG] Caching plugin from source: "/Users/liuhanwen/.claude/plugins/marketplaces/claude-plugins-official/external_plugins/serena" to temporary path /Users/liuhanwen/.claude/plugins/cache/temp_local_1768720712024_yykuca
+2026-01-18T07:18:32.027Z [DEBUG] Successfully cached plugin serena to /Users/liuhanwen/.claude/plugins/cache/serena
+2026-01-18T07:18:32.044Z [DEBUG] Using git SHA for serena@claude-plugins-official: 96276205880a
+2026-01-18T07:18:32.052Z [DEBUG] Saved 1 installed plugins to /Users/liuhanwen/.claude/plugins/installed_plugins.json
+2026-01-18T07:18:32.052Z [DEBUG] Added installed plugin: serena@claude-plugins-official (scope: user)
+2026-01-18T07:18:32.052Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude/settings.json.tmp.19379.1768720712052
+2026-01-18T07:18:32.055Z [DEBUG] Temp file written successfully, size: 73 bytes
+2026-01-18T07:18:32.055Z [DEBUG] Renaming /Users/liuhanwen/.claude/settings.json.tmp.19379.1768720712052 to /Users/liuhanwen/.claude/settings.json
+2026-01-18T07:18:32.055Z [DEBUG] File /Users/liuhanwen/.claude/settings.json written atomically
+2026-01-18T07:18:32.059Z [DEBUG] Loading plugin serena from source: "./external_plugins/serena"
+2026-01-18T07:18:32.063Z [DEBUG] FileHistory: Making snapshot for message 985d1e5d-e305-4926-85df-e6b0672d2d34
+2026-01-18T07:18:32.063Z [DEBUG] FileHistory: Added snapshot for 985d1e5d-e305-4926-85df-e6b0672d2d34, tracking 0 files
+2026-01-18T07:18:32.078Z [DEBUG] UserCommandMessage rendering: "plugin" (args: "none", isSkillFormat: false)
+2026-01-18T07:18:32.105Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T07:18:32.106Z [DEBUG] Using git SHA for serena@claude-plugins-official: 96276205880a
+2026-01-18T07:18:32.106Z [DEBUG] Plugin serena@claude-plugins-official version 96276205880a already cached at /Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/serena/96276205880a
+2026-01-18T07:18:32.106Z [DEBUG] Copied local plugin serena to versioned cache: /Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/serena/96276205880a
+2026-01-18T07:18:32.106Z [DEBUG] Found 1 plugins (1 enabled, 0 disabled)
+2026-01-18T07:18:32.106Z [DEBUG] Total plugin commands loaded: 0
+2026-01-18T07:18:32.106Z [DEBUG] Total plugin agents loaded: 0
+2026-01-18T07:18:32.108Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T07:18:39.580Z [DEBUG] Getting matching hook commands for SessionEnd with query: prompt_input_exit
+2026-01-18T07:18:39.580Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T07:18:39.580Z [DEBUG] Matched 0 unique hooks for query "prompt_input_exit" (0 before deduplication)

@@ -1,0 +1,14 @@
+Found 13 files
+packages/app-vsaas-portal/src/store/device/mutations.test.js
+packages/app-vsaas-portal/src/store/device/getters.js
+packages/app-vsaas-portal/src/pages/device/management/index.vue
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js
+packages/app-vsaas-portal/src/store/group/getters.js
+packages/app-vsaas-portal/src/pages/system/components/DynamicDeviceList.vue
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/index.vue

@@ -1,0 +1,599 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-35-import { DIALOGUE, EXTERNAL_DEVICE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-36-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-37-export default {
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-38-  name: 'DeleteExternalDeviceDialogue',
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-39-  props: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue:40:    deleteDevices: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-41-      type: Array,
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-42-      required: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-43-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-44-  },
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-45-  emits: ['deleteSuccess'],
+--
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-52-  methods: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-53-    ...mapActions('externalDevice', ['batchDeleteExternalDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-54-    async confirm() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-55-      this.dialogueState = DIALOGUE.STATE.PROCESSING;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-56-      try {
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue:57:        await this.batchDeleteExternalDevice(this.deleteDevices);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-58-        this.dialogueState = DIALOGUE.STATE.SUCCESS;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-59-        this.$emit('deleteSuccess');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-60-      } catch {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-61-        this.dialogueState = DIALOGUE.STATE.ERROR;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-62-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-96-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-97-    isError() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-98-      return this.dialogueState === DIALOGUE.STATE.ERROR;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-99-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-100-    shouldDisplayAlarmHint() {
+packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue:101:      return this.deleteDevices.some((item) => item.type === EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-102-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-103-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-104-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeleteExternalDeviceDialogue.vue-105-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-25-            {{ device.displayName }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-26-          </h5>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-27-          <h6
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-28-            v-if="hasDeleteDevicePermission"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-29-            class="button danger"
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:30:            @click="onClickDelete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-31-          >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-32-            {{ $t('Delete') }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-33-          </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-34-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-35-        <div class="block device-image">
+--
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-143-    currentGroupId: {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-144-      type: String,
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-145-      required: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-146-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-147-  },
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:148:  emits: ['deleteDevice', 'addExternalDevice', 'clickExternalDevice'],
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-149-  methods: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-150-    getDeviceImage(model) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-151-      return new URL(`/src/assets/${model}.png`, import.meta.url);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-152-    },
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:153:    onClickDelete() {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:154:      this.$emit('deleteDevice', this.device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-155-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-156-    onClickAdd() {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-157-      this.$emit('addExternalDevice', { preselectedBridgeDevice: this.device });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-158-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-159-    onClickSettings() {
+--
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-183-      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-184-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-185-    disableFeature() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-186-      return this.isRenewalOverdue || this.isFreePlan;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-187-    },
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:188:    deleteDeviceWarningText() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-189-      return this.$t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-190-        'Once you delete the device, all its data including video on {product} platform will be permanently erased.',
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-191-        { product: this.productName },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-192-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-193-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-25-            {{ device.displayName }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-26-          </h5>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-27-          <h6
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-28-            v-if="hasDeleteDevicePermission"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-29-            class="button danger"
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:30:            @click="onClickDelete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-31-          >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-32-            {{ $t('Delete') }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-33-          </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-34-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-35-        <div class="block device-image">
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-248-        this.$refs.deviceSelectModal.onSelectSuccess();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-249-      } catch {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-250-        this.$refs.deviceSelectModal.onSelectFailed();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-251-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-252-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:253:    onClickDelete() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-254-      this.$emit('deleteCurrentDevice', [this.device]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-255-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-256-    onClickSettings() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-257-      if (this.isUnsubscribed) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-258-        return;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-226-        expect(w.emitted('onSetNvrPassword')).toBeTruthy();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-227-        expect(w.emitted('onSetNvrPassword')[0]).toEqual([item.nvr]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-228-        expect(w.vm.$router.push).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-229-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-230-    });
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:231:    describe('onClickDeleteDevice', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:232:      it('should called removeDeviceDialog , and set currentDeleteItems = parameter.mac', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-233-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-234-        const item = rowData[0];
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:235:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:236:        w.vm.onClickDeleteDevice(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-237-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:238:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-239-        expect(w.vm.currentDeleteItems[0]).toStrictEqual(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-240-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-241-    });
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:242:    describe('onClickDeleteDevices', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:243:      it('should called removeDeviceDialog , and set currentDeleteItems = parameters mac', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-244-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-245-        const items = [rowData[0], rowData[1]];
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:246:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-247-        w.vm.selectedDevices = items;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-248-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:249:        w.vm.onClickDeleteDevices();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-250-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:251:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-252-        expect(w.vm.currentDeleteItems[0]).toStrictEqual(items[0]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-253-        expect(w.vm.currentDeleteItems[1]).toStrictEqual(items[1]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-254-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-255-    });
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:256:    describe('removeDeviceConfirm', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-257-      it('should return when isCancel = true', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-258-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-259-        const isCancel = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-260-        w.vm.batchDeleteDevice = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:261:        w.vm.removeDeviceConfirm(isCancel);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-262-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-263-        expect(w.vm.batchDeleteDevice).toHaveBeenCalledTimes(0);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-264-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-265-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-266-      it('should called batchDeleteDevice', async () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-293-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-294-          {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-295-            instance: 4,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-296-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-297-        ];
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:298:        w.vm.$refs.removeDeviceDialog.onDeleteSuccess = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:299:        await w.vm.removeDeviceConfirm(isCancel);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-300-        await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-301-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:302:        expect(w.vm.$refs.removeDeviceDialog.onDeleteSuccess).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-303-        expect(w.vm.batchDeleteDevice).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-304-        expect(w.vm.batchDeleteDevice).toHaveBeenCalledWith([1, 2, 3, 4]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-305-        expect(w.vm.selectedDevices).toStrictEqual([]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-306-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-307-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-44-        </span>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-45-      </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-46-      <template v-if="selectedDevices.length > 0 && hasManageDevicePermission">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-47-        <div
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-48-          class="delete-button"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:49:          @click="onClickDeleteDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-50-        >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-51-          <SvgIcon
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-52-            iconClass="general_delete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-53-            size="20px"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-54-            outerSize="20px"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-197-          />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-198-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-199-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-200-    </AppTable>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-201-    <DeleteDeviceDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:202:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:203:      @confirm="removeDeviceConfirm"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-204-    >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-205-      <template #extra-content>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-206-        <h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-207-          {{ $t('The cameras under VSS will also be deleted.') }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-208-        </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-209-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-210-      <template #warning-content>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-211-        <h6>
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:212:          {{ deleteDeviceWarningText }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-213-        </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-214-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-215-    </DeleteDeviceDialogue>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-216-    <MoveGroupOfDevicesDialogue
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-217-      ref="moveGroupOfDevicesDialogue"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-282-// Permission checks
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-283-const canDoDevice = store.getters['permission/canDoDevice'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-284-const canDoOrg = store.getters['permission/canDoOrg'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-285-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-286-// Component refs
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:287:const removeDeviceDialog = ref(null);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-288-const moveGroupOfDevicesDialogue = ref(null);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-289-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-290-// ==================== Search and filter feature ====================
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-291-const searchKeyword = ref('');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-292-const currentSortTypes = ref([]);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-486-  mixpanel.track(TRACK_EVENT_KEY.DEV_SETTINGS_OPEN, {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-487-    type: 'vss',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-488-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-489-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-490-
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:491:const onClickDeleteDevice = (item) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:492:  removeDeviceDialog.value.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-493-  currentDeleteItems.value = [item];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-494-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-495-
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:496:const onClickDeleteDevices = () => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:497:  removeDeviceDialog.value.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-498-  currentDeleteItems.value = selectedDevices.value;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-499-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-500-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-501-const onClickMoveGroupOfDevice = (item) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-502-  defaultMoveToGroupId.value = props.groups.find((group) => group.name === item.group).id;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-520-  } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-521-    throw new Error('moveGroupOfDeviceConfirm failed');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-522-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-523-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-524-
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:525:const removeDeviceConfirm = (isCancel) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-526-  if (isCancel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-527-    return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-528-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-529-  const instances = currentDeleteItems.value.map((item) => item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-530-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-531-  store.dispatch('device/batchDeleteDevice', instances).then(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-532-    () => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:533:      removeDeviceDialog.value.onDeleteSuccess();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-534-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-535-      if (selectedDevices.value.length > 0) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-536-        selectedDevices.value = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-537-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-538-      const pageSize = Math.ceil(props.rowData.length / props.countPerPage) || 1;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-539-      if (props.currentPageIndex >= pageSize) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-540-        emit('currentPageChanged', pageSize);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-541-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-542-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-543-    (error) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:544:      removeDeviceDialog.value.onDeleteFail();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-545-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-546-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-547-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-548-
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:549:const deleteDeviceWarningText = computed(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-550-  return t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-551-    'Once you delete the device, all its data including video on {product} platform will be permanently erased.',
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-552-    { product: productName.value },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-553-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-554-});
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-595-          {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-596-            name: t('Delete'),
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-597-            classList: ['delete', 'danger'],
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-598-            iconClass: 'general_delete',
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-599-            action: () => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:600:              onClickDeleteDevice(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-601-            },
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-602-            disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-603-            hasPermission: canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-604-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-605-        ]
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-97-              :countPerPage="COUNT_PER_PAGE"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-98-              :groups="groups"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-99-              :hasManageDevicePermission="hasCreateDevicePermission"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-100-              :currentGroupId="currentGroupId"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-101-              :highlightedDevice="currentSelectedDevice"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:102:              @deleteDevices="tryDeleteBridgeDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-103-              @changeGroup="changeCurrentGroup"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-104-              @doFilter="onFilter"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-105-              @tableLengthChanged="onTableLengthChanged"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-106-              @currentPageChanged="onCurrentPageChanged"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-107-              @devicesSorted="onDevicesSorted"
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-120-              :hasManageDevicePermission="hasCreateDevicePermission"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-121-              :highlightedDevice="currentSelectedDevice"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-122-              @doFilter="onFilter"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-123-              @tableLengthChanged="onTableLengthChanged"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-124-              @currentPageChanged="onCurrentPageChanged"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:125:              @deleteDevices="tryDeleteExternalDevice"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-126-              @click:row="onDeviceRowClick"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-127-            />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-128-            <ExternalDeviceManagementTable
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-129-              v-else-if="isPoESwitchGroupList && hasCreateDevicePermission"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-130-              :rowData="rowData"
+--
+packages/app-vsaas-portal/src/pages/device/management/index.vue-136-              :groups="groups"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-137-              :hasManageDevicePermission="hasCreateDevicePermission"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-138-              @doFilter="onFilter"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-139-              @tableLengthChanged="onTableLengthChanged"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-140-              @currentPageChanged="onCurrentPageChanged"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:141:              @deleteDevices="tryDeleteExternalDevice"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-142-            />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-143-            <DeviceManagementTable
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-144-              v-else
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-145-              ref="deviceManagementTable"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-146-              :rowData="rowData"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-171-          v-if="isBridgeGroupList"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-172-          :device="currentSelectedDevice"
+packages/app-vsaas-portal/src/pages/device/management/index.vue-173-          :currentGroupId="currentGroupId"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-174-          @addExternalDevice="showAddExternalDeviceDialogue"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-175-          @clickExternalDevice="onClickExternalDevice"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:176:          @deleteDevice="tryDeleteBridgeDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-177-        />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-178-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-179-      <template #footer="footer">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-180-        <CentralPanelFooter
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-181-          ref="footer"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-213-        </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-214-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-215-    </DeleteDeviceDialogue>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-216-    <DeleteExternalDeviceDialogue
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-217-      ref="removeExternalDeviceDialogue"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:218:      :deleteDevices="currentDeleteItems"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-219-      @deleteSuccess="onDeleteDevice"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-220-    />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-221-  </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-222-</template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-223-
+--
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-180-    hasManageDevicePermission: {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-181-      type: Boolean,
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-182-      default: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-183-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-184-  },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:185:  emits: ['doFilter', 'currentPageChanged', 'tableLengthChanged', 'click:row', 'deleteDevices'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-186-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-187-    return {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-188-      searchKeyword: '',
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-189-      selectedDevices: [],
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-190-      sortedDevices: [],
+--
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-233-            groupId: DEVICE_TABLE_GROUP_ID_MAP.POE_SWITCH,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-234-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-235-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-236-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-237-    },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:238:    onClickDeleteDevice(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:239:      this.$emit('deleteDevices', [item.instance]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-240-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-241-    showUploadAudioDialogue(device) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-242-      this.currentDevice = this.networkSpeakers[device.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-243-      this.$nextTick(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-244-        if (this.currentDevice.services.networkSpeakerAudio.isMultiAudioSupported) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-291-        {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-292-          name: this.$t('Delete'),
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-293-          classList: ['delete', 'danger'],
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-294-          iconClass: 'general_delete',
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-295-          action: () => {
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:296:            this.onClickDeleteDevice(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-297-          },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-298-          disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-299-          hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-300-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-301-      ].filter((action) => action.hasPermission);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-58-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-59-        <template v-if="canDeleteSelectedDevices && !shouldHideDeleteButton">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-60-          <div class="divider" />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-61-          <div
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-62-            class="delete-button"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:63:            @click="onClickDeleteDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-64-          >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-65-            <SvgIcon
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-66-              iconClass="general_delete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-67-              size="20px"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-68-              outerSize="20px"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-309-          />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-310-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-311-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-312-    </AppTable>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-313-    <DeleteDeviceDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:314:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-315-      :devices="currentDeleteItems || []"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:316:      @confirm="removeDeviceConfirm"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-317-    />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-318-    <MoveGroupOfDevicesDialogue
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-319-      ref="MoveGroupOfDevicesDialogue"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-320-      :groups="groups"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-321-      :defaultGroupId="defaultMoveToGroupId"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-427-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-428-      this.$mixpanel.track(TRACK_EVENT_KEY.DEV_SETTINGS_OPEN, {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-429-        type: nvr ? 'nvr' : 'camera',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-430-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-431-    },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:432:    onClickDeleteDevice(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:433:      this.$refs.removeDeviceDialog.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-434-      this.currentDeleteItems = [item];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-435-    },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:436:    onClickDeleteDevices() {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:437:      this.$refs.removeDeviceDialog.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-438-      this.currentDeleteItems = this.selectedDevices;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-439-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-440-    onClickMoveGroupOfDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-441-      const selectedDevicesId = this.selectedDevices.map((item) => item.deviceId);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-442-      const firstDevice = this.sortedDevices.find((device) => selectedDevicesId.indexOf(device.deviceId) >= 0);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-481-        this.unSelectAllDevices();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-482-      } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-483-        throw new Error('moveGroupOfDeviceConfirm failed');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-484-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-485-    },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:486:    removeDeviceConfirm(isCancel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-487-      if (isCancel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-488-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-489-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-490-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-491-      const instances = this.currentDeleteItems.map((item) => item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-492-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-493-      this.batchDeleteDevice(instances).then(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-494-        () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:495:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-496-          this.updateOutdatedFirmwareDevices(this.currentDeleteItems);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-497-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-498-          if (this.selectedDevices.length > 0) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-499-            this.selectedDevices = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-500-          }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-502-          if (this.currentPageIndex >= pageSize) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-503-            this.$emit('currentPageChanged', pageSize);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-504-          }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-505-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-506-        () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:507:          this.$refs.removeDeviceDialog.onDeleteFail();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-508-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-509-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-510-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-511-    removeUnavailableSelection() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-512-      this.selectedDevices = this.selectedDevices.filter((device) => this.isAvailableDevice(device.deviceId));
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-599-              {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-600-                name: this.$t('Delete'),
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-601-                classList: ['delete', 'danger'],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-602-                iconClass: 'general_delete',
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-603-                action: () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:604:                  this.onClickDeleteDevice(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-605-                },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-606-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-607-                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-608-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-609-            ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-44-        </span>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-45-      </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-46-      <template v-if="selectedDevices.length > 0 && hasManageDevicePermission">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-47-        <div
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-48-          class="delete-button"
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:49:          @click="onClickDeleteDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-50-        >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-51-          <SvgIcon
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-52-            iconClass="general_delete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-53-            size="20px"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-54-            outerSize="20px"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-258-    'currentPageChanged',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-259-    'tableLengthChanged',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-260-    'onSetNvrPassword',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-261-    'devicesSorted',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-262-    'changeGroup',
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:263:    'deleteDevices',
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-264-    'click:row',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-265-  ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-266-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-267-    return {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-268-      searchKeyword: '',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-301-        this.$emit('changeGroup', DEVICE_TABLE_GROUP_ID_MAP.NETWORK_SPEAKER);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-302-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-303-
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-304-      this.$emit('click:row', item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-305-    },
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:306:    onClickDeleteDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-307-      this.$emit(
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:308:        'deleteDevices',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-309-        this.selectedDevices.map((device) => device.instance),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-310-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-311-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-312-    selectAllDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue-313-      this.selectedDevices = this.rowData;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-44-        </span>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-45-      </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-46-      <template v-if="selectedDevices.length > 0 && hasManageDevicePermission">
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-47-        <div
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-48-          class="delete-button"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:49:          @click="onClickDeleteDevices"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-50-        >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-51-          <SvgIcon
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-52-            iconClass="general_delete"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-53-            size="20px"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-54-            outerSize="20px"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-213-          />
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-214-        </div>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-215-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-216-    </AppTable>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-217-    <DeleteDeviceDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:218:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:219:      @confirm="removeDeviceConfirm"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-220-    >
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-221-      <template #extra-content>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-222-        <h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-223-          {{ $t('The cameras under NVR will also be deleted.') }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-224-        </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-225-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-226-      <template #warning-content>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-227-        <h6>
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:228:          {{ deleteDeviceWarningText }}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-229-        </h6>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-230-      </template>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-231-    </DeleteDeviceDialogue>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-232-    <MoveGroupOfDevicesDialogue
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-233-      ref="MoveGroupOfDevicesDialogue"
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-329-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-330-      this.$mixpanel.track(TRACK_EVENT_KEY.DEV_SETTINGS_OPEN, {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-331-        type: 'nvr',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-332-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-333-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:334:    onClickDeleteDevice(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:335:      this.$refs.removeDeviceDialog.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-336-      this.currentDeleteItems = [item];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-337-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:338:    onClickDeleteDevices() {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:339:      this.$refs.removeDeviceDialog.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-340-      this.currentDeleteItems = this.selectedDevices;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-341-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-342-    onClickMoveGroupOfDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-343-      const selectedDevicesId = this.selectedDevices.map((item) => item.deviceId);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-344-      const firstDevice = this.sortedDevices.find((device) => selectedDevicesId.indexOf(device.deviceId) >= 0);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-370-        this.unSelectAllDevices();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-371-      } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-372-        throw new Error('moveGroupOfDeviceConfirm failed');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-373-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-374-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:375:    removeDeviceConfirm(isCancel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-376-      if (isCancel) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-377-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-378-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-379-      const instances = this.currentDeleteItems.map((item) => item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-380-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-381-      this.batchDeleteDevice(instances).then(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-382-        () => {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:383:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-384-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-385-          if (this.selectedDevices.length > 0) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-386-            this.selectedDevices = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-387-          }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-388-          const pageSize = Math.ceil(this.rowData.length / this.countPerPage) || 1;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-389-          if (this.currentPageIndex >= pageSize) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-390-            this.$emit('currentPageChanged', pageSize);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-391-          }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-392-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-393-        (error) => {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:394:          this.$refs.removeDeviceDialog.onDeleteFail();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-395-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-396-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-397-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-398-    selectAllDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-399-      this.selectedDevices = this.rowData;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-474-              {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-475-                name: this.$t('Delete'),
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-476-                classList: ['delete', 'danger'],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-477-                iconClass: 'general_delete',
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-478-                action: () => {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:479:                  this.onClickDeleteDevice(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-480-                },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-481-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-482-                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-483-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-484-            ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-608-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-609-        return this.columnTypes.indexOf(item.type) !== -1;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-610-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-611-      return list;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-612-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:613:    deleteDeviceWarningText() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-614-      return this.$t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-615-        'Once you delete the device, all its data including video on {product} platform will be permanently erased.',
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-616-        { product: this.productName },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-617-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-618-    },

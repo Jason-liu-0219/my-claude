@@ -1,0 +1,5 @@
+2026-01-18T08:42:25.094Z [INFO] [Claude in Chrome] Attempting to connect to: /var/folders/hk/gw4sz_bx6m3_sxgj_kxjpj1w0000gn/T/claude-mcp-browser-bridge-liuhanwen
+2026-01-18T08:42:25.095Z [DEBUG] [Claude in Chrome] Starting MCP server
+2026-01-18T08:42:25.096Z [DEBUG] [Claude in Chrome] MCP server started
+2026-01-18T08:42:25.096Z [INFO] [Claude in Chrome] Socket security validation passed
+2026-01-18T08:42:25.106Z [INFO] [Claude in Chrome] Successfully connected to bridge server

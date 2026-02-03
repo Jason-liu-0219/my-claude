@@ -1,0 +1,305 @@
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unused-expressions */
+import { RECORDING_TYPE, DEVICE_TYPE } from '@vivotek/const-vsaas';
+import VDSI from '../vdsi';
+import ComposeVsaasDeviceId from '../utility/composeVsaasDeviceId';
+import parseDeviceId from '../utility/parseDeviceId';
+
+export default class Configurator extends VDSI {
+  name = 'configurator';
+
+  constructor(reference) {
+    super(reference);
+
+    this.updateState({
+      support: {
+        audioin: 0,
+        di: 0,
+        do: 0,
+        remotefocus: 0,
+        tampering: 0
+      }
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get QUERIES() {
+    return [
+      // Connection & Auth
+      'apiDomain',
+      'apiToken',
+
+      // Backend Identifiers
+      'deviceId',
+      'thingName',
+      'derivationDescriptor',
+      'derivant',
+      'getBackendIdentifier',
+      'aiObjectSearchKey',
+
+      // Device Identity
+      'mac',
+      'model',
+      'type',
+      'localIP',
+      'city',
+      'firmware',
+      'siteID',
+
+      // Status & Capabilities
+      'cameraType',
+      'isUnknownDevice',
+      'online',
+      'recording',
+      'recordingType',
+      'isDualStream',
+      'fisheye',
+      'ptz',
+      'vca',
+
+      // NVR Context
+      'nvrMac',
+      'nvrThingName',
+      'nvr',
+      'channel',
+      'wizardFinished',
+
+      // UI Display
+      'displayName',
+      'groupName',
+      'nvrName',
+      'generalIconClass',
+      'statelessModelIcon',
+      'alertIconClass',
+    ];
+  }
+
+  // Connection & Auth
+
+  get apiDomain() {
+    return this.reference.options?.apiDomain || 'api.vortexcloud.com';
+  }
+
+  get apiToken() {
+    return this.reference.options?.apiToken;
+  }
+
+  // Backend Identifiers
+
+  get deviceId() {
+    return ComposeVsaasDeviceId(this.reference.options);
+  }
+
+  get thingName() {
+    if (this.reference.options?.thingName) {
+      return this.reference.options?.thingName;
+    }
+    const { thingName } = parseDeviceId(this.reference.options?.deviceId);
+    return thingName;
+  }
+
+  get derivationDescriptor() {
+    if (this.reference.options?.derivantInfo) {
+      return this.reference.options?.derivantInfo.derivationDescriptor;
+    }
+    return this.derivant;
+  }
+
+  get derivant() {
+    if (this.reference.options?.derivant) {
+      return this.reference.options?.derivant;
+    }
+    const { derivant } = parseDeviceId(this.reference.options?.deviceId);
+    return derivant;
+  }
+
+  getBackendIdentifier() {
+    const { thingName, derivant } = this;
+    return { thingName, derivant };
+  }
+
+  get aiObjectSearchKey() {
+    return `${this.nvrMac}_${this.derivant}`;
+  }
+
+  // Device Identity
+
+  get mac() {
+    return this.reference.options?.mac;
+  }
+
+  get model() {
+    return this.reference.options?.model;
+  }
+
+  get type() {
+    return DEVICE_TYPE.NVR_CHANNEL;
+  }
+
+  get localIP() {
+    return this.reference.options?.ip;
+  }
+
+  /* eslint-disable-next-line no-empty-function */
+  set city(value) { }
+
+  get city() {
+    return this.reference.options?.nvr?.city;
+  }
+
+  get firmware() {
+    return this.reference.options?.firmware;
+  }
+
+  get siteID() {
+    return this.reference.options.siteID;
+  }
+
+  set siteID(value) {
+    this.reference.options.siteID = value;
+  }
+
+  // Status & Capabilities
+
+  get isUnknownDevice() {
+    return this.reference.options?.type === 'unknownDevice';
+  }
+
+  get cameraType() {
+    const map = {
+      fisheye: this.fisheye,
+      ptz: this.ptz
+    };
+
+    return Object.keys(map).find((key) => map[key]) || 'default';
+  }
+
+  get online() {
+    return true;
+  }
+
+  get recording() {
+    return this.reference.options?.recording;
+  }
+
+  get recordingType() {
+    return this.reference.options?.recordingType ?? RECORDING_TYPE.DUAL;
+  }
+
+  get isDualStream() {
+    return this.recordingType === RECORDING_TYPE.DUAL;
+  }
+
+  get fisheye() {
+    return this.reference.options?.fisheye || false;
+  }
+
+  get ptz() {
+    return this.reference.options?.ptz || false;
+  }
+
+  get vca() {
+    return this.reference.options?.vca;
+  }
+
+  // NVR Context
+
+  get nvrMac() {
+    return this.reference.options?.derivationInfo?.parentDeviceMac || this.reference.options?.nvr?.mac;
+  }
+
+  get nvrThingName() {
+    return this.reference.options?.thingName;
+  }
+
+  get nvr() {
+    return this.reference.options?.nvr;
+  }
+
+  set nvr(val) {
+    this.reference.options.nvr = val;
+  }
+
+  get channel() {
+    return +this.derivationDescriptor.replace('ch', '');
+  }
+
+  get wizardFinished() {
+    if (!this.reference.options.nvr) {
+      return true;
+    }
+
+    return this.reference.options.nvr.wizardFinished;
+  }
+
+  // UI Display
+
+  get displayName() {
+    return this.reference?.options?.name || this.reference?.options?.mac;
+  }
+
+  set displayName(value) {
+    this.reference.options.name = value;
+  }
+
+  get groupName() {
+    return this.reference.options?.groupName;
+  }
+
+  set groupName(value) {
+    this.reference.options.groupName = value;
+  }
+
+  get nvrName() {
+    return this.nvrMac && this.displayName;
+  }
+
+  get generalIconClass() {
+    if (this.isUnknownDevice) {
+      return 'general_unknown_soild';
+    }
+
+    if (!this.wizardFinished) {
+      return 'status_camera_default';
+    }
+
+    const type = this.cameraType;
+
+    if (this.recording && this.online) {
+      return `status_camera_${type}_recording`;
+    }
+
+    return this.online ? `status_camera_${type}` : `status_camera_${type}_disconnected`;
+  }
+
+  get alertIconClass() {
+    if (!this.wizardFinished) {
+      return 'general_exclamation_solid';
+    }
+
+    return null;
+  }
+
+  get statelessModelIcon() {
+    const type = this.cameraType;
+
+    return `status_camera_${type}`;
+  }
+
+  queryConfiguration() {
+    return this.get('/vsaas/support').then((response) => {
+      const { info } = response?.data;
+      if (info) {
+        this.updateState({ support: info });
+      }
+      return info;
+    }).catch((err) => {
+      const errorMessage = err.message || err.statusText || 'queryConfiguration failed';
+      return Promise.reject(new Error(errorMessage));
+    });
+  }
+
+  checkSupportFromOptions(service) {
+    return this.reference.options?.support?.includes(service);
+  }
+}

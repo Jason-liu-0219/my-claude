@@ -1,0 +1,341 @@
+     1→<template>
+     2→  <SideMenusLayout
+     3→    :rightBasis="0"
+     4→    :leftBasis="0"
+     5→  >
+     6→    <template #center>
+     7→      <div
+     8→        v-if="currentUser"
+     9→        class="user-detail"
+    10→      >
+    11→        <div class="user-detail-header">
+    12→          <div
+    13→            class="go-back-button"
+    14→            @click="$router.go(-1)"
+    15→          >
+    16→            <SvgIcon
+    17→              class="icon"
+    18→              iconClass="general_arrow_left"
+    19→              size="28px"
+    20→              outerSize="62px"
+    21→            />
+    22→          </div>
+    23→          <h4 class="bold">
+    24→            {{ $t('User') }}
+    25→          </h4>
+    26→        </div>
+    27→        <div class="user-detail-container">
+    28→          <UserProfile :user="currentUser" />
+    29→          <div :class="['access', { fill: isOverviewEmpty }]">
+    30→            <div
+    31→              v-if="!userIsAdminOrOwner"
+    32→              class="header"
+    33→            >
+    34→              <h6 class="title">
+    35→                {{ $t('Device access ({totalAccess})', { totalAccess }) }}
+    36→              </h6>
+    37→              <button
+    38→                v-if="showAccessSettingsButton"
+    39→                class="access-settings-button"
+    40→                :disabled="isLoading"
+    41→                data-testid="access-settings-button"
+    42→                @click="openDeviceSelectModal()"
+    43→              >
+    44→                <SvgIcon
+    45→                  size="20px"
+    46→                  outerSize="32px"
+    47→                  iconClass="general_settings_line"
+    48→                />
+    49→                {{ $t('Manage Device Access') }}
+    50→              </button>
+    51→              <div class="divider" />
+    52→              <div class="filter-title">{{ $t('Filter:') }}</div>
+    53→              <AppButtonDropdown
+    54→                v-model="selectedSites"
+    55→                class="column-menu-button"
+    56→                :title="filterTitle"
+    57→                :hasCheckBox="true"
+    58→                :options="siteOptions"
+    59→                :isIconLeft="false"
+    60→                :disabled="isLoading"
+    61→                iconClass="general_arrow_bottom"
+    62→                iconSize="12px"
+    63→              />
+    64→            </div>
+    65→            <div class="access-container">
+    66→              <h6 v-if="userIsAdminOrOwner">
+    67→                {{ adminAccessMessage }}
+    68→              </h6>
+    69→              <DeviceAccessTable
+    70→                v-else
+    71→                :sites="filteredSites"
+    72→                :searchStatus="tableSearchStatus"
+    73→                :showManageButton="showAccessSettingsButton"
+    74→                @manageAccess="openDeviceSelectModal"
+    75→              />
+    76→            </div>
+    77→          </div>
+    78→        </div>
+    79→      </div>
+    80→      <!-- TODO: Marco put your Diagoue -->
+    81→    </template>
+    82→    <template #footer>
+    83→      <FooterPagination
+    84→        :pageCount="pageCount"
+    85→        :currentPageIndex="currentPageIndex"
+    86→        :rotating="false"
+    87→        @goPreviousPage="goPreviousPage"
+    88→        @goNextPage="goNextPage"
+    89→      />
+    90→    </template>
+    91→  </SideMenusLayout>
+    92→</template>
+    93→<script setup>
+    94→import { getCurrentInstance, onBeforeMount, nextTick, onMounted, computed } from 'vue';
+    95→import { useRouter } from 'vue-router';
+    96→
+    97→import { SideMenusLayout } from '@vivotek/advanced-vue-components';
+    98→import { TRACK_TIME_EVENT_KEY } from '@vivotek/const-vsaas';
+    99→import AppButtonDropdown from '@vivotek/generic-vue-components/components/AppButtonDropdown/AppButtonDropdown.vue';
+   100→import { FooterPagination } from '@vivotek/vue-app-layouts';
+   101→
+   102→import usePagination from '@/composables/usePagination/usePagination';
+   103→import { DEFAULT_PAGE_SIZE } from '@/constants/Pagination';
+   104→
+   105→import DeviceAccessTable from './components/DeviceAccessTable/DeviceAccessTable.vue';
+   106→import UserProfile from './components/UserProfile/UserProfile.vue';
+   107→import { useCurrentUserHelper } from './composables/useCurrentUserHelper';
+   108→import useDeviceAccessHelper from './composables/useDeviceAccessHelper';
+   109→import { useUserPermissionHelper } from './composables/useUserPermissionHelper';
+   110→
+   111→const router = useRouter();
+   112→const { proxy } = getCurrentInstance();
+   113→const mixpanel = proxy.$mixpanel;
+   114→
+   115→// ============================================================
+   116→// User
+   117→// ============================================================
+   118→const { currentUser } = useCurrentUserHelper();
+   119→const { userIsAdminOrOwner, showAccessSettingsButton } = useUserPermissionHelper(currentUser);
+   120→
+   121→const adminAccessMessage = computed(() => {
+   122→  return currentUser.value.isOwner
+   123→    ? proxy.$t('Owner has access to all sites in the organization.')
+   124→    : proxy.$t('Organization admin has access to all sites in the organization.');
+   125→});
+   126→
+   127→// ============================================================
+   128→// Device Access
+   129→// ============================================================
+   130→const {
+   131→  selectedSites,
+   132→  sites,
+   133→  totalAccess,
+   134→  isLoading,
+   135→  isOverviewEmpty,
+   136→  tableSearchStatus,
+   137→  siteOptions,
+   138→  filteredSites,
+   139→  filterTitle,
+   140→  fetchDeviceAccess,
+   141→} = useDeviceAccessHelper(currentUser);
+   142→
+   143→const openDeviceSelectModal = () => {
+   144→  mixpanel.time_event(TRACK_TIME_EVENT_KEY.USERS_SETUP_ACCESS);
+   145→  // TODO: Marco Open New Dialog
+   146→  // emit your event
+   147→  // refresh this page
+   148→};
+   149→
+   150→onMounted(async () => {
+   151→  await fetchDeviceAccess();
+   152→
+   153→  if (history.state.openAccessSettings) {
+   154→    await nextTick();
+   155→    openDeviceSelectModal();
+   156→  }
+   157→});
+   158→
+   159→// ============================================================
+   160→// Pagination
+   161→// ============================================================
+   162→const sitesCount = computed(() => sites.value.length);
+   163→const { currentPageIndex, pageCount, goPreviousPage, goNextPage } = usePagination(sitesCount, {
+   164→  perPage: DEFAULT_PAGE_SIZE,
+   165→});
+   166→
+   167→onBeforeMount(() => {
+   168→  if (!currentUser.value) {
+   169→    router.replace('/user/management');
+   170→  }
+   171→});
+   172→</script>
+   173→
+   174→<style scoped lang="less">
+   175→.user-detail {
+   176→  width: 100%;
+   177→  display: flex;
+   178→  flex-direction: column;
+   179→  flex: 1;
+   180→  min-height: 0;
+   181→  background-color: @color-surface02;
+   182→}
+   183→
+   184→.user-detail-header {
+   185→  display: flex;
+   186→  align-items: center;
+   187→  background-color: @color-surface03;
+   188→  border-bottom: 1px solid @color-outline11;
+   189→
+   190→  .go-back-button {
+   191→    cursor: pointer;
+   192→
+   193→    &:hover,
+   194→    &.active {
+   195→      background: @color-surface04;
+   196→    }
+   197→  }
+   198→}
+   199→
+   200→.user-detail-container {
+   201→  flex: 1;
+   202→  min-height: 0;
+   203→  display: flex;
+   204→  flex-direction: column;
+   205→  padding-bottom: 48px;
+   206→
+   207→  > div {
+   208→    width: 80%;
+   209→    max-width: 1404px;
+   210→    margin-left: auto;
+   211→    margin-right: auto;
+   212→  }
+   213→
+   214→  .user-profile {
+   215→    margin: 40px auto;
+   216→  }
+   217→}
+   218→
+   219→.access {
+   220→  flex: 1;
+   221→  display: flex;
+   222→  flex-direction: column;
+   223→  min-height: 0;
+   224→
+   225→  .header {
+   226→    display: flex;
+   227→    align-items: center;
+   228→    justify-content: space-between;
+   229→    margin-bottom: 24px;
+   230→
+   231→    h6 {
+   232→      color: @color-text02;
+   233→    }
+   234→
+   235→    h6.title {
+   236→      color: @color-text01;
+   237→      font-weight: 700;
+   238→      line-height: 40px;
+   239→      flex: 1;
+   240→    }
+   241→
+   242→    button {
+   243→      background-color: transparent;
+   244→      border: none;
+   245→
+   246→      &:hover {
+   247→        background-color: @color-surface03;
+   248→      }
+   249→    }
+   250→
+   251→    .filter-title {
+   252→      font-size: 14px;
+   253→      color: @color-text05;
+   254→    }
+   255→
+   256→    .divider {
+   257→      margin: 0 12px;
+   258→      width: 2px;
+   259→      height: 32px;
+   260→      border-left: 1px solid var(--color-outline14);
+   261→    }
+   262→
+   263→    .access-settings-button {
+   264→      width: 200px;
+   265→      position: relative;
+   266→
+   267→      .general_settings_line {
+   268→        margin-right: 12px;
+   269→      }
+   270→
+   271→      &:disabled {
+   272→        color: @color-text06;
+   273→      }
+   274→    }
+   275→
+   276→    .column-menu-button {
+   277→      margin: 0 8px;
+   278→
+   279→      :deep(.button) {
+   280→        padding: 0 8px;
+   281→
+   282→        &:active,
+   283→        &:hover,
+   284→        &[active='true'] {
+   285→          color: @color-icon04;
+   286→          background: @color-surface03;
+   287→
+   288→          > span {
+   289→            color: @color-text01;
+   290→          }
+   291→        }
+   292→      }
+   293→
+   294→      :deep(.dropdown) {
+   295→        width: 250px;
+   296→
+   297→        // 只針對 divider 之後的 options（排除 All）
+   298→        .divider ~ .options .check-box .text {
+   299→          overflow: hidden;
+   300→          text-overflow: ellipsis;
+   301→          white-space: nowrap;
+   302→        }
+   303→      }
+   304→    }
+   305→  }
+   306→}
+   307→
+   308→.access-container {
+   309→  flex: 1;
+   310→  min-height: 0;
+   311→  display: flex;
+   312→  flex-direction: column;
+   313→  padding-bottom: 40px;
+   314→
+   315→  > h6 {
+   316→    padding: 20px 18px;
+   317→    background: @color-surface03;
+   318→  }
+   319→
+   320→  .access-device-group-table {
+   321→    padding: 20px;
+   322→    background: @color-surface03;
+   323→    overflow: hidden;
+   324→
+   325→    :deep(.device-group-table) {
+   326→      height: 100%;
+   327→      padding: 0;
+   328→    }
+   329→  }
+   330→}
+   331→
+   332→:deep(.footer) {
+   333→  display: flex;
+   334→  justify-content: center;
+   335→}
+   336→</style>
+   337→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

@@ -1,0 +1,154 @@
+import { ref, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { sortingUtils } from '@vivotek/lib-utility';
+
+/**
+ * Device Access related logic
+ * @param {import('vue').Ref} currentUser - The user being viewed
+ */
+export default function useDeviceAccessHelper(currentUser) {
+  const store = useStore();
+  const { t } = useI18n();
+
+  const selectedSites = ref([]);
+
+  const deviceOverview = computed(() => store.getters['user/detailDeviceOverview']);
+  const isLoading = computed(() => store.getters['user/detailIsLoading']);
+  const myDevices = computed(() => store.getters['device/availableCameraDevices'] || []);
+  const mySites = computed(() => store.getters['group/groupsList'] || []);
+  const currentOrgId = computed(() => store.getters['organization/currentOrganization']?.organizationID);
+
+  const findMyDeviceInfo = (thingName, derivant) => {
+    return myDevices.value.find(
+      (device) => device.thingName === thingName && (device.options?.derivant === derivant || derivant === 'none'),
+    );
+  };
+
+  const findSiteName = (siteId) => {
+    const group = mySites.value.find((g) => g.id === siteId);
+    return group?.name || '-';
+  };
+
+  /**
+   * Transform API raw data (grantedDevices) into sites structure
+   */
+  const sites = computed(() => {
+    const grantedDevices = deviceOverview.value || [];
+    if (grantedDevices.length === 0) {
+      return [];
+    }
+
+    const siteMap = new Map();
+
+    grantedDevices.forEach((grantedDevice) => {
+      const { thingName, derivant, siteId, roleId, roleName } = grantedDevice;
+
+      if (!siteMap.has(siteId)) {
+        siteMap.set(siteId, {
+          id: siteId,
+          name: findSiteName(siteId),
+          devices: [],
+        });
+      }
+
+      const myDeviceInfo = findMyDeviceInfo(thingName, derivant);
+
+      siteMap.get(siteId).devices.push({
+        id: `${thingName}-${derivant}`,
+        thingName,
+        derivant,
+        name: myDeviceInfo?.displayName || thingName,
+        type: myDeviceInfo?.type || 'camera',
+        role: roleName,
+        roleId,
+      });
+    });
+
+    const siteList = Array.from(siteMap.values());
+
+    // Sort by name, but keep orgId site at bottom
+    return siteList.sort((a, b) => {
+      const aIsOrg = a.id === currentOrgId.value;
+      const bIsOrg = b.id === currentOrgId.value;
+      if (aIsOrg && !bIsOrg) {
+        return 1;
+      }
+      if (!aIsOrg && bIsOrg) {
+        return -1;
+      }
+      return sortingUtils.sortByLocalCompare(a, b, 'name');
+    });
+  });
+
+  watch(
+    [selectedSites, sites],
+    ([newSelectedSites, newSites]) => {
+      if (newSelectedSites.length === 0 && newSites.length > 0) {
+        selectedSites.value = newSites.map((site) => site.id);
+      }
+    },
+    { immediate: true },
+  );
+
+  const totalAccess = computed(() => {
+    return sites.value.reduce((total, site) => total + site.devices.length, 0);
+  });
+
+  const isOverviewEmpty = computed(() => totalAccess.value === 0);
+
+  const tableSearchStatus = computed(() => {
+    if (isLoading.value) {
+      return 'loading';
+    }
+    if (isOverviewEmpty.value) {
+      return 'no-device-group';
+    }
+    return '';
+  });
+
+  const siteOptions = computed(() => {
+    return sites.value.map((site) => ({
+      value: site.id,
+      text: site.name,
+    }));
+  });
+
+  const filteredSites = computed(() => {
+    if (selectedSites.value.length === 0) {
+      return sites.value;
+    }
+    return sites.value.filter((site) => selectedSites.value.includes(site.id));
+  });
+
+  const filterTitle = computed(() => {
+    if (selectedSites.value.length === 0 || selectedSites.value.length === sites.value.length) {
+      return t('All');
+    }
+    return selectedSites.value
+      .map((id) => sites.value.find((site) => site.id === id)?.name)
+      .filter(Boolean)
+      .join(', ');
+  });
+
+  const fetchDeviceAccess = async () => {
+    if (!currentUser.value?.userSub) {
+      return;
+    }
+    await store.dispatch('user/fetchUserGrantedDevices', { userSub: currentUser.value.userSub });
+  };
+
+  return {
+    selectedSites,
+    sites,
+    totalAccess,
+    isLoading,
+    isOverviewEmpty,
+    tableSearchStatus,
+    siteOptions,
+    filteredSites,
+    filterTitle,
+    fetchDeviceAccess,
+  };
+}

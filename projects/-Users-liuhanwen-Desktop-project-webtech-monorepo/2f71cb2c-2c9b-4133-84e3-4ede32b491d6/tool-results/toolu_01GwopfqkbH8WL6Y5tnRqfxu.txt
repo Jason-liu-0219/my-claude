@@ -1,0 +1,9 @@
+Found 8 files
+packages/app-vsaas-portal/src/components/Dropdowns/OrganizationRoleFormDropdown.vue
+packages/app-vsaas-portal/src/components/Speakers/SpeakerTalkDownController.vue
+packages/app-vsaas-portal/src/components/Poppers/RemoteLockControlPopper.vue
+packages/app-vsaas-portal/src/components/DeviceAccessControl/RoleLegendsModal.vue
+packages/app-vsaas-portal/src/components/Dialogues/AddVortexDeviceDialogue.test.js
+packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue
+packages/app-vsaas-portal/src/components/Schedule/index.vue
+packages/app-vsaas-portal/src/components/Dialogues/ChangeDeviceCityDialogue.vue

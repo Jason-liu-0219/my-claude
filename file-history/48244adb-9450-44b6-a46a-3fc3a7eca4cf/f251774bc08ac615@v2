@@ -1,0 +1,148 @@
+import { computed, getCurrentInstance, useTemplateRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { USER_ROLE, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+
+import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+
+/**
+ * Helper composable for user MFA and action management
+ *
+ * @param {Object} user - User object
+ * @param {Ref<boolean>} enableMFA - Whether MFA is enabled
+ * @returns {Object} Helper methods and computed properties
+ */
+const useUserMFAHelper = (props, enableMFA) => {
+  const { proxy } = getCurrentInstance();
+  const store = useStore();
+  const { t } = useI18n();
+
+  const resetMFADialogue = useTemplateRef('resetMFADialogue');
+  const changeUsernameDialogue = useTemplateRef('changeUsernameDialogue');
+  const removeUserDialogue = useTemplateRef('removeUserDialogue');
+  const changeOrganizationRoleDialogue = useTemplateRef('changeOrganizationRoleDialogue');
+
+  const onClickRemoveUser = () => {
+    removeUserDialogue.value.show();
+  };
+  const onClickResetUserMFA = () => {
+    resetMFADialogue.value.show();
+    proxy.$mixpanel.track(TRACK_EVENT_KEY.USERS_REST_MFA);
+  };
+  const onClickEditUsername = () => {
+    changeUsernameDialogue.value.show();
+  };
+
+  const onClickEditOrganizationRole = () => {
+    changeOrganizationRoleDialogue.value.show();
+  };
+
+  const enableResetMFA = computed(() => {
+    return store.getters['permission/canDoOrg']({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+  });
+
+  const isFreePlan = computed(() => store.getters['organization/isFreePlan']);
+
+  const enableEditOrganizationRole = computed(() => {
+    if (isFreePlan.value) {
+      return false;
+    }
+    return store.getters['permission/canDoOrg']({ scope: PERMISSION_ORG_SCOPE.ORG_ROLE_ASSIGN });
+  });
+
+  const enableRemoveUser = computed(() => {
+    return store.getters['permission/canDoOrg']({ scope: PERMISSION_ORG_SCOPE.ORG_USER_DELETE });
+  });
+
+  const enableEditUsername = computed(() => {
+    return store.getters['permission/canDoOrg']({ scope: PERMISSION_ORG_SCOPE.ORG_USER_UPDATE });
+  });
+
+  const currentUserRole = computed(() => store.getters['account/organizationRole']);
+
+  /**
+   * Computed property to check if user has any actions available
+   */
+  const moreActions = computed(() => {
+    const { isCurrentUser, isOwner: userIsOwner, isAdmin: userIsAdmin } = props.user;
+    const isCurrentUserOwnerOrAdmin = [USER_ROLE.OWNER, USER_ROLE.ADMIN].includes(currentUserRole.value);
+
+    const actions = [];
+
+    if (enableEditUsername.value) {
+      actions.push({
+        name: t('Edit username'),
+        classList: [''],
+        action: onClickEditUsername,
+      });
+    }
+
+    if (enableRemoveUser.value && !userIsOwner) {
+      if (isCurrentUserOwnerOrAdmin || !userIsAdmin) {
+        actions.push({
+          name: t('Remove this user'),
+          classList: ['danger'],
+          action: onClickRemoveUser,
+          disabled: isCurrentUser,
+        });
+      }
+    }
+
+    if (enableEditOrganizationRole.value && !userIsOwner) {
+      actions.push({
+        name: t('Edit organization role'),
+        classList: [''],
+        action: onClickEditOrganizationRole,
+      });
+    }
+
+    if (enableResetMFA.value) {
+      if (actions.length) {
+        actions.push({
+          classList: ['separator', 'border-separator'],
+        });
+      }
+      actions.push({
+        name: t('Reset MFA'),
+        classList: [''],
+        action: onClickResetUserMFA,
+        disabled: !enableMFA.value,
+      });
+    }
+
+    return actions;
+  });
+
+  const enableMoreActions = computed(() => {
+    return !!(!props.user.isCurrentUser && moreActions.value.length);
+  });
+
+  const showRoleTag = computed(() => {
+    return [USER_ROLE.OWNER, USER_ROLE.ADMIN].includes(props.user?.role);
+  });
+
+  const confirmChangeUsername = async (username) => {
+    try {
+      await store.dispatch('user/updateOrganizationUsername', { email: props.user.email, username });
+      changeUsernameDialogue.value.confirmUsernameDone();
+    } catch (error) {
+      changeUsernameDialogue.value.confirmUsernameDone(error);
+    }
+  };
+
+  return {
+    enableMoreActions,
+    moreActions,
+    showRoleTag,
+    confirmChangeUsername,
+    // for unit test
+    onClickEditUsername,
+    onClickResetUserMFA,
+    onClickRemoveUser,
+    onClickEditOrganizationRole,
+  };
+};
+
+export { useUserMFAHelper };
+export default useUserMFAHelper;

@@ -1,0 +1,678 @@
+<template>
+  <AppDialogue
+    ref="modal"
+    class="device-access-dialogue"
+    data-testid="device-access-dialogue"
+    name="DeviceAccessDialogue"
+    :closeWhenClickButton="closeOnSelect"
+    :title="dialogueTitle"
+    :subTitle="subTitle"
+    :primaryText="isProcessing ? $t('Selecting') : $t('Select')"
+    :buttonIconStatusMapping="buttonIconStatusMapping"
+    :state="modalState"
+    height="720px"
+    width="1116px"
+    @confirm="handleConfirm"
+  >
+    <template #content>
+      <div class="content-wrapper">
+        <div class="hint">
+          <h3 class="bold">
+            {{ selectedLengthHint }}
+          </h3>
+        </div>
+        <div class="dialogue-content">
+          <!-- Left: Site List -->
+          <div class="left-menu">
+            <DeviceGroupList
+              :multiple="multiple"
+              :groupList="sites"
+              :currentSelectedGroups="currentSelectedSites"
+              :currentSelectedDevices="currentSelectedDevices"
+              :focusGroupId="focusSiteId"
+              :isSearching="isSearching"
+              @toggleSelectedGroups="toggleSelectedSites"
+              @changeFocusGroup="changeFocusSiteAndClearInput"
+            />
+          </div>
+
+          <!-- Center: Device List -->
+          <div class="center-view">
+            <div class="search-container">
+              <AppInputFields
+                id="search-device-fields"
+                v-model.lazy="searchName"
+                class="search-input"
+                type="search"
+                :disabled="devices.length === 0"
+                @input="handleSearchInput"
+              />
+            </div>
+
+            <template v-if="hasSearchResult">
+              <div
+                v-if="currentFocusSiteInfo"
+                class="site-header-container"
+              >
+                <h6 class="site-hint">{{ currentFocusSiteInfo }}</h6>
+              </div>
+
+              <div class="site-batch-assign-container">
+                <h6 class="site-batch-selector-hint">
+                  {{ t('Update Selected Devices Access') }}
+                </h6>
+                <div class="site-batch-assign-selector">
+                  <DeviceRoleDropdown
+                    class="device-role-dropdown"
+                    :modelValue="currentBatchAssignRoleId"
+                    :placeholder="t('Select Role to assign')"
+                    :disabled="isBatchAssignDisabled"
+                    @selected="batchAssignRole"
+                  />
+                </div>
+              </div>
+
+              <div
+                ref="siteList"
+                class="site-list"
+              >
+                <div
+                  v-for="site in filteredSites"
+                  :key="site.id"
+                  class="site-wrapper"
+                >
+                  <template v-if="displayDevices[site.id]">
+                    <h6
+                      class="site-title"
+                      :title="site.name"
+                    >
+                      {{ site.name }}
+                    </h6>
+                    <div class="site-device-container">
+                      <AppCheckBox
+                        v-if="multiple"
+                        v-model.lazy="isSelectAllMap[site.id]"
+                        :indeterminate="checkIsSelectIndeterminate(site.devices)"
+                        :disabled="site.devices.length === 0"
+                        @click.prevent="selectAll(site.id)"
+                      />
+                      <span>{{ DEVICE_OF_GROUP_TYPE_LABEL[site.type] }}</span>
+                    </div>
+                    <AppDeviceList
+                      class="site-device-list"
+                      :multiple="multiple"
+                      :selectMode="!multiple"
+                      :devicesData="displayDevices[site.id]"
+                      :activeDeviceId="activeDeviceId"
+                      :defaultSelectedDevices="currentSelectedDevices"
+                      :enableListItemActive="false"
+                      :shouldDisplayThumbnail="shouldDisplayThumbnail(site.type)"
+                      @toggleSelectedDevices="toggleSelectedDevices"
+                      @selectDevice="selectDevice"
+                    >
+                      <template #rear="{ device }">
+                        <DeviceIndicator
+                          v-if="device.nvrName || device.vssName"
+                          :device="device"
+                        />
+                      </template>
+                      <template #dropdown="{ device }">
+                        <DeviceRoleDropdown
+                          class="device-role-dropdown"
+                          :modelValue="deviceRoles[device.deviceId]?.roleId || ''"
+                          :placeholder="$t('Select Role')"
+                          :initialDisplayText="deviceRoles[device.deviceId]?.roleName || ''"
+                          @selected="(role) => updateDeviceRole(device.deviceId, role)"
+                        />
+                      </template>
+                    </AppDeviceList>
+                  </template>
+                </div>
+              </div>
+            </template>
+
+            <div
+              v-else
+              class="no-result-container"
+            >
+              <SvgIcon
+                class="no-result-icon"
+                iconClass="search_failed"
+                size="100px"
+              />
+              <h6 class="text">{{ $t('No search results') }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template
+      v-if="isError"
+      #errorMessage
+    >
+      <AppFormErrorMessage :message="$t('Failed to assign device roles')" />
+    </template>
+  </AppDialogue>
+</template>
+
+<script setup>
+import { ref, computed, watch, useTemplateRef, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { DeviceIndicator, DeviceGroupList, AppDeviceList } from '@vivotek/advanced-vue-components';
+import { DIALOGUE, GROUP_TYPES } from '@vivotek/const-vsaas';
+
+import DeviceRoleDropdown from '@/components/Dropdowns/DeviceRoleDropdown.vue';
+import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
+import { composeDeviceId, useDeviceRoleHelper } from '@/pages/user/detail/composables/useDeviceRoleHelper';
+
+// ============================================================
+// Props & Emits
+// ============================================================
+const props = defineProps({
+  multiple: { type: Boolean, default: true },
+  availableDevices: { type: Array, default: null },
+  closeOnSelect: { type: Boolean, default: false },
+  title: { type: String, default: null },
+  subTitle: { type: String, default: null },
+  userId: { type: String, default: '' },
+});
+
+const emit = defineEmits(['success']);
+
+// ============================================================
+// Composables & Refs
+// ============================================================
+const store = useStore();
+const { t } = useI18n();
+const modal = useTemplateRef('modal');
+const siteList = useTemplateRef('siteList');
+
+// ============================================================
+// State
+// ============================================================
+const modalState = ref(DIALOGUE.STATE.DEFAULT);
+const searchName = ref('');
+const isSearching = ref(false);
+const focusSiteId = ref('');
+const currentSelectedDevices = ref([]);
+const currentSelectedSites = ref([]);
+const deviceRoles = ref({});
+const originalGrantedDevices = ref(new Map());
+const batchAssignRoleId = ref({});
+
+// ============================================================
+// Store Getters
+// ============================================================
+const sortedGroups = computed(() => store.getters['group/sortedGroups']);
+const userDetailGrantedDevices = computed(() => store.getters['user/detailDeviceOverview']);
+const activeDeviceId = computed(() => store.state.group.activeDeviceId);
+
+const devices = computed(() => {
+  return props.availableDevices ?? store.getters['device/getAvailableDevicesWithPermission'](PERMISSION_DEVICE_SCOPE.DEVICE_ALL_USERS) ?? [];
+});
+
+const { processSelectedDevices, processRemovedDevices, updateSelectedDevicesWithParentChannel } =
+  useDeviceRoleHelper(devices);
+
+// ============================================================
+// Computed - Sites & Devices
+// ============================================================
+const sites = computed(() => {
+  return sortedGroups.value()
+    .map((group) => ({
+      ...group,
+      devices: devices.value.filter((d) => d.options?.deviceGroupID === group.id),
+    }))
+    .filter((group) => group.devices.length > 0);
+});
+
+const availableDeviceIds = computed(() => new Set(devices.value.map((d) => d.deviceId)));
+
+const filteredSites = computed(() => {
+  return isSearching.value ? sites.value : sites.value.filter((s) => s.id === focusSiteId.value);
+});
+
+const displayDevices = computed(() => {
+  const result = {};
+  const keyword = searchName.value.toLowerCase();
+
+  sites.value.forEach((site) => {
+    const filtered = isSearching.value
+      ? site.devices.filter((d) => d.displayName.toLowerCase().includes(keyword))
+      : site.devices;
+
+    if (filtered.length > 0) {
+      result[site.id] = filtered;
+    }
+  });
+
+  return result;
+});
+
+const hasSearchResult = computed(() => Object.keys(displayDevices.value).length > 0);
+
+// ============================================================
+// Computed - Selection State
+// ============================================================
+const isSelectAllMap = computed(() => {
+  return sites.value.reduce((acc, site) => {
+    acc[site.id] = site.devices.every((d) => currentSelectedDevices.value.includes(d.deviceId));
+    return acc;
+  }, {});
+});
+
+const currentFocusSite = computed(() => sites.value.find((s) => s.id === focusSiteId.value) ?? null);
+
+const currentFocusSiteInfo = computed(() => {
+  if (!currentFocusSite.value) return null;
+
+  const { name, devices: siteDevices } = currentFocusSite.value;
+  const total = siteDevices.length;
+  const selected = siteDevices.filter((d) => currentSelectedDevices.value.includes(d.deviceId)).length;
+
+  return `${t('Selected Devices in')} ${name} (${selected}/${total})`;
+});
+
+const currentFocusSiteSelectedDevices = computed(() => {
+  if (!currentFocusSite.value || isSearching.value) return [];
+  return currentFocusSite.value.devices.filter((d) => currentSelectedDevices.value.includes(d.deviceId));
+});
+
+const currentBatchAssignRoleId = computed({
+  get: () => batchAssignRoleId.value[focusSiteId.value] || '',
+  set: (value) => {
+    if (focusSiteId.value) {
+      batchAssignRoleId.value[focusSiteId.value] = value;
+    }
+  },
+});
+
+const isBatchAssignDisabled = computed(() => currentFocusSiteSelectedDevices.value.length === 0);
+
+// ============================================================
+// Computed - UI State
+// ============================================================
+const isProcessing = computed(() => modalState.value === DIALOGUE.STATE.PROCESSING);
+const isError = computed(() => modalState.value === DIALOGUE.STATE.ERROR);
+const isInvalidSelection = computed(() => currentSelectedDevices.value.length === 0);
+const dialogueTitle = computed(() => props.title ?? t('Select Devices'));
+
+const selectedLengthHint = computed(() => {
+  const count = currentSelectedDevices.value.length;
+  return t('0 device is selected | 1 device is selected | {count} devices are selected', { count });
+});
+
+const buttonIconStatusMapping = computed(() => ({
+  ...DIALOGUE.PRIMARY_ACITON_BUTTON_MAPPING,
+  [DIALOGUE.STATE.DEFAULT]: [
+    { status: isInvalidSelection.value ? 'disabled' : '', icon: '' },
+    { status: '', icon: '' },
+  ],
+}));
+
+const DEVICE_OF_GROUP_TYPE_LABEL = computed(() => ({
+  [GROUP_TYPES.VSS]: t('VSS'),
+  [GROUP_TYPES.NVR]: t('NVR'),
+  [GROUP_TYPES.BRIDGE]: t('Bridge'),
+  [GROUP_TYPES.SITE]: t('Cameras'),
+}));
+
+// ============================================================
+// Methods - Initialization
+// ============================================================
+const initializeSelectedDevicesAndRoles = () => {
+  const granted = userDetailGrantedDevices.value;
+  if (!granted?.length) return;
+
+  const selectedIds = [];
+  const roles = {};
+
+  originalGrantedDevices.value.clear();
+
+  granted.forEach((device) => {
+    const deviceId = composeDeviceId(device.thingName, device.derivant);
+    originalGrantedDevices.value.set(deviceId, { ...device });
+
+    if (availableDeviceIds.value.has(deviceId)) {
+      selectedIds.push(deviceId);
+      roles[deviceId] = { roleId: device.roleId || '', roleName: device.roleName || '' };
+    }
+  });
+
+  currentSelectedDevices.value = selectedIds;
+  deviceRoles.value = roles;
+};
+
+const setFirstSiteAsDefault = () => {
+  if (sites.value.length) {
+    focusSiteId.value = sites.value[0].id;
+  }
+};
+
+const resetState = () => {
+  modalState.value = DIALOGUE.STATE.DEFAULT;
+  batchAssignRoleId.value = {};
+  searchName.value = '';
+  isSearching.value = false;
+  setFirstSiteAsDefault();
+  initializeSelectedDevicesAndRoles();
+};
+
+// ============================================================
+// Methods - Site Selection
+// ============================================================
+const getSiteDeviceIds = (siteIds) => {
+  return sites.value
+    .filter((s) => siteIds.includes(s.id))
+    .flatMap((s) => s.devices.map((d) => d.deviceId))
+    .filter((id) => availableDeviceIds.value.has(id));
+};
+
+const toggleSelectedSites = (selectedSites, indeterminateSites = []) => {
+  const indeterminateDeviceIds = getSiteDeviceIds(indeterminateSites);
+  const indeterminateSelected = currentSelectedDevices.value.filter((id) => indeterminateDeviceIds.includes(id));
+
+  const fullySelectedSites = selectedSites.filter((id) => !indeterminateSites.includes(id));
+  const fullySelectedDevices = getSiteDeviceIds(fullySelectedSites);
+
+  currentSelectedSites.value = selectedSites;
+  currentSelectedDevices.value = [...fullySelectedDevices, ...indeterminateSelected];
+};
+
+const changeFocusSiteAndClearInput = (siteId) => {
+  searchName.value = '';
+  isSearching.value = false;
+  focusSiteId.value = siteId;
+  siteList.value?.scrollTo?.(0, 0);
+};
+
+// ============================================================
+// Methods - Device Selection
+// ============================================================
+const selectDevice = (deviceId) => {
+  if (!props.multiple) {
+    currentSelectedDevices.value = [deviceId];
+  }
+};
+
+const toggleSelectedDevices = ({ selectedDevices }) => {
+  currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(selectedDevices, currentSelectedDevices.value);
+};
+
+const selectAll = (siteId) => {
+  const siteDeviceIds = displayDevices.value[siteId].map((d) => d.deviceId);
+  const current = currentSelectedDevices.value;
+  const isAllSelected = siteDeviceIds.every((id) => current.includes(id));
+
+  const target = isAllSelected
+    ? current.filter((id) => !siteDeviceIds.includes(id))
+    : [...new Set([...current, ...siteDeviceIds])];
+
+  currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(target, current);
+};
+
+const checkIsSelectIndeterminate = (siteDevices) => {
+  if (!siteDevices?.length) return false;
+
+  const ids = siteDevices.map((d) => d.deviceId);
+  const selectedCount = ids.filter((id) => currentSelectedDevices.value.includes(id)).length;
+
+  return selectedCount > 0 && selectedCount < ids.length;
+};
+
+// ============================================================
+// Methods - Role Assignment
+// ============================================================
+const updateDeviceRole = (deviceId, role) => {
+  deviceRoles.value[deviceId] = { roleId: role?.id || '', roleName: role?.name || '' };
+};
+
+const batchAssignRole = (role) => {
+  if (!role || isBatchAssignDisabled.value) return;
+
+  currentBatchAssignRoleId.value = role.id;
+  currentFocusSiteSelectedDevices.value.forEach((device) => {
+    deviceRoles.value[device.deviceId] = { roleId: role.id, roleName: role.name };
+  });
+};
+
+// ============================================================
+// Methods - Search
+// ============================================================
+const handleSearchInput = (input) => {
+  isSearching.value = Boolean(input);
+  if (!input) {
+    setFirstSiteAsDefault();
+  }
+};
+
+// ============================================================
+// Methods - UI Helpers
+// ============================================================
+const shouldDisplayThumbnail = (siteType) => {
+  return ![GROUP_TYPES.NVR, GROUP_TYPES.BRIDGE, GROUP_TYPES.VSS].includes(siteType);
+};
+
+// ============================================================
+// Methods - Actions
+// ============================================================
+const openDialogue = () => {
+  resetState();
+  modal.value?.show();
+};
+
+const handleConfirm = async (isConfirm) => {
+  if (!isConfirm) return;
+
+  if (!props.closeOnSelect) {
+    modalState.value = DIALOGUE.STATE.PROCESSING;
+  }
+
+  const grantedMap = new Map();
+  const selectedSet = new Set(currentSelectedDevices.value);
+
+  processSelectedDevices(currentSelectedDevices.value, deviceRoles.value, selectedSet, grantedMap);
+  processRemovedDevices(originalGrantedDevices.value, selectedSet, grantedMap);
+
+  try {
+    await store.dispatch('user/assignDeviceRole', {
+      userId: props.userId,
+      assignments: Array.from(grantedMap.values()),
+    });
+    modalState.value = DIALOGUE.STATE.SUCCESS;
+    emit('success');
+  } catch {
+    modalState.value = DIALOGUE.STATE.ERROR;
+  }
+};
+
+// ============================================================
+// Expose & Lifecycle
+// ============================================================
+defineExpose({ openDialogue });
+
+watch(
+  currentSelectedDevices,
+  (selected) => {
+    currentSelectedSites.value = sites.value
+      .filter((s) => s.devices.some((d) => selected.includes(d.deviceId)))
+      .map((s) => s.id);
+  },
+  { immediate: true },
+);
+
+onMounted(async () => {
+  setFirstSiteAsDefault();
+  await store.dispatch('user/fetchDefaultDeviceRoleList');
+});
+</script>
+
+<style lang="less" scoped>
+.device-access-dialogue {
+  cursor: default;
+
+  .main-wrapper {
+    > div:not(.header) {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      flex: 1;
+      > div {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+  }
+
+  .hint {
+    padding-bottom: 20px;
+    border-bottom: 1px solid @color-surface05;
+    h3 {
+      color: @color-primary;
+      line-height: 37px;
+    }
+    h6 {
+      color: @color-text03;
+      line-height: 20px;
+      margin-top: 10px;
+      &.error {
+        color: @color-alert;
+      }
+    }
+  }
+
+  .dialogue-content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 0;
+    padding-top: 10px;
+
+    .left-menu {
+      background-color: @color-surface03;
+      border-right: 1px solid #000;
+      height: 100%;
+    }
+
+    .center-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+      overflow-x: hidden;
+      height: 100%;
+    }
+  }
+
+  .search-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .search-input {
+    position: relative;
+    width: 300px;
+    height: 32px;
+  }
+
+  .site-header-container {
+    padding: 18px 18px 18px 0;
+  }
+
+  .site-hint,
+  .site-batch-selector-hint {
+    font-weight: 700;
+    font-size: 14px;
+    color: @color-text01;
+  }
+
+  .site-batch-assign-container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    padding: 18px 0;
+  }
+
+  .site-batch-assign-selector {
+    width: 30%;
+  }
+
+  .site-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .site-list {
+    overflow-y: auto;
+    height: 440px;
+    margin-bottom: 20px;
+
+    .site-device-list {
+      :deep(.device) {
+        h6 {
+          max-width: 500px;
+        }
+        .svg-icon[data-state='active'] {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  .site-title {
+    font-weight: bold;
+    padding: 18px;
+    font-size: 16px;
+    align-items: center;
+    line-height: 24px;
+    .text-ellipsis;
+  }
+
+  .site-device-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    background-color: @color-surface07;
+
+    :deep(.check-box .svg-icon) {
+      margin-right: 10px;
+    }
+  }
+
+  .no-result-container {
+    height: 440px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  :deep(.single-device) {
+    width: 100%;
+  }
+}
+
+:deep(.device-wrapper) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & .device {
+    width: 100%;
+  }
+
+  & .device-role-dropdown {
+    width: 30%;
+  }
+}
+</style>

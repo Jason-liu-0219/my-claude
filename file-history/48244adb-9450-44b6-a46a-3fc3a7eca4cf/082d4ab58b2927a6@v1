@@ -1,0 +1,250 @@
+import { ref } from 'vue';
+import { TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+
+import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+
+import { useUserMFAHelper } from './useUserMFAHelper';
+
+const trackMock = vi.fn();
+const showMock = vi.fn();
+const confirmUsernameDoneMock = vi.fn();
+
+const useTemplateRefMock = {
+  value: {
+    show: showMock,
+    confirmUsernameDone: confirmUsernameDoneMock,
+  },
+};
+
+vi.mock('vue', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useTemplateRef: () => useTemplateRefMock,
+    getCurrentInstance: () => ({
+      proxy: {
+        $mixpanel: {
+          track: trackMock,
+        },
+      },
+    }),
+  };
+});
+
+vi.mock('vue-i18n', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useI18n: () => ({
+      t: (key) => key,
+    }),
+  };
+});
+
+const isOwner = false;
+let currentOrganizationRole = 'ADMIN';
+
+const dispatchMock = vi.fn();
+const canDoOrgMock = vi.fn();
+
+const setupPermissionsMock = ({
+  canResetMFA = false,
+  canEditOrganizationRole = false,
+  canRemoveUser = false,
+  canEditUsername = false,
+} = {}) => {
+  canDoOrgMock.mockImplementation(({ scope }) => {
+    if (scope === PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED) {
+      return canResetMFA;
+    }
+    if (scope === PERMISSION_ORG_SCOPE.ORG_ROLE_ASSIGN) {
+      return canEditOrganizationRole;
+    }
+    if (scope === PERMISSION_ORG_SCOPE.ORG_USER_DELETE) {
+      return canRemoveUser;
+    }
+    if (scope === PERMISSION_ORG_SCOPE.ORG_USER_UPDATE) {
+      return canEditUsername;
+    }
+    return false;
+  });
+};
+
+vi.mock(import('vuex'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    // your mocked methods
+    useStore: () => ({
+      dispatch: dispatchMock,
+      getters: {
+        'account/isOwner': isOwner,
+        'account/organizationRole': currentOrganizationRole,
+        'permission/canDoOrg': canDoOrgMock,
+      },
+    }),
+  };
+});
+
+const mockProps = {
+  user: {
+    sub: '797afec1-ffb1-4037-913b-24d86186afdd',
+    name: 'jason.lu',
+    email: 'jason.lu@vivotek.com',
+    deviceGroupAccess: '0',
+    status: 'Pending',
+  },
+};
+
+describe('moreActions', () => {
+  beforeEach(() => {
+    canDoOrgMock.mockClear();
+    currentOrganizationRole = 'ADMIN';
+  });
+  it('should show edit username action when user has edit username permission', () => {
+    mockProps.user.isAdmin = false;
+    mockProps.user.role = {
+      name: 'member',
+      isCustomRole: false,
+    };
+    setupPermissionsMock({ canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickEditUsername } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(2);
+    expect(moreActions.value[0].name).toBe('Edit username');
+    expect(moreActions.value[0].action).toBe(onClickEditUsername);
+  });
+  it('should show remove user action when user is admin and has remove user permission', () => {
+    mockProps.user.isCurrentUser = false;
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickRemoveUser } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(4);
+    expect(moreActions.value[1].name).toBe('Remove this user');
+    expect(moreActions.value[1].action).toBe(onClickRemoveUser);
+    expect(moreActions.value[1].disabled).toBe(false);
+  });
+  it('should show remove user action and disabled when user is current user', () => {
+    mockProps.user.isCurrentUser = true;
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickRemoveUser } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(4);
+    expect(moreActions.value[1].name).toBe('Remove this user');
+    expect(moreActions.value[1].action).toBe(onClickRemoveUser);
+    expect(moreActions.value[1].disabled).toBe(true);
+  });
+  it('should not show remove user action when user without remove user permission', () => {
+    mockProps.user.isCurrentUser = false;
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: false });
+
+    const { moreActions, onClickRemoveUser } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(3);
+    expect(moreActions.value[1].name).not.toBe('Remove this user');
+    expect(moreActions.value[1].action).not.toBe(onClickRemoveUser);
+    expect(moreActions.value[1].disabled).not.toBe(true);
+  });
+  it('should not show remove user action when user is admin but current organization role is member', () => {
+    mockProps.user.isCurrentUser = false;
+    mockProps.user.isAdmin = true;
+    currentOrganizationRole = 'MEMBER';
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickRemoveUser } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(3);
+    expect(moreActions.value[1].name).not.toBe('Remove this user');
+    expect(moreActions.value[1].action).not.toBe(onClickRemoveUser);
+    expect(moreActions.value[1].disabled).not.toBe(true);
+  });
+  it('should show resetMFA action when user is not admin, and disabled when enableMFA is true', () => {
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickResetUserMFA } = useUserMFAHelper(mockProps, ref(false));
+    expect(moreActions.value.length).toBe(4);
+    expect(moreActions.value[2].classList).toContain('separator');
+    expect(moreActions.value[2].classList).toContain('border-separator');
+    expect(moreActions.value[3].name).toBe('Reset MFA');
+    expect(moreActions.value[3].action).toBe(onClickResetUserMFA);
+    expect(moreActions.value[3].disabled).toBe(true);
+  });
+  it('should show resetMFA action when user is not admin , and disabled when enableMFA is false', () => {
+    mockProps.user.isAdmin = false;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions, onClickResetUserMFA } = useUserMFAHelper(mockProps, ref(true));
+    expect(moreActions.value.length).toBe(4);
+    expect(moreActions.value[2].classList).toContain('separator');
+    expect(moreActions.value[2].classList).toContain('border-separator');
+    expect(moreActions.value[3].name).toBe('Reset MFA');
+    expect(moreActions.value[3].action).toBe(onClickResetUserMFA);
+    expect(moreActions.value[3].disabled).toBe(false);
+  });
+  it('should show edit organization role action when user has permission', () => {
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({
+      canResetMFA: true,
+      canEditOrganizationRole: true,
+      canEditUsername: true,
+      canRemoveUser: true,
+    });
+
+    const { moreActions, onClickEditOrganizationRole } = useUserMFAHelper(mockProps, ref(true));
+
+    // Order: Edit username(0), Remove user(1), Edit org role(2), separator(3), Reset MFA(4)
+    expect(moreActions.value.length).toBe(5);
+    expect(moreActions.value[2].name).toBe('Edit organization role');
+    expect(moreActions.value[2].action).toBe(onClickEditOrganizationRole);
+  });
+  it('should not show edit organization role action when user without permission', () => {
+    mockProps.user.isAdmin = true;
+    setupPermissionsMock({ canResetMFA: true, canEditUsername: true, canRemoveUser: true });
+
+    const { moreActions } = useUserMFAHelper(mockProps, ref(true));
+
+    expect(moreActions.value.length).toBe(4);
+    expect(moreActions.value[3].name).toBe('Reset MFA');
+  });
+});
+
+describe('onClickResetUserMFA', () => {
+  it('should call resetMFADialogue.show and track event', () => {
+    setupPermissionsMock({ canResetMFA: true });
+    const { onClickResetUserMFA } = useUserMFAHelper(mockProps, ref(false));
+
+    onClickResetUserMFA();
+    expect(showMock).toHaveBeenCalled();
+    expect(trackMock).toHaveBeenCalledWith(TRACK_EVENT_KEY.USERS_REST_MFA);
+  });
+});
+
+describe('confirmChangeUsername', () => {
+  it('should call changeUsernameDialogue.show', async () => {
+    dispatchMock.mockResolvedValue({});
+
+    const { confirmChangeUsername } = useUserMFAHelper(mockProps, ref(false));
+    await confirmChangeUsername('newUsername');
+
+    expect(dispatchMock).toHaveBeenCalledWith('user/updateOrganizationUsername', {
+      email: mockProps.user.email,
+      username: 'newUsername',
+    });
+    expect(confirmUsernameDoneMock).toHaveBeenCalled();
+  });
+
+  it('should call changeUsernameDialogue.show with error', async () => {
+    dispatchMock.mockRejectedValue('error');
+
+    const { confirmChangeUsername } = useUserMFAHelper(mockProps, ref(false));
+    await confirmChangeUsername('newUsername');
+
+    expect(dispatchMock).toHaveBeenCalledWith('user/updateOrganizationUsername', {
+      email: mockProps.user.email,
+      username: 'newUsername',
+    });
+    expect(confirmUsernameDoneMock).toHaveBeenCalledWith('error');
+  });
+});

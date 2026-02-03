@@ -1,0 +1,183 @@
+commit 3ca2a9c55ce0a80a9899e7447f44a940ad0165b3
+Author: JasonLiu <97425372+Jason-liu-0219@users.noreply.github.com>
+Date:   Mon Dec 22 13:19:20 2025 +0800
+
+    Oursky merge code (#6235)
+    
+    * feat(vsaas-portal): squash merge code
+    
+    * feat(vsaas-portal): resolve not work code
+    
+    * feat(vsaas-portal): fix test
+    
+    * feat(vsaas-portal): change env to vortex
+    
+    * feat(vsaas-portal): fix  workflow
+    
+    * feat(vsaas-portal): update lock file
+    
+    * feat(vsaas-portal): reset action to deafult
+    
+    * feat(vsaas-portal): fix lint
+    
+    * feat(vsaas-portal): pr fix
+    
+    * feat(vsaas-portal): fix lock
+    
+    * feat(vsaas-portal): fix test
+
+diff --git a/packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.js b/packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.js
+index f891057177..e67d3ef61f 100644
+--- a/packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.js
++++ b/packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.js
+@@ -3,34 +3,32 @@ import { useI18n } from 'vue-i18n';
+ import { useStore } from 'vuex';
+ 
+ import { USER_ROLE, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
++import { OrgActions } from '@vivotek/lib-vsaas-rbac';
++
++import { isSuperiorThanOrEqual } from '@/utils/RoleHelper';
+ 
+ /**
+  * Helper composable for user MFA and action management
+  *
+  * @param {Object} user - User object
+  * @param {Ref<boolean>} enableMFA - Whether MFA is enabled
++ * @param {Ref<Object>} permissions - OrgPermissionResultMap loaded the permission needed
+  * @returns {Object} Helper methods and computed properties
+  */
+-const useUserMFAHelper = (props, enableMFA) => {
++const useUserMFAHelper = (props, enableMFA, permissions) => {
+   const { proxy } = getCurrentInstance();
+   const store = useStore();
+   const { t } = useI18n();
+ 
+   const resetMFADialogue = useTemplateRef('resetMFADialogue');
+   const changeUsernameDialogue = useTemplateRef('changeUsernameDialogue');
+-  const grantUserAdminDialogue = useTemplateRef('grantUserAdminDialogue');
+-  const revokeUserAdminDialogue = useTemplateRef('revokeUserAdminDialogue');
+   const removeUserDialogue = useTemplateRef('removeUserDialogue');
++  const changeOrganizationRoleDialogue = useTemplateRef('changeOrganizationRoleDialogue');
++  const transferOrganizationOwnerDialogue = useTemplateRef('transferOrganizationOwnerDialogue');
+ 
+   const onClickRemoveUser = () => {
+     removeUserDialogue.value.show();
+   };
+-  const onClickGrantUserAdmin = () => {
+-    grantUserAdminDialogue.value.show();
+-  };
+-  const onClickRevokeUserAdmin = () => {
+-    revokeUserAdminDialogue.value.show();
+-  };
+   const onClickResetUserMFA = () => {
+     resetMFADialogue.value.show();
+     proxy.$mixpanel.track(TRACK_EVENT_KEY.USERS_REST_MFA);
+@@ -39,21 +37,21 @@ const useUserMFAHelper = (props, enableMFA) => {
+     changeUsernameDialogue.value.show();
+   };
+ 
++  const onClickEditOrganizationRole = () => {
++    changeOrganizationRoleDialogue.value.show();
++  };
++  const onClickTransferOrganization = () => {
++    transferOrganizationOwnerDialogue.value.show();
++  };
++
+   const isAdmin = computed(() => {
+     return store.getters['account/isAdmin'];
+   });
+   const isOwner = computed(() => {
+     return store.getters['account/isOwner'];
+   });
+-  const isFreePlan = computed(() => {
+-    return store.getters['organization/isFreePlan'];
+-  });
+-
+-  const hasUpdateUserPermission = computed(() => {
+-    return store.getters['permission/canUpdate']('user');
+-  });
+-  const hasDeleteUserPermission = computed(() => {
+-    return store.getters['permission/canDelete']('user');
++  const organizationRole = computed(() => {
++    return store.getters['account/organizationRole'];
+   });
+ 
+   const enableResetMFA = computed(() => {
+@@ -73,15 +71,15 @@ const useUserMFAHelper = (props, enableMFA) => {
+       },
+     ];
+ 
+-    if (hasUpdateUserPermission.value && !userIsOwner && !isFreePlan.value) {
++    if (!isSuperiorThanOrEqual(props.user.organizationRole, organizationRole.value)) {
+       actions.push({
+-        name: userIsAdmin ? t('Remove organization admin') : t('Make organization admin'),
++        name: t('Edit organization role'),
+         classList: [''],
+-        action: userIsAdmin ? onClickRevokeUserAdmin : onClickGrantUserAdmin,
+-        disabled: isCurrentUser,
++        action: onClickEditOrganizationRole,
+       });
+     }
+-    if (hasDeleteUserPermission.value && !userIsOwner) {
++
++    if (permissions.value?.get(OrgActions.RemoveUser) && !userIsOwner) {
+       actions.push({
+         name: t('Remove this user'),
+         classList: ['danger'],
+@@ -89,6 +87,13 @@ const useUserMFAHelper = (props, enableMFA) => {
+         disabled: isCurrentUser,
+       });
+     }
++    if (isOwner.value && userIsAdmin) {
++      actions.push({
++        name: t('Transfer ownership to this user'),
++        classList: ['danger'],
++        action: onClickTransferOrganization,
++      });
++    }
+     if (enableResetMFA.value) {
+       if (actions.length) {
+         actions.push({
+@@ -122,17 +127,38 @@ const useUserMFAHelper = (props, enableMFA) => {
+     }
+   };
+ 
++  const confirmChangeOrganizationRole = async (role) => {
++    try {
++      await store.dispatch('user/updateOrganizationRoleOfUser', {
++        externalID: props.user.userSub,
++        roleID: role,
++      });
++      store.dispatch('globalNotification/success', {
++        iconType: '',
++        message: t('Role updated successfully'),
++        timeout: 4000,
++        closable: true,
++      });
++      changeOrganizationRoleDialogue.value.confirmUpdateDone();
++    } catch (e) {
++      store.dispatch('globalNotification/error', {
++        iconType: '',
++        message: t('Role failed to update'),
++        timeout: 4000,
++        closable: true,
++      });
++      changeOrganizationRoleDialogue.value.confirmUpdateDone(e);
++    }
++  };
++
+   return {
+     enableMoreActions,
+     moreActions,
+     showRoleTag,
+     confirmChangeUsername,
+-    hasDeleteUserPermission,
+-    hasUpdateUserPermission,
++    confirmChangeOrganizationRole,
+     // for unit test
+     onClickEditUsername,
+-    onClickGrantUserAdmin,
+-    onClickRevokeUserAdmin,
+     onClickResetUserMFA,
+   };
+ };

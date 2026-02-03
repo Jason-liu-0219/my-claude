@@ -1,0 +1,4 @@
+Found 3 files
+packages/app-vsaas-ai/src/pages/search/reskin/components/ObjectInfo.vue
+packages/app-vsaas-ai/src/pages/search/components/ObjectInfo.vue
+packages/app-vsaas-ai/src/store/device/index.js

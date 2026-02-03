@@ -1,0 +1,27 @@
+[
+  {
+    "content": "Explore router structure and route definitions",
+    "status": "completed",
+    "activeForm": "Exploring router structure and route definitions"
+  },
+  {
+    "content": "Explore store modules and their structures",
+    "status": "completed",
+    "activeForm": "Exploring store modules and their structures"
+  },
+  {
+    "content": "Explore pages directory structure for each module",
+    "status": "completed",
+    "activeForm": "Exploring pages directory structure for each module"
+  },
+  {
+    "content": "Examine existing skill/agent files for reference patterns",
+    "status": "completed",
+    "activeForm": "Examining existing skill/agent files for reference patterns"
+  },
+  {
+    "content": "Design skill file structure and naming conventions",
+    "status": "in_progress",
+    "activeForm": "Designing skill file structure and naming conventions"
+  }
+]

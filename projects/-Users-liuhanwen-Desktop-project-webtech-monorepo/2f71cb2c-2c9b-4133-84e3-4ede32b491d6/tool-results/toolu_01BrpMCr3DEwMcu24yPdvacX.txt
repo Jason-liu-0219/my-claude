@@ -1,0 +1,256 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js-1-import { VSAAS_AI_ROUTE_DEVICE, VSAAS_AI_ROUTE_SETTINGS } from 'vortexai/VSaasAIRoutes';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js-2-
+packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js:3:import SettingsRoute from '@/pages/device/settings/route';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js-5-export default function addVortexAIRoutesToDevice(router) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js-6-  const detectionRoute = SettingsRoute.find((route) => route.name === 'DeviceSettingsDetection');
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-130-      const casbinModel = newModel(model);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-131-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-132-      // Convert policies array to Casbin format text
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:133:      // Input: [['role-org-admin', '/org/admin-restricted'], ['role-device-admin', '/device/*']]
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:134:      // Output: "p, role-org-admin, /org/admin-restricted\np, role-device-admin, /device/*"
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-135-      const policyText = policies.map((policy) => `p, ${policy.join(', ')}`).join('\n');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-136-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-137-      // Convert groupings array to Casbin format text
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-166-   * Check if user has permission for a resource and scope
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-167-   * @param {Object} options - Permission check options
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-168-   * @param {string} options.obj - Resource object path (e.g., 'org/abc/device/123')
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:169:   * @param {string} options.scope - Permission scope to check (e.g., '/device/settings', '/org/admin-restricted')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-170-   * @returns {boolean} True if user has permission, false otherwise
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-171-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-172-  canDo({ obj, scope }) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-200-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-201-      / Model format: enforceSync(res, scope)
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-202-      / res: full resource identifier (e.g., 'org/abc/device/123')
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:203:      // scope: permission scope (e.g., '/device/*', '/org/admin-restricted')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-204-      const result = this.enforcer.enforceSync(fullResourcePath, scope.trim());
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-205-      this.canDoCacheMap.set(cacheKey, result);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-206-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-258-   * Check organization permission
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-259-   * Uses organization resource path pattern: 'org/{orgId}'
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-260-   * @param {Object} options - Permission check options
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:261:   * @param {string} options.scope - Permission scope to check (e.g., '/org/admin-restricted', '/org/all-users')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-262-   * @returns {boolean} True if user has permission, false otherwise
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-263-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-264-  canDoOrg({ scope }) {
+--
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-284-   * Uses device resource path pattern: 'org/{orgId}/device/{deviceId}'
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-285-   * @param {Object} options - Permission check options
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-286-   * @param {string|number} options.deviceId - Device ID
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:287:   * @param {string} options.scope - Permission scope to check (e.g., '/device/*', '/device/settings')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-288-   * @returns {boolean} True if user has permission, false otherwise
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-289-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-290-  canDoDevice({ deviceId, scope }) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-998- *
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-999- * @example
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1000- * const permissions = [
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1001: *   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1002: *   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1003- *   { act: { name: '/device/overview/live_streaming' }, effect: 'deny' }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1004- * ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1005- *
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1067- *
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1068- * const expanded = expandDeviceSettingsPermissions(permissions);
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1069- * / returns: [
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1070: * //   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1071: * //   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1072- * /   { act: { name: '/device/overview/live_streaming' }, effect: 'deny' }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1073- * // ]
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1074- */
+--
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1127- * / returns: [
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1128- * /   { act: { name: '/device/profile/create' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1129- * /   { act: { name: '/device/profile/edit' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1130: * //   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1131: * //   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1132- * /   { act: { name: '/device/overview/live_streaming' }, effect: 'deny' }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1133- * // ]
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1134- */
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1213- * @example
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1214- * const apiPermissions = [
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1215- *   { act: { name: '/device/overview/live_streaming' }, effect: 'allow' }, // This will be shown (whitelisted)
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1216: *   { act: { name: '/device/settings' }, effect: 'allow' }, // This will be shown (whitelisted)
+packages/app-vsaas-portal/src/utils/RoleHelper.js-1217- *   { act: { name: '/device/new_permission' }, effect: 'deny' } // This will be filtered out (not whitelisted)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1218- * ];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/RoleHelper.js-1219- *
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-35-  p, free, /system, read
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-36-  p, free, /system/organization, read
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-37-  p, free, /system/license-information, read
+packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js:38:  p, free, /system/alarm-management, read
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-39-  p, free, /system/audit-log, read
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-40-  p, free, /system/reseller-management, read
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js-41-  p, free, /system/third-party-integration, read
+--
+packages/app-vsaas-portal/src/constants/Page.js-23-  RESELLER_MANAGEMENT: 'system/reseller-management',
+packages/app-vsaas-portal/src/constants/Page.js-24-  ORGANIZATION: 'system/organization',
+packages/app-vsaas-portal/src/constants/Page.js-25-  LICENSE_INFORMATION: 'system/license-information',
+packages/app-vsaas-portal/src/constants/Page.js:26:  ALARM_MANAGEMENT: 'system/alarm-management',
+packages/app-vsaas-portal/src/constants/Page.js-27-  AUDIT_LOG: 'system/audit-log',
+packages/app-vsaas-portal/src/constants/Page.js-28-  SSO: 'system/single-sign-on',
+packages/app-vsaas-portal/src/constants/Page.js-29-  MFA: 'system/organization-security',
+--
+packages/app-vsaas-portal/src/constants/Page.js-105-      path: 'system/organization',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/constants/Page.js-106-    },
+packages/app-vsaas-portal/src/constants/Page.js-107-    ALARM_MANAGEMENT: {
+packages/app-vsaas-portal/src/constants/Page.js:108:      path: 'system/alarm-management',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/constants/Page.js-109-    },
+packages/app-vsaas-portal/src/constants/Page.js-110-    AUDIT_LOG: {
+packages/app-vsaas-portal/src/constants/Page.js-111-      path: 'system/audit-log',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-30-m = g(r.res, p.role) && keyMatch(r.scope, p.scope)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-31-`;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-32-  const mockPolicies = [
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:33:    ['role-org-admin', '/org/admin-restricted'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-34-    ['role-org-admin', '/org/all-users'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-35-    ['role-device-admin', '/device/*'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-36-  ];
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-229-      await initializeManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-230-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-231-      // Test if policies work by checking actual permissions
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:232:      const hasOrgAdminPermission = manager.canDoOrg({ scope: '/org/admin-restricted' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-233-      expect(hasOrgAdminPermission).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-234-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-235-      const hasDevicePermission = manager.canDoDevice({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-288-    it('should return false for invalid obj', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-289-      const result = manager.canDo({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-290-        obj: null,
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:291:        scope: '/device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-292-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-293-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-294-      expect(result).toBe(false);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-308-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-309-      const result = manager.canDo({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-310-        obj: 'device/123',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:311:        scope: '/device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-312-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-313-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-314-      expect(result).toBe(false);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-336-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-337-      const result = manager.canDo({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-338-        obj: 'device/123',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:339:        scope: '/device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-340-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-341-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-342-      expect(result).toBe(false);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-401-    it('should check organization permission', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-402-      const enforceSyncSpy = vi.spyOn(manager.enforcer, 'enforceSync');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-403-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:404:      const result = manager.canDoOrg({ scope: '/org/admin-restricted' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-405-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-406-      expect(result).toBe(true);
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:407:      expect(enforceSyncSpy).toHaveBeenCalledWith(`org/${mockOrgId}`, '/org/admin-restricted');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-408-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-409-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-410-    it('should return false for invalid scope', () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-445-    it('should return false for invalid deviceId', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-446-      const result = manager.canDoDevice({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-447-        deviceId: null,
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:448:        scope: '/device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-449-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-450-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-451-      expect(result).toBe(false);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-144-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-145-      expect(mockStore.getters['permission/canDoDevice']).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-146-        deviceId: 'device1',
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:147:        scope: '/device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-148-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-149-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-150-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-167-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-168-  provide() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-169-    return {
+packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue:170:      permission: 'device/settings',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-171-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-172-  },
+packages/app-vsaas-portal/src/components/Dialogues/TechnicalSupportDialogue.vue-173-  emits: ['close'],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-89-import AppDialogue from '@vivotek/generic-vue-components/components/AppDialogue/AppDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-90-import AppInputFields from '@vivotek/generic-vue-components/components/AppInputFields/AppInputFields.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-91-
+packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue:92:import useRetentionDialogueState from '@/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/composables/useRetentionDialogueState';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-93-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-94-const { t } = useI18n();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue-95-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-99-import { DeviceSettingsLayout } from '@vivotek/vue-app-layouts';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-100-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-101-import InfoCardLayout from '@/layouts/InfoCardLayout.vue';
+packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue:102:import ConfirmRecordingRetentionDialogue from '@/pages/device/settings/RecordingAndStorage/components/ConfirmRecordingRetentionDialogue/ConfirmRecordingRetentionDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-103-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-104-const { t } = useI18n();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/RecordingRetention.vue-105-const store = useStore();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-30-import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-31-import { DeviceSettingsLayout } from '@vivotek/vue-app-layouts';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-32-
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue:33:import ChannelFirmwareManagementTable from '@/pages/device/settings/components/ChannelFirmwareManagementTable.vue';
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue:34:import OtaInfoCard from '@/pages/device/settings/components/OtaInfoCard.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-35-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-36-const props = defineProps({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemMaintenance.vue-37-  device: {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-184-import { DIALOGUE, DEVICE_TYPE, EXTERNAL_DEVICE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-185-import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-186-
+packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue:187:import SearchedExternalDeviceTable from '@/pages/device/settings/components/SearchedExternalDeviceTable.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-188-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-189-const DEVICE_TYPE_FILTER_ALL = 'ALL';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/AddExternalDeviceModal.vue-190-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-88-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-89-import { LICENSE_TYPE, LICENSE_STATE } from '@/constants/License';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-90-import InfoCardLayout from '@/layouts/InfoCardLayout.vue';
+packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue:91:import AudioFileManagementDialogue from '@/pages/device/settings/components/AudioFileManagementDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-92-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-93-export default {
+packages/app-vsaas-portal/src/pages/device/settings/media/DeviceAudioSettings.vue-94-  name: 'DeviceAudioSettings',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-91-import { EXTERNAL_DEVICE, DIALOGUE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-92-import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-93-
+packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue:94:import FailedToPlayAudioDialogue from '@/pages/device/settings/components/FailedToPlayAudioDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-95-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-96-import ChangeNetworkSpeakerPasswordDialogue from './ChangeNetworkSpeakerPasswordDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/SpeakerSettingsDialogue.vue-97-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-201-import ContactResellerModal from '@/components/Modal/ContactResellerModal.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-202-import { LICENSE_STATE, LICENSE_TYPE } from '@/constants/License';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-203-import { PERMISSION_DEVICE_SCOPE, PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:204:import AudioFileManagementDialogue from '@/pages/device/settings/components/AudioFileManagementDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:205:import SpeakerSettingsDialogue from '@/pages/device/settings/components/SpeakerSettingsDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:206:import UploadAudioFileDialogue from '@/pages/device/settings/components/UploadAudioFileDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-207-import { convertSpeakerLicense } from '@/utils/LicenseHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-208-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-209-export default {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-141-import { DeviceThumbnail, DropdownMenu } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-142-import { THUMBNAIL_TYPES } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-143-
+packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue:144:import usePresetSettings from '@/pages/device/settings/media/DevicePTZSettings/composables/usePresetSettings';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-145-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-146-import AddPresetDialogue from './AddPresetDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PresetSettings/PresetSettings.vue-147-import CollapsibleCard from '../CollapsibleCard.vue';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-114-import { DeviceThumbnail } from '@vivotek/advanced-vue-components';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-115-import { THUMBNAIL_TYPES, PTZ_PATROL_TYPE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-116-
+packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue:117:import usePatrolSettings from '@/pages/device/settings/media/DevicePTZSettings/composables/usePatrolSettings';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-118-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-119-import CollapsibleCard from '../CollapsibleCard.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/media/DevicePTZSettings/components/PatrolSettings/PatrolSettings.vue-120-import DeletePatrolDialogue from './DeletePatrolDialogue.vue';

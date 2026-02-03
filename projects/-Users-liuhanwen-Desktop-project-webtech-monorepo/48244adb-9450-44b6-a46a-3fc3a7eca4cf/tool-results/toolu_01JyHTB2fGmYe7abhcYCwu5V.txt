@@ -1,0 +1,9 @@
+Found 8 files
+core/device/vsaasNVRCamera/configurator.js
+core/device/vsaasCamera/configurator.js
+core/device/vsaasNVRCameraExt/Configurator.js
+core/device/vsaasCameraExt/Configurator.js
+core/device/vsaasBridge/configurator.js
+core/device/vsaasVSSCamera/configurator.js
+core/device/vsaasVSS/configurator.js
+core/device/vsaasNVR/configurator.js

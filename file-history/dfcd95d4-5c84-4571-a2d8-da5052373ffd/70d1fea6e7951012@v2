@@ -1,0 +1,797 @@
+<template>
+  <div class="management-table">
+    <div class="table-control-wrapper">
+      <div
+        class="search-input-wrapper"
+        :class="{ 'push-right': selectedDevices.length === 0 }"
+      >
+        <AppInputFields
+          id="search-input"
+          v-model.trim="searchKeyword"
+          class="search-input"
+          type="search"
+          :disabled="!rowData.length && !searchKeyword"
+        />
+        <AppButtonDropdown
+          v-model="currentSortTypes"
+          class="sort-button"
+          iconClass="general_custom_solid"
+          iconSize="20px"
+          :options="sortTypeOptions"
+          :disabled="!rowData.length"
+        />
+      </div>
+      <div
+        v-if="hasManageDevicePermission"
+        class="hint"
+      >
+        <span>
+          {{ selectedLengthHint }}
+        </span>
+        <span
+          v-if="selectedDevices.length != rowData.length && selectedDevices.length === countPerPage"
+          class="select-all-str"
+          @click="selectAllDevices"
+        >
+          {{ `Select all of your ${rowData.length} devices.` }}
+        </span>
+        <span
+          v-if="selectedDevices.length !== 0 && selectedDevices.length === rowData.length"
+          class="select-all-str"
+          @click="unSelectAllDevices"
+        >
+          {{ $t('Clear selections') }}
+        </span>
+      </div>
+      <template v-if="selectedDevices.length > 0 && hasManageDevicePermission">
+        <div
+          class="delete-button"
+          @click="onClickDeleteDevices"
+        >
+          <SvgIcon
+            iconClass="general_delete"
+            size="20px"
+            outerSize="20px"
+          />
+          <span>{{ $t('Delete') }}</span>
+        </div>
+        <div class="divider" />
+      </template>
+      <AppButtonDropdown
+        v-model="columnTypes"
+        class="column-menu-button"
+        :hasCheckBox="true"
+        :title="columnOptionTitle"
+        :options="columnOptions"
+        :disabled="!rowData.length"
+        :autoInitialize="false"
+        iconClass="general_column_solid"
+        iconSize="20px"
+      />
+    </div>
+    <AppTable
+      v-if="filteredHeaderList.length !== 0"
+      v-model:selectedArray="selectedDevices"
+      :bodyList="tableContentList"
+      :headerList="filteredHeaderList"
+      :defaultSortIndex="0"
+      :currentPageIndex="currentPageIndex - 1"
+      :pageCount="countPerPage"
+      :keyword="searchKeyword"
+      :keywordFilterRule="keywordFilterRule"
+      :displayRowButtons="true"
+      :grid="false"
+      :searchStatus="searchStatus"
+      :hasCheckbox="hasManageDevicePermission"
+      draggable
+      disablePlay
+      scroll
+      sort
+      @handleSortedList="setSortedDevices"
+      @tableLengthChanged="tableLengthChanged"
+    >
+      <template #table-content-row="{ item, headerList }">
+        <td
+          v-for="header in headerList"
+          :key="header.type"
+          :class="header.type"
+          :title="item[header.type]"
+          @click="onClickSetting(item)"
+        >
+          <div
+            v-if="header.type === 'name'"
+            :class="['device-name-wrapper', { 'no-devices': !item.cameras.length }]"
+          >
+            <SvgIcon
+              v-if="item.cameras.length"
+              class="icon"
+              :iconClass="item.displaySubItems ? 'general_arrow_bottom' : 'general_arrow_right'"
+              size="20px"
+              @click.capture.stop="toggleNVR(item)"
+            />
+            <SvgIcon
+              class="icon"
+              :iconClass="item.icon"
+              size="28px"
+            />
+            <SvgIcon
+              v-if="!item.wizardFinished"
+              class="icon wizard-alert-icon"
+              iconClass="general_exclamation_solid"
+              size="28px"
+              :title="$t('The NVR wizard has not completed. Please contact the owner or admin for assistance.')"
+            />
+            <h6>
+              {{ item.name }}
+            </h6>
+          </div>
+          <template v-else-if="header.type === 'model'">
+            <h6 class="model-name">
+              {{ item[header.type] || '-' }}
+            </h6>
+          </template>
+          <template v-else>
+            <h6>
+              {{ item[header.type] || (header.type === 'group' ? '' : '-') }}
+            </h6>
+          </template>
+        </td>
+      </template>
+      <template #row-buttons="{ item }">
+        <div
+          v-for="(button, index) in item.tableButtons"
+          :key="index"
+          :class="button.classList"
+          @click.capture.stop="button.action(item)"
+        >
+          <SvgIcon
+            :iconClass="button.iconClass"
+            :title="button.name"
+            size="20px"
+            outerSize="40px"
+          />
+        </div>
+      </template>
+      <template #table-content-sub-row="{ item: subItem, headerList }">
+        <td
+          v-for="header in headerList"
+          :key="header.type"
+          :class="header.type"
+          @click="onClickSetting(subItem)"
+        >
+          <div
+            v-if="header.type === 'name'"
+            class="device-name-wrapper"
+            :title="subItem.isUnknownDevice ? unknownDeviceTip : subItem.tooltip"
+          >
+            <SvgIcon
+              class="icon"
+              :iconClass="subItem.icon"
+              size="28px"
+            />
+            <SvgIcon
+              v-if="!subItem.wizardFinished"
+              class="icon wizard-alert-icon"
+              iconClass="general_exclamation_solid"
+              size="28px"
+            />
+            <h6 class="device-name">
+              {{ subItem.name }}
+            </h6>
+            <DeviceIndicator :device="subItem.instance" />
+          </div>
+          <template v-else-if="header.type === 'derivant'">
+            <h6>{{ subItem.formatChannelDerivant }}</h6>
+          </template>
+          <template v-else-if="header.type === 'model'">
+            <h6
+              class="model-name"
+              :title="subItem[header.type] || '-'"
+              v-text="subItem[header.type] || '-'"
+            />
+          </template>
+          <template v-else>
+            <h6
+              :title="subItem[header.type] || '-'"
+              v-text="subItem[header.type] || '-'"
+            />
+          </template>
+        </td>
+      </template>
+      <template #sub-row-buttons="{ item: subItem }">
+        <div
+          v-for="(button, index) in subItem.tableButtons"
+          :key="index"
+          :class="button.classList"
+          @click.capture.stop="button.action(subItem)"
+        >
+          <SvgIcon
+            :iconClass="button.iconClass"
+            :title="button.name"
+            size="20px"
+            outerSize="40px"
+          />
+        </div>
+      </template>
+    </AppTable>
+    <DeleteDeviceDialogue
+      ref="removeDeviceDialog"
+      @confirm="removeDeviceConfirm"
+    >
+      <template #extra-content>
+        <h6>
+          {{ $t('The cameras under NVR will also be deleted.') }}
+        </h6>
+      </template>
+      <template #warning-content>
+        <h6>
+          {{ deleteDeviceWarningText }}
+        </h6>
+      </template>
+    </DeleteDeviceDialogue>
+    <MoveGroupOfDevicesDialogue
+      ref="MoveGroupOfDevicesDialogue"
+      :groups="groups"
+      :defaultGroupId="defaultMoveToGroupId"
+      :operateAction="moveGroupOfDeviceConfirm"
+    />
+  </div>
+</template>
+
+<script>
+import { directive as onClickaway } from 'vue3-click-away';
+import { mapActions, mapState, mapGetters } from 'vuex';
+
+import { DeviceIndicator } from '@vivotek/advanced-vue-components';
+import { DEVICE_TABLE_GROUP_ID_MAP, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+import { sortingUtils, LocalStorageManager } from '@vivotek/lib-utility';
+
+import DeleteDeviceDialogue from '@/components/Dialogues/DeleteDeviceDialogue.vue';
+import MoveGroupOfDevicesDialogue from '@/components/Group/MoveGroupOfDevicesDialogue.vue';
+import { PERMISSION_DEVICE_SCOPE, PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+import CameraTableData from '@/models/TableInterface/CameraTableData';
+
+export default {
+  name: 'NVRDeviceManagementTable',
+  components: {
+    DeleteDeviceDialogue,
+    MoveGroupOfDevicesDialogue,
+    DeviceIndicator,
+  },
+  directives: {
+    onClickaway,
+  },
+  props: {
+    rowData: {
+      type: Array,
+      required: true,
+    },
+    groups: {
+      type: Array,
+      required: true,
+    },
+    countPerPage: {
+      type: Number,
+      default: 15,
+    },
+    currentPageIndex: {
+      type: Number,
+      default: 1,
+    },
+    hasManageDevicePermission: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  emits: ['doFilter', 'currentPageChanged', 'tableLengthChanged', 'onSetNvrPassword', 'devicesSorted'],
+  data() {
+    return {
+      searchKeyword: '',
+      selectedDevices: [],
+      sortedDevices: [],
+      currentSortTypes: [],
+      columnTypes: [],
+      columnOptionTitle: this.$t('Show column'),
+      currentGroupId: DEVICE_TABLE_GROUP_ID_MAP.NVR,
+      currentDeleteItems: null,
+      currentMovedGroupItems: null,
+      currentActionDevice: null,
+      defaultMoveToGroupId: '-1',
+      isNVROpened: {},
+      unknownDeviceTip: this.$t('Awaiting device to get connected'),
+    };
+  },
+  methods: {
+    ...mapActions('device', ['batchDeleteDevice']),
+    ...mapActions('group', ['batchMoveDeviceToGroup']),
+    onClickSetting(item) {
+      if (this.isRenewalOverdue) {
+        return;
+      }
+
+      if (!item.wizardFinished && this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })) {
+        this.$emit('onSetNvrPassword', item.instance);
+        return;
+      }
+
+      const { deviceId } = item;
+
+      if (!this.canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+        return;
+      }
+
+      this.$router.push({
+        name: 'DeviceSettings',
+        params: { deviceId },
+        state: {
+          groupId: this.currentGroupId,
+        },
+      });
+      this.$mixpanel.track(TRACK_EVENT_KEY.DEV_SETTINGS_OPEN, {
+        type: 'nvr',
+      });
+    },
+    onClickDeleteDevice(item) {
+      this.$refs.removeDeviceDialog.show();
+      this.currentDeleteItems = [item];
+    },
+    onClickDeleteDevices() {
+      this.$refs.removeDeviceDialog.show();
+      this.currentDeleteItems = this.selectedDevices;
+    },
+    onClickMoveGroupOfDevices() {
+      const selectedDevicesId = this.selectedDevices.map((item) => item.deviceId);
+      const firstDevice = this.sortedDevices.find((device) => selectedDevicesId.indexOf(device.deviceId) >= 0);
+      this.defaultMoveToGroupId = this.groups.find((group) => group.name === firstDevice.group).id;
+      this.currentMovedGroupItems = this.selectedDevices;
+
+      this.$nextTick(() => {
+        this.$refs.MoveGroupOfDevicesDialogue.show();
+      });
+    },
+    onClickMoveGroupOfDevice(item) {
+      this.defaultMoveToGroupId = this.groups.find((group) => group.name === item.group).id;
+      this.currentMovedGroupItems = [item];
+
+      this.$nextTick(() => {
+        this.$refs.MoveGroupOfDevicesDialogue.show();
+      });
+    },
+    async moveGroupOfDeviceConfirm(currentGroupId) {
+      try {
+        const devices = this.currentMovedGroupItems.map((item) => item.instance);
+        await this.batchMoveDeviceToGroup({
+          devices,
+          deviceGroupID: currentGroupId,
+        });
+
+        this.currentMovedGroupItems = [];
+
+        this.unSelectAllDevices();
+      } catch (error) {
+        throw new Error('moveGroupOfDeviceConfirm failed');
+      }
+    },
+    removeDeviceConfirm(isCancel) {
+      if (isCancel) {
+        return;
+      }
+      const instances = this.currentDeleteItems.map((item) => item.instance);
+
+      this.batchDeleteDevice(instances).then(
+        () => {
+          this.$refs.removeDeviceDialog.onDeleteSuccess();
+
+          if (this.selectedDevices.length > 0) {
+            this.selectedDevices = [];
+          }
+          const pageSize = Math.ceil(this.rowData.length / this.countPerPage) || 1;
+          if (this.currentPageIndex >= pageSize) {
+            this.$emit('currentPageChanged', pageSize);
+          }
+        },
+        (error) => {
+          this.$refs.removeDeviceDialog.onDeleteFail();
+        },
+      );
+    },
+    selectAllDevices() {
+      this.selectedDevices = this.rowData;
+    },
+    unSelectAllDevices() {
+      if (this.selectedDevices.length > 0) {
+        this.selectedDevices = [];
+      }
+    },
+    keywordFilterRule(rowData, keyword) {
+      const isAnyItemContainsKeyword = (item) =>
+        this.currentSortTypes
+          .map((type) => item[type])
+          .find((value) => value && value.toLowerCase().indexOf(keyword.toLowerCase()) !== -1);
+      return rowData
+        .map((listItem) => {
+          const subItems = listItem.cameras
+            .map((cameraInfo, index) => new CameraTableData(cameraInfo, index, this.$t.bind(this), this.productName))
+            .filter((subItem) => isAnyItemContainsKeyword(subItem));
+          return {
+            ...listItem,
+            subItems,
+          };
+        })
+        .filter((listItem) => {
+          if (listItem.subItems?.length) {
+            listItem.displaySubItems = true;
+            return true;
+          }
+          listItem.displaySubItems = false;
+          return isAnyItemContainsKeyword(listItem);
+        });
+    },
+    filterModelType(modelType) {
+      return modelType === 'Premium' ? this.$t('PREM') : '';
+    },
+    setSortedDevices(list) {
+      this.sortedDevices = list;
+      this.$emit('devicesSorted', list);
+    },
+    getTableButtons(device) {
+      const { isNVRCamera } = device;
+
+      return [
+        ...(this.isRenewalOverdue
+          ? []
+          : [
+              {
+                name: this.$t('Settings'),
+                classList: ['settings'],
+                iconClass: 'general_settings_line',
+                action: () => {
+                  this.onClickSetting(device);
+                },
+                disabled: false,
+                hasPermission: this.canDoDevice({
+                  deviceId: device.deviceId,
+                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+                }),
+              },
+            ]),
+        ...(isNVRCamera
+          ? [
+              {
+                name: this.$t('Move to'),
+                classList: ['move-device-group'],
+                iconClass: 'general_move_line',
+                action: () => {
+                  this.onClickMoveGroupOfDevice(device);
+                },
+                disabled: false,
+                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+              },
+            ]
+          : []),
+        ...(!isNVRCamera
+          ? [
+              {
+                name: this.$t('Delete'),
+                classList: ['delete', 'danger'],
+                iconClass: 'general_delete',
+                action: () => {
+                  this.onClickDeleteDevice(device);
+                },
+                disabled: false,
+                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+              },
+            ]
+          : []),
+      ].filter((action) => action.hasPermission);
+    },
+    toggleNVR(device) {
+      device.displaySubItems = !device.displaySubItems;
+    },
+    tableLengthChanged(tableLength) {
+      this.$emit('tableLengthChanged', tableLength);
+    },
+    getCurrentColumnTypesFromLocalStorage() {
+      const defaultColumnTypes = this.columnOptions.filter((item) => !item.defaultHide).map((item) => item.value);
+      this.columnTypes = LocalStorageManager.getOrSet('nvrDeviceManagementTableColumnTypes', defaultColumnTypes);
+    },
+  },
+  computed: {
+    ...mapState('device', ['searchStatus']),
+    ...mapGetters('organization', ['isRenewalOverdue']),
+    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+    selectedLengthHint() {
+      const count = this.selectedDevices.length;
+      if (count === 0) {
+        return '';
+      }
+      if (count === this.rowData.length) {
+        if (count > 1) {
+          return this.$t('All {count} devices are selected.', { count });
+        }
+        return this.$t('All 1 device is selected.');
+      }
+      if (count >= this.countPerPage) {
+        return this.$t('All {count} devices on this page are selected.', { count });
+      }
+      if (count > 1) {
+        return this.$t('{count} Devices selected', { count });
+      }
+      if (count === 1) {
+        return this.$t('1 Device selected');
+      }
+      return '';
+    },
+    tableHeaderList() {
+      const headers = [
+        {
+          type: 'name',
+          name: this.$t('Device name'),
+          sort: (a, b) => sortingUtils.sortByLocalCompare(a, b, 'name'),
+          defaultArrowDirection: 'up',
+          defaultHide: false,
+          fixed: true,
+        },
+        {
+          type: 'derivant',
+          name: this.$t('Channel #'),
+          sort: null,
+          defaultHide: false,
+          fixed: true,
+        },
+        {
+          type: 'group',
+          name: this.$t('Site'),
+          sort: (a, b) => sortingUtils.sortByASC(a, b, 'group'),
+          defaultArrowDirection: 'up',
+          defaultHide: false,
+        },
+        {
+          type: 'model',
+          name: this.$t('Model'),
+          sort: (a, b) => sortingUtils.sortByASC(a, b, 'model'),
+          defaultArrowDirection: 'up',
+          defaultHide: false,
+        },
+        {
+          type: 'mac',
+          name: this.$t('Device ID'),
+          sort: (a, b) => sortingUtils.sortByASC(a, b, 'mac'),
+          defaultArrowDirection: 'up',
+          defaultHide: false,
+        },
+        {
+          type: 'ip',
+          name: this.$t('Local IP'),
+          sort: (a, b) => sortingUtils.sortByASC(a, b, 'ip'),
+          defaultArrowDirection: 'up',
+          defaultHide: true,
+        },
+        {
+          type: 'firmware',
+          name: this.$t('Firmware'),
+          sort: (a, b) => sortingUtils.sortByASC(a, b, 'firmware'),
+          defaultArrowDirection: 'up',
+          defaultHide: true,
+        },
+      ];
+
+      return headers;
+    },
+    tableContentList() {
+      return this.rowData.map((data) => {
+        // subItems is for the hierarchy table
+        data.subItems = data.cameras
+          .map((cameraInfo, index) => {
+            const camera = new CameraTableData(cameraInfo, index, this.$t.bind(this), this.productName);
+            camera.tableButtons = this.getTableButtons(camera);
+            return camera;
+          })
+          .sort((a, b) => sortingUtils.sortByASC(a, b, 'derivant'));
+        data.tableButtons = this.getTableButtons(data);
+        return data;
+      });
+    },
+    columnOptions() {
+      return this.tableHeaderList
+        .filter((item) => item.type !== 'name' && item.type !== 'derivant')
+        .map((item) => ({ text: item.name, value: item.type, defaultHide: item.defaultHide }));
+    },
+    sortTypeOptions() {
+      return this.tableHeaderList.map((item) => ({ text: item.name, value: item.type }));
+    },
+    filteredHeaderList() {
+      const list = this.tableHeaderList.filter((item) => {
+        if (item.type === 'name' || item.type === 'derivant') {
+          return item;
+        }
+
+        return this.columnTypes.indexOf(item.type) !== -1;
+      });
+      return list;
+    },
+    deleteDeviceWarningText() {
+      return this.$t(
+        'Once you delete the device, all its data including video on {product} platform will be permanently erased.',
+        { product: this.productName },
+      );
+    },
+    productName() {
+      return this.$vendor.getVendorConfig().PRODUCT_NAME;
+    },
+  },
+  watch: {
+    rowData() {
+      this.unSelectAllDevices();
+      this.searchKeyword = '';
+      this.rowData.forEach((device) => {
+        device.displaySubItems = false;
+      });
+    },
+    searchKeyword() {
+      this.$emit('doFilter');
+    },
+    currentSortTypes() {
+      this.searchKeyword = '';
+    },
+    columnTypes() {
+      LocalStorageManager.set('nvrDeviceManagementTableColumnTypes', this.columnTypes);
+    },
+  },
+  async mounted() {
+    this.currentSortTypes = this.sortTypeOptions.map((item) => item.value);
+    this.getCurrentColumnTypesFromLocalStorage();
+    this.rowData.forEach((device) => {
+      device.displaySubItems = false;
+    });
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.table-control-wrapper {
+  span {
+    margin-right: auto;
+  }
+
+  .search-input {
+    z-index: 31;
+    :deep(.app-input-clear-icon) {
+      display: none;
+    }
+  }
+
+  .delete-button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 32px;
+    padding: 6px 12px;
+    color: @color-danger;
+    &:hover {
+      background-color: @color-surface09;
+    }
+    span {
+      padding-left: 12px;
+      font-size: 14px;
+    }
+  }
+  .move-to-button {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    height: 32px;
+    padding: 6px 12px;
+    color: @color-text02;
+    &:hover {
+      background-color: @color-surface09;
+    }
+    span {
+      padding-left: 12px;
+      font-size: 14px;
+    }
+  }
+}
+
+.sort-button {
+  .general_arrange {
+    &:active,
+    &[data-state='active'] {
+      color: @color-primary;
+    }
+  }
+}
+
+.device-name-wrapper {
+  .mixin-device-name-wrapper();
+}
+
+.hint {
+  span.select-all-str {
+    cursor: pointer;
+    color: @color-primary;
+  }
+}
+
+.model {
+  h6 {
+    display: inline-flex;
+  }
+
+  .model-name {
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  > span {
+    display: inline-flex;
+    vertical-align: middle;
+  }
+}
+
+:deep(.table-layout-wrapper) {
+  .table-row {
+    h6 {
+      color: @color-text02;
+      .text-ellipsis();
+    }
+    .svg-icon {
+      color: @color-icon03;
+    }
+    .wizard-alert-icon {
+      color: @color-alert;
+    }
+  }
+
+  .table-header {
+    th[type='name'] {
+      flex-basis: 263px;
+      flex-grow: 0;
+    }
+    th[type='derivant'] {
+      flex-basis: 100px;
+      flex-grow: 0;
+    }
+    th[type='model'] {
+      flex-basis: 200px;
+      flex-grow: 0;
+    }
+  }
+  .table-content {
+    .name,
+    .model {
+      flex-basis: 263px;
+      flex-grow: 0;
+    }
+    .model {
+      flex-basis: 200px;
+      flex-grow: 0;
+    }
+    .derivant {
+      flex-basis: 100px;
+      flex-grow: 0;
+    }
+
+    tr.sub-row {
+      padding-left: 40px;
+      .name {
+        padding-left: 40px;
+      }
+    }
+  }
+}
+
+:deep(.nvr-archive-stortage) {
+  .nvr-archive-stortage-text {
+    margin-top: 0;
+  }
+  .current-storage-size {
+    font-size: 14px;
+  }
+  span {
+    font-size: 14px;
+  }
+}
+</style>

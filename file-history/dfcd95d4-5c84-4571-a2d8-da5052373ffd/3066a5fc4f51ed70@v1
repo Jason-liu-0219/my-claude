@@ -1,0 +1,285 @@
+<template>
+  <div
+    class="flex items-center py-[10px] relative pointer-events-auto"
+    @mouseenter.stop="showCheckbox"
+    @mouseleave.stop="hideCheckbox"
+  >
+    <AppCheckBox
+      v-if="enableCheckbox"
+      v-model="isResultSelected"
+      class="opacity-0 w-0 absolute left-0 top-1/2 -translate-y-1/2 transition-all duration-200"
+      :class="{ 'opacity-100 w-auto': checkboxClassShow }"
+      :disabled="disableCheckbox"
+      :title="disableString"
+    />
+    <div
+      class="flex items-center transition-all duration-200 w-[calc(100%-32px)] z-[1]"
+      :class="{ 'translate-x-7 w-[calc(100%-70px)]': checkboxClassShow }"
+    >
+      <h3 class="text-neutral-800 text-[24px]">
+        {{ object.timeConfig.renderTime }}
+      </h3>
+      <div class="ml-[10px] overflow-hidden">
+        <InfoTooltip class="info-tooltip">
+          <template
+            v-if="isBetaEnabled"
+            #content
+          >
+            <template
+              v-for="item in tooltipContent"
+              :key="item.property"
+            >
+              <div class="flex items-center mb-2 last:mb-0">
+                <div class="w-[55px] text-foreground-hint text-left truncate">{{ item.property }}</div>
+                <div class="text-foreground-primary whitespace-nowrap truncate">{{ item.value }}</div>
+              </div>
+            </template>
+          </template>
+          <template #reference>
+            <div class="flex items-center">
+              <DeviceEventIndicator
+                v-if="isNVRCamera"
+                class="text-neutral-700 bg-neutral-200 ml-0 mr-[3px]"
+              />
+              <SvgIconReskin
+                class="text-foreground-primary"
+                name="video"
+                size="16px"
+              />
+              <div class="ml-[6px] leading-1.5 text-neutral-700 text-body-md truncate">
+                {{ object.device.displayName }}
+              </div>
+            </div>
+          </template>
+        </InfoTooltip>
+        <div class="flex mt-[2px] items-center">
+          <h6 class="text-foreground-hint text-helper-md">
+            {{ object.timeConfig.renderDate }}
+          </h6>
+        </div>
+      </div>
+    </div>
+    <AppMoreButtonDropdown
+      v-track="{
+        eventName: mixpanelClickMoreOptionEventName,
+      }"
+      :actions="actions"
+      :width="24"
+      :height="24"
+      :dropdownClass="['light']"
+      :hideDropdownOnClick="true"
+      class="ml-auto mr-[2px]"
+    />
+  </div>
+  <div
+    v-if="isRDMode && object.isEvent && object.cardType === 'EventCard'"
+    class="flex gap-x-[10px] -mt-2 z-[1] relative"
+  >
+    <h6
+      v-if="object.isEvent && object?.eventObject?.face?.score"
+      class=""
+    >
+      score: {{ object.eventObject.face?.score }}
+    </h6>
+  </div>
+  <div
+    v-if="isRDMode && isLMResult"
+    class="flex gap-x-[10px] -mt-2 z-[1] relative"
+  >
+    <h6 :title="`score: ${object.debugInfo.score.toFixed(3)}`">score: {{ object.debugInfo.score.toFixed(3) }}</h6>
+    <h6 :title="`oid: ${object.oid}, mac: ${object.device.mac}`">oid: {{ object.oid }}</h6>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import { DevelopmentEnvManager } from '@vivotek/lib-utility';
+import { DeviceEventIndicator } from '@vivotek/advanced-vue-components';
+import { VsaasNVRCamera as NVRCamera, VsaasNVRCameraExt as NVRCameraExt } from '@vivotek/device';
+import getImagePath from '@/utils/ImageHelper';
+import ruleIconMap from '@/constants/ruleIconMap';
+import AIObjectV2 from '@/models/AIObjectV2/AIObjectV2';
+import {
+  AI_HUB_EVENTINSIGHT_MAP,
+  AI_HUB_SEARCH_BY_TEXT_MAP,
+  AI_HUB_SEARCH_BY_FILTER_MAP,
+  ACTION_EVENTS,
+} from '@/constants/userTracking';
+import InfoTooltip from '@/components/InfoTooltip.vue';
+import { concatEventName } from '@/utils/userTrackingHelper';
+
+export default {
+  name: 'ObjectInfo',
+  components: {
+    InfoTooltip,
+    DeviceEventIndicator,
+  },
+  inject: ['getShowedSearchResultCount'],
+  props: {
+    object: {
+      type: Object,
+      required: true,
+    },
+    actions: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+    enableCheckbox: {
+      type: Boolean,
+      require: false,
+      default: true,
+    },
+    disableCheckbox: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
+  emits: ['reachLimit'],
+  data() {
+    return {
+      isShowCheckbox: false,
+    };
+  },
+  methods: {
+    ...mapActions('caseVault', ['addVideo', 'removeVideo']),
+    showCheckbox() {
+      if (!this.enableCheckbox) {
+        return;
+      }
+      this.isShowCheckbox = true;
+    },
+    hideCheckbox() {
+      this.isShowCheckbox = false;
+    },
+  },
+  computed: {
+    ...mapGetters('search', [
+      'isEventSearchFeature',
+      'isThinkSearchFeature',
+      'getFeatureEventName',
+      'getLMPrompt',
+      'isReSearchMode',
+    ]),
+    ...mapGetters('caseVault', ['isVideoReachedLimit']),
+    ...mapGetters('group', ['groupsMap']),
+    checkboxClassShow() {
+      return this.object.selected || this.isShowCheckbox;
+    },
+    isResultSelected: {
+      set(value) {
+        if (this.isEventSearchFeature) {
+          this.$mixpanel.track(AI_HUB_EVENTINSIGHT_MAP.eventinsight_checkbox_click);
+        } else if (this.isThinkSearchFeature) {
+          this.$mixpanel.track(AI_HUB_SEARCH_BY_TEXT_MAP.search_by_text_checkbox_click);
+        } else {
+          this.$mixpanel.track(AI_HUB_SEARCH_BY_FILTER_MAP.search_by_filter_checkbox_click);
+        }
+        this.$mixpanel.track(
+          concatEventName([this.getFeatureEventName, ACTION_EVENTS.RESULT, ACTION_EVENTS.OBJECT_SELECTED]),
+          {
+            states: {
+              clicked: 'checkbox',
+              objects: [
+                {
+                  mac: this.object.device.mac,
+                  oid: this.object.oid,
+                  uid: this.object.uid,
+                  video_clip_duration: this.object.timeConfig.duration,
+                },
+              ],
+              searched_text_content: this.getLMPrompt,
+              searched_text_content_length: this.getLMPrompt.length,
+              on_research_mode: this.isReSearchMode,
+              result_count: this.getShowedSearchResultCount(),
+            },
+          },
+        );
+
+        if (value) {
+          if (this.isVideoReachedLimit) {
+            this.$emit('reachLimit');
+            return;
+          }
+          this.addVideo(this.object);
+        } else {
+          this.removeVideo(this.object);
+        }
+        this.object.selected = value;
+      },
+      get() {
+        return this.object.selected;
+      },
+    },
+    ruleIconSrc() {
+      if (!this.object.isEvent) {
+        return null;
+      }
+      const { type } = this.object.eventData;
+      if (type) {
+        const imageName = ruleIconMap[type];
+        return imageName ? getImagePath(imageName) : null;
+      }
+      return null;
+    },
+    isLMResult() {
+      return this.object instanceof AIObjectV2;
+    },
+    isRDMode() {
+      return DevelopmentEnvManager.rdMode;
+    },
+    isEvent() {
+      return this.object.isEvent;
+    },
+    siteName() {
+      if (this.object.device?.deviceGroupID && this.groupsMap[this.object.device.deviceGroupID]) {
+        return this.groupsMap[this.object.device.deviceGroupID].name;
+      }
+      return null;
+    },
+    mixpanelClickMoreOptionEventName() {
+      if (this.isEventSearchFeature) {
+        return AI_HUB_EVENTINSIGHT_MAP.eventinsight_click_more_option;
+      }
+      if (this.isThinkSearchFeature) {
+        return AI_HUB_SEARCH_BY_TEXT_MAP.search_by_text_click_more_option;
+      }
+      return AI_HUB_SEARCH_BY_FILTER_MAP.search_by_filter_click_more_option;
+    },
+    isBetaEnabled() {
+      return DevelopmentEnvManager.betaEnabled;
+    },
+    isNVRCamera() {
+      return this.object.device instanceof NVRCameraExt || this.object.device instanceof NVRCamera;
+    },
+    tooltipContent() {
+      return [
+        ...(this.siteName
+          ? [
+              {
+                property: this.$t('Site'),
+                value: this.siteName,
+              },
+            ]
+          : []),
+        ...(this.isNVRCamera && this.object.device.nvrName
+          ? [
+              {
+                property: this.$t('NVR'),
+                value: this.object.device.nvrName,
+              },
+            ]
+          : []),
+        {
+          property: this.$t('Camera'),
+          value: this.object.device.displayName,
+        },
+      ];
+    },
+    disableString() {
+      return this.disableCheckbox ? this.$t('"Add to case" is getting ready...') : null;
+    },
+  },
+};
+</script>

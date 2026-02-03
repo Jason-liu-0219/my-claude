@@ -1,0 +1,66 @@
+2026-01-18T08:42:02.070Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.070Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.070Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.079Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.079Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.079Z [DEBUG] Language not supported while highlighting code, falling back to plaintext: vue
+2026-01-18T08:42:02.084Z [DEBUG] Getting matching hook commands for SessionEnd with query: clear
+2026-01-18T08:42:02.084Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T08:42:02.084Z [DEBUG] Matched 0 unique hooks for query "clear" (0 before deduplication)
+2026-01-18T08:42:02.084Z [DEBUG] Cleared all session hooks for session d59b479d-3639-4015-ad26-fbc6fa377a89
+2026-01-18T08:42:02.085Z [DEBUG] Getting matching hook commands for SessionStart with query: clear
+2026-01-18T08:42:02.085Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T08:42:02.085Z [DEBUG] Matched 0 unique hooks for query "clear" (0 before deduplication)
+2026-01-18T08:42:02.088Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T08:42:02.094Z [DEBUG] FileHistory: Added snapshot for 89f8975e-bd39-441b-9220-f18ef0f9dc4c, tracking 0 files
+2026-01-18T08:42:02.100Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:02.104Z [DEBUG] AutoUpdaterWrapper: Installation type: npm-global
+2026-01-18T08:42:02.116Z [DEBUG] Full reset (shrink->below): prevHeight=111, nextHeight=12, viewport=49
+2026-01-18T08:42:02.121Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-01-18T08:42:03.767Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.801Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.815Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.830Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.845Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.860Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.877Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.895Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.937Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:03.949Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:04.274Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:04.731Z [DEBUG] UserCommandMessage rendering: "clear" (args: "none", isSkillFormat: false)
+2026-01-18T08:42:17.443Z [DEBUG] MCP server "ide": Calling MCP tool: getDiagnostics
+2026-01-18T08:42:17.444Z [DEBUG] LSP Diagnostics: getLSPDiagnosticAttachments called
+2026-01-18T08:42:17.444Z [DEBUG] LSP Diagnostics: Checking registry - 0 pending
+2026-01-18T08:42:17.444Z [DEBUG] Hooks: Found 0 total hooks in registry
+2026-01-18T08:42:17.444Z [DEBUG] Hooks: checkForNewResponses returning 0 responses
+2026-01-18T08:42:17.453Z [DEBUG] MCP server "ide": Tool 'getDiagnostics' completed successfully in 10ms
+2026-01-18T08:42:17.460Z [DEBUG] Getting matching hook commands for UserPromptSubmit with query: undefined
+2026-01-18T08:42:17.460Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T08:42:17.460Z [DEBUG] Matched 0 unique hooks for query "no match query" (0 before deduplication)
+2026-01-18T08:42:17.462Z [DEBUG] Started caffeinate to prevent sleep
+2026-01-18T08:42:17.462Z [DEBUG] FileHistory: Making snapshot for message c04cbbaf-8f05-48f1-981b-2f3ed6c1fcb7
+2026-01-18T08:42:17.462Z [DEBUG] FileHistory: Added snapshot for c04cbbaf-8f05-48f1-981b-2f3ed6c1fcb7, tracking 0 files
+2026-01-18T08:42:17.465Z [DEBUG] MCP server "ide": Calling MCP tool: closeAllDiffTabs
+2026-01-18T08:42:17.466Z [DEBUG] Tool search disabled for model 'claude-haiku-4-5-20251001': model does not support tool_reference blocks. This feature is only available on Claude Sonnet 4+, Opus 4+, and newer models.
+2026-01-18T08:42:17.466Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-01-18T08:42:17.467Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-01-18T08:42:17.468Z [DEBUG] getPluginSkills: Processing 1 enabled plugins
+2026-01-18T08:42:17.468Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-01-18T08:42:17.468Z [DEBUG] Total plugin skills loaded: 0
+2026-01-18T08:42:17.468Z [DEBUG] Total plugin commands loaded: 0
+2026-01-18T08:42:17.473Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T08:42:17.473Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T08:42:17.473Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T08:42:17.481Z [DEBUG] MCP server "ide": Tool 'closeAllDiffTabs' completed successfully in 16ms
+2026-01-18T08:42:17.500Z [DEBUG] Loaded 3 unique skills (managed: 0, user: 2, project: 0, legacy commands: 1)
+2026-01-18T08:42:17.500Z [DEBUG] getSkills returning: 3 skill dir commands, 0 plugin skills, 0 bundled skills
+2026-01-18T08:42:17.627Z [DEBUG] Auto tool search disabled: 14945 chars (threshold: 50000, 10% of context)
+2026-01-18T08:42:17.629Z [DEBUG] Skills and commands included in Skill tool: debug-investigator, vue3, debug
+2026-01-18T08:42:17.635Z [DEBUG] [API:request] Creating client, ANTHROPIC_CUSTOM_HEADERS present: false, has Authorization header: false
+2026-01-18T08:42:17.635Z [DEBUG] [API:auth] OAuth token check starting
+2026-01-18T08:42:17.635Z [DEBUG] [API:auth] OAuth token check complete
+2026-01-18T08:42:18.358Z [DEBUG] Stream started - received first chunk
+2026-01-18T08:42:20.488Z [DEBUG] Getting matching hook commands for SessionEnd with query: prompt_input_exit
+2026-01-18T08:42:20.488Z [DEBUG] Found 0 hook matchers in settings
+2026-01-18T08:42:20.488Z [DEBUG] Matched 0 unique hooks for query "prompt_input_exit" (0 before deduplication)

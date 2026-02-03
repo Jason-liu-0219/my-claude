@@ -1,0 +1,52 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-288-    commit('setOutdatedFirmwareDeviceList', outdatedFirmwareDevices);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-289-    if (!outdatedFirmwareDevices.length) {
+packages/app-vsaas-portal/src/store/device/actions.js-290-      commit('ui/setShowUpdateFirmwareBanner', false, { root: true });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-291-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-292-  },
+packages/app-vsaas-portal/src/store/device/actions.js:293:  async updateNvrWizardFinished({ commit, state, rootState }, { device, value }) {
+packages/app-vsaas-portal/src/store/device/actions.js:294:    commit('updateNvrWizardFinished', { device, value });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-295-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-296-  async getSharedDeviceInfo({ state, commit, rootState }, { sharedToken, password }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-297-    const { token, deviceInfo, canPlayback } = await rootState.apiService.getSharedDeviceInfo({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-298-      sharedToken,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/actions.js-299-      password,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-173-      currentDevice.groupName = groupName;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-174-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-175-      delete state.uninitializedDevices[device.deviceId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-176-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-177-  },
+packages/app-vsaas-portal/src/store/device/mutations.js:178:  updateNvrWizardFinished(state, { device, value }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-179-    const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-180-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-181-    currentDevice.wizardFinished = value;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-182-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-183-  setSearchStatus(state, status) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-1-import shallowMount from '@/utils/testHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-3-import { NVR_SETUP_WIZARD } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-4-
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:5:import SetNvrWizardDialogue from './SetNvrWizardDialogue.vue';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-7-const { STATUS_MAPPING } = NVR_SETUP_WIZARD;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-8-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-9-vi.mock('@/models/ApiService');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-10-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-11-const createWrapper = (options) => {
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:12:  const wrapper = shallowMount(SetNvrWizardDialogue, {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-13-    ...options,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-14-  });
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:15:  wrapper.vm.$refs.SetNvrWizardDialogue.show = vi.fn();
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:16:  wrapper.vm.$refs.SetNvrWizardDialogue.hide = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-17-  return wrapper;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-18-};
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:19:describe('SetNvrWizardDialogue', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-20-  describe('methods', () => {
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js:21:    describe('SetNvrWizardDialogue/setPassword', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-22-      it('should set password success', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-23-        const w = await createWrapper({
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-24-          props: {
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js-25-            device: {
+
+[Showing results with pagination = limit: 50, offset: 0]

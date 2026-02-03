@@ -1,0 +1,1141 @@
+env: {
+  VITE_LOG_LEVEL: 'debug',
+  VITE_LOG_ENABLE: 'true',
+  VITE_PRODUCT_NAME: 'VORTEX',
+  VITE_FULL_PRODUCT_NAME: 'VORTEX',
+  VITE_VENDOR_NAME: 'Vivotek',
+  VITE_AMPLIFY_BACKEND_REGION: 'ap-northeast-1',
+  VITE_AWS_IOT_CORE_DATA_PLANE_ENDPOINT: 'a2vbbdorkkxq7n-ats.iot.ap-northeast-1.amazonaws.com',
+  VITE_AWS_COGNITO_IDENTITY_POOL_ID: 'ap-northeast-1:bb9cf3d9-889e-48ce-89fb-821451a5ff89',
+  VITE_AWS_COGNITO_USER_POOL_ID: 'ap-northeast-1_BxG4FgrFm',
+  VITE_AWS_COGNITO_WEB_CLIENT_ID: '3ncfua3oh3v13cjt1k3njknc0s',
+  VITE_AWS_COGNITO_DOMAIN: 'https://hulkdevsignup.auth.ap-northeast-1.amazoncognito.com',
+  VITE_S3_BUCKET: 'hulk-devices-push-storage-the-greate-one-vsaas-vortex-dev',
+  VITE_S3_CDN_URL: 'cloudfront.dev.vortexcloud.com',
+  VITE_SSO_ENTITY_ID_PREFIX: 'urn:amazon:cognito:sp:',
+  VITE_SSO_ACS_URL_SUFFIX: '/saml2/idpresponse',
+  VITE_SSO_AS_URL: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress',
+  VITE_SSO_LOGOUT_URL_SUFFIX: '/saml2/logout',
+  VITE_SI_DOMAIN: 'reseller.dev.vortexcloud.com',
+  VITE_VORTEXAI_SERVER_URL: 'vortexai.dev.vortexcloud.com',
+  VITE_ENV_NAME: 'dev',
+  VITE_BACKEND_URL: 'https://api.backend.dev.vortexcloud.com/graphql',
+  VITE_BACKEND_DOMAIN: 'api.backend.dev.vortexcloud.com',
+  VITE_SUBSCRIBE_WEBSOCKET_URL: 'wss://api.subscribe.dev.vortexcloud.com/graphql',
+  VITE_OPENAPI_DOMAIN: 'api.dev.vortexcloud.com',
+  VITE_MFE_REMOTE_AI_ORIGIN: 'https://mfe-ai.dev.vortexcloud.com',
+  VITE_MIXPANEL_ID: '84e929a6e2399e2034e60a02a31b8944',
+  VITE_SOURCE_MAP: 'true',
+  VITE_BACKEND_LAMBDA_DOMAIN: 'lgqnuvzpg9.execute-api.ap-northeast-1.amazonaws.com/dev'
+} test
+generated source map: true
+Unable to import module /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/vendors/Vivotek/prebuild.mjs
+
+ RUN  v3.2.4 /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal
+      Coverage enabled with v8
+
+ ✓ src/pages/user/detail/composables/useDeviceRoleHelper.test.js (47 tests) 8ms
+[1m[33m[@vue/compiler-sfc][0m[33m `defineEmits` is a compiler macro and no longer needs to be imported.[0m
+
+[1m[33m[@vue/compiler-sfc][0m[33m `defineExpose` is a compiler macro and no longer needs to be imported.[0m
+
+[1m[33m[@vue/compiler-sfc][0m[33m `defineModel` is a compiler macro and no longer needs to be imported.[0m
+
+
+ Test Files  1 passed (1)
+      Tests  47 passed (47)
+   Start at  22:23:14
+   Duration  11.14s (transform 1.40s, setup 245ms, collect 718ms, tests 8ms, environment 416ms, prepare 688ms)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |    0.16 |    60.98 |    58.7 |    0.16 |                   
+ app-vsaas-portal  |       0 |        0 |       0 |       0 |                   
+  ...css.config.js |       0 |        0 |       0 |       0 | 1-13              
+  puppeteer.cjs    |       0 |        0 |       0 |       0 | 1-19              
+  ...ind.config.js |       0 |        0 |       0 |       0 | 1-288             
+  unit.setup.js    |       0 |        0 |       0 |       0 | 1-23              
+  ...orResolver.js |       0 |        0 |       0 |       0 | 1-22              
+ .../awsConfig/dev |       0 |        0 |       0 |       0 |                   
+  aws-exports.js   |       0 |        0 |       0 |       0 | 1-27              
+ ...Config/preprod |       0 |        0 |       0 |       0 |                   
+  aws-exports.js   |       0 |        0 |       0 |       0 | 1-27              
+ ...awsConfig/prod |       0 |        0 |       0 |       0 |                   
+  aws-exports.js   |       0 |        0 |       0 |       0 | 1-27              
+ ...as-portal/mock |       0 |    16.66 |   16.66 |       0 |                   
+  ...Component.vue |       0 |      100 |     100 |       0 | 2-7               
+  MockService.js   |       0 |        0 |       0 |       0 | 1-10              
+  ...aasAIRoute.js |       0 |        0 |       0 |       0 | 1-62              
+  ...onSettings.js |       0 |        0 |       0 |       0 | 1-60              
+  index.js         |       0 |        0 |       0 |       0 | 1-10              
+  styleMock.js     |       0 |        0 |       0 |       0 | 1                 
+ ...portal/release |       0 |        0 |       0 |       0 |                   
+  changelog.js     |       0 |        0 |       0 |       0 | 1-15              
+ ...aas-portal/src |       0 |    14.28 |   14.28 |       0 |                   
+  App.vue          |       0 |      100 |     100 |       0 | 2-25              
+  ...endManager.js |       0 |        0 |       0 |       0 | 1-57              
+  aws-exports.js   |       0 |        0 |       0 |       0 | 1-27              
+  main.js          |       0 |        0 |       0 |       0 | 1-94              
+  performance.js   |       0 |        0 |       0 |       0 | 1-42              
+  registerSW.js    |       0 |        0 |       0 |       0 | 1-43              
+  sw.js            |       0 |        0 |       0 |       0 | 1-59              
+ ...onents/Avatars |       0 |      100 |     100 |       0 |                   
+  AppAvatar.vue    |       0 |      100 |     100 |       0 | 2-104             
+ ...onents/Banners |       0 |      100 |     100 |       0 |                   
+  AppBanner.vue    |       0 |      100 |     100 |       0 | 2-61              
+  ...eedBanner.vue |       0 |      100 |     100 |       0 | 2-42              
+  ...ionBanner.vue |       0 |      100 |     100 |       0 | 2-135             
+  ...ingBanner.vue |       0 |      100 |     100 |       0 | 2-57              
+  ...areBanner.vue |       0 |      100 |     100 |       0 | 2-55              
+ ...onents/Buttons |       0 |      100 |     100 |       0 |                   
+  ...adeButton.vue |       0 |      100 |     100 |       0 | 2-42              
+  ...essButton.vue |       0 |      100 |     100 |       0 | 2-91              
+ ...mponents/Cards |       0 |      100 |     100 |       0 |                   
+  AppUserCard.vue  |       0 |      100 |     100 |       0 | 2-40              
+ .../AIConsentCard |       0 |      100 |     100 |       0 |                   
+  ...nsentCard.vue |       0 |      100 |     100 |       0 | 2-206             
+  ...ntFeature.vue |       0 |      100 |     100 |       0 | 2-184             
+  ...Agreement.vue |       0 |      100 |     100 |       0 | 2-115             
+ ...ents/Dialogues |       0 |      100 |     100 |       0 |                   
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-89              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-62              
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-85              
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-85              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-102             
+  ...ADialogue.vue |       0 |      100 |     100 |       0 | 2-197             
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-65              
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-55              
+  ...eaveGuide.vue |       0 |      100 |     100 |       0 | 2-81              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-71              
+  ...yDialogue.vue |       0 |      100 |     100 |       0 | 2-124             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-127             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-131             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-123             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-251             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-121             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-59              
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-75              
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-145             
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-106             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-163             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-132             
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-110             
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-108             
+  ...gDialogue.vue |       0 |      100 |     100 |       0 | 2-158             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-71              
+  InfoDialogue.vue |       0 |      100 |     100 |       0 | 2-68              
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-132             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-62              
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-59              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-67              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-68              
+  ...kDialogue.vue |       0 |      100 |     100 |       0 | 2-123             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-113             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-64              
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-126             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-373             
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-233             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-116             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-76              
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-213             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-370             
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-195             
+  ...kDialogue.vue |       0 |      100 |     100 |       0 | 2-76              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-115             
+ ...gues/Downgrade |       0 |      100 |     100 |       0 |                   
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-56              
+  ...yDialogue.vue |       0 |      100 |     100 |       0 | 2-109             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-131             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-50              
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-405             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-69              
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-62              
+ ...hangedDialogue |       0 |      100 |     100 |       0 |                   
+  ...dDailogue.vue |       0 |      100 |     100 |       0 | 2-54              
+ ...ctUserDialogue |       0 |      100 |     100 |       0 |                   
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-243             
+ ...es/ShareDevice |       0 |      100 |     100 |       0 |                   
+  ShareDevice.vue  |       0 |      100 |     100 |       0 | 2-143             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-114             
+  ...eSettings.vue |       0 |      100 |     100 |       0 | 2-582             
+ ...logues/Upgrade |       0 |      100 |     100 |       0 |                   
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-88              
+ ...ents/Dropdowns |       0 |      100 |     100 |       0 |                   
+  ...eDropdown.vue |       0 |      100 |     100 |       0 | 2-84              
+  ...eDropdown.vue |       0 |      100 |     100 |       0 | 2-104             
+  ...vDropdown.vue |       0 |      100 |     100 |       0 | 2-157             
+  ...eDropdown.vue |       0 |      100 |     100 |       0 | 2-230             
+  ...mDropdown.vue |       0 |      100 |     100 |       0 | 2-101             
+  ...eDropdown.vue |       0 |      100 |     100 |       0 | 2-207             
+ ...rtArchiveVideo |       0 |      100 |     100 |       0 |                   
+  ...hiveModal.vue |       0 |      100 |     100 |       0 | 2-158             
+  ...hiveModal.vue |       0 |      100 |     100 |       0 | 2-291             
+  ...ayerPanel.vue |       0 |      100 |     100 |       0 | 2-616             
+ ...nts/FileUpload |       0 |      100 |     100 |       0 |                   
+  ...eUploader.vue |       0 |      100 |     100 |       0 | 2-275             
+  DropFile.vue     |       0 |      100 |     100 |       0 | 2-143             
+ ...ForgotPassword |       0 |      100 |     100 |       0 |                   
+  EnterEmail.vue   |       0 |      100 |     100 |       0 | 2-98              
+  ...wPassword.vue |       0 |      100 |     100 |       0 | 2-198             
+  ...erifyCode.vue |       0 |      100 |     100 |       0 | 2-75              
+  ...setResult.vue |       0 |      100 |     100 |       0 | 2-86              
+  ...CodeInput.vue |       0 |      100 |     100 |       0 | 2-228             
+ ...mponents/Group |       0 |      100 |     100 |       0 |                   
+  ...pDialogue.vue |       0 |      100 |     100 |       0 | 2-176             
+  ...GroupList.vue |       0 |      100 |     100 |       0 | 2-469             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-130             
+  ...pDialogue.vue |       0 |      100 |     100 |       0 | 2-103             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-372             
+ ...ers/AppHeaders |       0 |      100 |     100 |       0 |                   
+  AppHeader.vue    |       0 |      100 |     100 |       0 | 2-167             
+  ...untButton.vue |       0 |      100 |     100 |       0 | 2-143             
+  ...elpButton.vue |       0 |      100 |     100 |       0 | 2-100             
+  ...intButton.vue |       0 |      100 |     100 |       0 | 2-47              
+  ...onsButton.vue |       0 |      100 |     100 |       0 | 2-29              
+  ...lerNotify.vue |       0 |      100 |     100 |       0 | 2-45              
+ ...mponents/Hints |       0 |      100 |     100 |       0 |                   
+  AppHint.vue      |       0 |      100 |     100 |       0 | 2-28              
+ ...nts/Indicators |       0 |      100 |     100 |       0 |                   
+  ...Indicator.vue |       0 |      100 |     100 |       0 | 2-96              
+ ...omponents/List |       0 |      100 |     100 |       0 |                   
+  ...lSiteList.vue |       0 |      100 |     100 |       0 | 2-373             
+  LazyloadList.vue |       0 |      100 |     100 |       0 | 2-108             
+  ...ollerList.vue |       0 |      100 |     100 |       0 | 2-211             
+ ...mponents/Logos |       0 |      100 |     100 |       0 |                   
+  ...mpanyLogo.vue |       0 |      100 |     100 |       0 | 2-13              
+  AppLogo.vue      |       0 |      100 |     100 |       0 | 2-13              
+  ...viderLogo.vue |       0 |      100 |     100 |       0 | 2-52              
+ ...omponents/Maps |       0 |      100 |     100 |       0 |                   
+  LocationMap.vue  |       0 |      100 |     100 |       0 | 2-160             
+ ...mponents/Modal |       0 |      100 |     100 |       0 |                   
+  ...llerModal.vue |       0 |      100 |     100 |       0 | 2-72              
+ ...ts/Navigations |       0 |      100 |     100 |       0 |                   
+  Navigation.vue   |       0 |      100 |     100 |       0 | 2-254             
+ .../PlaybackModal |       0 |      100 |     100 |       0 |                   
+  EventPlayer.vue  |       0 |      100 |     100 |       0 | 2-395             
+  index.vue        |       0 |      100 |     100 |       0 | 2-85              
+ ...ponents/Player |       0 |      100 |     100 |       0 |                   
+  ...erWrapper.vue |       0 |      100 |     100 |       0 | 2-530             
+ ...onents/Poppers |       0 |      100 |     100 |       0 |                   
+  ...rolPopper.vue |       0 |      100 |     100 |       0 | 2-382             
+ ...onents/QRCodes |       0 |      100 |     100 |       0 |                   
+  AppQRCode.vue    |       0 |      100 |     100 |       0 | 2-77              
+ ...nents/Schedule |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-371             
+ ...nents/Snackbar |       0 |      100 |     100 |       0 |                   
+  BaseSnackbar.vue |       0 |      100 |     100 |       0 | 2-170             
+  ...ification.vue |       0 |      100 |     100 |       0 | 2-69              
+ ...nents/Speakers |       0 |      100 |     100 |       0 |                   
+  ...ontroller.vue |       0 |      100 |     100 |       0 | 2-255             
+ ...rs/composables |       0 |        0 |       0 |       0 |                   
+  ...orkSpeaker.js |       0 |        0 |       0 |       0 | 1-126             
+  ...woWayAudio.js |       0 |        0 |       0 |       0 | 1-121             
+ ...nts/Validators |       0 |      100 |     100 |       0 |                   
+  ...Validator.vue |       0 |      100 |     100 |       0 | 2-153             
+ ...reskin/Buttons |       0 |      100 |     100 |       0 |                   
+  ...adeButton.vue |       0 |      100 |     100 |       0 | 2-21              
+ ...reskin/Devices |       0 |      100 |     100 |       0 |                   
+  DeviceStatus.vue |       0 |      100 |     100 |       0 | 2-47              
+ ...reskin/Headers |       0 |      100 |     100 |       0 |                   
+  Header.vue       |       0 |      100 |     100 |       0 | 2-71              
+  ...untButton.vue |       0 |      100 |     100 |       0 | 2-125             
+  ...elpButton.vue |       0 |      100 |     100 |       0 | 2-88              
+  HintButton.vue   |       0 |      100 |     100 |       0 | 2-42              
+ ...s/reskin/Logos |       0 |      100 |     100 |       0 |                   
+  AppLogo.vue      |       0 |      100 |     100 |       0 | 2-13              
+ ...in/Navigations |       0 |      100 |     100 |       0 |                   
+  Navigation.vue   |       0 |      100 |     100 |       0 | 2-152             
+  ...gatorItem.vue |       0 |      100 |     100 |       0 | 2-39              
+ ...eskin/Schedule |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-258             
+ ...rc/composables |       0 |        0 |       0 |       0 |                   
+  useActions.js    |       0 |        0 |       0 |       0 | 1-88              
+ ...heckFormHelper |       0 |        0 |       0 |       0 |                   
+  ...rorHelpers.js |       0 |        0 |       0 |       0 | 1-24              
+  ...FormHelper.js |       0 |        0 |       0 |       0 | 1-72              
+ ...s/useDraggable |       0 |        0 |       0 |       0 |                   
+  useDraggable.js  |       0 |        0 |       0 |       0 | 1-257             
+ ...ilterByKeyword |       0 |        0 |       0 |       0 |                   
+  ...rByKeyword.js |       0 |        0 |       0 |       0 | 1-21              
+ .../useI18nHelper |       0 |        0 |       0 |       0 |                   
+  useI18nHelper.js |       0 |        0 |       0 |       0 | 1-12              
+ ...es/useMixpanel |       0 |        0 |       0 |       0 |                   
+  useMixpanel.js   |       0 |        0 |       0 |       0 | 1-18              
+ .../usePagination |       0 |        0 |       0 |       0 |                   
+  usePagination.js |       0 |        0 |       0 |       0 | 1-78              
+ ...ssionHierarchy |       0 |        0 |       0 |       0 |                   
+  ...nHierarchy.js |       0 |        0 |       0 |       0 | 1-257             
+ ...RoleListHelper |       0 |        0 |       0 |       0 |                   
+  ...ListHelper.js |       0 |        0 |       0 |       0 | 1-77              
+ ...s/useSelectAll |       0 |        0 |       0 |       0 |                   
+  useSelectAll.js  |       0 |        0 |       0 |       0 | 1-27              
+ ...dPartyRegistry |       0 |        0 |       0 |       0 |                   
+  ...tyRegistry.js |       0 |        0 |       0 |       0 | 1-8               
+ .../accessControl |       0 |        0 |       0 |       0 |                   
+  registry.js      |       0 |        0 |       0 |       0 | 1-68              
+ ...TimelineHotkey |       0 |        0 |       0 |       0 |                   
+  ...lineHotkey.js |       0 |        0 |       0 |       0 | 1-146             
+ .../src/constants |       0 |        0 |       0 |       0 |                   
+  License.js       |       0 |        0 |       0 |       0 | 1-117             
+  Page.js          |       0 |        0 |       0 |       0 | 1-226             
+  Pagination.js    |       0 |        0 |       0 |       0 | 1-28              
+  Permission.js    |       0 |        0 |       0 |       0 | 1-222             
+  Site.js          |       0 |        0 |       0 |       0 | 1-5               
+ ...nstants/reskin |       0 |        0 |       0 |       0 |                   
+  Page.js          |       0 |        0 |       0 |       0 | 1-82              
+ ...ortal/src/i18n |       0 |        0 |       0 |       0 |                   
+  index.js         |       0 |        0 |       0 |       0 | 1-70              
+  ...uageHelper.js |       0 |        0 |       0 |       0 | 1-48              
+  languageList.js  |       0 |        0 |       0 |       0 | 1-60              
+ ...al/src/layouts |       0 |      100 |     100 |       0 |                   
+  AppLayout.vue    |       0 |      100 |     100 |       0 | 2-44              
+  ...ardLayout.vue |       0 |      100 |     100 |       0 | 2-24              
+  Layout.vue       |       0 |      100 |     100 |       0 | 2-99              
+  LoginLayout.vue  |       0 |      100 |     100 |       0 | 2-9               
+ ...layouts/reskin |       0 |      100 |     100 |       0 |                   
+  Layout.vue       |       0 |      100 |     100 |       0 | 2-27              
+  VsaasLayout.vue  |       0 |      100 |     100 |       0 | 2-28              
+ ...trolPermission |       0 |        0 |       0 |       0 |                   
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-153             
+ ...src/models/API |       0 |        0 |       0 |       0 |                   
+  ApiService.js    |       0 |        0 |       0 |       0 | 1-297             
+  ...rorHandler.js |       0 |        0 |       0 |       0 | 1-30              
+  ...rorHandler.js |       0 |        0 |       0 |       0 | 1-14              
+ .../AccessControl |       0 |        0 |       0 |       0 |                   
+  ...trolHelper.js |       0 |        0 |       0 |       0 | 1-622             
+  ...ntegration.js |       0 |        0 |       0 |       0 | 1-376             
+  ...trolObject.js |       0 |        0 |       0 |       0 | 1-165             
+ ...c/models/Alarm |       0 |        0 |       0 |       0 |                   
+  Alarm.js         |       0 |        0 |       0 |       0 | 1-215             
+ .../models/Apollo |       0 |        0 |       0 |       0 |                   
+  index.js         |       0 |        0 |       0 |       0 | 1-160             
+ ...models/Archive |       0 |        0 |       0 |       0 |                   
+  Archive.js       |       0 |        0 |       0 |       0 | 1-166             
+  SharedArchive.js |       0 |        0 |       0 |       0 | 1-69              
+ ...c/models/Audio |       0 |        0 |       0 |       0 |                   
+  G711.js          |       0 |        0 |       0 |       0 | 1-223             
+  ...neStreamer.js |       0 |        0 |       0 |       0 | 1-123             
+  ...tProcessor.js |       0 |        0 |       0 |       0 | 1-67              
+  ...dioService.js |       0 |        0 |       0 |       0 | 1-406             
+ ...odels/AuditLog |       0 |        0 |       0 |       0 |                   
+  ...LogService.js |       0 |        0 |       0 |       0 | 1-26              
+ ...Authentication |       0 |        0 |       0 |       0 |                   
+  ...entication.js |       0 |        0 |       0 |       0 | 1-224             
+  ...ionService.js |       0 |        0 |       0 |       0 | 1-229             
+ ...CustomizedView |       0 |        0 |       0 |       0 |                   
+  ...omizedView.js |       0 |        0 |       0 |       0 | 1-680             
+  ...cesManager.js |       0 |        0 |       0 |       0 | 1-159             
+ .../models/Device |       0 |        0 |       0 |       0 |                   
+  DeviceFactory.js |       0 |        0 |       0 |       0 | 1-231             
+ ...ce/CloudBackup |       0 |        0 |       0 |       0 |                   
+  ...uleService.js |       0 |        0 |       0 |       0 | 1-36              
+  ...kupService.js |       0 |        0 |       0 |       0 | 1-72              
+ ...s/Device/Event |       0 |        0 |       0 |       0 |                   
+  EventService.js  |       0 |        0 |       0 |       0 | 1-105             
+ ...Settings/Audio |       0 |        0 |       0 |       0 |                   
+  ...lipService.js |       0 |        0 |       0 |       0 | 1-253             
+  ...oInService.js |       0 |        0 |       0 |       0 | 1-90              
+ ...yNightSettings |       0 |        0 |       0 |       0 |                   
+  ...ngsService.js |       0 |        0 |       0 |       0 | 1-233             
+ ...talInputOutput |       0 |        0 |       0 |       0 |                   
+  ...eIOService.js |       0 |        0 |       0 |       0 | 1-81              
+ ...gs/ImageAffect |       0 |        0 |       0 |       0 |                   
+  ...ectService.js |       0 |        0 |       0 |       0 | 1-46              
+ .../ImageExposure |       0 |        0 |       0 |       0 |                   
+  ...ureService.js |       0 |        0 |       0 |       0 | 1-75              
+ ...ngs/ImageScene |       0 |        0 |       0 |       0 |                   
+  ...odeService.js |       0 |        0 |       0 |       0 | 1-67              
+ ...gs/Maintenance |       0 |        0 |       0 |       0 |                   
+  ...nceService.js |       0 |        0 |       0 |       0 | 1-85              
+ ...e/Settings/OTA |       0 |        0 |       0 |       0 |                   
+  ...OTAService.js |       0 |        0 |       0 |       0 | 1-15              
+  ...gerService.js |       0 |        0 |       0 |       0 | 1-142             
+  OTAService.js    |       0 |        0 |       0 |       0 | 1-77              
+ ...gs/PrivacyMask |       0 |        0 |       0 |       0 |                   
+  PrivacyMask.js   |       0 |        0 |       0 |       0 | 1-79              
+  ...askService.js |       0 |        0 |       0 |       0 | 1-104             
+ ...gs/RemoteFocus |       0 |        0 |       0 |       0 |                   
+  ...cusService.js |       0 |        0 |       0 |       0 | 1-99              
+ ...s/RetentionDay |       0 |        0 |       0 |       0 |                   
+  ...DayService.js |       0 |        0 |       0 |       0 | 1-233             
+ ...ngs/RtspAccess |       0 |        0 |       0 |       0 |                   
+  ...essService.js |       0 |        0 |       0 |       0 | 1-62              
+ ...ettings/SDCard |       0 |        0 |       0 |       0 |                   
+  SDCardService.js |       0 |        0 |       0 |       0 | 1-36              
+ ...ettings/System |       0 |        0 |       0 |       0 |                   
+  SystemService.js |       0 |        0 |       0 |       0 | 1-29              
+ ...ings/Tampering |       0 |        0 |       0 |       0 |                   
+  ...ingService.js |       0 |        0 |       0 |       0 | 1-134             
+ ...ttings/VideoIn |       0 |        0 |       0 |       0 |                   
+  ...oInService.js |       0 |        0 |       0 |       0 | 1-83              
+ ...dels/Device/UI |       0 |        0 |       0 |       0 |                   
+  UIService.js     |       0 |        0 |       0 |       0 | 1-175             
+ ...els/Device/VCA |       0 |        0 |       0 |       0 |                   
+  ...VcaService.js |       0 |        0 |       0 |       0 | 1-24              
+  VcaService.js    |       0 |        0 |       0 |       0 | 1-161             
+ ...ce/VideoStream |       0 |        0 |       0 |       0 |                   
+  ...eamService.js |       0 |        0 |       0 |       0 | 1-115             
+ ...dels/FloorPlan |       0 |        0 |       0 |       0 |                   
+  ...ionService.js |       0 |        0 |       0 |       0 | 1-75              
+  ...lanService.js |       0 |        0 |       0 |       0 | 1-90              
+ ...dels/GoogleMap |       0 |        0 |       0 |       0 |                   
+  ...MapService.js |       0 |        0 |       0 |       0 | 1-273             
+ ...src/models/IoT |       0 |        0 |       0 |       0 |                   
+  ...eIoTClient.js |       0 |        0 |       0 |       0 | 1-534             
+  ...eSignaling.js |       0 |        0 |       0 |       0 | 1-123             
+  ...Strategies.js |       0 |        0 |       0 |       0 | 1-189             
+ ...IModelDownload |       0 |        0 |       0 |       0 |                   
+  ...oadService.js |       0 |        0 |       0 |       0 | 1-76              
+ ...lSettingsProxy |       0 |        0 |       0 |       0 |                   
+  ...oxyService.js |       0 |        0 |       0 |       0 | 1-100             
+ ...oT/ExportVideo |       0 |        0 |       0 |       0 |                   
+  ...deoService.js |       0 |        0 |       0 |       0 | 1-98              
+ ...ExternalDevice |       0 |        0 |       0 |       0 |                   
+  ...IoTService.js |       0 |        0 |       0 |       0 | 1-189             
+ ...s/IoT/Joystick |       0 |        0 |       0 |       0 |                   
+  CameraCommand.js |       0 |        0 |       0 |       0 | 1-494             
+  ...ickService.js |       0 |        0 |       0 |       0 | 1-929             
+  ...nelCommand.js |       0 |        0 |       0 |       0 | 1-104             
+  ...nelCommand.js |       0 |        0 |       0 |       0 | 1-92              
+ ...NVRSetupWizard |       0 |        0 |       0 |       0 |                   
+  ...ardService.js |       0 |        0 |       0 |       0 | 1-165             
+ ...NetworkSpeaker |       0 |        0 |       0 |       0 |                   
+  ...dioService.js |       0 |        0 |       0 |       0 | 1-155             
+  ...kerService.js |       0 |        0 |       0 |       0 | 1-14              
+  ...temService.js |       0 |        0 |       0 |       0 | 1-108             
+  ...ownService.js |       0 |        0 |       0 |       0 | 1-150             
+ ...ls/IoT/Odyssey |       0 |        0 |       0 |       0 |                   
+  ...nnectPager.js |       0 |        0 |       0 |       0 | 1-121             
+  ...Connection.js |       0 |        0 |       0 |       0 | 1-187             
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-368             
+ .../IoT/POESwitch |       0 |        0 |       0 |       0 |                   
+  ...tchService.js |       0 |        0 |       0 |       0 | 1-85              
+ ...models/IoT/SIP |       0 |        0 |       0 |       0 |                   
+  SIPConnection.js |       0 |        0 |       0 |       0 | 1-98              
+  ...ionHandler.js |       0 |        0 |       0 |       0 | 1-33              
+  SIPWrapper.js    |       0 |        0 |       0 |       0 | 1-354             
+ ...oxy/Connection |       0 |        0 |       0 |       0 |                   
+  v1.js            |       0 |        0 |       0 |       0 | 1-92              
+ ...sProxy/Service |       0 |        0 |       0 |       0 |                   
+  v1.js            |       0 |        0 |       0 |       0 | 1-108             
+  v2.js            |       0 |        0 |       0 |       0 | 1-122             
+ ...ls/IoT/Webhook |       0 |        0 |       0 |       0 |                   
+  ...ookService.js |       0 |        0 |       0 |       0 | 1-100             
+ ...els/Permission |       0 |        0 |       0 |       0 |                   
+  ...lanService.js |       0 |        0 |       0 |       0 | 1-23              
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-97              
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-361             
+ ...dels/Recording |       0 |        0 |       0 |       0 |                   
+  ...ingService.js |       0 |        0 |       0 |       0 | 1-384             
+ ...ls/SmartSensor |       0 |        0 |       0 |       0 |                   
+  ...nsorHelper.js |       0 |        0 |       0 |       0 | 1-119             
+  ...ntegration.js |       0 |        0 |       0 |       0 | 1-147             
+  ...nsorObject.js |       0 |        0 |       0 |       0 | 1-65              
+ ...els/SnoozeRule |       0 |        0 |       0 |       0 |                   
+  SnoozeRule.js    |       0 |        0 |       0 |       0 | 1-97              
+ ...TableInterface |       0 |        0 |       0 |       0 |                   
+  ...eTableData.js |       0 |        0 |       0 |       0 | 1-16              
+  ...aTableData.js |       0 |        0 |       0 |       0 | 1-65              
+  ...eTableData.js |       0 |        0 |       0 |       0 | 1-39              
+  ...lTableData.js |       0 |        0 |       0 |       0 | 1-144             
+  NVRTableData.js  |       0 |        0 |       0 |       0 | 1-15              
+  VSSTableData.js  |       0 |        0 |       0 |       0 | 1-14              
+ ...havierTracking |       0 |        0 |       0 |       0 |                   
+  ...ingService.js |       0 |        0 |       0 |       0 | 1-221             
+ ...models/Webhook |       0 |        0 |       0 |       0 |                   
+  ...ookProfile.js |       0 |        0 |       0 |       0 | 1-223             
+ ...ForgotPassword |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-58              
+  route.js         |       0 |        0 |       0 |       0 | 1-12              
+ ...ord/components |       0 |      100 |     100 |       0 |                   
+  Error.vue        |       0 |      100 |     100 |       0 | 2-40              
+  ...ordLayout.vue |       0 |      100 |     100 |       0 | 2-19              
+  Success.vue      |       0 |      100 |     100 |       0 | 2-43              
+ ...ages/Timelapse |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-7               
+  route.js         |       0 |        0 |       0 |       0 | 1-12              
+ ...melapse/export |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-193             
+ ...ort/components |       0 |      100 |     100 |       0 |                   
+  ...askButton.vue |       0 |      100 |     100 |       0 | 2-105             
+  ...tTaskCard.vue |       0 |      100 |     100 |       0 | 2-86              
+  ...ardStatus.vue |       0 |      100 |     100 |       0 | 2-68              
+  ...tTaskList.vue |       0 |      100 |     100 |       0 | 2-88              
+  ...lapseItem.vue |       0 |      100 |     100 |       0 | 2-90              
+  ...lapseList.vue |       0 |      100 |     100 |       0 | 2-114             
+  ...lapseSort.vue |       0 |      100 |     100 |       0 | 2-44              
+  ...apseStep1.vue |       0 |      100 |     100 |       0 | 2-71              
+ ...rt/composables |       0 |        0 |       0 |       0 |                   
+  dateHelpers.js   |       0 |        0 |       0 |       0 | 1-249             
+  ...apseExport.js |       0 |        0 |       0 |       0 | 1-210             
+  ...lapseModel.js |       0 |        0 |       0 |       0 | 1-636             
+ .../pages/account |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-93              
+  route.js         |       0 |        0 |       0 |       0 | 1-39              
+ ...iKeyManagement |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-89              
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-162             
+  ...IKeyModal.vue |       0 |      100 |     100 |       0 | 2-262             
+  ...yDialogue.vue |       0 |      100 |     100 |       0 | 2-92              
+ ...count/language |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-52              
+ ...age/components |       0 |      100 |     100 |       0 |                   
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-114             
+ ...es/account/mfa |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-143             
+ ...mfa/components |       0 |      100 |     100 |       0 |                   
+  ...pDialogue.vue |       0 |      100 |     100 |       0 | 2-172             
+ ...ficationCenter |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-174             
+ ...ccount/profile |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-216             
+ ...rc/pages/alarm |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-8               
+  route.js         |       0 |        0 |       0 |       0 | 1-16              
+ ...ges/alarm/mock |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-824             
+ .../pages/archive |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-13              
+  route.js         |       0 |        0 |       0 |       0 | 1-27              
+ ...ive/management |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-204             
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...tailPanel.vue |       0 |      100 |     100 |       0 | 2-224             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-649             
+  ...PlayModal.vue |       0 |      100 |     100 |       0 | 2-176             
+  ...erControl.vue |       0 |      100 |     100 |       0 | 2-273             
+  ...lMoreMenu.vue |       0 |      100 |     100 |       0 | 2-214             
+  ...ayerPanel.vue |       0 |      100 |     100 |       0 | 2-279             
+  ...rTimeline.vue |       0 |      100 |     100 |       0 | 2-108             
+ ...anagementTable |       0 |      100 |     100 |       0 |                   
+  ...dModeView.vue |       0 |      100 |     100 |       0 | 2-162             
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-83              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-139             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-106             
+  ShareArchive.vue |       0 |      100 |     100 |       0 | 2-261             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-140             
+  ...eSettings.vue |       0 |      100 |     100 |       0 | 2-450             
+ ...src/pages/auth |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-95              
+ ...c/pages/device |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-13              
+  route.js         |       0 |        0 |       0 |       0 | 1-36              
+ ...vice/AddDevice |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2                 
+  route.js         |       0 |        0 |       0 |       0 | 1-24              
+ ...DeviceSettings |       0 |      100 |     100 |       0 |                   
+  ...eSettings.vue |       0 |      100 |     100 |       0 | 2-356             
+ ...dDeviceSuccess |       0 |      100 |     100 |       0 |                   
+  ...ceSuccess.vue |       0 |      100 |     100 |       0 | 2-92              
+ .../EnterDeviceId |       0 |      100 |     100 |       0 |                   
+  ...rDeviceId.vue |       0 |      100 |     100 |       0 | 2-106             
+ ...Id/composables |       0 |        0 |       0 |       0 |                   
+  ...dCheckForm.js |       0 |        0 |       0 |       0 | 1-101             
+ ...ice/components |       0 |      100 |     100 |       0 |                   
+  ...ralHeader.vue |       0 |      100 |     100 |       0 | 2-29              
+ ...iceStoreHelper |       0 |        0 |       0 |       0 |                   
+  ...toreHelper.js |       0 |        0 |       0 |       0 | 1-97              
+ ...ice/management |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-876             
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...viceModal.vue |       0 |      100 |     100 |       0 | 2-548             
+  ...tailPanel.vue |       0 |      100 |     100 |       0 | 2-236             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-490             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-104             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-796             
+  ...ementTabs.vue |       0 |      100 |     100 |       0 | 2-77              
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-479             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-648             
+  ...tailPanel.vue |       0 |      100 |     100 |       0 | 2-400             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-95              
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-653             
+ .../device/reskin |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-8               
+ ...kin/components |       0 |      100 |     100 |       0 |                   
+  Skeleton.vue     |       0 |      100 |     100 |       0 | 2-14              
+ ...kin/management |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-584             
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-271             
+  ...ntToolbar.vue |       0 |      100 |     100 |       0 | 2-228             
+ ...evice/settings |       0 |       50 |      50 |       0 |                   
+  ...eSettings.vue |       0 |      100 |     100 |       0 | 2-362             
+  route.js         |       0 |        0 |       0 |       0 | 1-268             
+ .../settings/DIDO |       0 |      100 |     100 |       0 |                   
+  DigitalInput.vue |       0 |      100 |     100 |       0 | 2-222             
+  ...talOutput.vue |       0 |      100 |     100 |       0 | 2-155             
+ ...dingAndStorage |       0 |      100 |     100 |       0 |                   
+  CloudBackup.vue  |       0 |      100 |     100 |       0 | 2-303             
+  ...Retention.vue |       0 |      100 |     100 |       0 | 2-251             
+ ...entionDialogue |       0 |      100 |     100 |       0 |                   
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-245             
+ ...ue/composables |       0 |        0 |       0 |       0 |                   
+  ...logueState.js |       0 |        0 |       0 |       0 | 1-53              
+ ...ngs/components |       0 |      100 |     100 |       0 |                   
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-304             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-179             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-305             
+  ...lDialogue.vue |       0 |      100 |     100 |       0 | 2-73              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-106             
+  ...gsContent.vue |       0 |      100 |     100 |       0 | 2-19              
+  ...sSideMenu.vue |       0 |      100 |     100 |       0 | 2-254             
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-45              
+  ...pportHint.vue |       0 |      100 |     100 |       0 | 2-28              
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-81              
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-330             
+  OtaInfoCard.vue  |       0 |      100 |     100 |       0 | 2-178             
+  ...atusTable.vue |       0 |      100 |     100 |       0 | 2-127             
+  ...viceTable.vue |       0 |      100 |     100 |       0 | 2-158             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-229             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-117             
+ ...ings/detection |       0 |      100 |     100 |       0 |                   
+  ...tionAudio.vue |       0 |      100 |     100 |       0 | 2-246             
+  ...Tampering.vue |       0 |      100 |     100 |       0 | 2-176             
+ ...settings/media |       0 |      100 |     100 |       0 |                   
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-194             
+  ...oSettings.vue |       0 |      100 |     100 |       0 | 2-190             
+  ...tspAccess.vue |       0 |      100 |     100 |       0 | 2-213             
+  ...djustment.vue |       0 |      100 |     100 |       0 | 2-218             
+  ...eSettings.vue |       0 |      100 |     100 |       0 | 2-278             
+  ...ivacyMask.vue |       0 |      100 |     100 |       0 | 2-260             
+  ...mSettings.vue |       0 |      100 |     100 |       0 | 2-214             
+  ...MaskModal.vue |       0 |      100 |     100 |       0 | 2-348             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-82              
+ ...icePTZSettings |       0 |      100 |     100 |       0 |                   
+  Preference.vue   |       0 |      100 |     100 |       0 | 2-410             
+  ...AndPatrol.vue |       0 |      100 |     100 |       0 | 2-27              
+  index.vue        |       0 |      100 |     100 |       0 | 2-121             
+ ...ngs/components |       0 |      100 |     100 |       0 |                   
+  ...sibleCard.vue |       0 |      100 |     100 |       0 | 2-44              
+  ...rolsPanel.vue |       0 |      100 |     100 |       0 | 2-165             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-67              
+  ...ontroller.vue |       0 |      100 |     100 |       0 | 2-207             
+ ...PatrolSettings |       0 |      100 |     100 |       0 |                   
+  ...lDialogue.vue |       0 |      100 |     100 |       0 | 2-103             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-63              
+  ...pdownMenu.vue |       0 |      100 |     100 |       0 | 2-31              
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-82              
+  ...lSettings.vue |       0 |      100 |     100 |       0 | 2-139             
+  ...lDialogue.vue |       0 |      100 |     100 |       0 | 2-295             
+  ...gableItem.vue |       0 |      100 |     100 |       0 | 2-117             
+  ...lDialogue.vue |       0 |      100 |     100 |       0 | 2-35              
+  ...rolButton.vue |       0 |      100 |     100 |       0 | 2-92              
+  ...lDialogue.vue |       0 |      100 |     100 |       0 | 2-587             
+  ...tDropdown.vue |       0 |      100 |     100 |       0 | 2-122             
+ ...PresetSettings |       0 |      100 |     100 |       0 |                   
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-138             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-110             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-151             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-100             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-52              
+  ...tSettings.vue |       0 |      100 |     100 |       0 | 2-172             
+ ...gs/composables |       0 |        0 |       0 |       0 |                   
+  ...Controller.js |       0 |        0 |       0 |       0 | 1-49              
+  ...olSettings.js |       0 |        0 |       0 |       0 | 1-118             
+  ...rolSetting.js |       0 |        0 |       0 |       0 | 1-310             
+  ...etSettings.js |       0 |        0 |       0 |       0 | 1-109             
+  ...tDwellTime.js |       0 |        0 |       0 |       0 | 1-124             
+ ...tingsTimelapse |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-303             
+ ...pse/components |       0 |      100 |     100 |       0 |                   
+  ...eSchedule.vue |       0 |      100 |     100 |       0 | 2-139             
+  ...seSetting.vue |       0 |      100 |     100 |       0 | 2-44              
+  ...ailyUsage.vue |       0 |      100 |     100 |       0 | 2-40              
+  ...Frequency.vue |       0 |      100 |     100 |       0 | 2-27              
+ ...se/composables |       0 |        0 |       0 |       0 |                   
+  ...encyHelper.js |       0 |        0 |       0 |       0 | 1-70              
+  ...duleHelper.js |       0 |        0 |       0 |       0 | 1-138             
+  ...gAPIHelper.js |       0 |        0 |       0 |       0 | 1-95              
+ ...dia/components |       0 |      100 |     100 |       0 |                   
+  ...ttingCard.vue |       0 |      100 |     100 |       0 | 2-226             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-30              
+ ...ettings/system |       0 |      100 |     100 |       0 |                   
+  ...tallation.vue |       0 |      100 |     100 |       0 | 2-381             
+  ...intenance.vue |       0 |      100 |     100 |       0 | 2-66              
+  ...gsWrapper.vue |       0 |      100 |     100 |       0 | 2-57              
+  ...hSettings.vue |       0 |      100 |     100 |       0 | 2-225             
+  ...teSupport.vue |       0 |      100 |     100 |       0 | 2-141             
+ ...temInformation |       0 |      100 |     100 |       0 |                   
+  ...formation.vue |       0 |      100 |     100 |       0 | 2-332             
+ ...on/composables |       0 |        0 |       0 |       0 |                   
+  ...ttonHelper.js |       0 |        0 |       0 |       0 | 1-61              
+  ...atedHelper.js |       0 |        0 |       0 |       0 | 1-66              
+  ...ogueHelper.js |       0 |        0 |       0 |       0 | 1-154             
+  ...sionHelper.js |       0 |        0 |       0 |       0 | 1-28              
+  ...tionHelper.js |       0 |        0 |       0 |       0 | 1-57              
+ ...temNVRSettings |       0 |      100 |     100 |       0 |                   
+  v1.vue           |       0 |      100 |     100 |       0 | 2-180             
+  v2.vue           |       0 |      100 |     100 |       0 | 2-171             
+ ...es/deviceShare |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-115             
+ ...are/components |       0 |      100 |     100 |       0 |                   
+  ...PlayModal.vue |       0 |      100 |     100 |       0 | 2-297             
+ ...ages/floorplan |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-32              
+  route.js         |       0 |        0 |       0 |       0 | 1-42              
+ ...sses/detectors |       0 |        0 |       0 |       0 |                   
+  ...itDetector.js |       0 |        0 |       0 |       0 | 1-82              
+  ...geDetector.js |       0 |        0 |       0 |       0 | 1-289             
+ ...asses/handlers |       0 |        0 |       0 |       0 |                   
+  ...ionHandler.js |       0 |        0 |       0 |       0 | 1-159             
+  ...ropHandler.js |       0 |        0 |       0 |       0 | 1-213             
+  ...ionHandler.js |       0 |        0 |       0 |       0 | 1-360             
+  ...oomHandler.js |       0 |        0 |       0 |       0 | 1-176             
+ ...asses/managers |       0 |        0 |       0 |       0 |                   
+  CanvasManager.js |       0 |        0 |       0 |       0 | 1-413             
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-590             
+ ...sses/renderers |       0 |        0 |       0 |       0 |                   
+  ...ceRenderer.js |       0 |        0 |       0 |       0 | 1-272             
+  ...ewRenderer.js |       0 |        0 |       0 |       0 | 1-179             
+  FOVRenderer.js   |       0 |        0 |       0 |       0 | 1-454             
+  ImageRenderer.js |       0 |        0 |       0 |       0 | 1-120             
+  ...onRenderer.js |       0 |        0 |       0 |       0 | 1-87              
+ .../classes/state |       0 |        0 |       0 |       0 |                   
+  EdgeDragState.js |       0 |        0 |       0 |       0 | 1-228             
+ ...sses/utilities |       0 |        0 |       0 |       0 |                   
+  ...Calculator.js |       0 |        0 |       0 |       0 | 1-203             
+  ...eTransform.js |       0 |        0 |       0 |       0 | 1-136             
+  IconCache.js     |       0 |        0 |       0 |       0 | 1-122             
+  Viewport.js      |       0 |        0 |       0 |       0 | 1-177             
+ ...lan/components |       0 |      100 |     100 |       0 |                   
+  ...foTooltip.vue |       0 |      100 |     100 |       0 | 2-174             
+  DeviceCard.vue   |       0 |      100 |     100 |       0 | 2-105             
+  DevicePanel.vue  |       0 |      100 |     100 |       0 | 2-153             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-91              
+  ...ueDisplay.vue |       0 |      100 |     100 |       0 | 2-77              
+  ...lanCanvas.vue |       0 |      100 |     100 |       0 | 2-1050            
+  ...mptyState.vue |       0 |      100 |     100 |       0 | 2-28              
+  ...ormDialog.vue |       0 |      100 |     100 |       0 | 2-501             
+  ...ViewModal.vue |       0 |      100 |     100 |       0 | 2-235             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-118             
+  ...mDialogue.vue |       0 |      100 |     100 |       0 | 2-83              
+  ...rPlanList.vue |       0 |      100 |     100 |       0 | 2-396             
+  ...tSkeleton.vue |       0 |      100 |     100 |       0 | 2-43              
+  StatusLegend.vue |       0 |      100 |     100 |       0 | 2-42              
+  Tag.vue          |       0 |      100 |     100 |       0 | 2-25              
+  ...odeToggle.vue |       0 |      100 |     100 |       0 | 2-77              
+ ...an/composables |       0 |        0 |       0 |       0 |                   
+  ...ePositions.js |       0 |        0 |       0 |       0 | 1-184             
+  ...Navigation.js |       0 |        0 |       0 |       0 | 1-179             
+ ...orplan/default |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-177             
+ ...floorplan/edit |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-1044            
+ ...loorplan/utils |       0 |        0 |       0 |       0 |                   
+  ...inateUtils.js |       0 |        0 |       0 |       0 | 1-136             
+  ...onResolver.js |       0 |        0 |       0 |       0 | 1-100             
+  userAnalytics.js |       0 |        0 |       0 |       0 | 1-442             
+ ...floorplan/view |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-662             
+ ...rc/pages/group |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-404             
+ ...oup/components |       0 |      100 |     100 |       0 |                   
+  ...eviceList.vue |       0 |      100 |     100 |       0 | 2-334             
+  SingleGroup.vue  |       0 |      100 |     100 |       0 | 2-75              
+ ...rc/pages/login |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-49              
+  route.js         |       0 |        0 |       0 |       0 | 1-137             
+ ...gin/components |       0 |    92.85 |   92.85 |       0 |                   
+  ...onRequired.js |       0 |        0 |       0 |       0 | 1-63              
+  ...nRequired.vue |       0 |      100 |     100 |       0 | 2-200             
+  ...teAccount.vue |       0 |      100 |     100 |       0 | 2-257             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-308             
+  ...tPassword.vue |       0 |      100 |     100 |       0 | 2-247             
+  LoginFooter.vue  |       0 |      100 |     100 |       0 | 2-42              
+  ...anization.vue |       0 |      100 |     100 |       0 | 2-88              
+  ...Agreement.vue |       0 |      100 |     100 |       0 | 2-69              
+  ResendEmail.vue  |       0 |      100 |     100 |       0 | 2-114             
+  ...wPassword.vue |       0 |      100 |     100 |       0 | 2-82              
+  SignIn.vue       |       0 |      100 |     100 |       0 | 2-344             
+  SignInSSO.vue    |       0 |      100 |     100 |       0 | 2-117             
+  ...Agreement.vue |       0 |      100 |     100 |       0 | 2-133             
+  VerifyMFA.vue    |       0 |      100 |     100 |       0 | 2-140             
+ ...s/noPrivileges |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-37              
+ ...s/notification |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-13              
+  route.js         |       0 |        0 |       0 |       0 | 1-36              
+ ...message-center |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-1051            
+ ...ter/components |       0 |      100 |     100 |       0 |                   
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-74              
+  ...formation.vue |       0 |      100 |     100 |       0 | 2-316             
+  ...formation.vue |       0 |      100 |     100 |       0 | 2-97              
+  ...formation.vue |       0 |      100 |     100 |       0 | 2-124             
+  ...tailPanel.vue |       0 |      100 |     100 |       0 | 2-316             
+  ...tionPanel.vue |       0 |      100 |     100 |       0 | 2-549             
+  ...nterTable.vue |       0 |      100 |     100 |       0 | 2-496             
+  ...mptyBlock.vue |       0 |      100 |     100 |       0 | 2-74              
+  ...gDialogue.vue |       0 |      100 |     100 |       0 | 2-100             
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-32              
+ ...ozeRuleSidebar |       0 |      100 |     100 |       0 |                   
+  ...eRuleCard.vue |       0 |      100 |     100 |       0 | 2-110             
+  ...eRuleInfo.vue |       0 |      100 |     100 |       0 | 2-67              
+  ...leSidebar.vue |       0 |      100 |     100 |       0 | 2-134             
+ ...ation/settings |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-8               
+ ...src/pages/role |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-18              
+  route.js         |       0 |        0 |       0 |       0 | 1-44              
+ ...es/role/Detail |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-202             
+ ...ole/components |       0 |      100 |     100 |       0 |                   
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-170             
+  ...oDialogue.vue |       0 |      100 |     100 |       0 | 2-169             
+  ...RoleTable.vue |       0 |      100 |     100 |       0 | 2-210             
+  ...RoleTable.vue |       0 |      100 |     100 |       0 | 2-157             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-160             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-174             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-243             
+  ...ngeDialog.vue |       0 |      100 |     100 |       0 | 2-80              
+  ...sionTable.vue |       0 |      100 |     100 |       0 | 2-109             
+  RoleDetail.vue   |       0 |      100 |     100 |       0 | 2-87              
+  ...ementTabs.vue |       0 |      100 |     100 |       0 | 2-70              
+  ...sionTable.vue |       0 |      100 |     100 |       0 | 2-233             
+  ...sTemplate.vue |       0 |      100 |     100 |       0 | 2-89              
+  RolesView.vue    |       0 |      100 |     100 |       0 | 2-187             
+ ...le/composables |       0 |        0 |       0 |       0 |                   
+  useCopyRole.js   |       0 |        0 |       0 |       0 | 1-35              
+ ...e/organization |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-198             
+ .../role/resource |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-199             
+ ...es/searchlight |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-64              
+ ...rc/pages/share |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-203             
+ ...c/pages/system |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-389             
+  route.js         |       0 |        0 |       0 |       0 | 1-140             
+ ...tem/components |       0 |      100 |     100 |       0 |                   
+  ...tSettings.vue |       0 |      100 |     100 |       0 | 2-20              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-124             
+  ...anagement.vue |       0 |      100 |     100 |       0 | 2-495             
+  ...ntDetails.vue |       0 |      100 |     100 |       0 | 2-592             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-376             
+  ...areUpdate.vue |       0 |      100 |     100 |       0 | 2-114             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-98              
+  ...eviceList.vue |       0 |      100 |     100 |       0 | 2-134             
+  EventDelay.vue   |       0 |      100 |     100 |       0 | 2-93              
+  ...onDetails.vue |       0 |      100 |     100 |       0 | 2-302             
+  ...nSecurity.vue |       0 |      100 |     100 |       0 | 2-111             
+  SIManagement.vue |       0 |      100 |     100 |       0 | 2-436             
+  ...ilTooltip.vue |       0 |      100 |     100 |       0 | 2-42              
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-212             
+  ...Microsoft.vue |       0 |      100 |     100 |       0 | 2-47              
+  ...tingsOkta.vue |       0 |      100 |     100 |       0 | 2-131             
+  SingleSignOn.vue |       0 |      100 |     100 |       0 | 2-294             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-50              
+ .../AccessControl |       0 |      100 |     100 |       0 |                   
+  ...olDetails.vue |       0 |      100 |     100 |       0 | 2-116             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-59              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-56              
+  ...bjectList.vue |       0 |      100 |     100 |       0 | 2-37              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-138             
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-88              
+  ...trolTable.vue |       0 |      100 |     100 |       0 | 2-223             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-58              
+  ...tionModal.vue |       0 |      100 |     100 |       0 | 2-53              
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-175             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-64              
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-56              
+  index.vue        |       0 |      100 |     100 |       0 | 2-456             
+ ...nents/AuditLog |       0 |      100 |     100 |       0 |                   
+  ...ogDetails.vue |       0 |      100 |     100 |       0 | 2-128             
+  ...tLogTable.vue |       0 |      100 |     100 |       0 | 2-272             
+  ...dDialogue.vue |       0 |      100 |     100 |       0 | 2-54              
+  index.vue        |       0 |      100 |     100 |       0 | 2-238             
+ ...EditAlarmModal |       0 |      100 |     100 |       0 |                   
+  ...lectModal.vue |       0 |      100 |     100 |       0 | 2-172             
+  ...tepAction.vue |       0 |      100 |     100 |       0 | 2-1038            
+  ...StepEvent.vue |       0 |      100 |     100 |       0 | 2-638             
+  ...pSchedule.vue |       0 |      100 |     100 |       0 | 2-73              
+  ...tepSource.vue |       0 |      100 |     100 |       0 | 2-225             
+  ...epSummary.vue |       0 |      100 |     100 |       0 | 2-553             
+  ...kDialogue.vue |       0 |      100 |     100 |       0 | 2-153             
+  ...lectModal.vue |       0 |      100 |     100 |       0 | 2-232             
+  ...pientList.vue |       0 |      100 |     100 |       0 | 2-49              
+  ...lectModal.vue |       0 |      100 |     100 |       0 | 2-205             
+  ...oneNotify.vue |       0 |      100 |     100 |       0 | 2-40              
+  index.vue        |       0 |      100 |     100 |       0 | 2-599             
+ ...ts/SmartSensor |       0 |      100 |     100 |       0 |                   
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-255             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-100             
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-66              
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-109             
+  ...nDialogue.vue |       0 |      100 |     100 |       0 | 2-99              
+  ...tailPanel.vue |       0 |      100 |     100 |       0 | 2-164             
+  ...nsorTable.vue |       0 |      100 |     100 |       0 | 2-200             
+  index.vue        |       0 |      100 |     100 |       0 | 2-322             
+ ...rtyIntegration |       0 |      100 |     100 |       0 |                   
+  ProviderCard.vue |       0 |      100 |     100 |       0 | 2-25              
+  index.vue        |       0 |      100 |     100 |       0 | 2-240             
+ ...onents/Webhook |       0 |      100 |     100 |       0 |                   
+  ...kDialogue.vue |       0 |      100 |     100 |       0 | 2-129             
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-672             
+  ...tDialogue.vue |       0 |      100 |     100 |       0 | 2-173             
+ ...nseInformation |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-232             
+ ...ion/components |       0 |      100 |     100 |       0 |                   
+  ...eDialogue.vue |       0 |      100 |     100 |       0 | 2-260             
+  ...rtisement.vue |       0 |      100 |     100 |       0 | 2-37              
+  LicenseCount.vue |       0 |      100 |     100 |       0 | 2-27              
+  LicenseHint.vue  |       0 |      100 |     100 |       0 | 2-32              
+  ToggleBlock.vue  |       0 |      100 |     100 |       0 | 2-76              
+ ...on/composables |       0 |        0 |       0 |       0 |                   
+  ...nformation.js |       0 |        0 |       0 |       0 | 1-336             
+  ...onDialogue.js |       0 |        0 |       0 |       0 | 1-361             
+ .../system/reskin |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-28              
+ ...onsentSettings |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-6               
+ ...ngs/components |       0 |      100 |     100 |       0 |                   
+  ...nsentCard.vue |       0 |      100 |     100 |       0 | 2-224             
+  ...ntFeature.vue |       0 |      100 |     100 |       0 | 2-160             
+  ...Agreement.vue |       0 |      100 |     100 |       0 | 2-94              
+ ...larmMenagement |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-321             
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-239             
+ ...kin/components |       0 |      100 |     100 |       0 |                   
+  LicenseBadge.vue |       0 |      100 |     100 |       0 | 2-37              
+  SystemCard.vue   |       0 |      100 |     100 |       0 | 2-4               
+  ...mSideMenu.vue |       0 |      100 |     100 |       0 | 2-132             
+ ...DeviceSettings |       0 |      100 |     100 |       0 |                   
+  ...areUpdate.vue |       0 |      100 |     100 |       0 | 2-101             
+  EventDelay.vue   |       0 |      100 |     100 |       0 | 2-93              
+ ...n/organization |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-279             
+ ...es/upgradePlan |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-192             
+ ...src/pages/user |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-7               
+  route.js         |       0 |        0 |       0 |       0 | 1-23              
+ ...es/user/detail |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-177             
+ ...ail/components |       0 |      100 |     100 |       0 |                   
+  ...sDialogue.vue |       0 |      100 |     100 |       0 | 2-590             
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-117             
+  ...ADialogue.vue |       0 |      100 |     100 |       0 | 2-109             
+ ...iceAccessTable |       0 |      100 |     100 |       0 |                   
+  ...cessTable.vue |       0 |      100 |     100 |       0 | 2-162             
+ ...ts/UserProfile |       0 |      100 |     100 |       0 |                   
+  UserProfile.vue  |       0 |      100 |     100 |       0 | 2-108             
+ ...le/composables |       0 |        0 |       0 |       0 |                   
+  ...rMFAHelper.js |       0 |        0 |       0 |       0 | 1-148             
+ ...il/composables |   55.35 |    95.58 |      85 |   55.35 |                   
+  ...UserHelper.js |       0 |        0 |       0 |       0 | 1-20              
+  ...cessHelper.js |       0 |        0 |       0 |       0 | 1-138             
+  ...RoleHelper.js |     100 |      100 |     100 |     100 |                   
+  ...sionHelper.js |       0 |        0 |       0 |       0 | 1-19              
+ ...ser/management |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-199             
+ ...ent/components |       0 |      100 |     100 |       0 |                   
+  ...rDialogue.vue |       0 |      100 |     100 |       0 | 2-357             
+  ...mentTable.vue |       0 |      100 |     100 |       0 | 2-251             
+ ...src/pages/view |       0 |       50 |      50 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-44              
+  route.js         |       0 |        0 |       0 |       0 | 1-19              
+ ...iew/components |       0 |      100 |     100 |       0 |                   
+  ...wDialogue.vue |       0 |      100 |     100 |       0 | 2-108             
+ ...ages/view/edit |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-376             
+ ...dit/components |       0 |      100 |     100 |       0 |                   
+  Badge.vue        |       0 |      100 |     100 |       0 | 2-18              
+  ...gDialogue.vue |       0 |      100 |     100 |       0 | 2-51              
+  ...eSiteList.vue |       0 |      100 |     100 |       0 | 2-132             
+  ...bnailList.vue |       0 |      100 |     100 |       0 | 2-103             
+  ...rsWrapper.vue |       0 |      100 |     100 |       0 | 2-268             
+  ...wDialogue.vue |       0 |      100 |     100 |       0 | 2-38              
+  SingleSite.vue   |       0 |      100 |     100 |       0 | 2-146             
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-104             
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-66              
+  ...agination.vue |       0 |      100 |     100 |       0 | 2-88              
+ ...ages/view/list |       0 |      100 |     100 |       0 |                   
+  index.vue        |       0 |      100 |     100 |       0 | 2-407             
+ ...ist/components |       0 |      100 |     100 |       0 |                   
+  ...dViewList.vue |       0 |      100 |     100 |       0 | 2-249             
+  EmptyView.vue    |       0 |      100 |     100 |       0 | 2-37              
+  ...Thumbnail.vue |       0 |      100 |     100 |       0 | 2-57              
+ ...ponents/Footer |       0 |    66.66 |   66.66 |       0 |                   
+  ...tdownTimer.js |       0 |        0 |       0 |       0 | 1-120             
+  ...tralPanel.vue |       0 |      100 |     100 |       0 | 2-15              
+  ...trolsModel.js |       0 |        0 |       0 |       0 | 1-297             
+  ...tControls.vue |       0 |      100 |     100 |       0 | 2-177             
+  ...agination.vue |       0 |      100 |     100 |       0 | 2-42              
+  ...tControls.vue |       0 |      100 |     100 |       0 | 2-148             
+ ...PlayersWrapper |       0 |      100 |     100 |       0 |                   
+  ...rsWrapper.vue |       0 |      100 |     100 |       0 | 2-302             
+ ...er/composables |       0 |        0 |       0 |       0 |                   
+  ...iceDisplay.js |       0 |        0 |       0 |       0 | 1-107             
+  ...ackControl.js |       0 |        0 |       0 |       0 | 1-68              
+  ...iewControl.js |       0 |        0 |       0 |       0 | 1-35              
+ ...tal/src/plugin |       0 |        0 |       0 |       0 |                   
+  ...cComponent.js |       0 |        0 |       0 |       0 | 1-28              
+  reskinHandler.js |       0 |        0 |       0 |       0 | 1-31              
+  ...eComponent.js |       0 |        0 |       0 |       0 | 1-42              
+ ...tal/src/router |       0 |        0 |       0 |       0 |                   
+  ...Middleware.js |       0 |        0 |       0 |       0 | 1-531             
+  ...outeHelper.js |       0 |        0 |       0 |       0 | 1-24              
+  ...uterLoader.js |       0 |        0 |       0 |       0 | 1-17              
+  ...outeHelper.js |       0 |        0 |       0 |       0 | 1-26              
+  index.js         |       0 |        0 |       0 |       0 | 1-95              
+  router.js        |       0 |        0 |       0 |       0 | 1-230             
+ ...src/singletons |       0 |        0 |       0 |       0 |                   
+  ...eInterface.js |       0 |        0 |       0 |       0 | 1-1310            
+  ...ionManager.js |       0 |        0 |       0 |       0 | 1-65              
+  ...IoTManager.js |       0 |        0 |       0 |       0 | 1-21              
+ ...rtal/src/store |       0 |        0 |       0 |       0 |                   
+  index.js         |       0 |        0 |       0 |       0 | 1-116             
+ .../accessControl |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-91              
+  getters.js       |       0 |        0 |       0 |       0 | 1-43              
+  index.js         |       0 |        0 |       0 |       0 | 1-16              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-15              
+ .../store/account |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-439             
+  getters.js       |       0 |        0 |       0 |       0 | 1-35              
+  index.js         |       0 |        0 |       0 |       0 | 1-24              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-35              
+ ...rc/store/alarm |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-187             
+  getters.js       |       0 |        0 |       0 |       0 | 1-36              
+  index.js         |       0 |        0 |       0 |       0 | 1-24              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-72              
+ .../store/archive |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-232             
+  getters.js       |       0 |        0 |       0 |       0 | 1-3               
+  index.js         |       0 |        0 |       0 |       0 | 1-24              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-122             
+ ...store/auditLog |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-32              
+  index.js         |       0 |        0 |       0 |       0 | 1-13              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-7               
+ ...c/store/device |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-375             
+  getters.js       |       0 |        0 |       0 |       0 | 1-196             
+  index.js         |       0 |        0 |       0 |       0 | 1-56              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-235             
+ ...externalDevice |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-153             
+  getters.js       |       0 |        0 |       0 |       0 | 1-20              
+  index.js         |       0 |        0 |       0 |       0 | 1-19              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-69              
+ ...tore/floorPlan |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-561             
+  getters.js       |       0 |        0 |       0 |       0 | 1-265             
+  index.js         |       0 |        0 |       0 |       0 | 1-58              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-298             
+ ...e/globalDialog |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-56              
+  getters.js       |       0 |        0 |       0 |       0 | 1-7               
+  index.js         |       0 |        0 |       0 |       0 | 1-18              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-32              
+ ...alNotification |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-148             
+  getters.js       |       0 |        0 |       0 |       0 | 1-20              
+  index.js         |       0 |        0 |       0 |       0 | 1-29              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-104             
+ ...rc/store/group |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-192             
+  getters.js       |       0 |        0 |       0 |       0 | 1-251             
+  index.js         |       0 |        0 |       0 |       0 | 1-25              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-138             
+ .../store/license |       0 |        0 |       0 |       0 |                   
+  getters.js       |       0 |        0 |       0 |       0 | 1-375             
+  index.js         |       0 |        0 |       0 |       0 | 1-8               
+ .../src/store/mfa |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-54              
+  getters.js       |       0 |        0 |       0 |       0 | 1-13              
+  index.js         |       0 |        0 |       0 |       0 | 1-15              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-5               
+ ...e/notification |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-229             
+  getters.js       |       0 |        0 |       0 |       0 | 1-41              
+  index.js         |       0 |        0 |       0 |       0 | 1-34              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-78              
+ ...e/organization |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-194             
+  getters.js       |       0 |        0 |       0 |       0 | 1-51              
+  index.js         |       0 |        0 |       0 |       0 | 1-26              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-57              
+ ...ore/permission |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-34              
+  getters.js       |       0 |        0 |       0 |       0 | 1-123             
+  index.js         |       0 |        0 |       0 |       0 | 1-17              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-21              
+ ...src/store/role |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-405             
+  getters.js       |       0 |        0 |       0 |       0 | 1-78              
+  index.js         |       0 |        0 |       0 |       0 | 1-90              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-74              
+ ...l/src/store/si |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-89              
+  getters.js       |       0 |        0 |       0 |       0 | 1-7               
+  index.js         |       0 |        0 |       0 |       0 | 1-18              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-18              
+ ...e/singleSignOn |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-39              
+  index.js         |       0 |        0 |       0 |       0 | 1-8               
+ ...re/smartSensor |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-59              
+  getters.js       |       0 |        0 |       0 |       0 | 1-25              
+  index.js         |       0 |        0 |       0 |       0 | 1-15              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-13              
+ ...e/subscription |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-170             
+  index.js         |       0 |        0 |       0 |       0 | 1-10              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-17              
+ ...ore/thirdParty |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-79              
+  getters.js       |       0 |        0 |       0 |       0 | 1-34              
+  index.js         |       0 |        0 |       0 |       0 | 1-16              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-26              
+ ...l/src/store/ui |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-147             
+  getters.js       |       0 |        0 |       0 |       0 | 1-69              
+  index.js         |       0 |        0 |       0 |       0 | 1-45              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-102             
+ ...src/store/user |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-288             
+  getters.js       |       0 |        0 |       0 |       0 | 1-51              
+  index.js         |       0 |        0 |       0 |       0 | 1-46              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-119             
+ ...src/store/view |       0 |        0 |       0 |       0 |                   
+  actions.js       |       0 |        0 |       0 |       0 | 1-196             
+  getters.js       |       0 |        0 |       0 |       0 | 1-45              
+  index.js         |       0 |        0 |       0 |       0 | 1-20              
+  mutations.js     |       0 |        0 |       0 |       0 | 1-28              
+ ...rtal/src/utils |       0 |        5 |       5 |       0 |                   
+  AvatarHelper.js  |       0 |        0 |       0 |       0 | 1-60              
+  ButtonStatus.js  |       0 |        0 |       0 |       0 | 1-29              
+  CasbinHelper.js  |       0 |        0 |       0 |       0 | 1-35              
+  ...eInfoLabel.js |       0 |        0 |       0 |       0 | 1-141             
+  ...ttingsMenu.js |       0 |        0 |       0 |       0 | 1-400             
+  ...loadHelper.js |       0 |        0 |       0 |       0 | 1-61              
+  ErrorHelper.js   |       0 |        0 |       0 |       0 | 1-62              
+  ...PlanHelper.js |       0 |        0 |       0 |       0 | 1-89              
+  JWT.js           |       0 |        0 |       0 |       0 | 1-41              
+  LayoutHelper.js  |       0 |        0 |       0 |       0 | 1-67              
+  LicenseHelper.js |       0 |        0 |       0 |       0 | 1-165             
+  ...akerHelper.js |       0 |        0 |       0 |       0 | 1-20              
+  ...hValidator.js |       0 |        0 |       0 |       0 | 1-74              
+  RoleHelper.js    |       0 |        0 |       0 |       0 | 1-1305            
+  ...ableHelper.js |       0 |        0 |       0 |       0 | 1-202             
+  SetCookie.js     |       0 |        0 |       0 |       0 | 1-16              
+  StringHelper.js  |       0 |        0 |       0 |       0 | 1-83              
+  ...aceholder.vue |       0 |      100 |     100 |       0 | 2-7               
+  ...eryBuilder.js |       0 |        0 |       0 |       0 | 1-18              
+  testHelper.js    |       0 |        0 |       0 |       0 | 1-110             
+ ...src/utils/View |       0 |        0 |       0 |       0 |                   
+  utility.js       |       0 |        0 |       0 |       0 | 1-158             
+ .../utils/Zendesk |       0 |        0 |       0 |       0 |                   
+  ...kAPIHelper.js |       0 |        0 |       0 |       0 | 1-55              
+ ...aas-portal/sso |       0 |        0 |       0 |       0 |                   
+  index.js         |       0 |        0 |       0 |       0 | 1-79              
+ .../MarchNetworks |       0 |        0 |       0 |       0 |                   
+  prebuild.mjs     |       0 |        0 |       0 |       0 | 1-20              
+-------------------|---------|----------|---------|---------|-------------------

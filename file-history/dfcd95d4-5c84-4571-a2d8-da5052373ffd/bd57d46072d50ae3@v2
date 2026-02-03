@@ -1,0 +1,205 @@
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { STREAM_CONNECTION_STATUS as STATUS, DEVICE_TYPE } from '@vivotek/const-vsaas';
+import RemoteConfigService from '@vivotek/lib-remote-config';
+
+// eslint-disable-next-line import/extensions
+import DeviceUserBehaviorTrackingService from './DeviceUserBehaviorTrackingService.js';
+
+vi.mock('@vivotek/lib-remote-config', () => ({
+  default: {
+    getConfiguration: vi.fn().mockReturnValue(true),
+  },
+}));
+
+vi.mock(import('@vivotek/lib-utility'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    getTagged: vi.fn(() => ({ log: vi.fn() })),
+
+    // your mocked methods
+  };
+});
+describe('DeviceUserBehaviorTrackingService', () => {
+  let service;
+  let mockReference;
+
+  beforeEach(() => {
+    mockReference = {
+      city: 'Taipei',
+      mac: 'AA:BB:CC:DD:EE:FF',
+      nvrMac: '11:22:33:44:55:66',
+      channel: 1,
+      deviceGroupID: 'group-1',
+      type: DEVICE_TYPE.CAMERA,
+      options: {
+        organizationID: 'org-1',
+      },
+    };
+
+    service = new DeviceUserBehaviorTrackingService(mockReference);
+
+    RemoteConfigService.getConfiguration.mockReturnValue({});
+  });
+
+  describe('canTrack', () => {
+    it('should return false when status is not OK', () => {
+      service.state.allowTrackSuccessConnectionMap = {};
+
+      const result = service.canTrack(STATUS.ERROR);
+
+      expect(result).toBe(false);
+    });
+
+    it('should return false when organization is not in allow list', () => {
+      service.state.allowTrackSuccessConnectionMap = {
+        'other-org': {},
+      };
+
+      const result = service.canTrack(STATUS.OK);
+
+      expect(result).toBe(false);
+    });
+
+    it('should return true when tracking all devices in organization (empty org config)', () => {
+      service.state.allowTrackSuccessConnectionMap = {
+        'org-1': {},
+      };
+
+      const result = service.canTrack(STATUS.OK);
+
+      expect(result).toBe(true);
+    });
+
+    it('should return true when tracking all devices in group (empty group config)', () => {
+      service.state.allowTrackSuccessConnectionMap = {
+        'org-1': {
+          'group-1': {},
+        },
+      };
+
+      const result = service.canTrack(STATUS.OK);
+
+      expect(result).toBe(true);
+    });
+
+    describe('NVR_CHANNEL device type', () => {
+      beforeEach(() => {
+        mockReference.type = DEVICE_TYPE.NVR_CHANNEL;
+        service = new DeviceUserBehaviorTrackingService(mockReference);
+      });
+
+      it('should return true when NVR MAC is in group config without channel restriction', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              '11:22:33:44:55:66': {},
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(true);
+      });
+
+      it('should return true when NVR MAC is in group config and channel is allowed', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              '11:22:33:44:55:66': {
+                channel: [1, 4, 8],
+              },
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(true);
+      });
+
+      it('should return false when NVR MAC is in group config but channel is not allowed', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              '11:22:33:44:55:66': {
+                channel: [2, 4, 8],
+              },
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(false);
+      });
+
+      it('should return false when NVR MAC is not in group config', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              'other-nvr-mac': {},
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(false);
+      });
+    });
+
+    describe('CAMERA device type', () => {
+      beforeEach(() => {
+        mockReference.type = DEVICE_TYPE.CAMERA;
+        service = new DeviceUserBehaviorTrackingService(mockReference);
+      });
+
+      it('should return true when camera MAC is in group config', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              'AA:BB:CC:DD:EE:FF': {},
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(true);
+      });
+
+      it('should return false when camera MAC is not in group config', () => {
+        service.state.allowTrackSuccessConnectionMap = {
+          'org-1': {
+            'group-1': {
+              'other-camera-mac': {},
+            },
+          },
+        };
+
+        const result = service.canTrack(STATUS.OK);
+
+        expect(result).toBe(false);
+      });
+    });
+
+    it('should return false for unknown device type', () => {
+      mockReference.type = 'UNKNOWN_TYPE';
+      service = new DeviceUserBehaviorTrackingService(mockReference);
+
+      service.state.allowTrackSuccessConnectionMap = {
+        'org-1': {
+          'group-1': {
+            'some-device': {},
+          },
+        },
+      };
+
+      const result = service.canTrack(STATUS.OK);
+
+      expect(result).toBe(false);
+    });
+  });
+});

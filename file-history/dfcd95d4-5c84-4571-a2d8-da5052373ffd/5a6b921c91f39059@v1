@@ -1,0 +1,78 @@
+import { PERMISSION_TYPES } from '@/constants/Permission';
+
+export default {
+  organizationRoles(state, getters) {
+    return [...getters.defaultOrganizationRoles, ...getters.customOrganizationRoles];
+  },
+  defaultOrganizationRoles(state) {
+    return state.roles[PERMISSION_TYPES.ORGANIZATION].default;
+  },
+  customOrganizationRoles(state) {
+    return state.roles[PERMISSION_TYPES.ORGANIZATION].custom;
+  },
+  organizationRoleCount(state, getters) {
+    return getters.defaultOrganizationRoles.length + getters.totalCustomOrganizationRoleCount;
+  },
+  totalCustomOrganizationRoleCount(state) {
+    return state.roles[PERMISSION_TYPES.ORGANIZATION].totalCustom;
+  },
+  resourceRoles: (state, getters) => {
+    return [...getters.defaultResourceRoles, ...getters.customResourceRoles];
+  },
+  defaultResourceRoles(state) {
+    return state.roles[PERMISSION_TYPES.DEVICE].default;
+  },
+  customResourceRoles(state) {
+    return state.roles[PERMISSION_TYPES.DEVICE].custom;
+  },
+  resourceRoleCount(state, getters) {
+    return getters.resourceRoles.length;
+  },
+  totalCustomResourceRoleCount(state) {
+    return state.roles[PERMISSION_TYPES.DEVICE].totalCustom;
+  },
+  customOrganizationRolesPagination(state) {
+    return state.pagination[PERMISSION_TYPES.ORGANIZATION];
+  },
+  customResourceRolesPagination(state) {
+    return state.pagination[PERMISSION_TYPES.DEVICE];
+  },
+  customOrganizationRolesPageCount(state, getters) {
+    return (
+      Math.ceil(getters.totalCustomOrganizationRoleCount / getters.customOrganizationRolesPagination.pageSize) || 1
+    );
+  },
+  customResourceRolesPageCount(state, getters) {
+    return Math.ceil(getters.totalCustomResourceRoleCount / getters.customResourceRolesPagination.pageSize) || 1;
+  },
+  defaultOrganizationRolesLoading(state) {
+    return state.loading[PERMISSION_TYPES.ORGANIZATION].default;
+  },
+  defaultResourceRolesLoading(state) {
+    return state.loading[PERMISSION_TYPES.DEVICE].default;
+  },
+  customOrganizationRolesLoading(state) {
+    return state.loading[PERMISSION_TYPES.ORGANIZATION].custom;
+  },
+  customResourceRolesLoading(state) {
+    return state.loading[PERMISSION_TYPES.DEVICE].custom;
+  },
+  customOrganizationRolesSorting(state) {
+    return state.sorting[PERMISSION_TYPES.ORGANIZATION].custom;
+  },
+  customResourceRolesSorting(state) {
+    return state.sorting[PERMISSION_TYPES.DEVICE].custom;
+  },
+  defaultOrganizationRolesError(state) {
+    return state.error[PERMISSION_TYPES.ORGANIZATION].default;
+  },
+  defaultResourceRolesError(state) {
+    return state.error[PERMISSION_TYPES.DEVICE].default;
+  },
+  customOrganizationRolesError(state) {
+    return state.error[PERMISSION_TYPES.ORGANIZATION].custom;
+  },
+  customResourceRolesError(state) {
+    return state.error[PERMISSION_TYPES.DEVICE].custom;
+  },
+};

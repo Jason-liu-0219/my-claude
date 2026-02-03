@@ -1,0 +1,192 @@
+export default {
+  async fetchGroupList({ state, dispatch, commit, getters, rootGetters, rootState }, { queryDevices = false } = {}) {
+    if (state.isFetchingData) {
+      return;
+    }
+    try {
+      const { sites } = await rootState.apiService.listSite();
+
+      commit('setGroupsMap', { items: sites });
+      commit('device/setInitialDeviceGroupName', { groupsMap: getters.groupsMap }, { root: true });
+
+      if (!state.activeGroupId) {
+        await dispatch('setActiveGroupId', getters.defaultGroup?.id);
+      }
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  setActiveGroupId({ state, commit, dispatch }, groupId) {
+    dispatch('setLayout');
+    commit('setActiveGroupId', groupId);
+    if (groupId) {
+      dispatch('changeLayout', { layout: state.layout });
+      dispatch('resetAvailableDeviceUiSettings');
+    }
+  },
+
+  async updateGroupInformation({ commit, rootGetters, rootState }, { id, name, location }) {
+    try {
+      const group = await rootState.apiService.updateSite({
+        siteId: id,
+        name,
+        location,
+      });
+
+      const devices = rootGetters['device/groupDevicesMap'][group.id];
+
+      commit('updateGroup', group);
+      commit('device/updateDevicesGroupName', { group, devices }, { root: true });
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async batchMoveDeviceToGroup({ commit, rootGetters, rootState }, { devices, siteID }) {
+    try {
+      const deviceList = devices.map((device) => ({
+        thingName: device.thingName,
+        derivant: device.options.derivant,
+      }));
+      const response = await rootState.apiService.moveDevicesToSite({
+        siteId: siteID,
+        devices: deviceList,
+      });
+      const { devices: resultDevices, summary } = response;
+      const failedThingNames = resultDevices.filter((item) => item.status === 'failed').map((item) => item.thingName);
+      const movedItems = devices.filter((device) => !failedThingNames.includes(device.thingName));
+
+      movedItems.forEach((device) => {
+        const originInfo = rootGetters['device/allDevicesMap'][device.deviceId]?.options;
+        originInfo.siteID = siteID;
+
+        const groupName = rootGetters['group/groupsMap'][originInfo.siteID]?.name;
+        commit('device/updateDevice', { device: originInfo, groupName }, { root: true });
+      });
+
+      if (summary.failed > 0) {
+        throw new Error('Batch operation has partial failures.');
+      }
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async setActiveDeviceId({ commit, getters, state, rootGetters, dispatch }, deviceId) {
+    if (deviceId === state.activeDeviceId) {
+      commit('setActiveDeviceId', '');
+      commit('setActiveViewIndex', -1);
+      return;
+    }
+
+    const activeDevice = rootGetters['device/allDevicesMap']?.[deviceId];
+
+    const activeGroup = getters.validGroups.find((group) => group.id === activeDevice?.deviceGroupID);
+
+    if (activeGroup?.id !== state.activeGroupId) {
+      await dispatch('setActiveGroupId', activeGroup?.id);
+    }
+
+    commit('setActiveDeviceId', deviceId);
+    const activeViewInfo = getters.activeGroupPageLayoutInfo
+      .filter((info) => info.deviceId !== '' && info.status !== 'CAM_EMPTY' && info.status !== 'CAM_FILTER')
+      .find((info) => info.deviceId === deviceId);
+
+    if (activeViewInfo) {
+      commit('setActivePageIndex', activeViewInfo.pageIndex);
+      commit('setActiveViewIndex', activeViewInfo.viewIndex);
+    } else {
+      commit('setActiveViewIndex', -1);
+    }
+  },
+
+  resetGroupStatus({ getters, commit }) {
+    commit('setActiveGroupId', getters.defaultGroup?.id);
+  },
+
+  setLayout({ state, commit, getters, dispatch }) {
+    const layout = sessionStorage.getItem('layout') || state.layout;
+    const isLayoutChanged = layout !== state.layout;
+    const { activeDeviceId, activePageIndex } = state;
+
+    commit('setLayout', layout);
+    commit('changeLayout', {
+      layout,
+      pageIndex: isLayoutChanged ? 0 : activePageIndex,
+      devices: getters.activeGroupAvailableDevices,
+    });
+    if (activeDeviceId) {
+      dispatch('setActiveDeviceId', activeDeviceId);
+    }
+  },
+
+  async changeLayout({ dispatch, commit }, { layout } = {}) {
+    if (layout) {
+      sessionStorage.setItem('layout', layout);
+    }
+
+    commit('setSyncMode', false);
+    dispatch('setLayout');
+  },
+
+  goPreviousPage({ state, commit }) {
+    if (state.activePageIndex === 0) {
+      return;
+    }
+    commit('setSyncMode', false);
+    commit('goPreviousPage');
+  },
+
+  goNextPage({ state, getters, commit }) {
+    if (state.activePageIndex + 1 >= getters.pageCount) {
+      return;
+    }
+    commit('setSyncMode', false);
+    commit('goNextPage');
+  },
+
+  async createGroup({ commit, rootState }, { name, location }) {
+    try {
+      const group = await rootState.apiService.createSite({
+        name,
+        location,
+      });
+      await commit('addGroup', group);
+      return group;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async removeGroup({ commit, rootState }, group) {
+    const { id } = group;
+    try {
+      await rootState.apiService.deleteSite({
+        siteId: id,
+      });
+      await commit('removeGroup', id);
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  resetAvailableDeviceUiSettings({ getters }) {
+    getters.activeGroupAvailableDevices.forEach((device) => {
+      device.services.ui.resetState();
+    });
+  },
+
+  updateAvailableDeviceUiSettingsFromLocalStorage({ rootGetters }) {
+    const availableCameraDevices = rootGetters['device/availableCameraDevices'];
+
+    availableCameraDevices?.forEach((device) => {
+      device.services.ui.updateFromLocalStorage(device);
+    });
+  },
+
+  goNextNonEmptyPage({ commit, getters }) {
+    const currentPages = getters.activeGroupPages;
+    commit('goNextNonEmptyPage', { pages: currentPages });
+  },
+};

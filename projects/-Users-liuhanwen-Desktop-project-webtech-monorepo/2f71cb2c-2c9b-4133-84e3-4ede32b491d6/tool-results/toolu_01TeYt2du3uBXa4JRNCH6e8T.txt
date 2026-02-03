@@ -1,0 +1,994 @@
+     1→<template>
+     2→  <div
+     3→    class="app-dropdown-wrapper"
+     4→    :style-type="styleType"
+     5→  >
+     6→    <multiselect
+     7→      id="app-dropdown"
+     8→      ref="multiselect"
+     9→      v-model="vModel"
+    10→      label="text"
+    11→      class="app-dropdown"
+    12→      :trackBy="trackBy"
+    13→      :groupValues="groupValues"
+    14→      :groupLabel="groupLabel"
+    15→      :groupSelect="groupSelect"
+    16→      :options="dropdownOptions"
+    17→      :allowEmpty="multiple"
+    18→      :closeOnSelect="!multiple"
+    19→      :clearOnSelect="false"
+    20→      :multiple="multiple"
+    21→      :maxHeight="maxHeight"
+    22→      :showLabels="showLabels"
+    23→      :searchable="searchable"
+    24→      :taggable="false"
+    25→      :openDirection="openDirection"
+    26→      :placeholder="placeholder"
+    27→      :class="{
+    28→        single: !multiple,
+    29→        multiple: multiple,
+    30→        error: isError && !showLabels,
+    31→        'no-select': disableSingleSelect && options.length === 1,
+    32→        'group-select': groupSelect,
+    33→      }"
+    34→      :disabled="disabled"
+    35→      @open="toggleDropdown(true)"
+    36→      @close="toggleDropdown(false)"
+    37→    >
+    38→      <template #noResult>
+    39→        {{ $t('No search result') }}
+    40→      </template>
+    41→      <template #singleLabel="{ option }">
+    42→        <span v-if="customizedLabel && option.label !== ''">
+    43→          <slot
+    44→            name="customizedLabel"
+    45→            :label="option.label"
+    46→          >
+    47→            {{ option.label }}
+    48→          </slot>
+    49→        </span>
+    50→        <span
+    51→          v-else
+    52→          :title="option.text"
+    53→        >
+    54→          {{ option.text }}
+    55→        </span>
+    56→      </template>
+    57→      <template #selection>
+    58→        <SvgIcon
+    59→          v-if="iconClass !== ''"
+    60→          :iconClass="iconClass"
+    61→          size="20px"
+    62→        />
+    63→        <span
+    64→          v-if="multiple && !showLabels"
+    65→          class="multiselect__single"
+    66→        >
+    67→          <span :title="displayingValue">{{ displayingValue }}</span>
+    68→        </span>
+    69→      </template>
+    70→
+    71→      <template
+    72→        v-if="multiple"
+    73→        #beforeList
+    74→      >
+    75→        <div
+    76→          v-if="extraBeforeListOptions.length > 0"
+    77→          class="extra-before-list-options-wrapper"
+    78→        >
+    79→          <div
+    80→            v-for="extraBeforeListOption in extraBeforeListOptions"
+    81→            :key="extraBeforeListOption.value"
+    82→            class="option-wrapper"
+    83→            @click.stop="selectExtraBeforeListOption(extraBeforeListOption)"
+    84→          >
+    85→            <AppCheckbox
+    86→              v-model="extraBeforeListOption.selected"
+    87→              @click.stop
+    88→            />
+    89→            <h6 class="option__title">
+    90→              {{ extraBeforeListOption.label }}
+    91→            </h6>
+    92→            <AppToolTip
+    93→              v-if="extraBeforeListOption.tooltip"
+    94→              :contentPosition="'top'"
+    95→              @click.stop
+    96→            >
+    97→              <template #content>
+    98→                <span>
+    99→                  {{ extraBeforeListOption.tooltip.content }}
+   100→                </span>
+   101→              </template>
+   102→            </AppToolTip>
+   103→          </div>
+   104→        </div>
+   105→        <div
+   106→          class="all-option-wrapper"
+   107→          :class="{ selected: isSelectingAll }"
+   108→          @click.stop.self="selectAll"
+   109→        >
+   110→          <AppCheckbox
+   111→            v-model="isSelectingAll"
+   112→            :indeterminate="isSelectIndeterminate"
+   113→            @click.prevent="selectAll"
+   114→          />
+   115→          <h6
+   116→            class="option__title"
+   117→            :title="selectAllLabel"
+   118→            @click.prevent="selectAll"
+   119→          >
+   120→            {{ selectAllLabel }}
+   121→          </h6>
+   122→        </div>
+   123→      </template>
+   124→
+   125→      <template
+   126→        v-if="multiple"
+   127→        #option="{ option }"
+   128→      >
+   129→        <template v-if="!groupSelect">
+   130→          <AppCheckbox
+   131→            v-model="vModel"
+   132→            :value="option"
+   133→            dropDownMode
+   134→          />
+   135→          <span
+   136→            class="option__title"
+   137→            :title="option.text"
+   138→          >
+   139→            {{ option.text }}
+   140→          </span>
+   141→        </template>
+   142→
+   143→        <template v-else>
+   144→          <AppCheckbox
+   145→            v-if="!option.$isLabel"
+   146→            v-model="vModel"
+   147→            :value="option"
+   148→            dropDownMode
+   149→          />
+   150→          <template v-if="option.$isLabel">
+   151→            <AppCheckbox
+   152→              :indeterminate="isSelectIndeterminateOfGroup(option.$groupLabel)"
+   153→              :staticChecked="isSelectAllValuesOfGroup(option.$groupLabel)"
+   154→            />
+   155→          </template>
+   156→          <span
+   157→            v-if="option.$groupLabel"
+   158→            :title="option.$groupLabel"
+   159→          >
+   160→            {{ option.$groupLabel }}
+   161→          </span>
+   162→          <span
+   163→            v-if="!option.$isLabel"
+   164→            class="option__title"
+   165→            :title="option.text"
+   166→          >
+   167→            {{ option.text }}
+   168→          </span>
+   169→          <span
+   170→            v-if="!option.$isLabel && option.displayIcon"
+   171→            class="option__title"
+   172→          >
+   173→            <slot
+   174→              name="icon"
+   175→              :option="option"
+   176→            />
+   177→          </span>
+   178→        </template>
+   179→      </template>
+   180→      <template
+   181→        v-else
+   182→        #option="{ option }"
+   183→      >
+   184→        <span
+   185→          :title="option.text"
+   186→          @click="handleOptionClick(option)"
+   187→        >
+   188→          {{ option.text }}
+   189→        </span>
+   190→        <slot
+   191→          name="icon"
+   192→          :option="option"
+   193→        />
+   194→      </template>
+   195→      <template #afterList>
+   196→        <li
+   197→          v-if="hasMore || loading || loadError"
+   198→          class="multiselect__load-more"
+   199→        >
+   200→          <div
+   201→            v-show="loading"
+   202→            class="load-more-loading"
+   203→          >
+   204→            <span class="load-more-spinner" />
+   205→          </div>
+   206→          <button
+   207→            v-show="loadError && !loading"
+   208→            class="load-more-error"
+   209→            @click.stop="$emit('loadMore')"
+   210→          >
+   211→            {{ $t('Load failed. Click to retry') }}
+   212→          </button>
+   213→          <div
+   214→            ref="loadMoreTrigger"
+   215→            class="load-more-trigger"
+   216→          />
+   217→        </li>
+   218→      </template>
+   219→    </multiselect>
+   220→    <AppCardMessage
+   221→      v-if="isError && !showLabels && showErrorMessage"
+   222→      class="alert"
+   223→      iconClass="general_hint"
+   224→    >
+   225→      <template #message>
+   226→        <span class="message"> {{ $t('Select at least 1 item') }}<br /> </span>
+   227→      </template>
+   228→    </AppCardMessage>
+   229→  </div>
+   230→</template>
+   231→
+   232→<script>
+   233→import multiselect from '@suadelabs/vue3-multiselect';
+   234→import '@suadelabs/vue3-multiselect/dist/vue3-multiselect.esm.css';
+   235→import AppCardMessage from '../AppCardMessage/AppCardMessage.vue';
+   236→import AppCheckBox from '../AppCheckBox/AppCheckBox.vue';
+   237→
+   238→export default {
+   239→  name: 'AppDropdown',
+   240→  components: {
+   241→    multiselect,
+   242→    AppCheckbox: AppCheckBox,
+   243→    AppCardMessage,
+   244→  },
+   245→  props: {
+   246→    trackBy: {
+   247→      type: String,
+   248→      required: false,
+   249→      default: 'value',
+   250→    },
+   251→    options: {
+   252→      type: Array,
+   253→      required: true,
+   254→    },
+   255→    modelValue: {
+   256→      type: [String, Object, Boolean, Number, Array],
+   257→      required: true,
+   258→    },
+   259→    disabled: {
+   260→      type: Boolean,
+   261→      default: false,
+   262→    },
+   263→    searchable: {
+   264→      type: Boolean,
+   265→      default: false,
+   266→    },
+   267→    filterable: {
+   268→      type: Boolean,
+   269→      default: false,
+   270→    },
+   271→    clearable: {
+   272→      type: Boolean,
+   273→      default: false,
+   274→    },
+   275→    placeholder: {
+   276→      type: String,
+   277→      default: '',
+   278→    },
+   279→    openDirection: {
+   280→      type: String,
+   281→      default: 'auto', // auto, top, bottom
+   282→    },
+   283→    multiple: {
+   284→      type: Boolean,
+   285→      default: false,
+   286→      required: false,
+   287→    },
+   288→    groupSelect: {
+   289→      type: Boolean,
+   290→      default: false,
+   291→      required: false,
+   292→    },
+   293→    selectAllLabel: {
+   294→      type: String,
+   295→      default: '',
+   296→      required: false,
+   297→    },
+   298→    selectNoneLabel: {
+   299→      type: String,
+   300→      default: '-',
+   301→      required: false,
+   302→    },
+   303→    disabledLabel: {
+   304→      type: String,
+   305→      default: '-',
+   306→      required: false,
+   307→    },
+   308→    showLabels: {
+   309→      type: Boolean,
+   310→      default: false,
+   311→    },
+   312→    showErrorMessage: {
+   313→      type: Boolean,
+   314→      default: true,
+   315→    },
+   316→    autoScroll: {
+   317→      type: Boolean,
+   318→      default: false,
+   319→    },
+   320→    maxHeight: {
+   321→      type: Number,
+   322→      default: 300,
+   323→    },
+   324→    isError: {
+   325→      type: Boolean,
+   326→      default: null,
+   327→    },
+   328→    iconClass: {
+   329→      type: String,
+   330→      default: '',
+   331→      required: false,
+   332→    },
+   333→    disableSingleSelect: {
+   334→      type: Boolean,
+   335→      default: true,
+   336→    },
+   337→    styleType: {
+   338→      type: String,
+   339→      default: 'gui-style-1',
+   340→    },
+   341→    customizedLabel: {
+   342→      type: Boolean,
+   343→      default: false,
+   344→    },
+   345→    showDisplayingValueWhenDisabled: {
+   346→      type: Boolean,
+   347→      default: false,
+   348→    },
+   349→    extraBeforeListOptions: {
+   350→      type: Array,
+   351→      default: () => [],
+   352→    },
+   353→    loading: {
+   354→      type: Boolean,
+   355→      default: false,
+   356→    },
+   357→    hasMore: {
+   358→      type: Boolean,
+   359→      default: false,
+   360→    },
+   361→    loadError: {
+   362→      type: Boolean,
+   363→      default: false,
+   364→    },
+   365→  },
+   366→  emits: ['update:modelValue', 'toggleDropdown', 'optionClick', 'loadMore'],
+   367→  data() {
+   368→    return {
+   369→      dropdownOptions: [],
+   370→      MAX_DISPLAYING_LENGTH: 20,
+   371→      loadMoreObserver: null,
+   372→    };
+   373→  },
+   374→  computed: {
+   375→    vModel: {
+   376→      set(value) {
+   377→        if (this.groupSelect) {
+   378→          this.$emit('update:modelValue', value);
+   379→        } else if (this.multiple && !this.groupSelect) {
+   380→          this.$emit(
+   381→            'update:modelValue',
+   382→            value.map((item) => item.value),
+   383→          );
+   384→        } else {
+   385→          if (value.value instanceof Function) {
+   386→            this.$emit('update:modelValue', value.default);
+   387→            return;
+   388→          }
+   389→
+   390→          this.$emit('update:modelValue', value.value);
+   391→        }
+   392→      },
+   393→      get() {
+   394→        if (this.groupSelect) {
+   395→          return this.modelValue;
+   396→        }
+   397→
+   398→        if (this.multiple) {
+   399→          return this.options.filter((item) => this.modelValue.includes(item.value));
+   400→        }
+   401→        const singleSelectValue = this.options.filter((item) => {
+   402→          if (item.value instanceof Function) {
+   403→            return item.value(this.modelValue);
+   404→          }
+   405→
+   406→          return JSON.stringify(item.value) === JSON.stringify(this.modelValue);
+   407→        })[0];
+   408→
+   409→        return singleSelectValue;
+   410→      },
+   411→    },
+   412→    isSelectingNone() {
+   413→      return this.vModel.length === 0;
+   414→    },
+   415→    isSelectingAll() {
+   416→      if (this.groupSelect) {
+   417→        return this.vModel.length === this.groupAllItem.length;
+   418→      }
+   419→
+   420→      return this.vModel.length === this.options.length;
+   421→    },
+   422→    isSelectIndeterminate() {
+   423→      if (this.groupSelect) {
+   424→        return this.vModel.length !== this.groupAllItem.length && this.vModel.length !== 0;
+   425→      }
+   426→
+   427→      return this.vModel.length !== this.options.length && this.vModel.length !== 0;
+   428→    },
+   429→    groupValues() {
+   430→      return this.groupSelect ? 'groupValues' : '';
+   431→    },
+   432→    groupLabel() {
+   433→      return this.groupSelect ? 'groupLabel' : '';
+   434→    },
+   435→    groupAllItem() {
+   436→      if (!this.groupSelect) {
+   437→        return [];
+   438→      }
+   439→
+   440→      const result = [];
+   441→      this.options.forEach((element) => {
+   442→        result.push(...element.groupValues);
+   443→      });
+   444→      return result;
+   445→    },
+   446→    displayingValue() {
+   447→      if (this.disabled && !this.showDisplayingValueWhenDisabled) {
+   448→        return this.disabledLabel;
+   449→      }
+   450→
+   451→      if (this.isSelectingNone) {
+   452→        return this.selectNoneLabel;
+   453→      }
+   454→
+   455→      if (this.isSelectingAll) {
+   456→        return this.selectAllLabel;
+   457→      }
+   458→
+   459→      let a = [];
+   460→      this.vModel.forEach((element, index) => {
+   461→        if (a.join(', ').length <= this.MAX_DISPLAYING_LENGTH) {
+   462→          a.push(element.text);
+   463→        }
+   464→      });
+   465→      const remainingAmount = this.vModel.length - a.length;
+   466→
+   467→      a =
+   468→        remainingAmount !== 0
+   469→          ? `${a.join(', ').slice(0, this.MAX_DISPLAYING_LENGTH)}...,+${remainingAmount}`
+   470→          : a.join(', ');
+   471→
+   472→      return a;
+   473→    },
+   474→    vModelValues() {
+   475→      return this.vModel.map((item) => item.value);
+   476→    },
+   477→  },
+   478→  watch: {
+   479→    options(value) {
+   480→      this.dropdownOptions = [...value];
+   481→    },
+   482→  },
+   483→  mounted() {
+   484→    this.dropdownOptions = [...this.options];
+   485→  },
+   486→  beforeUnmount() {
+   487→    this.teardownLoadMoreObserver();
+   488→  },
+   489→  methods: {
+   490→    isSelectIndeterminateOfGroup(label) {
+   491→      if (this.isSelectAllValuesOfGroup(label)) {
+   492→        return false;
+   493→      }
+   494→      const values = this.options.find((item) => item.groupLabel === label).groupValues.map((item) => item.value);
+   495→      return values.some((option) => this.vModelValues.includes(option));
+   496→    },
+   497→    isSelectAllValuesOfGroup(label) {
+   498→      const values = this.options.find((item) => item.groupLabel === label).groupValues.map((item) => item.value);
+   499→      return values.every((option) => this.vModelValues.includes(option));
+   500→    },
+   501→    selectAll() {
+   502→      if (this.groupSelect && !this.isSelectingAll) {
+   503→        this.vModel = this.groupAllItem;
+   504→      } else if (!this.groupSelect && !this.isSelectingAll) {
+   505→        this.vModel = this.options;
+   506→      } else {
+   507→        this.vModel = [];
+   508→      }
+   509→    },
+   510→    scrollToSelected() {
+   511→      const target = this.$refs.multiselect.$el.querySelector('span.multiselect__option--selected');
+   512→      if (target) {
+   513→        target.scrollIntoView();
+   514→      }
+   515→    },
+   516→    toggleDropdown(value) {
+   517→      this.$emit('toggleDropdown', value);
+   518→
+   519→      if (value && !this.multiple && this.autoScroll) {
+   520→        this.$nextTick(() => {
+   521→          this.scrollToSelected();
+   522→        });
+   523→      }
+   524→
+   525→      // Setup/teardown infinite scroll observer
+   526→      if (value && this.hasMore) {
+   527→        this.$nextTick(() => {
+   528→          this.setupLoadMoreObserver();
+   529→        });
+   530→      } else {
+   531→        this.teardownLoadMoreObserver();
+   532→      }
+   533→    },
+   534→    setupLoadMoreObserver(retryCount = 0) {
+   535→      if (this.loadMoreObserver) {
+   536→        return;
+   537→      }
+   538→
+   539→      const trigger = this.$refs.loadMoreTrigger;
+   540→      if (!trigger) {
+   541→        if (retryCount < 5) {
+   542→          setTimeout(() => {
+   543→            this.setupLoadMoreObserver(retryCount + 1);
+   544→          }, 50);
+   545→        }
+   546→        return;
+   547→      }
+   548→
+   549→      this.loadMoreObserver = new IntersectionObserver(
+   550→        (entries) => {
+   551→          const entry = entries[0];
+   552→          if (entry.isIntersecting && this.hasMore && !this.loading) {
+   553→            this.$emit('loadMore');
+   554→          }
+   555→        },
+   556→        {
+   557→          root: this.$refs.multiselect?.$el?.querySelector('.multiselect__content-wrapper'),
+   558→          threshold: 0.1,
+   559→        },
+   560→      );
+   561→
+   562→      this.loadMoreObserver.observe(trigger);
+   563→    },
+   564→    teardownLoadMoreObserver() {
+   565→      if (this.loadMoreObserver) {
+   566→        this.loadMoreObserver.disconnect();
+   567→        this.loadMoreObserver = null;
+   568→      }
+   569→    },
+   570→    selectExtraBeforeListOption(item) {
+   571→      item.selected = !item.selected;
+   572→    },
+   573→    handleOptionClick(option) {
+   574→      this.$emit('optionClick', option);
+   575→    },
+   576→  },
+   577→};
+   578→</script>
+   579→
+   580→<style lang="less">
+   581→.app-dropdown-wrapper {
+   582→  .multiselect.app-dropdown {
+   583→    box-sizing: border-box;
+   584→    border-radius: 4px;
+   585→    border: 1px solid @color-outline04;
+   586→    min-height: unset;
+   587→    span {
+   588→      .text-ellipsis;
+   589→    }
+   590→    &:hover {
+   591→      border: 1px solid @color-outline03;
+   592→      .multiselect__single {
+   593→        color: @color-text01;
+   594→      }
+   595→      .multiselect__select {
+   596→        &:before {
+   597→          border-color: @color-icon03 transparent transparent;
+   598→        }
+   599→      }
+   600→    }
+   601→    &.multiselect--disabled {
+   602→      border: 1px solid @color-outline04;
+   603→      background: transparent;
+   604→      opacity: 1;
+   605→
+   606→      .multiselect__select {
+   607→        background: transparent;
+   608→        &:before {
+   609→          border-color: @color-icon01 transparent transparent;
+   610→        }
+   611→      }
+   612→      .multiselect__single {
+   613→        > span {
+   614→          width: auto;
+   615→          color: @color-text06;
+   616→        }
+   617→      }
+   618→    }
+   619→    &.error {
+   620→      border: 1px solid #ffb029;
+   621→    }
+   622→    &.multiselect--active {
+   623→      border: 1px solid @color-outline07;
+   624→      .multiselect__single {
+   625→        color: @color-text01;
+   626→      }
+   627→      .multiselect__select {
+   628→        top: 1px;
+   629→        &:before {
+   630→          border-color: @color-icon03 transparent transparent;
+   631→        }
+   632→      }
+   633→    }
+   634→    .multiselect__placeholder {
+   635→      margin: 0;
+   636→      padding: 0;
+   637→      font-size: 14px;
+   638→      color: @color-text24;
+   639→    }
+   640→    .multiselect__select {
+   641→      height: 30px;
+   642→      display: flex;
+   643→      justify-content: center;
+   644→      align-items: center;
+   645→      top: -2px;
+   646→
+   647→      &:before {
+   648→        top: 0;
+   649→        border-width: 7px 5px 0;
+   650→        border-color: @color-icon02 transparent transparent;
+   651→      }
+   652→    }
+   653→    .multiselect__tags {
+   654→      border-radius: 3px;
+   655→      min-height: 30px;
+   656→      padding: 6px 44px 6px 12px;
+   657→      background: @color-surface01;
+   658→      border: none;
+   659→      display: flex;
+   660→      align-items: center;
+   661→      height: 30px;
+   662→
+   663→      .multiselect__single {
+   664→        max-width: 210px;
+   665→        display: inline-block;
+   666→        text-overflow: ellipsis;
+   667→        overflow: hidden;
+   668→        white-space: nowrap;
+   669→        min-height: auto;
+   670→        margin-bottom: 0;
+   671→        background-color: transparent;
+   672→        padding: 0;
+   673→        color: @color-text03;
+   674→        text-align: left;
+   675→        line-height: initial;
+   676→        > span {
+   677→          width: auto;
+   678→          font-size: 14px;
+   679→          font-weight: 400;
+   680→        }
+   681→      }
+   682→    }
+   683→
+   684→    .multiselect__content {
+   685→      width: 100%;
+   686→    }
+   687→
+   688→    .multiselect__content-wrapper {
+   689→      background: @color-surface01;
+   690→      border: 1px solid @color-outline04;
+   691→      border-radius: 4px;
+   692→      width: calc(100% + 2px);
+   693→      overflow-x: hidden;
+   694→      top: auto;
+   695→      bottom: 32px;
+   696→      left: -1px;
+   697→      padding: 4px;
+   698→      &:has(.all-option-wrapper) {
+   699→        #app-dropdown-0 {
+   700→          margin-top: 14px;
+   701→        }
+   702→      }
+   703→      li.multiselect__element:not(:first-child) {
+   704→        margin-top: 1px;
+   705→      }
+   706→    }
+   707→
+   708→    &:not(.multiselect--above) .multiselect__content-wrapper {
+   709→      top: 35px;
+   710→      bottom: auto;
+   711→    }
+   712→
+   713→    .multiselect__option {
+   714→      display: flex;
+   715→      align-items: center;
+   716→      background: @color-surface01;
+   717→      color: @color-text03;
+   718→      text-align: left;
+   719→      overflow: hidden;
+   720→      border-radius: 2px;
+   721→      &:hover {
+   722→        color: @color-text01;
+   723→        background: @color-surface05;
+   724→      }
+   725→      > .check-box {
+   726→        margin-right: 8px;
+   727→      }
+   728→      > span {
+   729→        min-width: 0;
+   730→        flex: 1 1 0;
+   731→        width: 100%;
+   732→        font-size: 14px;
+   733→        font-weight: 400;
+   734→      }
+   735→    }
+   736→    .multiselect__input {
+   737→      padding: 0;
+   738→      border: none;
+   739→      margin-bottom: 0;
+   740→      &:focus {
+   741→        background-color: transparent;
+   742→      }
+   743→      > span {
+   744→        font-size: 14px;
+   745→        font-weight: 400;
+   746→      }
+   747→    }
+   748→    &.single {
+   749→      .multiselect__option {
+   750→        &.multiselect__option--selected {
+   751→          color: @color-text09;
+   752→          background: @color-primary;
+   753→        }
+   754→      }
+   755→    }
+   756→    &.no-select {
+   757→      pointer-events: none;
+   758→      .multiselect__single {
+   759→        padding: 0;
+   760→      }
+   761→      .multiselect__select {
+   762→        display: none;
+   763→      }
+   764→    }
+   765→
+   766→    .all-option-wrapper,
+   767→    .extra-before-list-options-wrapper .option-wrapper {
+   768→      display: flex;
+   769→      align-items: center;
+   770→      height: 40px;
+   771→      padding: 6px 12px;
+   772→      background: @color-surface01;
+   773→      font-size: 14px;
+   774→      color: @color-text03;
+   775→      text-align: left;
+   776→      position: sticky;
+   777→      top: 0;
+   778→      z-index: 1;
+   779→      box-shadow: 0 0 0 4px @color-surface01;
+   780→
+   781→      > .check-box {
+   782→        margin-right: 8px;
+   783→      }
+   784→
+   785→      &:hover {
+   786→        color: @color-text01;
+   787→        background: @color-surface05;
+   788→      }
+   789→      &::before {
+   790→        content: '';
+   791→        position: absolute;
+   792→        left: 0;
+   793→        right: 0;
+   794→        bottom: -8px;
+   795→        height: 8px;
+   796→        background-color: @color-surface01;
+   797→        z-index: -1;
+   798→      }
+   799→      &::after {
+   800→        content: '';
+   801→        position: absolute;
+   802→        left: 0;
+   803→        right: 0;
+   804→        bottom: -8px;
+   805→        height: 1px;
+   806→        background-color: @color-outline04;
+   807→      }
+   808→    }
+   809→  }
+   810→
+   811→  &.small-image .multiselect.app-dropdown {
+   812→    min-height: 22px;
+   813→    .multiselect__select {
+   814→      height: 22px;
+   815→      width: 22px;
+   816→      &:before {
+   817→        top: 90%;
+   818→        border-width: 6px 4px 0;
+   819→      }
+   820→    }
+   821→    .multiselect__tags {
+   822→      min-height: 22px;
+   823→      padding: 4px 6px;
+   824→      height: 22px;
+   825→      font-size: 12px;
+   826→    }
+   827→    .multiselect__single {
+   828→      font-size: 12px;
+   829→      font-weight: 600;
+   830→    }
+   831→    .multiselect__content-wrapper {
+   832→      width: calc(100% + 2px);
+   833→      top: 24px;
+   834→      left: -1px;
+   835→    }
+   836→    .multiselect__option {
+   837→      height: 22px;
+   838→      font-size: 12px;
+   839→      min-height: 22px;
+   840→      padding: 0 6px;
+   841→      font-weight: 600;
+   842→    }
+   843→    .all-option-wrapper {
+   844→      font-size: 12px;
+   845→    }
+   846→  }
+   847→
+   848→  .multiple {
+   849→    .multiselect__option:not(.multiselect__option--group) {
+   850→      padding-left: 45px;
+   851→      margin: 1px 0;
+   852→    }
+   853→    .multiselect__option--selected {
+   854→      font-weight: normal;
+   855→    }
+   856→  }
+   857→
+   858→  &[style-type='gui-style-2'] {
+   859→    .multiselect.app-dropdown {
+   860→      border: none;
+   861→      &.multiselect--disabled {
+   862→        .multiselect__single {
+   863→          > span {
+   864→            color: @color-text05;
+   865→          }
+   866→        }
+   867→      }
+   868→      &:hover {
+   869→        .multiselect__select::before {
+   870→          border-color: @color-primary transparent transparent;
+   871→        }
+   872→        .multiselect__tags .multiselect__single {
+   873→          color: @color-primary;
+   874→        }
+   875→      }
+   876→      .multiselect__select {
+   877→        height: 22px;
+   878→        width: auto;
+   879→        padding: 0 4px;
+   880→        &::before {
+   881→          border-width: 8px 6px 0;
+   882→          border-color: @color-icon05 transparent transparent;
+   883→        }
+   884→      }
+   885→      .multiselect__tags {
+   886→        padding: 2px 0;
+   887→        background: transparent;
+   888→        height: 22px;
+   889→        min-height: 24px;
+   890→        width: calc(100% - 22px);
+   891→        cursor: pointer;
+   892→        .multiselect__single {
+   893→          color: @color-text09;
+   894→          font-size: 14px;
+   895→          font-weight: 600;
+   896→        }
+   897→      }
+   898→      &:not(.multiselect--above) .multiselect__content-wrapper {
+   899→        top: calc(100% + 4px);
+   900→      }
+   901→      &.multiselect--above .multiselect__content-wrapper {
+   902→        bottom: calc(100% + 4px);
+   903→      }
+   904→      .multiselect__content-wrapper {
+   905→        width: 216px;
+   906→        border-color: @color-outline21;
+   907→        border-radius: 4px;
+   908→        background-color: @color-surface24;
+   909→        padding: 10px 0;
+   910→        min-height: fit-content;
+   911→      }
+   912→      .multiselect__option {
+   913→        padding: 6px 11px;
+   914→        min-height: 20px;
+   915→        background-color: transparent;
+   916→        color: @color-text09;
+   917→        &:hover {
+   918→          background-color: @color-surface25;
+   919→        }
+   920→        &.multiselect__option--selected {
+   921→          background-color: @color-primary;
+   922→        }
+   923→        > span {
+   924→          font-size: 14px;
+   925→        }
+   926→      }
+   927→    }
+   928→  }
+   929→
+   930→  .extra-before-list-options-wrapper .app-tooltip .tooltip-content {
+   931→    span {
+   932→      overflow: auto;
+   933→      text-overflow: unset;
+   934→      white-space: normal;
+   935→    }
+   936→  }
+   937→  .app-tooltip {
+   938→    margin-left: 0.5rem;
+   939→  }
+   940→
+   941→  .multiselect__load-more {
+   942→    list-style: none;
+   943→    padding: 8px 12px;
+   944→    display: flex;
+   945→    justify-content: center;
+   946→    align-items: center;
+   947→    position: relative;
+   948→
+   949→    .load-more-loading {
+   950→      display: flex;
+   951→      justify-content: center;
+   952→      align-items: center;
+   953→    }
+   954→
+   955→    .load-more-spinner {
+   956→      width: 20px;
+   957→      height: 20px;
+   958→      border: 2px solid @color-outline04;
+   959→      border-top-color: @color-primary;
+   960→      border-radius: 50%;
+   961→      animation: spin 0.8s linear infinite;
+   962→    }
+   963→
+   964→    .load-more-error {
+   965→      background: none;
+   966→      border: none;
+   967→      color: @color-alert;
+   968→      font-size: 12px;
+   969→      cursor: pointer;
+   970→      padding: 4px 8px;
+   971→
+   972→      &:hover {
+   973→        text-decoration: underline;
+   974→      }
+   975→    }
+   976→
+   977→    .load-more-trigger {
+   978→      position: absolute;
+   979→      inset: 0;
+   980→    }
+   981→  }
+   982→
+   983→  @keyframes spin {
+   984→    to {
+   985→      transform: rotate(360deg);
+   986→    }
+   987→  }
+   988→}
+   989→</style>
+   990→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

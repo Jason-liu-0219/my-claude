@@ -1,0 +1,31 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-103-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-104-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-105-
+packages/app-vsaas-portal/src/graphql/mutations.gql-106-mutation deleteArchives($input: [DeleteArchiveInput]!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-107-    deleteArchive(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-108-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-109-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-110-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-111-
+packages/app-vsaas-portal/src/graphql/mutations.gql-112-mutation genMp4($input: GenMp4Input!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-113-    genMp4(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-114-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-115-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-116-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-117-
+packages/app-vsaas-portal/src/graphql/mutations.gql:118:mutation setUserOfOrganization($input: SetUserOfOrganizationInput!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-119-    setUserOfOrganization(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-120-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-121-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-122-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-123-
+packages/app-vsaas-portal/src/graphql/mutations.gql-124-mutation inviteAgain($input: InviteAgainInput!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-125-    inviteAgain(input: $input) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-126-        res
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-127-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-128-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-129-
+packages/app-vsaas-portal/src/graphql/mutations.gql-130-mutation addSIUserToOrganization($email: String!, $organizationID: ID!) {
+packages/app-vsaas-portal/src/graphql/mutations.gql-131-    addSIUserToOrganization(email: $email, organizationID: $organizationID) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-132-        ...SIService
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/graphql/mutations.gql-133-    }

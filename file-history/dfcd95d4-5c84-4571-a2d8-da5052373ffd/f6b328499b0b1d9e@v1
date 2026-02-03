@@ -1,0 +1,572 @@
+<template>
+  <div
+    class="table-layout-wrapper"
+    :data-grid-mode="grid"
+    :class="{
+      scroll: scroll,
+      export: theme === 'export',
+    }"
+  >
+    <div class="table-container">
+      <div class="header-wrapper">
+        <table
+          class="table-header"
+          :class="{
+            disabled: disabled || rowData.length === 0 || searchStatus === 'loading',
+          }"
+        >
+          <keep-alive>
+            <thead>
+              <component
+                :is="currentHeaderComponent"
+                v-model:headerList="headerData"
+                :disabled="disabled"
+                :sortStyle="sortStyle"
+                :hasCheckbox="hasCheckbox"
+                :isSelectIndeterminate="isSelectIndeterminate"
+                :isSelectAll="isSelectAll"
+                :rowData="rowData"
+                :currentHeaderIndex="currentHeaderIndex"
+                :sortIcon="sortIcon"
+                :sort="sort"
+                :displayRowButtons="displayRowButtons"
+                :draggable="draggable"
+                @selectAll="selectAll"
+                @sort="sortHandler"
+              >
+                <template #table-header-row="{ item, index }">
+                  <slot
+                    name="table-header-row"
+                    :item="item"
+                    :index="index"
+                    :headerList="headerData"
+                  />
+                </template>
+                <template #headerPlayButton>
+                  <slot name="headerPlayButton" />
+                </template>
+                <template #headerButton="{ item }">
+                  <slot
+                    name="headerButton"
+                    :item="item"
+                  />
+                </template>
+              </component>
+            </thead>
+          </keep-alive>
+        </table>
+      </div>
+      <div
+        ref="bodyWrapper"
+        class="body-wrapper"
+      >
+        <table
+          v-show="rowData.length !== 0 && searchStatus !== 'loading'"
+          class="table-content"
+        >
+          <keep-alive>
+            <tbody>
+              <template
+                v-for="(item, index) in paginatedRowData"
+                :key="index"
+              >
+                <component
+                  :is="currentBodyComponent"
+                  v-model.lazy="$_selectedArray"
+                  :customClass="customBodyClass"
+                  :hasCheckbox="hasCheckbox"
+                  :disabled="disabled || item.disabled"
+                  :item="item"
+                  :index="index"
+                  :displayRowButtons="displayRowButtons"
+                  :highlightIndex="highlightIndex"
+                  :rowsClickable="rowsClickable"
+                  @onClickRow="onClickRow(item, index)"
+                >
+                  <template #table-content-row>
+                    <slot
+                      name="table-content-row"
+                      :item="item"
+                      :index="index"
+                      :headerList="headerData"
+                    />
+                  </template>
+                  <template #head-control>
+                    <slot
+                      name="head-control"
+                      :item="item"
+                    />
+                  </template>
+                  <template #row-buttons>
+                    <slot
+                      name="row-buttons"
+                      :item="item"
+                    />
+                  </template>
+                </component>
+                <RowBody
+                  v-for="(subItem, subIndex) in item.subItems"
+                  v-show="item.displaySubItems && !grid"
+                  :key="`${index}-${subIndex}`"
+                  v-model.lazy="$_selectedArray"
+                  class="sub-row"
+                  :disabled="disabled || subItem.disabled"
+                  :index="subIndex"
+                  :item="subItem"
+                  :displayRowButtons="displayRowButtons"
+                  :rowsClickable="rowsClickable"
+                >
+                  <template #table-content-row>
+                    <slot
+                      name="table-content-sub-row"
+                      :item="subItem"
+                      :index="subIndex"
+                      :headerList="headerData"
+                    />
+                  </template>
+                  <template #row-buttons>
+                    <slot
+                      name="sub-row-buttons"
+                      :item="subItem"
+                    />
+                  </template>
+                </RowBody>
+              </template>
+            </tbody>
+          </keep-alive>
+        </table>
+        <template v-if="!(rowData.length !== 0 && searchStatus !== 'loading')">
+          <slot name="status-icon">
+            <AppTableStatusInfoIcon :status="searchStatus" />
+          </slot>
+          <slot name="empty-block-buttons" />
+        </template>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import AppTableStatusInfoIcon from './AppTableStatusInfoIcon.vue';
+
+import GridHeader from './components/GridHeader.vue';
+import RowHeader from './components/RowHeader.vue';
+import GridBody from './components/GridBody.vue';
+import RowBody from './components/RowBody.vue';
+
+export default {
+  name: 'AppTable',
+  components: {
+    GridHeader,
+    RowHeader,
+    GridBody,
+    RowBody,
+    AppTableStatusInfoIcon,
+  },
+  props: {
+    searchStatus: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    sort: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    scroll: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    grid: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    theme: {
+      type: String,
+      required: false,
+      default: 'normal',
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    headerList: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    selectedArray: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    pageCount: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    bodyList: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    hasCheckbox: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    sortStyle: {
+      type: String,
+      default: 'sortWithTableHeader',
+      // sortWithTableHeader / dropdown / text
+    },
+    displayRowButtons: {
+      type: Boolean,
+      default: false,
+    },
+    keyword: {
+      type: String,
+      requied: false,
+      default: '',
+    },
+    keywordFilterRule: {
+      type: Function,
+      required: false,
+      default() {
+        return this.bodyList;
+      },
+    },
+    defaultSortIndex: {
+      type: Number,
+      required: false,
+      default: 0,
+    },
+    currentPageIndex: {
+      type: Number,
+      required: false,
+      default: null,
+    },
+    highlightIndex: {
+      type: Number,
+      required: false,
+      default: -1,
+    },
+    draggable: {
+      type: Boolean,
+      default: false,
+    },
+    autoScrollToTop: {
+      type: Boolean,
+      default: true,
+    },
+    rowsClickable: {
+      type: Boolean,
+      default: false,
+    },
+    customBodyClass: {
+      type: Function,
+      default: (item, index) => ({}),
+    },
+  },
+  emits: ['tableLengthChanged', 'update:selectedArray', 'click:row', 'handleSortedList'],
+  data() {
+    return {
+      rowData: [],
+      headerData: [],
+      reverse: false,
+      currentHeaderIndex: null,
+      sortOrder: 'asc',
+      sortType: 'Name',
+      hovering: -1,
+    };
+  },
+  computed: {
+    currentBodyComponent() {
+      return this.grid ? 'GridBody' : 'RowBody';
+    },
+    currentHeaderComponent() {
+      return this.grid ? 'GridHeader' : 'RowHeader';
+    },
+    $_selectedArray: {
+      get() {
+        return this.selectedArray.map((item) => item.id);
+      },
+      set(value) {
+        const $_selected = this.bodyList.filter((item) => value.includes(item.id));
+        this.$emit('update:selectedArray', $_selected);
+      },
+    },
+    isSelectAll() {
+      if (this.rowData.length === 0) {
+        return false;
+      }
+
+      return this.$_selectedArray.length >= this.paginatedRowData.length;
+    },
+    isSelectIndeterminate() {
+      if (this.rowData.length === 0) {
+        return false;
+      }
+
+      return this.$_selectedArray.length !== 0 && this.$_selectedArray.length < this.paginatedRowData.length;
+    },
+    sortIcon() {
+      if (this.headerList[this.currentHeaderIndex]?.defaultArrowDirection === 'down') {
+        return this.reverse ? 'general_sort_top' : 'general_sort_bottom';
+      }
+      return !this.reverse ? 'general_sort_top' : 'general_sort_bottom';
+    },
+    paginatedRowData() {
+      if (this.currentPageIndex === null && this.pageCount === null) {
+        return this.rowData;
+      }
+
+      return this.rowData.slice(this.currentPageIndex * this.pageCount, (this.currentPageIndex + 1) * this.pageCount);
+    },
+    tableLength() {
+      return this.rowData.length;
+    },
+  },
+  watch: {
+    bodyList: {
+      handler() {
+        const clone = [...this.bodyList];
+
+        this.rowData = this.keyword ? this.keywordFilterRule(clone, this.keyword) : clone;
+        if (this.rowData.length === 0) {
+          this.reverse = null;
+          this.currentHeaderIndex = null;
+          return;
+        }
+
+        // Re-apply current sort to new data, preserving direction
+        if (this.currentHeaderIndex !== null && this.headerList[this.currentHeaderIndex]?.sort) {
+          this.rowData = [...this.rowData].sort((a, b) =>
+            this.headerList[this.currentHeaderIndex].sort(a, b),
+          );
+          if (this.reverse) {
+            this.rowData = this.rowData.reverse();
+          }
+        } else if (this.currentHeaderIndex === null) {
+          // No sort applied yet, use default
+          this.sortHandler(this.defaultSortIndex);
+        }
+      },
+      immediate: true,
+    },
+    headerList: {
+      handler(value) {
+        const clone = [...value];
+
+        this.headerData = clone.map((item, index) => {
+          item.headerListIndex = index;
+          return item;
+        });
+
+        if (this.currentHeaderIndex !== this.defaultSortIndex) {
+          this.sortHandler(this.defaultSortIndex);
+        }
+      },
+      immediate: true,
+    },
+    keyword: {
+      handler(value) {
+        const clone = [...this.bodyList];
+
+        this.rowData = value ? this.keywordFilterRule(clone, this.keyword) : clone;
+
+        this.sortHandler(this.currentHeaderIndex, true);
+      },
+    },
+    tableLength(value) {
+      this.$emit('tableLengthChanged', value);
+    },
+    currentPageIndex() {
+      if (this.autoScrollToTop && this.$refs.bodyWrapper) {
+        this.$refs.bodyWrapper.scrollTop = 0;
+      }
+      this.$_selectedArray = [];
+    },
+  },
+  methods: {
+    sortHandler(headerListIndex, reset = false) {
+      if (this.disabled || this.sort === false) {
+        return;
+      }
+
+      const clone = [...this.rowData];
+
+      if (!this.headerList[headerListIndex]?.sort) {
+        return;
+      }
+
+      if (reset) {
+        this.currentHeaderIndex = null;
+      }
+
+      if (this.currentHeaderIndex !== headerListIndex) {
+        this.reverse = false;
+
+        if (this.headerList[headerListIndex].sort) {
+          this.rowData = clone.sort((a, b) => this.headerList[headerListIndex].sort(a, b));
+          this.currentHeaderIndex = headerListIndex;
+        }
+      } else {
+        this.reverse = !this.reverse;
+        this.rowData = clone.reverse();
+      }
+      this.$emit('handleSortedList', this.rowData);
+    },
+    selectAll() {
+      if (this.disabled) {
+        return;
+      }
+
+      if (this.$_selectedArray.length !== this.paginatedRowData.length) {
+        const clone = [...this.paginatedRowData.map((item) => item.id)];
+        this.$_selectedArray = clone;
+      } else {
+        this.$_selectedArray = [];
+      }
+    },
+    onClickRow(item, index) {
+      this.$emit('click:row', item, index);
+    },
+    destructProps(item, index) {
+      return {
+        ...item,
+        index,
+      };
+    },
+  },
+};
+</script>
+
+<style lang="less">
+@import './table.less';
+
+.table-layout-wrapper {
+  background: @color-surface01;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+
+  &[data-grid-mode='true'] {
+    > .table-container {
+      > .body-wrapper {
+        > .table-content {
+          > tbody {
+            margin-top: 10px;
+            margin-left: -10px;
+            margin-right: -10px;
+            display: flex;
+            flex-wrap: wrap;
+
+            > tr {
+              width: 228px;
+              height: 234px !important;
+              display: inline-flex;
+              flex-direction: column;
+              margin: 1rem;
+              background-color: #2e2e2e;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.export {
+    height: 100%;
+  }
+
+  &.scroll {
+    .theme-scroll;
+
+    // Fix for scrollbar width causing header/body misalignment
+    .header-wrapper {
+      // Reserve space for scrollbar to maintain alignment
+      // Use CSS custom property for dynamic scrollbar width detection
+      padding-right: var(--scrollbar-width, 17px);
+      box-sizing: border-box;
+    }
+
+    .body-wrapper {
+      // Use scrollbar-gutter for modern browsers that support it
+      scrollbar-gutter: stable;
+
+      // Fallback for browsers that don't support scrollbar-gutter
+      // The padding-right on header-wrapper will handle the alignment
+    }
+  }
+
+  .table-container {
+    position: relative;
+    box-sizing: border-box;
+    overflow: initial;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &.export {
+      .theme-export;
+    }
+
+    &.dido {
+      .theme-dido;
+    }
+
+    .header-wrapper {
+      overflow: initial;
+    }
+
+    .body-wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      .empty-block {
+        flex: 1;
+        background-color: @color-surface02;
+      }
+    }
+
+    table {
+      width: 100%;
+      table-layout: fixed;
+      border: 0;
+      border-spacing: 0;
+      border-collapse: collapse;
+
+      &.table-header {
+        &.disabled {
+          pointer-events: none;
+
+          tr {
+            border-color: @color-primary-disable;
+            th {
+              div {
+                color: @color-primary-disable;
+              }
+              :deep(h6) {
+                color: @color-primary-disable;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  :deep(.status_loading) {
+    pointer-events: none;
+    animation: spin 1.5s linear infinite;
+  }
+}
+</style>

@@ -1,0 +1,32 @@
+RestfulErrorHandler.js:4 RestfulErrorHandler Error: HTTP error, status = 500
+    at requestToCloud (ApiService.js:199:13)
+    at async Object.requestToIoTServer (ApiService.js:269:14)
+RestfulErrorHandler    @    RestfulErrorHandler.js:4
+await in RestfulErrorHandler        
+requestToCloud    @    ApiService.js:220
+await in requestToCloud        
+requestToIoTServer    @    ApiService.js:145
+(anonymous)    @    ApiService.js:269
+await in (anonymous)        
+requestToIoTServer    @    ApiServiceInterface.js:570
+getPreoffer    @    OdysseyConnection.js:22
+connect    @    IoTSignaling.js:73
+connect    @    RTCPeerClient.js:83
+createPeerClient    @    OdysseyConnection.js:143
+await in createPeerClient        
+connect    @    OdysseyConnection.js:125
+connect    @    OdysseyConnectPager.js:68
+OdysseyConnectPager    @    OdysseyConnectPager.js:24
+createConnection    @    OdysseyConnectionManager.js:248
+requestStreamingConnection    @    OdysseyConnectionManager.js:100
+request    @    vdi.js:63
+request    @    vdsi.js:181
+createStreamingInterface    @    vsaasStreamingHanlder.js:194
+$play    @    streamingHandler.js:469
+(anonymous)    @    streamingHandler.js:99
+tryToPlayLooped    @    streamingHandler.js:98
+play    @    streamingHandler.js:170
+play    @    index.js:912
+mounted    @    PluginlessWrapper.vue:200
+Promise.then        
+(anonymous)    @    main.js:53

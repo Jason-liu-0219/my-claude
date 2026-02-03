@@ -1,0 +1,65 @@
+import { reactive } from 'vue';
+
+import { VsaasNVRCamera as NVRCamera, VsaasVSSCamera as VSSCamera } from '@vivotek/device';
+import { getDeviceTooltip, getDeviceIconTooltip, getSdCardStorageCapacityDays } from '@vivotek/lib-utility';
+
+export default class CameraTableData {
+  constructor(source, id, $t, productName) {
+    this.instance = reactive(source);
+    this.productName = productName;
+    this.$t = $t;
+
+    this.id = id;
+    this.deviceId = this.instance.deviceId || '';
+
+    this.group = this.instance.groupName || '';
+    this.groupId = this.instance.options.deviceGroupID || '';
+
+    this.model = this.instance.model || '';
+    this.modelType = this.instance.modelType || '';
+    this.mac = this.instance.mac || '';
+    this.derivant = this.instance.derivant || '';
+    this.firmware = this.instance.firmware || '';
+    this.ip = this.instance.localIP || '';
+    this.storageCapacity = this.instance.storageCapacity
+      ? $t('- | 1 day | {count} Days', { count: this.instance.storageCapacity ?? 0 })
+      : '';
+
+    this.nvr = this.instance.nvr || null;
+    this.nvrName = this.instance.nvr ? this.instance.nvrName : '';
+    this.vss = this.instance.vss || null;
+    this.vssName = this.instance.vss ? this.instance.vssName : '';
+    this.isUnknownDevice = this.instance.isUnknownDevice;
+    this.isNVRCamera = this.instance instanceof NVRCamera;
+    this.isVSSCamera = this.instance instanceof VSSCamera;
+    this.tableButtons = [];
+    this.wizardFinished = this.instance.wizardFinished;
+
+    this.recording = this.isNVRCamera || this.isUnknownDevice ? undefined : this.instance.recording;
+    this.sdCardStorageCapacity = getSdCardStorageCapacityDays($t, this.instance);
+    this.isBlockCameraVcaCapabilityAndSupport =
+      this.instance.services.configurator.state.isBlockCameraVcaCapabilityAndSupport || false;
+    this.contractInfo = this.instance.contractInfo;
+    this.formatChannelDerivant = this.instance.formatChannelDerivant ?? '';
+  }
+
+  get icon() {
+    return this.instance.generalIconClass || '';
+  }
+
+  get iconTooltip() {
+    return getDeviceIconTooltip(this.$t, this.instance, this.productName) || '';
+  }
+
+  get tooltip() {
+    return getDeviceTooltip(this.$t, this.instance, this.productName) || '';
+  }
+
+  get name() {
+    return this.instance.displayName || '';
+  }
+
+  get displayName() {
+    return this.instance.displayName || '';
+  }
+}

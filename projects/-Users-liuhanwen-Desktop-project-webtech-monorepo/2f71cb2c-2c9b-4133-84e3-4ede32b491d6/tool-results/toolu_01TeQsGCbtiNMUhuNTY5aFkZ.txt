@@ -1,0 +1,54 @@
+    90→    } catch (error) {
+    91→      throw error.generalize();
+    92→    }
+    93→  },
+    94→
+    95→  async batchMoveDeviceToGroup({ commit, rootGetters, rootState }, { devices, deviceGroupID }) {
+    96→    try {
+    97→      const items = devices.map((device) => ({
+    98→        mac: device.options.mac,
+    99→        derivant: device.options.derivant,
+   100→      }));
+   101→      const response = await rootState.apiService.batchMoveDeviceToGroup({
+   102→        deviceGroupID,
+   103→        items,
+   104→      });
+   105→      const { failedItems, res } = response;
+   106→      const failedMacs = failedItems?.map((item) => item.mac) || [];
+   107→      const movedItems = devices.filter((device) => !failedMacs.includes(device.mac));
+   108→
+   109→      movedItems.forEach((device) => {
+   110→        const originInfo = rootGetters['device/allDevicesMap'][device.deviceId]?.options;
+   111→        originInfo.deviceGroupID = deviceGroupID;
+   112→
+   113→        const groupName = rootGetters['group/groupsMap'][originInfo.deviceGroupID]?.name;
+   114→        commit('device/updateDevice', { device: originInfo, groupName }, { root: true });
+   115→      });
+   116→
+   117→      if (!res) {
+   118→        throw new Error('Batch operation has an error.');
+   119→      }
+   120→    } catch (error) {
+   121→      throw error.generalize();
+   122→    }
+   123→  },
+   124→
+   125→  async setActiveDeviceId({ commit, getters, state, rootGetters, dispatch }, deviceId) {
+   126→    if (deviceId === state.activeDeviceId) {
+   127→      commit('setActiveDeviceId', '');
+   128→      commit('setActiveViewIndex', -1);
+   129→      return;
+   130→    }
+   131→
+   132→    const activeDevice = rootGetters['device/allDevicesMap']?.[deviceId];
+   133→
+   134→    const activeGroup = getters.validGroups.find((group) => group.id === activeDevice?.deviceGroupID);
+   135→
+   136→    if (activeGroup?.id !== state.activeGroupId) {
+   137→      await dispatch('setActiveGroupId', activeGroup?.id);
+   138→    }
+   139→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

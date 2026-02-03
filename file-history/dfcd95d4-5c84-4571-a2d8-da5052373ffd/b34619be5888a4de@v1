@@ -1,0 +1,170 @@
+<template>
+  <div class="user-profile">
+    <AppAvatar
+      :fontSize="40"
+      :name="user.name"
+      :role="user.role?.name?.toUpperCase()"
+      :showBorder="user.isCurrentUser"
+    />
+    <div
+      class="info-container"
+      data-testid="user-info"
+    >
+      <div
+        v-if="showRoleTag"
+        :class="['role', user.role?.name?.toLowerCase()]"
+      >
+        <template v-if="user.isOwner">
+          {{ $t('Owner') }}
+        </template>
+        <template v-else-if="user.isAdmin">
+          {{ $t('Organization admin') }}
+        </template>
+      </div>
+      <div class="name-more">
+        <h2
+          :title="user.name"
+          v-text="user.name"
+        />
+        <AppMoreButtonDropdown
+          v-if="enableMoreActions"
+          data-testid="user-profile-more-actions"
+          :actions="moreActions"
+          :width="42"
+          :height="42"
+          :dropdownClass="['user-profile']"
+          :hideDropdownOnClick="true"
+        />
+      </div>
+      <h4
+        :title="user.email"
+        v-text="user.email"
+      />
+    </div>
+    <RemoveUserDialogue
+      ref="removeUserDialogue"
+      :user="user"
+    />
+    <ResetMFADialogue
+      ref="resetMFADialogue"
+      :email="user.email"
+      @success="resetMFASuccess"
+    />
+    <ChangeUsernameDialogue
+      ref="changeUsernameDialogue"
+      :username="user.name"
+      @confirm="confirmChangeUsername"
+    />
+    <ChangeOrganizationRoleDialogue
+      ref="changeOrganizationRoleDialogue"
+      :user="user"
+      :isUpdateUserLoading="getUpdateUserLoading"
+      @success="emit('roleChanged')"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, onBeforeMount, computed } from 'vue';
+import { useStore } from 'vuex';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+import ChangeOrganizationRoleDialogue from '@/components/Dialogues/ChangeOrganizationRoleDialogue.vue';
+import ChangeUsernameDialogue from '@/components/Dialogues/ChangeUsernameDialogue.vue';
+import RemoveUserDialogue from '@/pages/user/detail/components/RemoveUserDialogue.vue';
+import ResetMFADialogue from '@/pages/user/detail/components/ResetMFADialogue.vue';
+
+import { useUserMFAHelper } from './composables/useUserMFAHelper';
+
+const store = useStore();
+
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+});
+
+const enableMFA = ref(false);
+const permissions = ref(null);
+
+const { enableMoreActions, moreActions, showRoleTag, confirmChangeUsername } = useUserMFAHelper(
+  props,
+  enableMFA,
+  permissions,
+);
+
+const resetMFASuccess = () => {
+  enableMFA.value = false;
+};
+
+const getUpdateUserLoading = computed(() => {
+  return store.getters['user/getUpdateUserLoading'];
+});
+
+onBeforeMount(async () => {
+  enableMFA.value = (await store.dispatch('user/getUserMFA', { email: props.user.email }))?.enableMFA || false;
+});
+</script>
+
+<style scoped lang="less">
+.user-profile {
+  display: flex;
+  .app-avatar {
+    width: 80px;
+    height: 80px;
+    + div {
+      margin-left: 20px;
+    }
+  }
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: calc(100% - 100px);
+    h4 {
+      color: @color-text02;
+    }
+  }
+
+  .role {
+    align-self: start;
+    padding: 4px 6px;
+    margin: 0 0 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 4px;
+    &.admin {
+      color: @color-primary;
+      background: @color-surface17;
+    }
+    &.owner {
+      color: @color-text22;
+      background: @color-surface37;
+    }
+  }
+
+  .name-more {
+    display: flex;
+    align-items: center;
+    h2 {
+      .text-ellipsis;
+    }
+    :deep(.more-button-dropdown) {
+      margin-left: 15px;
+
+      .more-button-icon-container {
+        border-radius: 50%;
+        &:hover {
+          background: @color-surface03;
+        }
+        &.active {
+          .svg-icon {
+            color: @color-icon06;
+          }
+        }
+      }
+    }
+  }
+}
+</style>

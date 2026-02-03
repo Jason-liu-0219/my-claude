@@ -1,0 +1,231 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-20-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-21-}));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-22-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-23-describe('getters', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-24-  describe('groupsMap', () => {
+packages/app-vsaas-portal/src/store/group/getters.test.js:25:    it('should return rawGroupsMap from groupsMap', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-26-      const state = {
+packages/app-vsaas-portal/src/store/group/getters.test.js:27:        rawGroupsMap: { 1: { id: 1 }, 2: { id: 2 } },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-28-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-29-      const rootGetters = {
+packages/app-vsaas-portal/src/store/group/getters.test.js-30-        'device/groupDevicesMap': {
+packages/app-vsaas-portal/src/store/group/getters.test.js-31-          1: ['d1', 'd2', 'd3'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.test.js-32-        },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-8-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-9-}));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-10-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-11-describe('mutations', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-12-  describe('setGroupsMap', () => {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:13:    it('should set rawGroupsMap', () => {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:14:      const state = { rawGroupsMap: {} };
+packages/app-vsaas-portal/src/store/group/mutations.test.js-15-      const items = [{ id: 1 }, { id: 2 }, { id: 3 }];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-16-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-17-      mutations.setGroupsMap(state, { items });
+packages/app-vsaas-portal/src/store/group/mutations.test.js:18:      expect(state.rawGroupsMap).toStrictEqual({
+packages/app-vsaas-portal/src/store/group/mutations.test.js-19-        1: { id: 1, pages: null },
+packages/app-vsaas-portal/src/store/group/mutations.test.js-20-        2: { id: 2, pages: null },
+packages/app-vsaas-portal/src/store/group/mutations.test.js-21-        3: { id: 3, pages: null },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-22-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-23-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-24-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-25-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-26-  describe('resetGroups', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-27-    it('should reset state', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-28-      const state = {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:29:        rawGroupsMap: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-30-          1: { id: 1 },
+packages/app-vsaas-portal/src/store/group/mutations.test.js-31-          2: { id: 2 },
+packages/app-vsaas-portal/src/store/group/mutations.test.js-32-          3: { id: 3 },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-33-        },
+packages/app-vsaas-portal/src/store/group/mutations.test.js-34-        activePageIndex: 2,
+--
+packages/app-vsaas-portal/src/store/group/mutations.test.js-37-        activeDeviceId: '345',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-38-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-39-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-40-      mutations.resetGroups(state);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-41-
+packages/app-vsaas-portal/src/store/group/mutations.test.js:42:      expect(state.rawGroupsMap).toStrictEqual({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-43-      expect(state.activePageIndex).toBe(0);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-44-      expect(state.activeViewIndex).toBe(-1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-45-      expect(state.activeGroupId).toBe('');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-46-      expect(state.activeDeviceId).toBe('');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-47-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-48-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-49-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-50-  describe('removeGroup', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-51-    it('should remove group', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-52-      const state = {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:53:        rawGroupsMap: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-54-          111: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-55-            id: 111,
+packages/app-vsaas-portal/src/store/group/mutations.test.js-56-            name: '123',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-57-            pages: [{ a: 1 }],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-58-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-59-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-60-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-61-      mutations.removeGroup(state, 111);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-62-
+packages/app-vsaas-portal/src/store/group/mutations.test.js:63:      expect(state.rawGroupsMap).toEqual({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-64-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-65-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-66-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-67-  describe('setActiveGroupId', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-68-    it('should set activeGroupId to test1234', () => {
+--
+packages/app-vsaas-portal/src/store/group/mutations.test.js-147-          address: 'address',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-148-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-149-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-150-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-151-      const state = {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:152:        rawGroupsMap: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-153-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-154-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-155-      mutations.addGroup(state, group);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-156-
+packages/app-vsaas-portal/src/store/group/mutations.test.js:157:      expect(state.rawGroupsMap.group1).toStrictEqual({
+packages/app-vsaas-portal/src/store/group/mutations.test.js-158-        id: 'group1',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-159-        name: 'groupName',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-160-        organizationID: 'orgId',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-161-        location: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-162-          latitude: 123,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-230-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-231-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-232-  describe('changeLayout', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-233-    it('should changeLayout and set pages', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-234-      const state = {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:235:        rawGroupsMap: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-236-          0: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-237-            id: 0,
+packages/app-vsaas-portal/src/store/group/mutations.test.js-238-            pages: [],
+packages/app-vsaas-portal/src/store/group/mutations.test.js-239-            devices: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-240-              {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-260-      mutations.changeLayout(state, params);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-261-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-262-      expect(state.activeDeviceId).toBe('');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-263-      expect(state.activeViewIndex).toBe(-1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-264-      expect(state.activePageIndex).toBe(0);
+packages/app-vsaas-portal/src/store/group/mutations.test.js:265:      expect(state.rawGroupsMap[0].pages.length).toBe(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-266-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-267-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-268-  describe('updateGroup', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-269-    it('should update group name', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-270-      const state = {
+packages/app-vsaas-portal/src/store/group/mutations.test.js:271:        rawGroupsMap: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-272-          123: {
+packages/app-vsaas-portal/src/store/group/mutations.test.js-273-            name: '',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-274-            id: '123',
+packages/app-vsaas-portal/src/store/group/mutations.test.js-275-            devices: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-276-              {
+--
+packages/app-vsaas-portal/src/store/group/mutations.test.js-285-        id: '123',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-286-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-287-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-288-      mutations.updateGroup(state, group);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-289-
+packages/app-vsaas-portal/src/store/group/mutations.test.js:290:      expect(state.rawGroupsMap['123'].name).toBe('test2');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-291-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-292-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-293-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-294-  describe('handleFirstFetch', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.test.js-295-    it('handleFirstFetch', () => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/index.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/index.js-7-const group = {
+packages/app-vsaas-portal/src/store/group/index.js-8-  namespaced: true,
+packages/app-vsaas-portal/src/store/group/index.js-9-  state: {
+packages/app-vsaas-portal/src/store/group/index.js-10-    isFetchingData: false,
+packages/app-vsaas-portal/src/store/group/index.js:11:    rawGroupsMap: {},
+packages/app-vsaas-portal/src/store/group/index.js-12-    activePageIndex: 0,
+packages/app-vsaas-portal/src/store/group/index.js-13-    activeViewIndex: -1,
+packages/app-vsaas-portal/src/store/group/index.js-14-    activeGroupId: '', // group id
+packages/app-vsaas-portal/src/store/group/index.js-15-    activeDeviceId: '', // device id
+packages/app-vsaas-portal/src/store/group/index.js-16-    editingGroup: [],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-29-const mutations = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-30-  setGroupsMap(state, { items, nextToken }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-31-    state.isFetchingData = !!nextToken;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-32-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-33-    items.forEach((group) => {
+packages/app-vsaas-portal/src/store/group/mutations.js:34:      state.rawGroupsMap[group.id] = reactive({ ...group, pages: null });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-35-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-36-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-37-  resetGroups(state) {
+packages/app-vsaas-portal/src/store/group/mutations.js:38:    state.rawGroupsMap = {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-39-    state.activePageIndex = 0;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-40-    state.activeViewIndex = -1;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-41-    state.activeGroupId = '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-42-    state.activeDeviceId = '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-43-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-44-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-45-  removeGroup(state, id) {
+packages/app-vsaas-portal/src/store/group/mutations.js:46:    delete state.rawGroupsMap[id];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-47-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-48-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-49-  setActiveGroupId(state, groupId = '') {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-50-    state.activeGroupId = groupId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-51-    state.activePageIndex = 0;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-56-  setActiveDeviceId(state, deviceId) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-57-    state.activeDeviceId = deviceId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-58-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-59-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-60-  addGroup(state, group) {
+packages/app-vsaas-portal/src/store/group/mutations.js:61:    state.rawGroupsMap[group.id] = reactive({
+packages/app-vsaas-portal/src/store/group/mutations.js-62-      id: group.id,
+packages/app-vsaas-portal/src/store/group/mutations.js-63-      name: group.name,
+packages/app-vsaas-portal/src/store/group/mutations.js:64:      organizationID: group.organizationID,
+packages/app-vsaas-portal/src/store/group/mutations.js-65-      location: group.location,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-66-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-67-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-68-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-69-  setActiveViewIndex(state, viewIndex) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-106-    let groupId = state.activeGroupId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-107-    if (typeof layout !== 'string') {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-108-      groupId = layout.groupId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-109-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-110-
+packages/app-vsaas-portal/src/store/group/mutations.js:111:    const targetGroup = state.rawGroupsMap[groupId];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-112-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-113-    if (targetGroup) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-114-      targetGroup.pages = getDevicePages(layout, devices);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-115-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-116-    state.activeDeviceId = '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-117-    state.activeViewIndex = -1;
+packages/app-vsaas-portal/src/store/group/mutations.js-118-    state.activePageIndex = pageIndex < targetGroup?.pages?.length ? pageIndex : 0;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-119-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-120-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-121-  updateGroup(state, group) {
+packages/app-vsaas-portal/src/store/group/mutations.js:122:    state.rawGroupsMap[group.id] = reactive(group);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-123-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-124-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-125-  handleFirstFetch(state, id = '') {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-126-    state.activeGroupId = id;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/mutations.js-127-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-37-export default {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-38-  groupsList(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-39-    return Object.values(getters.groupsMap);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-40-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-41-  groupsMap(state, getters, rootState, rootGetters) {
+packages/app-vsaas-portal/src/store/group/getters.js:42:    const groupMap = state.rawGroupsMap;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-43-    const deviceOfGroupsMap = rootGetters['device/groupDevicesMap'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-44-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-45-    const result = Object.values(groupMap).reduce((acc, group) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-46-      const targetDevices = deviceOfGroupsMap[group.id] || [];
+packages/app-vsaas-portal/src/store/group/getters.js-47-      acc[group.id] = { devices: targetDevices, ...group };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-241-    return getters.sortedGroups()[0] || null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-242-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-243-  isGroupFetchingData(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-244-    return state.isFetchingData;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-245-  },
+packages/app-vsaas-portal/src/store/group/getters.js:246:  // Get all the group except 'Ungrouped Cameras'
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-247-  validGroupsExcludingOrganization(state, getters, rootState, rootGetters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-248-    const { organizationID } = rootGetters['organization/currentOrganization'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-249-    return getters.validGroups.filter((group) => group.id !== organizationID);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-250-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/group/getters.js-251-};

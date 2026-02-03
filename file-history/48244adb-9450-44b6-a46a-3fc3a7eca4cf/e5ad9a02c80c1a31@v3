@@ -1,0 +1,164 @@
+import { computed } from 'vue';
+
+import { DEVICE_TYPE } from '@vivotek/const-vsaas';
+
+// ============================================================
+// Constants
+// ============================================================
+export const DEFAULT_VIEWER_ROLE_ID = 'role-device-viewer';
+
+// ============================================================
+// Device ID Utilities
+// ============================================================
+export const composeDeviceId = (thingName, derivant) => {
+  if (!derivant || derivant === 'none') {
+    return thingName;
+  }
+  return `${thingName}:${derivant}`;
+};
+
+export const parseDeviceId = (deviceId) => {
+  if (!deviceId.includes(':')) {
+    return { thingName: deviceId, derivant: 'none' };
+  }
+  const [thingName, derivant] = deviceId.split(':');
+  return { thingName, derivant };
+};
+
+// ============================================================
+// Device Type Checks
+// ============================================================
+export const isNvrChannel = (device) => device?.type === DEVICE_TYPE.NVR_CHANNEL;
+
+export const isVssChannel = (device) => device?.type === DEVICE_TYPE.VSS_CHANNEL;
+
+export const isParentDevice = (device) => {
+  return device?.type === DEVICE_TYPE.NVR || device?.type === DEVICE_TYPE.VSS;
+};
+
+export const getParentDeviceId = (device) => {
+  if (isNvrChannel(device)) {
+    return device.nvr.deviceId;
+  }
+  if (isVssChannel(device)) {
+    return device.vss.deviceId;
+  }
+  return null;
+};
+
+export const isChannelOfParent = ({ channelDevice, parentDevice }) => {
+  if (!channelDevice || !parentDevice) {
+    return false;
+  }
+
+  const { type: parentType, deviceId: parentId } = parentDevice;
+  const { type: channelType, nvr, vss } = channelDevice;
+
+  if (parentType === DEVICE_TYPE.NVR && channelType === DEVICE_TYPE.NVR_CHANNEL) {
+    return nvr?.deviceId === parentId;
+  }
+
+  if (parentType === DEVICE_TYPE.VSS && channelType === DEVICE_TYPE.VSS_CHANNEL) {
+    return vss?.deviceId === parentId;
+  }
+
+  return false;
+};
+
+// ============================================================
+// Composable
+// ============================================================
+export const useDeviceRoleHelper = (devices) => {
+  const deviceMap = computed(() => new Map(devices.value.map((d) => [d.deviceId, d])));
+
+  // --- Granted Device Factories ---
+  const createGrantedDevice = (deviceId, roleId = '') => ({
+    ...parseDeviceId(deviceId),
+    roleId,
+  });
+
+  const createViewerGrantedDevice = (deviceId) => ({
+    ...parseDeviceId(deviceId),
+    roleId: DEFAULT_VIEWER_ROLE_ID,
+  });
+
+  const createRemovedGrantedDevice = ({ thingName, derivant }) => ({
+    thingName,
+    derivant,
+    roleId: null,
+  });
+
+  // --- Internal Helpers ---
+  const addParentIfNeeded = (device, selectedIds, grantedMap) => {
+    const parentId = getParentDeviceId(device);
+    if (parentId && !selectedIds.has(parentId) && !grantedMap.has(parentId)) {
+      grantedMap.set(parentId, createViewerGrantedDevice(parentId));
+    }
+  };
+
+  const getChannelsOfParent = (parentId) => {
+    const parent = deviceMap.value.get(parentId);
+    if (!parent || !isParentDevice(parent)) {
+      return [];
+    }
+    return devices.value
+      .filter((d) => isChannelOfParent({ channelDevice: d, parentDevice: parent }))
+      .map((d) => d.deviceId);
+  };
+
+  // --- Public Methods ---
+  const processSelectedDevices = (selectedDeviceIds, deviceRoles, selectedIdsSet, grantedMap) => {
+    selectedDeviceIds.forEach((deviceId) => {
+      const roleId = deviceRoles[deviceId]?.roleId || '';
+      grantedMap.set(deviceId, createGrantedDevice(deviceId, roleId));
+      addParentIfNeeded(deviceMap.value.get(deviceId), selectedIdsSet, grantedMap);
+    });
+  };
+
+  const processRemovedDevices = (originalGranted, selectedIdsSet, grantedMap) => {
+    originalGranted.forEach((grantedDevice, deviceId) => {
+      if (selectedIdsSet.has(deviceId)) {
+        return;
+      }
+      grantedMap.set(deviceId, createRemovedGrantedDevice(grantedDevice));
+
+      // If removing a parent, also remove its channels
+      const device = deviceMap.value.get(deviceId);
+      if (isParentDevice(device)) {
+        originalGranted.forEach((channelGranted, channelId) => {
+          const channelDevice = deviceMap.value.get(channelId);
+          if (isChannelOfParent({ channelDevice, parentDevice: device })) {
+            grantedMap.set(channelId, createRemovedGrantedDevice(channelGranted));
+          }
+        });
+      }
+    });
+  };
+
+  const updateSelectedDevicesWithParentChannel = (targetSelected, currentSelected) => {
+    const targetSet = new Set(targetSelected);
+    const currentSet = new Set(currentSelected);
+
+    // Find deselected and newly selected devices
+    const deselected = currentSelected.filter((id) => !targetSet.has(id));
+    const newlySelected = targetSelected.filter((id) => !currentSet.has(id));
+
+    // When parent is deselected, remove its channels
+    const channelsToRemove = new Set(deselected.flatMap(getChannelsOfParent));
+    const filtered = targetSelected.filter((id) => !channelsToRemove.has(id));
+
+    // When channel is selected, auto-add its parent
+    const filteredSet = new Set(filtered);
+    const parentsToAdd = newlySelected
+      .map((id) => getParentDeviceId(deviceMap.value.get(id)))
+      .filter((parentId) => parentId && !filteredSet.has(parentId));
+
+    return [...filtered, ...new Set(parentsToAdd)];
+  };
+
+  return {
+    processSelectedDevices,
+    processRemovedDevices,
+    updateSelectedDevicesWithParentChannel,
+  };
+};

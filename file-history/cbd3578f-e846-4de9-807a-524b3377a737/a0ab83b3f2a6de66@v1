@@ -1,0 +1,234 @@
+---
+name: pr
+description: Use when user says "發 PR", "create PR", "開 PR", "/pr", or wants to create a pull request for vsaas-portal changes. Automatically generates PR title, description, and assigns reviewers.
+version: 1.0.0
+---
+
+# PR - 自動建立 Pull Request
+
+針對 `app-vsaas-portal` 專案自動建立 PR，包含標題生成、描述生成和 reviewer 指派。
+
+## 使用方式
+
+當使用者說 `/pr` 或「發 PR」時執行此 skill。
+
+## 執行步驟
+
+### Step 1: 確認工作目錄和分支
+
+```bash
+# 確認在 monorepo 根目錄
+cd /Users/liuhanwen/Desktop/project/webtech-monorepo
+
+# 取得當前分支
+CURRENT_BRANCH=$(git branch --show-current)
+echo "當前分支: $CURRENT_BRANCH"
+
+# 確認不是 main 分支
+if [ "$CURRENT_BRANCH" = "main" ]; then
+  echo "錯誤：不能從 main 分支建立 PR"
+  exit 1
+fi
+```
+
+### Step 2: 取得變更資訊
+
+```bash
+# 取得相對於 main 的變更檔案
+CHANGED_FILES=$(git diff --name-only main)
+echo "變更檔案:"
+echo "$CHANGED_FILES"
+
+# 確認是 vsaas-portal 的變更
+if ! echo "$CHANGED_FILES" | grep -q "packages/app-vsaas-portal"; then
+  echo "警告：變更不在 app-vsaas-portal 範圍內"
+fi
+
+# 取得 commits
+COMMITS=$(git log main..HEAD --oneline)
+echo "Commits:"
+echo "$COMMITS"
+```
+
+### Step 3: 生成 PR 標題
+
+從第一個 commit 或分支名稱推斷標題：
+
+```bash
+# 優先使用第一個 commit 訊息
+FIRST_COMMIT=$(git log main..HEAD --oneline --format="%s" | tail -1)
+
+# 如果 commit 已符合 conventional commits 格式，直接使用
+if echo "$FIRST_COMMIT" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|chore|ci)\("; then
+  PR_TITLE="$FIRST_COMMIT"
+else
+  # 從分支名推斷 type
+  if echo "$CURRENT_BRANCH" | grep -qiE "^fix"; then
+    TYPE="fix"
+  elif echo "$CURRENT_BRANCH" | grep -qiE "^feat"; then
+    TYPE="feat"
+  else
+    TYPE="fix"  # 預設
+  fi
+  
+  # 組合標題
+  PR_TITLE="${TYPE}(vsaas-portal): ${FIRST_COMMIT}"
+fi
+
+echo "PR 標題: $PR_TITLE"
+```
+
+### Step 4: 生成 PR 描述
+
+精簡格式：
+
+```bash
+# 生成變更清單
+CHANGES=$(git log main..HEAD --oneline --format="- %s")
+
+PR_BODY="## Changes
+${CHANGES}
+
+## Checklist
+- [ ] Code follows project conventions
+- [ ] Tests added/updated
+- [ ] Build passes locally"
+
+echo "PR 描述:"
+echo "$PR_BODY"
+```
+
+### Step 5: 決定 Reviewer
+
+```bash
+# 取得變更檔案的最後提交者
+CHANGED_FILES_LIST=$(git diff --name-only main | head -1)
+LAST_AUTHOR=$(git log -1 --format='%aN' -- "$CHANGED_FILES_LIST" 2>/dev/null)
+CURRENT_USER=$(git config user.name)
+
+# 決定 reviewer
+if [ -n "$LAST_AUTHOR" ] && [ "$LAST_AUTHOR" != "$CURRENT_USER" ]; then
+  # 嘗試取得 GitHub username
+  REVIEWER_EMAIL=$(git log -1 --format='%aE' -- "$CHANGED_FILES_LIST")
+  # 從 email 提取 username（假設格式為 username@domain）
+  REVIEWER=$(echo "$REVIEWER_EMAIL" | cut -d'@' -f1)
+else
+  REVIEWER="MarcoLin01"
+fi
+
+echo "Reviewer: $REVIEWER"
+```
+
+### Step 6: 建立 PR
+
+```bash
+# 確認遠端已推送
+git push origin "$CURRENT_BRANCH" 2>/dev/null || git push -u origin "$CURRENT_BRANCH"
+
+# 建立 PR
+gh pr create \
+  --base main \
+  --title "$PR_TITLE" \
+  --body "$PR_BODY" \
+  --reviewer "$REVIEWER"
+```
+
+## 完整腳本
+
+將以上步驟組合成完整執行流程：
+
+```bash
+#!/bin/bash
+set -e
+
+# 1. 環境檢查
+CURRENT_BRANCH=$(git branch --show-current)
+if [ "$CURRENT_BRANCH" = "main" ]; then
+  echo "❌ 不能從 main 分支建立 PR"
+  exit 1
+fi
+
+# 2. 取得變更
+CHANGED_FILES=$(git diff --name-only main)
+if [ -z "$CHANGED_FILES" ]; then
+  echo "❌ 沒有相對於 main 的變更"
+  exit 1
+fi
+
+# 3. 生成標題
+FIRST_COMMIT=$(git log main..HEAD --oneline --format="%s" | tail -1)
+if echo "$FIRST_COMMIT" | grep -qE "^(feat|fix|docs|style|refactor|perf|test|chore|ci)\("; then
+  PR_TITLE="$FIRST_COMMIT"
+else
+  TYPE="fix"
+  echo "$CURRENT_BRANCH" | grep -qiE "^feat" && TYPE="feat"
+  PR_TITLE="${TYPE}(vsaas-portal): ${FIRST_COMMIT}"
+fi
+
+# 4. 生成描述
+CHANGES=$(git log main..HEAD --oneline --format="- %s")
+PR_BODY="## Changes
+${CHANGES}
+
+## Checklist
+- [ ] Code follows project conventions
+- [ ] Tests added/updated
+- [ ] Build passes locally"
+
+# 5. 決定 Reviewer
+FIRST_FILE=$(echo "$CHANGED_FILES" | head -1)
+LAST_AUTHOR=$(git log -1 --format='%aN' -- "$FIRST_FILE" 2>/dev/null || echo "")
+CURRENT_USER=$(git config user.name)
+
+if [ -n "$LAST_AUTHOR" ] && [ "$LAST_AUTHOR" != "$CURRENT_USER" ]; then
+  REVIEWER_EMAIL=$(git log -1 --format='%aE' -- "$FIRST_FILE")
+  REVIEWER=$(echo "$REVIEWER_EMAIL" | cut -d'@' -f1)
+else
+  REVIEWER="MarcoLin01"
+fi
+
+# 6. 顯示預覽
+echo "================================"
+echo "📋 PR 預覽"
+echo "================================"
+echo "分支: $CURRENT_BRANCH → main"
+echo "標題: $PR_TITLE"
+echo "Reviewer: $REVIEWER"
+echo ""
+echo "描述:"
+echo "$PR_BODY"
+echo "================================"
+
+# 7. 推送並建立 PR
+echo ""
+echo "🚀 推送分支..."
+git push origin "$CURRENT_BRANCH" 2>/dev/null || git push -u origin "$CURRENT_BRANCH"
+
+echo "📤 建立 PR..."
+gh pr create \
+  --base main \
+  --title "$PR_TITLE" \
+  --body "$PR_BODY" \
+  --reviewer "$REVIEWER"
+
+echo "✅ PR 建立完成！"
+```
+
+## Commit 類型參考
+
+| Type | 說明 | 範例 |
+|------|------|------|
+| feat | 新功能 | `feat(vsaas-portal): add user filter` |
+| fix | 修復 | `fix(vsaas-portal): fix table sorting` |
+| docs | 文件 | `docs(vsaas-portal): update README` |
+| refactor | 重構 | `refactor(vsaas-portal): simplify auth logic` |
+| style | 格式 | `style(vsaas-portal): format code` |
+| test | 測試 | `test(vsaas-portal): add unit tests` |
+| chore | 維護 | `chore(vsaas-portal): update deps` |
+
+## 注意事項
+
+1. **確認 gh CLI 已登入**：執行 `gh auth status` 檢查
+2. **確認分支已推送**：PR 需要遠端分支存在
+3. **BREAKING CHANGE**：避免在 commit 中使用，會觸發 MAJOR 版本
+4. **僅限 vsaas-portal**：此 skill 專為 app-vsaas-portal 設計

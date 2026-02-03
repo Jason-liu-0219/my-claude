@@ -1,0 +1,240 @@
+     1→import { reactive } from 'vue';
+     2→
+     3→import {
+     4→  DEVICE_TYPE,
+     5→  FIRMWARE_UPGRADE_STATUS_MAP,
+     6→  CHANNEL_FIRMWARE_UPGRADE_STATUS_MAP,
+     7→  ADD_DEVICE_INSPECT_TYPE,
+     8→} from '@vivotek/const-vsaas';
+     9→import {
+    10→  composeVsaasDeviceId as ComposeVsaasDeviceId,
+    11→  VsaasNVR,
+    12→  VsaasNVRCamera as NVRCamera,
+    13→  VsaasVSS,
+    14→  VsaasVSSCamera as VSSCamera,
+    15→} from '@vivotek/device';
+    16→import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+    17→
+    18→import DeviceFactory from '@/models/Device/DeviceFactory';
+    19→import { convertMainLicense, convertCloudBackupLicense, convertAILicenseExpired } from '@/utils/LicenseHelper';
+    20→
+    21→const mutations = {
+    22→  setDevices(state, { items: devices, groupsMap, plan, dependencies }) {
+    23→    const excludedDeviceTypes = ['ipspeaker', 'poeSwitch'];
+    24→    const devicesWithoutExternalDevice = devices.filter((device) => !excludedDeviceTypes.includes(device.type));
+    25→    const disableSpeedDomeModels = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.DISABLE_SPEED_DOMES);
+    26→
+    27→    devicesWithoutExternalDevice.forEach((item) => {
+    28→      const device = reactive(DeviceFactory({ options: { ...item, plan } }).injectDependencies(dependencies));
+    29→      if (disableSpeedDomeModels.includes(device.model)) {
+    30→        device.services.configurator.updateState({
+    31→          isBlockCameraVcaCapabilityAndSupport: true,
+    32→        });
+    33→      }
+    34→      device.sharedLink = item.sharedLink?.enabled ? item.sharedLink : { enabled: false };
+    35→      device.mainLicense = convertMainLicense(item.contractInfo);
+    36→      device.cloudBackupLicense = convertCloudBackupLicense(item.contractInfo);
+    37→      device.aiLicenseExpired = convertAILicenseExpired(item.contractInfo);
+    38→
+    39→      if (!state.deviceMap[item.type]) {
+    40→        state.deviceMap[item.type] = new Map();
+    41→      }
+    42→
+    43→      state.deviceMap?.[item.type]?.set(device.deviceId, device);
+    44→
+    45→      const groupName = groupsMap?.[item.deviceGroupID]?.name;
+    46→
+    47→      if (groupName) {
+    48→        device.groupName = groupName;
+    49→      } else {
+    50→        state.uninitializedDevices[device.deviceId] = device;
+    51→      }
+    52→    });
+    53→  },
+    54→  resetDevices(state) {
+    55→    state.uninitializedDevices = {};
+    56→    state.searchStatus = 'initial';
+    57→    state.deviceMap = {
+    58→      nvr: new Map(),
+    59→      bridge: new Map(),
+    60→      camera: new Map(),
+    61→      nvrchannel: new Map(),
+    62→      unknownDevice: new Map(),
+    63→      vss: new Map(),
+    64→      vsschannel: new Map(),
+    65→    };
+    66→    state.isFetchingData = false;
+    67→    state.isFetchedOutdatedFirmwareDevice = false;
+    68→    state.outdatedFirmwareDeviceList = [];
+    69→    state.deviceIdForAddDevice = '';
+    70→    state.retainOriginalSettingsForAddDevice = false;
+    71→    state.cacheForAddDevice = {
+    72→      city: null,
+    73→      group: null,
+    74→    };
+    75→    state.currentAddedDeviceType = null;
+    76→  },
+    77→  deleteDevice(state, device) {
+    78→    const map = state.deviceMap[device?.type || device.options.type];
+    79→    if (!map.has(device.deviceId)) {
+    80→      return;
+    81→    }
+    82→
+    83→    map.get(device.deviceId).notifyUpdate();
+    84→    map.delete(device.deviceId);
+    85→
+    86→    delete state.uninitializedDevices[device.deviceId];
+    87→  },
+    88→  updateDevice(state, { device, groupName, plan }) {
+    89→    const deviceId = ComposeVsaasDeviceId(device);
+    90→    const map = state.deviceMap[device.type];
+    91→    const nvrMap = state.deviceMap.nvr;
+    92→    const vssMap = state.deviceMap.vss;
+    93→    const listOfMap = Array.from(map.values());
+    94→    const deviceOfState = map.get(deviceId);
+    95→
+    96→    device.groupName = groupName;
+    97→
+    98→    if (state.deviceMap.unknownDevice.has(deviceId) && !deviceOfState) {
+    99→      state.deviceMap.unknownDevice.delete(deviceId);
+   100→    }
+   101→
+   102→    if (!deviceOfState || deviceOfState.isUnknownDevice) {
+   103→      const newDeviceInstance = DeviceFactory({ options: { ...device, plan } });
+   104→
+   105→      map.set(deviceId, reactive(newDeviceInstance));
+   106→    }
+   107→
+   108→    const target = map.get(deviceId);
+   109→    Object.keys(target.options).forEach((key) => {
+   110→      target.options[key] = device[key];
+   111→      /**
+   112→       * If device has never been updated via Carota, the fwUpgradeState in listDeviceInfoOfOrganization will be null.
+   113→       * To ensure OTA status remains accurate, when device state changes, retrieve the latest state via getDeviceInfo
+   114→       * and update the status in OTAService in real time.
+   115→       */
+   116→      if (key === 'fwUpgradeState' && target.services?.ota && device[key]) {
+   117→        if (target.type === DEVICE_TYPE.NVR_CHANNEL) {
+   118→          target.services.ota.setStatus(CHANNEL_FIRMWARE_UPGRADE_STATUS_MAP[device[key]]);
+   119→        } else {
+   120→          target.services.ota.setStatus(FIRMWARE_UPGRADE_STATUS_MAP[device[key]]);
+   121→        }
+   122→      }
+   123→    });
+   124→
+   125→    if (target instanceof VsaasNVR) {
+   126→      listOfMap
+   127→        .filter((item) => item instanceof NVRCamera && item.nvrMac === device.mac)
+   128→        .forEach((channel) => {
+   129→          map.get(channel.deviceId).nvr = target.options;
+   130→        });
+   131→      nvrMap.set(target.deviceId, target);
+   132→    } else if (target instanceof NVRCamera) {
+   133→      const nvr = listOfMap.find((item) => item instanceof VsaasNVR && item.mac === target.nvrMac);
+   134→      if (nvr) {
+   135→        target.nvr = nvr.options;
+   136→      }
+   137→    } else if (target instanceof VsaasVSS) {
+   138→      listOfMap
+   139→        .filter((item) => item instanceof VSSCamera && item.vssMac === device.mac)
+   140→        .forEach((channel) => {
+   141→          map.get(channel.deviceId).vss = target.options;
+   142→        });
+   143→      vssMap.set(target.deviceId, target);
+   144→    } else if (target instanceof VSSCamera) {
+   145→      const vss = listOfMap.find((item) => item instanceof VsaasVSS && item.mac === target.vssMac);
+   146→      if (vss) {
+   147→        target.vss = vss.options;
+   148→      }
+   149→    }
+   150→  },
+   151→  updateDevicesGroupName(state, { group, devices }) {
+   152→    if (!group || !devices) {
+   153→      return;
+   154→    }
+   155→
+   156→    const groupName = group.name;
+   157→
+   158→    devices.forEach((device) => {
+   159→      const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+   160→
+   161→      currentDevice.groupName = groupName;
+   162→    });
+   163→  },
+   164→  setInitialDeviceGroupName(state, { groupsMap }) {
+   165→    Object.values(state.uninitializedDevices).forEach((device) => {
+   166→      const groupName = groupsMap[device.deviceGroupID]?.name;
+   167→      if (!groupName) {
+   168→        return;
+   169→      }
+   170→
+   171→      const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+   172→
+   173→      currentDevice.groupName = groupName;
+   174→
+   175→      delete state.uninitializedDevices[device.deviceId];
+   176→    });
+   177→  },
+   178→  updateNvrWizardFinished(state, { device, value }) {
+   179→    const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+   180→
+   181→    currentDevice.wizardFinished = value;
+   182→  },
+   183→  setSearchStatus(state, status) {
+   184→    state.searchStatus = status;
+   185→  },
+   186→  setIsFetchingData(state, nextToken) {
+   187→    state.isFetchingData = !!nextToken;
+   188→  },
+   189→  setIsFetchedOutdatedFirmwareDevice(state, status) {
+   190→    state.isFetchedOutdatedFirmwareDevice = status;
+   191→  },
+   192→  setOutdatedFirmwareDeviceList(state, deviceList) {
+   193→    state.outdatedFirmwareDeviceList = deviceList;
+   194→  },
+   195→  setSharedDevice(state, { deviceInfo, dependencies, canPlayback }) {
+   196→    const device = reactive(DeviceFactory({ options: deviceInfo })).injectDependencies(dependencies);
+   197→    state.sharedDevice = device;
+   198→    state.sharedDevice.canPlayback = canPlayback;
+   199→    state.sharedDevice.services.recording.disableCloudStreaming = true;
+   200→  },
+   201→  setDeviceSharedLink(state, { deviceId, deviceType, sharedLink }) {
+   202→    const device = state.deviceMap[deviceType].get(deviceId);
+   203→    if (device) {
+   204→      device.sharedLink = {
+   205→        ...device.sharedLink,
+   206→        ...sharedLink,
+   207→      };
+   208→    }
+   209→  },
+   210→  deleteDeviceSharedLink(state, { deviceId, deviceType }) {
+   211→    const device = state.deviceMap[deviceType].get(deviceId);
+   212→    if (device) {
+   213→      delete device.sharedLink;
+   214→    }
+   215→  },
+   216→  updateDeviceIdForAddDevice(state, deviceId) {
+   217→    state.deviceIdForAddDevice = deviceId;
+   218→  },
+   219→  updateRetainOriginalSettingsForAddDevice(state, retainOriginalSettings) {
+   220→    state.retainOriginalSettingsForAddDevice = retainOriginalSettings;
+   221→  },
+   222→  updateCacheForAddDevice(state, cache) {
+   223→    state.cacheForAddDevice = { ...state.cacheForAddDevice, ...cache };
+   224→  },
+   225→  setCurrentAddedDeviceType(state, deviceInspect) {
+   226→    state.currentAddedDeviceType = ADD_DEVICE_INSPECT_TYPE[deviceInspect.deviceType];
+   227→  },
+   228→  clearAddDeviceStore(state) {
+   229→    state.deviceIdForAddDevice = '';
+   230→    state.retainOriginalSettingsForAddDevice = false;
+   231→    state.currentAddedDeviceType = '';
+   232→  },
+   233→};
+   234→
+   235→export default mutations;
+   236→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

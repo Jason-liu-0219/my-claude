@@ -1,0 +1,3 @@
+2026-01-29T14:54:25.447Z [DEBUG] Failed to check enabledPlatforms: TypeError: LK is not a function
+2026-01-29T14:54:25.459Z [DEBUG] [Claude in Chrome] Starting MCP server
+2026-01-29T14:54:25.460Z [DEBUG] [Claude in Chrome] MCP server started

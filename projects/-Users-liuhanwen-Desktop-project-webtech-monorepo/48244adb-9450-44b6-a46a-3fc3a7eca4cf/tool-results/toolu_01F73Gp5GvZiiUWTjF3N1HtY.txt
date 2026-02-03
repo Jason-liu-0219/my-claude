@@ -1,0 +1,3 @@
+Found 2 files
+packages/app-vsaas-portal/src/store/user/getters.js
+packages/app-vsaas-portal/src/store/user/actions.js

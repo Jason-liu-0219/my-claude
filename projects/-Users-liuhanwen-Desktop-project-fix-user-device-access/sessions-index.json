@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "sessionId": "4ee0e48e-16e0-4f55-9548-e31cca6f4846",
+      "fullPath": "/Users/liuhanwen/.claude/projects/-Users-liuhanwen-Desktop-project-fix-user-device-access/4ee0e48e-16e0-4f55-9548-e31cca6f4846.jsonl",
+      "fileMtime": 1769845706494,
+      "firstPrompt": "幫我修正 device 給權限的彈窗，有搜尋條件的時候無法批次更新，幫我確認問題後修正發 PR",
+      "messageCount": 29,
+      "created": "2026-01-31T07:28:18.777Z",
+      "modified": "2026-01-31T07:48:26.352Z",
+      "gitBranch": "",
+      "projectPath": "/Users/liuhanwen/Desktop/project/fix-user-device-access",
+      "isSidechain": false
+    }
+  ],
+  "originalPath": "/Users/liuhanwen/Desktop/project/fix-user-device-access"
+}

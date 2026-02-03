@@ -1,0 +1,623 @@
+import VsaasNVR from '@vivotek/device/vsaasNVR';
+import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+
+import ApiServiceInterface from '@/singletons/ApiServiceInterface';
+
+import actions from './actions';
+
+vi.mock('@vivotek/threadable-canvas', () => ({}));
+
+vi.mock('@/singletons/ApiServiceInterface');
+
+vi.mock('@vivotek/lib-remote-config', () => {
+  return {
+    default: {
+      getConfiguration: vi.fn().mockReturnValue(true),
+    },
+    PORTAL_FEATURE_CONFIG_KEY: {
+      UPGRADE_ORGANIZATION_PLAN: 'upgradeOrganizationPlan',
+    },
+  };
+});
+
+describe('actions', () => {
+  describe('fetchListDeviceInfoOfOrganization', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should dispatch setNetworkSpeakers , commit setDevices , setSearchStatus', async () => {
+      const data = [1, 2, 3, 4];
+      const rootGetters = {
+        'organization/currentOrganization': {
+          organizationID: 'organizationID1',
+        },
+      };
+      const dispatch = vi.fn();
+      const commit = vi.fn();
+
+      const spy = vi.spyOn(ApiServiceInterface, 'listDeviceInfoOfOrganization').mockResolvedValue(data);
+
+      await actions.fetchListDeviceInfoOfOrganization({
+        state: { isFetchingData: false },
+        commit,
+        rootGetters,
+        dispatch,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).toBeCalledWith({ organizationID: 'organizationID1', limit: 200 }, expect.anything());
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(commit).toHaveBeenCalledTimes(2);
+    });
+  });
+  describe('createDevice', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+    it('should call createDevice API', async () => {
+      const mac = 'mac1';
+      const organizationID = 'organizationID1';
+      const siteID = 'siteID1';
+      const name = 'camera 1';
+      const city = 'NTP';
+      const groupsMap = {
+        siteID1: {
+          id: siteID,
+          organizationID,
+          name: '123',
+        },
+      };
+      const commit = vi.fn();
+      const dispatch = vi.fn();
+      const rootGetters = {
+        'group/groupsMap': groupsMap,
+      };
+      const data = {
+        siteID,
+        organizationID,
+      };
+      const spy = vi.spyOn(ApiServiceInterface, 'createDevice').mockResolvedValue(data);
+
+      await actions.createDevice(
+        {
+          dispatch,
+          commit,
+          rootGetters,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        {
+          mac,
+          organizationID,
+          siteID,
+          name,
+          city,
+        },
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toBeCalledWith({
+        mac,
+        organizationID,
+        siteID,
+        name,
+        city,
+      });
+      expect(commit).toBeCalledWith('updateDevice', {
+        device: {
+          siteID,
+          organizationID,
+        },
+        groupName: rootGetters['group/groupsMap'][siteID].name,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(1, 'account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+    });
+  });
+
+  describe('batchDeleteDevice', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should not call batchDeleteDevice API when no devices', async () => {
+      const spy = vi.spyOn(ApiServiceInterface, 'batchDeleteDevice');
+      await actions.batchDeleteDevice(
+        {
+          commit: vi.fn(),
+          dispatch: vi.fn(),
+        },
+        [],
+      );
+      expect(spy).toHaveBeenCalledTimes(0);
+    });
+
+    it('should call batchDeleteDevice API', async () => {
+      const devices = [
+        {
+          deviceId: 'device1',
+          options: {
+            thingName: 'thingName',
+            mac: 'mac1',
+            derivant: 'none',
+          },
+        },
+      ];
+      const items = devices.map((device) => ({
+        mac: device.options.mac,
+        derivant: device.options.derivant,
+      }));
+      const commit = vi.fn();
+      const dispatch = vi.fn();
+      const spy = vi.spyOn(ApiServiceInterface, 'batchDeleteDevice').mockResolvedValue({
+        res: true,
+      });
+      await actions.batchDeleteDevice(
+        {
+          commit,
+          dispatch,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        devices,
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toBeCalledWith({ items });
+      expect(dispatch).toHaveBeenNthCalledWith(1, 'ui/removeDeviceFromUISettings', 'device1', { root: true });
+      expect(dispatch).toHaveBeenNthCalledWith(2, 'account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+    });
+
+    it('should call batchDeleteDevice API when delete nvr', async () => {
+      const devices = [
+        new VsaasNVR({
+          mac: 'mac1',
+          thingName: 'thingName',
+          derivant: 'none',
+        }),
+      ];
+
+      const state = {
+        deviceMap: {
+          nvrchannel: new Map([
+            [
+              'mac1:ch3',
+              {
+                mac: 'mac1',
+                thingName: 'thingName',
+                derivant: 'ch3',
+                options: {
+                  mac: 'mac1',
+                  thingName: 'thingName',
+                  derivant: 'ch3',
+                },
+              },
+            ],
+          ]),
+        },
+      };
+
+      const items = devices.map((device) => ({
+        mac: device.options.mac,
+        derivant: device.options.derivant,
+      }));
+      const commit = vi.fn();
+      const dispatch = vi.fn();
+      const spy = vi.spyOn(ApiServiceInterface, 'batchDeleteDevice').mockResolvedValue({
+        res: true,
+      });
+
+      await actions.batchDeleteDevice(
+        {
+          state,
+          commit,
+          dispatch,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        devices,
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toBeCalledWith({ items });
+      expect(dispatch).toHaveBeenNthCalledWith(1, 'externalDevice/deleteExternalDeviceWithNvr', devices[0], {
+        root: true,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, 'ui/removeDeviceFromUISettings', 'thingName', { root: true });
+      expect(dispatch).toHaveBeenNthCalledWith(3, 'account/fetchCurrentOrganizationsLicenseInfo', null, { root: true });
+      expect(commit).toHaveBeenNthCalledWith(1, 'deleteDevice', devices[0]);
+    });
+  });
+
+  describe('onDeviceSubscribeUpdate', () => {
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should call getDeviceInfo API with no derivant and commit updateDevice when device is found', async () => {
+      const commit = vi.fn();
+      const rootState = {
+        apiService: ApiServiceInterface,
+        device: {
+          devices: {
+            thingName1: {},
+          },
+        },
+      };
+      const rootGetters = {
+        'group/groupsMap': {
+          siteID1: {
+            id: 'siteID1',
+            name: 'siteID1',
+          },
+        },
+      };
+      const mockDevice = {
+        derivant: 'none',
+        siteID: 'siteID1',
+        thingName: 'thingName1',
+        mac: 'mac1',
+      };
+      const mockResponse = [{ mac: 'mac1', thingName: 'thingName1', siteID: 'siteID1' }];
+      const spy = vi.spyOn(ApiServiceInterface, 'getDeviceInfo').mockResolvedValue(mockResponse);
+
+      await actions.updateDeviceInfo(
+        {
+          commit,
+          rootGetters,
+          rootState,
+          getters: {
+            allDevicesMap: {
+              thingName1: {},
+            },
+          },
+        },
+        { device: mockDevice, groupsMap: rootGetters['group/groupsMap'] },
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toBeCalledWith({ mac: mockDevice.mac });
+      expect(commit).toHaveBeenNthCalledWith(1, 'updateDevice', {
+        device: mockResponse[0],
+        groupName: 'siteID1',
+      });
+    });
+
+    it('should call getDeviceInfo API with mac and derivant and commit updateDevice when device is found', async () => {
+      const commit = vi.fn();
+      const rootState = {
+        apiService: ApiServiceInterface,
+        device: {
+          devices: {
+            thingName1: {},
+          },
+        },
+      };
+      const mockDevice = {
+        siteID: 'siteID1',
+        thingName: 'thingName1',
+        mac: 'mac1',
+        derivant: 'none',
+      };
+      const rootGetters = {
+        'group/groupsMap': {
+          siteID1: {
+            id: 'siteID1',
+            name: 'siteID1',
+          },
+        },
+      };
+      const mockResponse = [
+        {
+          mac: 'mac1',
+          derivant: 'derivant1',
+          thingName: 'thingName1',
+          siteID: 'siteID1',
+        },
+        {
+          mac: 'mac1',
+          derivant: 'derivant2',
+          thingName: 'thingName1',
+          siteID: 'siteID1',
+        },
+        {
+          mac: 'mac1',
+          derivant: 'none',
+          thingName: 'thingName1',
+          siteID: 'siteID1',
+        },
+      ];
+      const spy = vi.spyOn(ApiServiceInterface, 'getDeviceInfo').mockResolvedValue(mockResponse);
+
+      await actions.updateDeviceInfo(
+        {
+          commit,
+          rootState,
+          rootGetters,
+          getters: {
+            allDevicesMap: {
+              thingName1: {},
+            },
+          },
+        },
+        { device: mockDevice, groupsMap: rootGetters['group/groupsMap'] },
+      );
+
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toBeCalledWith({ mac: mockDevice.mac });
+      expect(commit).toHaveBeenNthCalledWith(1, 'updateDevice', {
+        device: mockResponse[0],
+        groupName: 'siteID1',
+      });
+      expect(commit).toHaveBeenNthCalledWith(2, 'updateDevice', {
+        device: mockResponse[1],
+        groupName: 'siteID1',
+      });
+      expect(commit).toHaveBeenNthCalledWith(3, 'updateDevice', {
+        device: mockResponse[2],
+        groupName: 'siteID1',
+      });
+    });
+
+    it('should not call getDeviceInfo API and not commit updateDevice when device is not found', async () => {
+      const commit = vi.fn();
+      const rootState = {
+        apiService: ApiServiceInterface,
+      };
+      const mockDevice = {
+        derivant: 'none',
+        siteID: 'siteID1',
+        thingName: 'thingName1',
+        mac: 'mac54001',
+      };
+
+      const mockGroups = {};
+      const mockResponse = [{ mac: 'mac54001', thingName: 'thingName1' }];
+
+      const spy = vi.spyOn(ApiServiceInterface, 'getDeviceInfo').mockResolvedValue(mockResponse);
+
+      await actions.updateDeviceInfo(
+        {
+          commit,
+          rootState,
+          getters: {
+            allDevicesMap: {},
+          },
+          rootGetters: {
+            currentVortexPlan: {
+              plan: 'free',
+            },
+          },
+        },
+        { device: mockDevice, groups: mockGroups },
+      );
+
+      expect(spy).toHaveBeenCalledTimes(0);
+      expect(commit).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('queryOutdatedFirmwareDevice', () => {
+    const rootGetters = {
+      'account/isOwner': true,
+      'account/isAdmin': false,
+      'organization/currentOrganization': {
+        organizationID: 'organizationID1',
+      },
+    };
+    const data = [
+      {
+        thingName: 'thingName1',
+      },
+    ];
+
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should call queryOutdatedFirmwareDevice API, commit setOutdatedFirmwareDeviceList, setIsFetchedOutdatedFirmwareDevice, setShowUpdateFirmwareDialogue', async () => {
+      const commit = vi.fn();
+      const spy = vi.spyOn(ApiServiceInterface, 'queryOutdatedFirmwareDevice').mockResolvedValue(data);
+
+      await actions.queryOutdatedFirmwareDevice({
+        commit,
+        rootGetters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+        state: {
+          isFetchedOutdatedFirmwareDevice: false,
+        },
+        dispatch: vi.fn().mockResolvedValue(true),
+      });
+
+      // expect(spy).toBeCalledWith({ organizationID: 'organizationID1' });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', data);
+      expect(commit).toHaveBeenCalledWith('setIsFetchedOutdatedFirmwareDevice', true);
+      expect(commit).toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+      );
+    });
+
+    it('should not commit setShowUpdateFirmwareDialogue when data is empty after from queryOutdatedFirmwareDevice API', async () => {
+      const commit = vi.fn();
+      const spy = vi.spyOn(ApiServiceInterface, 'queryOutdatedFirmwareDevice').mockResolvedValue([]);
+
+      await actions.queryOutdatedFirmwareDevice({
+        commit,
+        rootGetters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+        state: {
+          isFetchedOutdatedFirmwareDevice: false,
+        },
+        dispatch: vi.fn().mockResolvedValue(true),
+      });
+
+      expect(spy).toBeCalledWith({ organizationID: 'organizationID1' });
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+      );
+      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', []);
+      expect(commit).toHaveBeenCalledWith('setIsFetchedOutdatedFirmwareDevice', true);
+      expect(commit).not.toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+    });
+
+    it('should not call queryOutdatedFirmwareDevice API when user has fetched outdatedFirmwareDeviceList', async () => {
+      const commit = vi.fn();
+      const spy = vi.spyOn(ApiServiceInterface, 'queryOutdatedFirmwareDevice').mockResolvedValue(data);
+
+      await actions.queryOutdatedFirmwareDevice({
+        commit,
+        rootGetters: {
+          'account/isOwner': true,
+          'account/isAdmin': false,
+        },
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+        state: {
+          isFetchedOutdatedFirmwareDevice: true,
+        },
+        dispatch: vi.fn().mockResolvedValue(true),
+      });
+
+      expect(spy).not.toBeCalledWith({ organizationID: 'organizationID1' });
+      expect(spy).not.toHaveBeenCalledTimes(1);
+      expect(commit).not.toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', data);
+      expect(commit).not.toHaveBeenCalledWith('setIsFetchedOutdatedFirmwareDevice', true);
+      expect(commit).not.toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+        PORTAL_FEATURE_CONFIG_KEY.UPGRADE_ORGANIZATION_PLAN,
+      );
+    });
+  });
+
+  describe('upgradeDevicesFirmware', () => {
+    const devices = [
+      {
+        services: {
+          ota: {
+            checkFirmwareVersion: vi.fn().mockResolvedValue({
+              targetVersion: '123',
+            }),
+            upgradeToLatestFirmware: vi.fn().mockResolvedValue(),
+          },
+          connection: {
+            releaseConnection: vi.fn(),
+          },
+        },
+        online: true,
+      },
+    ];
+
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should call ota checkFirmwareVersion and upgradeToLatestFirmware API', async () => {
+      await actions.upgradeDevicesFirmware({
+        getters: { firmwareUpdateRequiredDevices: devices },
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+      expect(devices[0].services.ota.checkFirmwareVersion).toHaveBeenCalledTimes(1);
+      expect(devices[0].services.ota.upgradeToLatestFirmware).toHaveBeenCalledTimes(1);
+    });
+
+    it('should commit setIsUpdateFirmwareError and setShowUpdateFirmwareDialogue when targetVersion return none after call ota checkFirmwareVersion API', async () => {
+      devices[0].services.ota.checkFirmwareVersion.mockResolvedValue({
+        targetVersion: 'none',
+      });
+      const commit = vi.fn();
+
+      await actions.upgradeDevicesFirmware({
+        getters: { firmwareUpdateRequiredDevices: devices },
+        commit,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(devices[0].services.ota.checkFirmwareVersion).toHaveBeenCalledTimes(1);
+      expect(devices[0].services.ota.upgradeToLatestFirmware).toHaveBeenCalledTimes(0);
+      expect(commit).toHaveBeenCalledWith('ui/setIsUpdateFirmwareError', true, { root: true });
+      expect(commit).toHaveBeenCalledWith('ui/setShowUpdateFirmwareDialogue', true, { root: true });
+    });
+  });
+
+  describe('updateOutdatedFirmwareDevices', () => {
+    const currentDeleteItems = [
+      {
+        deviceId: 'item1',
+      },
+    ];
+    const state = {
+      outdatedFirmwareDeviceList: [
+        {
+          thingName: 'item1',
+        },
+      ],
+    };
+
+    afterEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('should update outdatedFirmwareDeviceList and set updateFirmwareBanner when outdatedFirmwareDeviceList include currentDeleteItems', () => {
+      const commit = vi.fn();
+      actions.updateOutdatedFirmwareDevices(
+        {
+          state,
+          commit,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        currentDeleteItems,
+      );
+      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', []);
+      expect(commit).toHaveBeenCalledWith('ui/setShowUpdateFirmwareBanner', false, { root: true });
+    });
+
+    it('should not set updateFirmwareBanner when outdatedFirmwareDeviceList is not empty', () => {
+      state.outdatedFirmwareDeviceList = [
+        {
+          thingName: 'item1',
+        },
+        {
+          thingName: 'item2',
+        },
+      ];
+      const commit = vi.fn();
+
+      actions.updateOutdatedFirmwareDevices(
+        {
+          state,
+          commit,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        currentDeleteItems,
+      );
+
+      expect(commit).toHaveBeenCalledWith('setOutdatedFirmwareDeviceList', [
+        {
+          thingName: 'item2',
+        },
+      ]);
+      expect(commit).not.toHaveBeenCalledWith('ui/setShowUpdateFirmwareBanner', false, { root: true });
+    });
+  });
+});

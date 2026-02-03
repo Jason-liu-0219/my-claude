@@ -1,0 +1,51 @@
+  const moreActions = computed(() => {
+    const { isCurrentUser, isOwner: userIsOwner, isAdmin: userIsAdmin } = props.user;
+    const actions = [
+      {
+        name: t('Edit username'),
+        classList: [''],
+        action: onClickEditUsername,
+      },
+    ];
+
+    if (hasUpdateUserPermission.value && !userIsOwner && !isFreePlan.value) {
+      actions.push({
+        name: userIsAdmin ? t('Remove organization admin') : t('Make organization admin'),
+        classList: [''],
+        action: userIsAdmin ? onClickRevokeUserAdmin : onClickGrantUserAdmin,
+        disabled: isCurrentUser,
+      });
+    }
+    if (hasDeleteUserPermission.value && !userIsOwner) {
+      actions.push({
+        name: t('Remove this user'),
+        classList: ['danger'],
+        action: onClickRemoveUser,
+        disabled: isCurrentUser,
+      });
+    }
+    if (enableResetMFA.value) {
+      if (actions.length) {
+        actions.push({
+          classList: ['separator', 'border-separator'],
+        });
+      }
+      actions.push({
+        name: t('Reset MFA'),
+        classList: [''],
+        action: onClickResetUserMFA,
+        disabled: !enableMFA.value,
+      });
+    }
+    return actions;
+  });
+
+  const enableMoreActions = computed(() => {
+    return !!(!props.user.isCurrentUser && moreActions.value.length);
+  });
+
+  const showRoleTag = computed(() => {
+    return [USER_ROLE.OWNER, USER_ROLE.ADMIN].includes(props.user?.role);
+  });
+
+  const confirmChangeUsername = async (username) => {

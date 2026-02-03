@@ -1,0 +1,290 @@
+<template>
+  <div class="device-access-table">
+    <AppTable
+      :bodyList="tableContentList"
+      :headerList="tableHeaderList"
+      :searchStatus="searchStatus"
+      :displayRowButtons="false"
+      :grid="false"
+      scroll
+      sort
+    >
+      <template #table-content-row="{ item, headerList }">
+        <td
+          v-for="header in headerList"
+          :key="header.type"
+          :class="header.type"
+          @click="toggleSite(item)"
+        >
+          <div
+            v-if="header.type === 'name'"
+            class="device-name-wrapper"
+          >
+            <SvgIcon
+              v-if="item.devices?.length"
+              class="icon expand-icon"
+              :iconClass="item.displaySubItems ? 'general_arrow_bottom' : 'general_arrow_right'"
+              size="20px"
+            />
+            <SvgIcon
+              class="icon"
+              :iconClass="item.icon || 'general_location_site'"
+              size="28px"
+            />
+            <h6>{{ item.name }}</h6>
+          </div>
+          <template v-else-if="header.type === 'role'">
+            <h6>{{ item.role }}</h6>
+          </template>
+        </td>
+      </template>
+      <template #table-content-sub-row="{ item: subItem, headerList }">
+        <td
+          v-for="header in headerList"
+          :key="header.type"
+          :class="header.type"
+        >
+          <div
+            v-if="header.type === 'name'"
+            class="device-name-wrapper"
+          >
+            <SvgIcon
+              class="icon"
+              :iconClass="getDeviceIcon(subItem.type)"
+              size="28px"
+            />
+            <h6>{{ subItem.name }}</h6>
+          </div>
+          <template v-else-if="header.type === 'role'">
+            <h6>{{ subItem.role }}</h6>
+          </template>
+        </td>
+      </template>
+      <template #status-icon>
+        <AppTableStatusInfoIcon :status="searchStatus">
+          <template #append>
+            <button
+              v-if="showManageButton"
+              class="manage-access-button"
+              @click="emit('manageAccess')"
+            >
+              {{ t('Manage Device Access') }}
+            </button>
+          </template>
+        </AppTableStatusInfoIcon>
+      </template>
+    </AppTable>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+import AppTableStatusInfoIcon from '@vivotek/generic-vue-components/components/AppTable/AppTableStatusInfoIcon.vue';
+import { sortingUtils } from '@vivotek/lib-utility';
+
+const { t } = useI18n();
+
+const props = defineProps({
+  sites: {
+    type: Array,
+    default: () => [],
+  },
+  searchStatus: {
+    type: String,
+    default: '',
+  },
+  showManageButton: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(['manageAccess']);
+
+const sortCompare = (a, b) => {
+  // Virtual sites (with icon) go to top
+  const aIsVirtual = !!a.icon;
+  const bIsVirtual = !!b.icon;
+  if (aIsVirtual && !bIsVirtual) {
+    return -1;
+  }
+  if (!aIsVirtual && bIsVirtual) {
+    return 1;
+  }
+  // Ungrouped site goes to bottom
+  if (a.isUngrouped && !b.isUngrouped) {
+    return 1;
+  }
+  if (!a.isUngrouped && b.isUngrouped) {
+    return -1;
+  }
+  return sortingUtils.sortByLocalCompare(a, b, 'name');
+};
+
+const expandedSiteIds = ref(new Set());
+
+// Only run once when data arrives, then stop
+const stopWatch = watch(
+  () => props.sites,
+  (newSites) => {
+    if (newSites.length > 0) {
+      const sorted = [...newSites].sort(sortCompare);
+      expandedSiteIds.value.add(sorted[0].id);
+      stopWatch();
+    }
+  },
+  { immediate: true },
+);
+
+const tableHeaderList = computed(() => [
+  {
+    type: 'name',
+    name: t('Sites/Devices'),
+  },
+  {
+    type: 'role',
+    name: t('Role and Permission'),
+  },
+]);
+
+// Pre-sort data here since AppTable sort is disabled
+const tableContentList = computed(() => {
+  return [...props.sites].sort(sortCompare).map((site) => ({
+    ...site,
+    subItems: site.devices || [],
+    displaySubItems: expandedSiteIds.value.has(site.id),
+  }));
+});
+
+const toggleSite = (item) => {
+  if (expandedSiteIds.value.has(item.id)) {
+    expandedSiteIds.value.delete(item.id);
+  } else {
+    expandedSiteIds.value.add(item.id);
+  }
+};
+
+const getDeviceIcon = (type) => {
+  const iconMap = {
+    camera: 'general_camera_solid',
+    nvr: 'general_device_solid',
+    nvrchannel: 'general_camera_solid',
+    vss: 'general_device_solid',
+    vsschannel: 'general_camera_solid',
+    bridge: 'general_RX_solid',
+    ipspeaker: 'general_speaker_solid',
+    poeSwitch: 'general_poe_solid',
+    unknownDevice: 'general_unknown_soild',
+  };
+  return iconMap[type] || 'general_camera_solid';
+};
+</script>
+
+<style scoped lang="less">
+.device-access-table {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: @color-surface03;
+  padding: 20px;
+
+  :deep(.table-layout-wrapper) {
+    flex: 1;
+    min-height: 0;
+    background: @color-surface03;
+
+    .empty-block {
+      background: @color-surface03;
+    }
+
+    // Header styles
+    .table-header {
+      th[type='name'],
+      th[type='role'] {
+        flex: 1;
+        flex-basis: 50%;
+      }
+
+      .table-row:hover {
+        background: transparent;
+      }
+    }
+
+    // Content styles
+    .table-content {
+      .name,
+      .role {
+        flex: 1;
+        flex-basis: 50%;
+      }
+
+      .role h6 {
+        color: @color-text02;
+      }
+
+      .table-row {
+        height: 57px;
+        cursor: pointer;
+
+        &:hover {
+          background: @color-surface04;
+        }
+
+        h6 {
+          color: @color-text01;
+          .text-ellipsis();
+        }
+      }
+
+      tr.sub-row {
+        background: @color-surface02;
+
+        .name {
+          padding-left: 40px;
+        }
+      }
+    }
+  }
+
+  // Device name wrapper
+  .device-name-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .icon {
+      color: @color-icon03;
+      flex-shrink: 0;
+    }
+
+    .expand-icon {
+      cursor: pointer;
+    }
+
+    h6 {
+      .text-ellipsis();
+    }
+  }
+
+  .manage-access-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    border: 1px solid @color-text03;
+    border-radius: 4px;
+    background: transparent;
+    color: @color-text01;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: @color-surface04;
+    }
+  }
+}
+</style>

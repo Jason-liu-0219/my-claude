@@ -1,0 +1,163 @@
+/* eslint-disable import/first */
+import shallowMount from '@/utils/testHelper';
+
+import { createStore } from 'vuex';
+
+// Mock Vue internals to provide proxy.$t and proxy.$vendor during setup()
+vi.mock('vue', async () => {
+  const actual = await vi.importActual('vue');
+  return {
+    ...actual,
+    getCurrentInstance: () => ({
+      proxy: {
+        $t: (key) => key,
+      },
+    }),
+    useTemplateRef: () => ({
+      value: {
+        openRight: vi.fn(),
+        show: vi.fn(),
+        hide: vi.fn(),
+        openDialogue: vi.fn(),
+        onSelectSuccess: vi.fn(),
+        onSelectFailed: vi.fn(),
+      },
+    }),
+  };
+});
+
+import AccessControl from './index.vue';
+
+const device1 = {
+  deviceId: 'device1',
+  services: {
+    configurator: {
+      getBackendIdentifier: () => 'device1',
+    },
+  },
+};
+
+const device2 = {
+  deviceId: 'device2',
+  services: {
+    configurator: {
+      getBackendIdentifier: () => 'device2',
+    },
+  },
+};
+
+const buildStore = () =>
+  createStore({
+    modules: {
+      accessControl: {
+        namespaced: true,
+        state: {
+          status: '',
+          integration: {
+            provider: 'provider',
+            removeNonexistentBindings: vi.fn().mockResolvedValue(),
+            bindAccessControlObject: vi.fn().mockResolvedValue(),
+            removedObjects: [],
+          },
+        },
+        getters: {
+          currentProvider: () => 'provider',
+          hasProviderIntegrated: () => true,
+        },
+        actions: {
+          initIntegration: () => {},
+        },
+      },
+      device: {
+        namespaced: true,
+        getters: {
+          availableDevices: () => [device1, device2],
+          allDevicesMap: () => ({ device1, device2 }),
+          isAvailableDevice: () => () => true,
+          getAvailableDevicesWithScope: () => () => [device1, device2],
+          getAvailableCameraDevicesWithPermission: () => () => [device1, device2],
+        },
+      },
+      permission: {
+        namespaced: true,
+        getters: {
+          canDoDevice: () => () => true,
+        },
+      },
+    },
+  });
+
+const createWrapper = async (computed, options = {}) => {
+  const store = options.store || buildStore();
+  const wrapper = shallowMount(AccessControl, {
+    ...options,
+    store,
+  });
+  await wrapper.vm.$nextTick();
+  return { wrapper, store };
+};
+
+describe('AccessControl', () => {
+  describe('methods', () => {
+    describe('initialize', () => {
+      it('should call functions to query current access control configuration and remove nonexistent bindings', async () => {
+        const { wrapper, store } = await createWrapper();
+        const state = wrapper.vm.$.setupState;
+        const dispatchSpy = vi.spyOn(store, 'dispatch').mockResolvedValue();
+        await state.initialize();
+        expect(state.currentBindingObject).toBeNull();
+        expect(dispatchSpy).toHaveBeenCalledWith('accessControl/initIntegration');
+        expect(state.isLoading).toBe(false);
+      });
+      it('should handle error when querying current access control configuration', async () => {
+        const { wrapper, store } = await createWrapper();
+        const state = wrapper.vm.$.setupState;
+        const error = new Error('test error');
+        const dispatchSpy = vi
+          .spyOn(store, 'dispatch')
+          .mockImplementation((type) =>
+            type === 'accessControl/initIntegration' ? Promise.reject(error) : Promise.resolve(),
+          );
+        await state.initialize();
+        expect(dispatchSpy).toHaveBeenCalledWith('accessControl/initIntegration');
+        expect(state.isLoading).toBe(false);
+      });
+    });
+    describe('removeNonexistentBindings', () => {
+      it('should call function to remove nonexistent bindings (removed devices)', async () => {
+        const { wrapper } = await createWrapper();
+        const state = wrapper.vm.$.setupState;
+        state.integration.removedObjects = [
+          {
+            objectId: 'object1',
+            devices: [{ thingName: 'device1' }],
+          },
+        ];
+        await state.removeNonexistentBindings();
+        expect(state.integration.removeNonexistentBindings).toHaveBeenCalledWith(['device1', 'device2']);
+        expect(state.updatedObjectList).toEqual([
+          {
+            objectId: 'object1',
+            devices: [{ thingName: 'device1' }],
+            deviceList: [device1],
+          },
+        ]);
+      });
+    });
+    describe('handleSelectCameras', async () => {
+      it('should bind access control objects with selected cameras', async () => {
+        const { wrapper } = await createWrapper();
+        const state = wrapper.vm.$.setupState;
+        state.currentBindingObject = {
+          objectId: 'object1',
+          devices: ['device2'],
+        };
+        await state.handleSelectCameras(['device1']);
+        expect(state.integration.bindAccessControlObject).toHaveBeenCalledWith({
+          objectId: 'object1',
+          devices: ['device1'],
+        });
+      });
+    });
+  });
+});

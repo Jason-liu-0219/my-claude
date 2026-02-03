@@ -1,0 +1,3 @@
+packages/app-vsaas-portal/src/pages/device/management/index.vue:129:              v-else-if="isPoESwitchGroupList && hasCreateDevicePermission"
+packages/app-vsaas-portal/src/store/permission/getters.js:36:            rootGetters['device/allDevicesMap'][deviceId] || rootState.externalDevice.poeSwitches[deviceId];
+packages/app-vsaas-portal/src/store/permission/getters.test.js:134:            poeSwitches: {},

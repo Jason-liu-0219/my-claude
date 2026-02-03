@@ -1,0 +1,142 @@
+     1→<template>
+     2→  <div class="move-camera-group-dialogue">
+     3→    <AppDialogue
+     4→      ref="moveDeviceGroupDialogue"
+     5→      class="moveDeviceGroupDialogue"
+     6→      name="moveDeviceGroupDialogue"
+     7→      width="828px"
+     8→      :title="$t('Move to')"
+     9→      :state="currentState"
+    10→      :closeWhenClickButton="false"
+    11→      :buttons="dialogueButtons"
+    12→    >
+    13→      <template #content>
+    14→        <div class="content">
+    15→          <DeviceManagementGroupList
+    16→            v-model="currentGroupId"
+    17→            :selectMode="true"
+    18→            :groups="filteredGroups"
+    19→            :hideTitle="true"
+    20→          />
+    21→        </div>
+    22→      </template>
+    23→      <template
+    24→        v-if="isError"
+    25→        #errorMessage
+    26→      >
+    27→        <AppFormErrorMessage :message="$t('Failed to move devices. Try again.')" />
+    28→      </template>
+    29→    </AppDialogue>
+    30→  </div>
+    31→</template>
+    32→
+    33→<script>
+    34→import { DIALOGUE, DEVICE_TABLE_GROUP_ID_MAP } from '@vivotek/const-vsaas';
+    35→
+    36→import DeviceManagementGroupList from '@/components/Group/DeviceManagementGroupList.vue';
+    37→
+    38→export default {
+    39→  name: 'MoveGroupOfDevicesDialogue',
+    40→  components: {
+    41→    DeviceManagementGroupList,
+    42→  },
+    43→  props: {
+    44→    groups: {
+    45→      type: Array,
+    46→      required: true,
+    47→    },
+    48→    defaultGroupId: {
+    49→      type: String,
+    50→      default: '-1',
+    51→    },
+    52→    operateAction: {
+    53→      type: Function,
+    54→      required: true,
+    55→    },
+    56→  },
+    57→  data() {
+    58→    return {
+    59→      currentState: DIALOGUE.STATE.DEFAULT,
+    60→      currentGroupId: '',
+    61→    };
+    62→  },
+    63→  methods: {
+    64→    show() {
+    65→      this.setDefault();
+    66→      this.dialogue.show();
+    67→    },
+    68→    hide() {
+    69→      this.dialogue.hide();
+    70→    },
+    71→    async confirm() {
+    72→      this.setState(DIALOGUE.STATE.PROCESSING);
+    73→
+    74→      try {
+    75→        await this.operateAction(this.currentGroupId);
+    76→        this.setState(DIALOGUE.STATE.SUCCESS);
+    77→      } catch (error) {
+    78→        this.setState(DIALOGUE.STATE.ERROR);
+    79→      }
+    80→    },
+    81→    setState(state) {
+    82→      this.currentState = state;
+    83→    },
+    84→    setDefault() {
+    85→      this.setState(DIALOGUE.STATE.DEFAULT);
+    86→      this.currentGroupId = this.defaultGroupId !== '-1' ? this.defaultGroupId : this.filteredGroups[0].id;
+    87→    },
+    88→    onSelectGroup(groupId) {
+    89→      this.currentGroupId = groupId;
+    90→    },
+    91→  },
+    92→  computed: {
+    93→    dialogue() {
+    94→      return this.$refs.moveDeviceGroupDialogue;
+    95→    },
+    96→    dialogueDisabled() {
+    97→      return this.isProcessing || this.currentState === DIALOGUE.STATE.SUCCESS;
+    98→    },
+    99→    dialogueButtons() {
+   100→      return [
+   101→        {
+   102→          class: 'solid',
+   103→          text: this.isProcessing ? this.$t('Moving...') : this.$t('Move'),
+   104→          clickHandler: () => {
+   105→            this.confirm();
+   106→          },
+   107→        },
+   108→        {
+   109→          class: 'ghost',
+   110→          text: this.$t('Cancel'),
+   111→          clickHandler: () => {
+   112→            this.hide();
+   113→          },
+   114→        },
+   115→      ];
+   116→    },
+   117→    filteredGroups() {
+   118→      return this.groups.filter((group) => Object.values(DEVICE_TABLE_GROUP_ID_MAP).indexOf(group.id) < 0);
+   119→    },
+   120→    isProcessing() {
+   121→      return this.currentState === DIALOGUE.STATE.PROCESSING;
+   122→    },
+   123→    isError() {
+   124→      return this.currentState === DIALOGUE.STATE.ERROR;
+   125→    },
+   126→  },
+   127→  // mounted() {
+   128→  //   this.setDefault();
+   129→  // }
+   130→};
+   131→</script>
+   132→
+   133→<style lang="less" scoped>
+   134→.content {
+   135→  height: 460px;
+   136→}
+   137→</style>
+   138→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

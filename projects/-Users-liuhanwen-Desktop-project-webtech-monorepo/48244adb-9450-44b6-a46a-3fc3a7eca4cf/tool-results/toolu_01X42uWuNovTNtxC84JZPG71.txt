@@ -1,0 +1,201 @@
+     1→import {
+     2→  VsaasCamera,
+     3→  VsaasNVR,
+     4→  VsaasNVRCamera as NVRCamera,
+     5→  VsaasVSS,
+     6→  VsaasVSSCamera as VSSCamera,
+     7→  VsaasBridge,
+     8→} from '@vivotek/device';
+     9→import ComposeVsaasDeviceId from '@vivotek/device/utility/composeVsaasDeviceId';
+    10→import { sortingUtils } from '@vivotek/lib-utility';
+    11→
+    12→export default {
+    13→  groupDevicesMap(state, getters) {
+    14→    // NOTE: NVR does not belong to any group
+    15→    const map = new Map();
+    16→
+    17→    getters.availableCameraDevices.forEach((device) => {
+    18→      const groupId = device.options.deviceGroupID;
+    19→      if (!map.has(groupId)) {
+    20→        map.set(groupId, []);
+    21→      }
+    22→      map.get(groupId).push(device);
+    23→    });
+    24→
+    25→    map.forEach((devices) => {
+    26→      devices.sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'displayName'));
+    27→    });
+    28→
+    29→    return Object.fromEntries(map);
+    30→  },
+    31→  allDevicesMap(state, getters) {
+    32→    const mergedMap = Object.values(state.deviceMap).reduce((acc, map) => new Map([...acc, ...map]), new Map());
+    33→
+    34→    return Object.fromEntries(mergedMap);
+    35→  },
+    36→  devicesAISearchMap(state, getters) {
+    37→    return getters.availableCameraDevices.reduce((acc, item) => {
+    38→      acc[item.aiObjectSearchKey] = item;
+    39→      return acc;
+    40→    }, {});
+    41→  },
+    42→  availableDevices(state) {
+    43→    const allValues = Object.values(state.deviceMap).flatMap((map) => Array.from(map.values()));
+    44→
+    45→    return allValues.map((device) => {
+    46→      if (device instanceof NVRCamera) {
+    47→        device.nvr = state.deviceMap.nvr.get(device.thingName);
+    48→      }
+    49→      if (device instanceof VSSCamera) {
+    50→        device.vss = state.deviceMap.vss.get(device.thingName);
+    51→      }
+    52→      return device;
+    53→    });
+    54→  },
+    55→  availableNVRDevices(state, getters) {
+    56→    return getters.availableDevices
+    57→      .filter((item) => item instanceof VsaasNVR)
+    58→      .map((nvr) => {
+    59→        nvr.channels = getters.availableNVRCameraDevices.filter((item) => nvr.mac === item.nvrMac);
+    60→        return nvr;
+    61→      });
+    62→  },
+    63→  availableVSSDevices(state, getters) {
+    64→    return getters.availableDevices
+    65→      .filter((item) => item instanceof VsaasVSS)
+    66→      .map((vss) => {
+    67→        vss.channels = getters.availableVSSCameraDevices.filter((item) => item.vssMac === vss.mac);
+    68→        return vss;
+    69→      });
+    70→  },
+    71→  availableBridgeDevices(state, getters) {
+    72→    return getters.availableDevices.filter((item) => item instanceof VsaasBridge);
+    73→  },
+    74→  availableCameraDevices(state, getters) {
+    75→    return getters.availableDevices.filter(
+    76→      (item) => item instanceof VsaasCamera || item instanceof NVRCamera || item instanceof VSSCamera,
+    77→    );
+    78→  },
+    79→  availableNVRCameraDevices(state, getters) {
+    80→    return getters.availableDevices.filter((item) => item instanceof NVRCamera);
+    81→  },
+    82→  availableVSSCameraDevices(state, getters) {
+    83→    return getters.availableDevices.filter((item) => item instanceof VSSCamera);
+    84→  },
+    85→  availableVsaasCameraDevices(state, getters) {
+    86→    return getters.availableDevices.filter((item) => item instanceof VsaasCamera);
+    87→  },
+    88→  filteredUnknownVsaasCameraDevices(state, getters) {
+    89→    return getters.availableVsaasCameraDevices.filter((device) => !device.isUnknownDevice);
+    90→  },
+    91→  filteredDevices(state, getters) {
+    92→    return (searchText) =>
+    93→      getters.availableDevices.filter(
+    94→        (device) => device.displayName?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1,
+    95→      );
+    96→  },
+    97→  isAvailableDevice(state, getters) {
+    98→    return (deviceId) => Object.keys(getters.allDevicesMap).includes(deviceId);
+    99→  },
+   100→  deviceCount(state, getters) {
+   101→    return getters.availableDevices.length;
+   102→  },
+   103→  getDeviceGroupId(state, getters) {
+   104→    return (deviceId) => {
+   105→      return getters.allDevicesMap[deviceId]?.options.deviceGroupID;
+   106→    };
+   107→  },
+   108→  getDeviceByMac: (state, getters) => (mac) => getters.availableDevices.find((device) => device.mac === mac),
+   109→  getDeviceByKey: (state, getters) => (mac, derivant) =>
+   110→    getters.availableDevices.find((device) => device.options.mac === mac && device.options.derivant === derivant),
+   111→  getDeviceByDeviceId: (state, getters) => (deviceId) =>
+   112→    getters.availableDevices.find((device) => device.deviceId === deviceId),
+   113→  getAvailableDevicesWithPermission(state, getters, rootState, rootGetters) {
+   114→    return (permission) => {
+   115→      if (!permission) {
+   116→        return getters.availableDevices;
+   117→      }
+   118→      return getters.availableDevices.filter(
+   119→        (device) => rootGetters['permission/hasPermission'](permission, device.deviceId) === true,
+   120→      );
+   121→    };
+   122→  },
+   123→  getAvailableCameraDevicesWithPermission(state, getters, rootState, rootGetters) {
+   124→    return (scope) => {
+   125→      if (!scope) {
+   126→        return getters.availableCameraDevices;
+   127→      }
+   128→      return getters.availableCameraDevices.filter((device) =>
+   129→        rootGetters['permission/canDoDevice']({ scope, deviceId: device.deviceId }),
+   130→      );
+   131→    };
+   132→  },
+   133→  getAvailableVsaasCamerasWithPermission(state, getters, rootState, rootGetters) {
+   134→    return (scope) => {
+   135→      if (!scope) {
+   136→        return getters.availableVsaasCameraDevices;
+   137→      }
+   138→      return getters.availableVsaasCameraDevices.filter((device) =>
+   139→        rootGetters['permission/canDoDevice']({ scope, deviceId: device.deviceId }),
+   140→      );
+   141→    };
+   142→  },
+   143→  firmwareUpdateRequiredDevices(state, getters) {
+   144→    return getters.availableCameraDevices.filter((device) => {
+   145→      return state.outdatedFirmwareDeviceList.find(
+   146→        (outdatedDevice) =>
+   147→          outdatedDevice.thingName === device.thingName && outdatedDevice.derivant === device.options.derivant,
+   148→      );
+   149→    });
+   150→  },
+   151→  getDeviceAssociatedSpeakers(state, getters, rootState, rootGetters) {
+   152→    const availableSpeakers = rootGetters['externalDevice/availableNetworkSpeakers'];
+   153→    return (device) =>
+   154→      availableSpeakers
+   155→        .filter((speaker) =>
+   156→          speaker.services.networkSpeakerSystem?.associatedDevices
+   157→            .map((info) => ComposeVsaasDeviceId(info))
+   158→            .includes(device.deviceId),
+   159→        )
+   160→        .flat();
+   161→  },
+   162→  existingDeviceTypes(state) {
+   163→    return Object.keys(state.deviceMap).filter((type) => {
+   164→      const deviceMap = state.deviceMap[type];
+   165→      return deviceMap && deviceMap.size > 0;
+   166→    });
+   167→  },
+   168→  getAvailableDevicesWithScope(state, getters, rootState, rootGetters) {
+   169→    return ({ scope }) => {
+   170→      return getters.availableDevices.filter((device) =>
+   171→        rootGetters['permission/canDoDevice']({
+   172→          deviceId: device.deviceId,
+   173→          scope,
+   174→        }),
+   175→      );
+   176→    };
+   177→  },
+   178→  /**
+   179→   * Check if any device in the list lacks the specified permission scope
+   180→   * Supports both deviceIds (strings) and device sources ({ thingName, derivant })
+   181→   * @param {Array<string|Object>} devices - Array of device IDs or device sources
+   182→   * @param {string} scope - Permission scope to check
+   183→   * @returns {boolean} True if any device lacks the permission
+   184→   */
+   185→  hasInvalidDevicesInScope(state, getters, rootState, rootGetters) {
+   186→    return ({ devices, scope }) => {
+   187→      if (!devices || devices.length === 0) {
+   188→        return false;
+   189→      }
+   190→      return devices.some((device) => {
+   191→        const deviceId = typeof device === 'string' ? device : ComposeVsaasDeviceId(device);
+   192→        return !rootGetters['permission/canDoDevice']({ deviceId, scope });
+   193→      });
+   194→    };
+   195→  },
+   196→};
+   197→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

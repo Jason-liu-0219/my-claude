@@ -1,0 +1,223 @@
+import { computed } from 'vue';
+
+import { DEVICE_TYPE } from '@vivotek/const-vsaas';
+
+export const DEFAULT_VIEWER_ROLE_ID = 'role-device-viewer';
+
+export const composeDeviceId = (thingName, derivant) => {
+  if (!derivant || derivant === 'none') {
+    return thingName;
+  }
+  return `${thingName}:${derivant}`;
+};
+
+export const parseDeviceId = (deviceId) => {
+  if (!deviceId.includes(':')) {
+    return { thingName: deviceId, derivant: 'none' };
+  }
+  const [thingName, derivant] = deviceId.split(':');
+  return { thingName, derivant };
+};
+
+export const isNvrChannel = (device) => {
+  return device?.type === DEVICE_TYPE.NVR_CHANNEL;
+};
+
+export const isVssChannel = (device) => {
+  return device?.type === DEVICE_TYPE.VSS_CHANNEL;
+};
+
+export const isParentDevice = (device) => {
+  return device?.type === DEVICE_TYPE.NVR || device?.type === DEVICE_TYPE.VSS;
+};
+
+export const getParentDeviceId = (device) => {
+  if (isNvrChannel(device)) {
+    return device.nvr.deviceId;
+  }
+  if (isVssChannel(device)) {
+    return device.vss.deviceId;
+  }
+  return null;
+};
+
+/**
+ * check the channel belongs to the specified parent device
+ */
+export const isChannelOfParent = ({ channelDevice, parentDevice }) => {
+  if (!channelDevice) {
+    return false;
+  }
+
+  const isNvr =
+    parentDevice?.type === DEVICE_TYPE.NVR &&
+    channelDevice?.type === DEVICE_TYPE.NVR_CHANNEL &&
+    channelDevice?.nvr?.deviceId === parentDevice?.deviceId;
+
+  const isVss =
+    parentDevice?.type === DEVICE_TYPE.VSS &&
+    channelDevice?.type === DEVICE_TYPE.VSS_CHANNEL &&
+    channelDevice.vss?.deviceId === parentDevice?.deviceId;
+
+  return isNvr || isVss;
+};
+
+export const useDeviceRoleHelper = (devices) => {
+  const deviceMap = computed(() => {
+    const map = new Map();
+    devices.value.forEach((device) => {
+      map.set(device.deviceId, device);
+    });
+    return map;
+  });
+
+  const createGrantedDevice = (deviceId, roleId = '') => {
+    const { thingName, derivant } = parseDeviceId(deviceId);
+
+    return {
+      thingName,
+      derivant,
+      roleId,
+    };
+  };
+
+  const createViewerGrantedDevice = (deviceId) => {
+    const { thingName, derivant } = parseDeviceId(deviceId);
+
+    return {
+      thingName,
+      derivant,
+      roleId: DEFAULT_VIEWER_ROLE_ID,
+    };
+  };
+
+  const createRemovedGrantedDevice = (originalDevice) => {
+    return {
+      thingName: originalDevice.thingName,
+      derivant: originalDevice.derivant,
+      roleId: null,
+    };
+  };
+
+  /**
+   * handle channel parent device
+   * if selected device is NVR/VSS channel, automatically add its parent device and give viewer permission
+   */
+  const addParentDeviceIfNeeded = (device, selectedDeviceIdsSet, grantedDevicesMap) => {
+    const parentDeviceId = getParentDeviceId(device);
+
+    if (!parentDeviceId) {
+      return;
+    }
+
+    if (!selectedDeviceIdsSet.has(parentDeviceId) && !grantedDevicesMap.has(parentDeviceId)) {
+      grantedDevicesMap.set(parentDeviceId, createViewerGrantedDevice(parentDeviceId));
+    }
+  };
+
+  /**
+   * handle selected devices
+   */
+  const processSelectedDevices = (currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap) => {
+    currentSelectedDevices.forEach((deviceId) => {
+      const roleId = deviceRoles[deviceId]?.roleId || '';
+      const device = deviceMap.value.get(deviceId);
+
+      grantedDevicesMap.set(deviceId, createGrantedDevice(deviceId, roleId));
+      addParentDeviceIfNeeded(device, selectedDeviceIdsSet, grantedDevicesMap);
+    });
+  };
+
+  /**
+   * handle removed devices
+   */
+  const processRemovedDevices = (originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap) => {
+    originalGrantedDevices.forEach((originalDevice, originalDeviceId) => {
+      if (selectedDeviceIdsSet.has(originalDeviceId)) {
+        return;
+      }
+
+      const device = deviceMap.value.get(originalDeviceId);
+
+      grantedDevicesMap.set(originalDeviceId, createRemovedGrantedDevice(originalDevice));
+
+      if (isParentDevice(device)) {
+        originalGrantedDevices.forEach((channelDevice, channelDeviceId) => {
+          const channelDeviceObj = deviceMap.value.get(channelDeviceId);
+
+          if (isChannelOfParent({ channelDevice: channelDeviceObj, parentDevice: device })) {
+            grantedDevicesMap.set(channelDeviceId, createRemovedGrantedDevice(channelDevice));
+          }
+        });
+      }
+    });
+  };
+
+  /**
+   * find all channels of parent devices
+   */
+  const getChannelsOfParents = (parentDeviceIds) => {
+    const channels = new Set();
+
+    parentDeviceIds.forEach((parentDeviceId) => {
+      const parentDevice = deviceMap.value.get(parentDeviceId);
+
+      if (parentDevice && isParentDevice(parentDevice)) {
+        devices.value.forEach((device) => {
+          if (
+            isChannelOfParent({
+              channelDevice: device,
+              parentDevice,
+            })
+          ) {
+            channels.add(device.deviceId);
+          }
+        });
+      }
+    });
+
+    return channels;
+  };
+
+  /**
+   * find all parents to add
+   */
+  const getParentsToAdd = (deviceIds, currentSelectedSet) => {
+    const parents = new Set();
+
+    deviceIds.forEach((deviceId) => {
+      const device = deviceMap.value.get(deviceId);
+      const parentDeviceId = getParentDeviceId(device);
+
+      if (parentDeviceId && !currentSelectedSet.has(parentDeviceId)) {
+        parents.add(parentDeviceId);
+      }
+    });
+
+    return Array.from(parents);
+  };
+
+  const updateSelectedDevicesWithParentChannel = (targetSelectedDevices, currentSelectedDevices) => {
+    const targetSet = new Set(targetSelectedDevices);
+    const currentSet = new Set(currentSelectedDevices);
+
+    const deselectedDevices = currentSelectedDevices.filter((id) => !targetSet.has(id));
+    const newSelectedDevices = targetSelectedDevices.filter((id) => !currentSet.has(id));
+
+    // handle deselected devices：check if deselected devices are NVR/VSS parents, and find channels to remove
+    const channelsToRemove = getChannelsOfParents(deselectedDevices);
+    const finalSelectedDevices = targetSelectedDevices.filter((id) => !channelsToRemove.has(id));
+
+    // handle selected devices：check if new selected devices are NVR/VSS channels, and find parents to add
+    const finalSelectedSet = new Set(finalSelectedDevices);
+    const parentsToAdd = getParentsToAdd(newSelectedDevices, finalSelectedSet);
+
+    return [...finalSelectedDevices, ...parentsToAdd];
+  };
+
+  return {
+    processSelectedDevices,
+    processRemovedDevices,
+    updateSelectedDevicesWithParentChannel,
+  };
+};

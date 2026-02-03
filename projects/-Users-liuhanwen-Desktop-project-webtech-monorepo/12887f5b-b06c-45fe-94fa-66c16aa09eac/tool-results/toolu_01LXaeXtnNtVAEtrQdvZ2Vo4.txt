@@ -1,0 +1,297 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-47-      expect(state.planPermissionManager).toEqual(planPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-48-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-49-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-50-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-51-  describe('setAIControlPermissionManager', () => {
+packages/app-vsaas-portal/src/store/permission/mutations.test.js:52:    it('should set state aiControlPermissionManager', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-53-      const state = {
+packages/app-vsaas-portal/src/store/permission/mutations.test.js-54-        aiControlPermissionManager: null,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-55-      };
+packages/app-vsaas-portal/src/store/permission/mutations.test.js:56:      const aiControlPermissionManager = { setDarkReleaseFeatures: vi.fn() };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-57-      mutations.setAIControlPermissionManager(state, aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-58-      expect(state.aiControlPermissionManager).toEqual(aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-59-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-60-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.test.js-61-});
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-8-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-9-  isDirtyByName(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-10-    return (id) => state.dirty[id] === true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-11-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-12-  excludeVcaEvents(state, $getters, rootState) {
+packages/app-vsaas-portal/src/store/ui/getters.js:13:    const { aiControlPermissionManager } = rootState.permission;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-14-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-15-    const remoteConfigEventMap = {
+packages/app-vsaas-portal/src/store/ui/getters.js-16-      [VCA_EVENT_TYPE.LICENSE_PLATE_RECOGNITION]:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/ui/getters.js-17-        aiControlPermissionManager.vcaEventRemoteConfigSettings?.[VCA_CAPABILITY_TYPE.LICENSE_PLATE_RECOGNITION_EVENT],
+packages/app-vsaas-portal/src/store/ui/getters.js-18-      [VCA_EVENT_TYPE.FACE_RECOGNITION]:
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-23-    const permissionManager = await new PlanPermissionManager(isFreePlan);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-24-    await permissionManager.createEnforcer();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-25-    commit('setPlanPermission', permissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-26-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-27-  createAIControlPermissionManager({ commit }, currentOrg) {
+packages/app-vsaas-portal/src/store/permission/actions.js:28:    const aiControlPermissionManager = new AIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-29-    aiControlPermissionManager.setDarkReleaseFeatures(currentOrg.support);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-30-    commit('setAIControlPermissionManager', aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-31-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-32-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/actions.js-33-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-12-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-13-  setPlanPermission(state, planPermissionManager) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-14-    state.planPermissionManager = planPermissionManager;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-15-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-16-  setAIControlPermissionManager(state, aiControlPermissionManager) {
+packages/app-vsaas-portal/src/store/permission/mutations.js:17:    state.aiControlPermissionManager = aiControlPermissionManager;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-18-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-19-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-20-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/mutations.js-21-export default mutations;
+--
+packages/app-vsaas-portal/src/store/account/actions.js-207-        dispatch('permission/getPermissionPolicies', null, { root: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-208-      ]).catch((error) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-209-        throw error;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-210-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-211-
+packages/app-vsaas-portal/src/store/account/actions.js:212:      const { aiControlPermissionManager } = rootState.permission;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-213-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-214-      await Promise.all([
+packages/app-vsaas-portal/src/store/account/actions.js-215-        dispatch('si/getSIOfOrganization', null, { root: true }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-216-        aiControlPermissionManager.getAIControlSettings(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/account/actions.js-217-        aiControlPermissionManager.getVcaEventRemoteConfigSettings(),
+--
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-18-  aiControlSettings = { termsAgreement: null, options: { facialRecognition: { enable: false } } },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-19-  aiControlSettingsAvailable = true,
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-20-  darkReleaseFeatures = { FaceRecognitionEvent: true },
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-21-  vcaEventRemoteConfigSettings = { FaceRecognitionEvent: true },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-22-} = {}) {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:23:  const aiControlPermissionManager = new AIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-24-  Object.assign(aiControlPermissionManager, {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-25-    aiControlSettings,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-26-    aiControlSettingsAvailable,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-27-    darkReleaseFeatures,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-28-    vcaEventRemoteConfigSettings,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-34-  beforeEach(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-35-    vi.clearAllMocks();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-36-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-37-  describe('getVcaEventRemoteConfigSettings', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-38-    it('should call RemoteConfigService.getConfiguration with supportVcaEvent when AIControlPermissionManager get vca event remote config settings', async () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:39:      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-40-      await aiControlPermissionManager.getVcaEventRemoteConfigSettings();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-41-      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(PORTAL_FEATURE_CONFIG_KEY.SUPPORT_VCA_EVENT);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-42-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-43-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-44-  describe('getAIControlSettingsAvailable', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-45-    it('should call RemoteConfigService.getConfiguration with supportAiControlSettings when AIControlPermissionManager get ai control settings available', async () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:46:      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-47-      await aiControlPermissionManager.getAIControlSettingsAvailable();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-48-      expect(RemoteConfigService.getConfiguration).toHaveBeenCalledWith(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-49-        PORTAL_FEATURE_CONFIG_KEY.SUPPORT_AI_CONTROL_SETTINGS,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-50-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-51-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-52-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-53-  describe('initIsShowAIControlSettingsDialogue', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-54-    it('should set isShowAIControlSettingsDialogue to true when termsAgreement is null, hasPermission is true, isRemoteAccess is false, and aiControlSettingsAvailable is true', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:55:      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-56-      aiControlPermissionManager.initIsShowAIControlSettingsDialogue({ hasPermission: true, isRemoteAccess: false });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-57-      expect(aiControlPermissionManager.isShowAIControlSettingsDialogue).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-58-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-59-    it('should set isShowAIControlSettingsDialogue to false when termsAgreement is not null', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:60:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-61-        aiControlSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-62-          termsAgreement: 'test',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-63-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-64-      });
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-65-      aiControlPermissionManager.initIsShowAIControlSettingsDialogue({ hasPermission: true, isRemoteAccess: false });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-66-      expect(aiControlPermissionManager.isShowAIControlSettingsDialogue).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-67-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-68-    it('should set isShowAIControlSettingsDialogue to false when hasPermission is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:69:      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-70-      aiControlPermissionManager.initIsShowAIControlSettingsDialogue({ hasPermission: false, isRemoteAccess: false });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-71-      expect(aiControlPermissionManager.isShowAIControlSettingsDialogue).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-72-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-73-    it('should set isShowAIControlSettingsDialogue to false when isRemoteAccess is true', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:74:      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-75-      aiControlPermissionManager.initIsShowAIControlSettingsDialogue({ hasPermission: true, isRemoteAccess: true });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-76-      expect(aiControlPermissionManager.isShowAIControlSettingsDialogue).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-77-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-78-    it('should set isShowAIControlSettingsDialogue to false when aiControlSettingsAvailable is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:79:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-80-        aiControlSettingsAvailable: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-81-      });
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-82-      aiControlPermissionManager.initIsShowAIControlSettingsDialogue({ hasPermission: true, isRemoteAccess: false });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-83-      expect(aiControlPermissionManager.isShowAIControlSettingsDialogue).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-84-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-85-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-86-  describe('isShowAIControlFeature', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-87-    it('should return true when isOrganizationReleaseFeature and vcaEventRemoteConfigSettings of FaceRecognitionEvent is true', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:88:      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-89-      expect(aiControlPermissionManager.isShowAIControlFeature('FaceRecognitionEvent')).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-90-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-91-    it('should return false when isOrganizationReleaseFeature of FaceRecognitionEvent is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:92:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-93-        darkReleaseFeatures: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-94-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-95-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-96-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-97-      expect(aiControlPermissionManager.isShowAIControlFeature('FaceRecognitionEvent')).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-98-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-99-    it('should return false when vcaEventRemoteConfigSettings of FaceRecognitionEvent is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:100:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-101-        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-102-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-103-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-104-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-105-      expect(aiControlPermissionManager.isShowAIControlFeature('FaceRecognitionEvent')).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-106-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-107-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-108-  describe('hasVcaEventPermission', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-109-    it('should return true when isShowAIControlFeature is true and facialRecognition enabled', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:110:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-111-        aiControlSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-112-          options: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-113-            facialRecognition: { enable: true },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-114-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-115-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-116-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-117-      expect(aiControlPermissionManager.hasVcaEventPermission('FaceRecognitionEvent')).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-118-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-119-    it('should return false when vcaEventRemoteConfigSettings of facialRecognition event is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:120:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-121-        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-122-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-123-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-124-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-125-      expect(aiControlPermissionManager.hasVcaEventPermission('FaceRecognitionEvent')).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-126-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-127-    it('should return false when aiControlSettings of facialRecognition disabled', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:128:      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-129-      expect(aiControlPermissionManager.hasVcaEventPermission('FaceRecognitionEvent')).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-130-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-131-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-132-  describe('isFacialRecognitionEnable', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-133-    it('should return true when facialRecognition is enabled', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:134:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-135-        aiControlSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-136-          options: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-137-            facialRecognition: { enable: true },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-138-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-139-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-140-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-141-      expect(aiControlPermissionManager.isFacialRecognitionEnable).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-142-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-143-    it('should return false when facialRecognition is disabled', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:144:      const aiControlPermissionManager = createAIControlPermissionManager();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-145-      expect(aiControlPermissionManager.isFacialRecognitionEnable).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-146-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-147-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-148-  describe('displayFaceRecognition', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-149-    it('should return true when aiControlSettingsAvailable is true and hasVcaEventPermission is true', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:150:      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:151:      aiControlPermissionManager.hasVcaEventPermission = vi.fn().mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-152-      expect(aiControlPermissionManager.displayFaceRecognition).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-153-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-154-    it('should return false when aiControlSettingsAvailable is true and hasVcaEventPermission is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:155:      const aiControlPermissionManager = createAIControlPermissionManager();
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:156:      aiControlPermissionManager.hasVcaEventPermission = vi.fn().mockReturnValue(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-157-      expect(aiControlPermissionManager.displayFaceRecognition).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-158-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-159-    it('should return true when aiControlSettingsAvailable is false and isShowAIControlFeature is true', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:160:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-161-        aiControlSettingsAvailable: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-162-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-163-      expect(aiControlPermissionManager.displayFaceRecognition).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-164-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-165-    it('should return false when aiControlSettingsAvailable is false and isShowAIControlFeature is false', () => {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js:166:      const aiControlPermissionManager = createAIControlPermissionManager({
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-167-        aiControlSettingsAvailable: false,
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-168-        vcaEventRemoteConfigSettings: {
+packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-169-          FaceRecognitionEvent: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-170-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/AIControlPermission/AIControlPermissionManager.test.js-171-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-61-        expect(mockUpdateAIControlAgreement).toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-62-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-63-      it('should show error dialogue when user checked the terms agreement but failed to update', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-64-        const wrapper = createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-65-        wrapper.vm.showErrorDialogue = vi.fn();
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js:66:        wrapper.vm.aiControlPermissionManager.updateAIControlAgreement = vi
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-67-          .fn()
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-68-          .mockRejectedValue(new Error('Failed to update'));
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-69-        expect(wrapper.vm.updateTermsAgreement({ agree: true, requestId: '123' }))
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-70-          .rejects.toThrow('Failed to update')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-71-          .then(() => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-99-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-100-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-101-      it('should show error dialogue when user checked the facial recognition setting but failed to update', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-102-        const wrapper = createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-103-        wrapper.vm.showErrorDialogue = vi.fn();
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js:104:        wrapper.vm.aiControlPermissionManager.updateAIControlFeature = vi
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-105-          .fn()
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-106-          .mockRejectedValue(new Error('Failed to update'));
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-107-        expect(wrapper.vm.updateFeatureSetting({ key: AI_CONSENT_SETTINGS.FACIAL_RECOGNITION, value: true }))
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-108-          .rejects.toThrow('Failed to update')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-109-          .then(() => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-111-          });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-112-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-113-      it('should show error dialogue when user checked the license plate recognition setting but failed to update', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-114-        const wrapper = createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-115-        wrapper.vm.showErrorDialogue = vi.fn();
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js:116:        wrapper.vm.aiControlPermissionManager.updateAIControlFeature = vi
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-117-          .fn()
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-118-          .mockRejectedValue(new Error('Failed to update'));
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-119-        expect(wrapper.vm.updateFeatureSetting({ key: AI_CONSENT_SETTINGS.LICENSE_PLATE_RECOGNITION, value: true }))
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-120-          .rejects.toThrow('Failed to update')
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentCard.test.js-121-          .then(() => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-118-    return mvpFeature.includes(pageKey) && shouldDisplayLink(pageItem.path);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-119-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-120-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-121-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-122-// === Permission related ===
+packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue:123:const aiControlPermissionManager = computed(() => store.state.permission.aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-124-const hasPagePermission = computed(() => store.getters['permission/hasPagePermission']);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-125-const hasPlanPermission = computed(() => store.getters['permission/hasPlanPermission']);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-126-const shouldDisplayLink = (page) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-127-  /**
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-128-   * profile search depends on ai control settings, if user never update FR it should be enabled
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-58-  const { t } = useI18n();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-59-  const store = useStore();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-60-  const licenseConfig = getLicenseConfig();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-61-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-62-  const isFreePlan = computed(() => store.getters['organization/isFreePlan']);
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:63:  const aiControlPermissionManager = computed(() => store.state.permission.aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-64-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-65-  const openedLicenseInformationList = ref([
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-66-    LICENSE_BLOCK_KEY.CAMERA,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-67-    LICENSE_BLOCK_KEY.SPEAKER,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-68-    LICENSE_BLOCK_KEY.CLOUD_STORAGE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-72-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-73-const currentDisableFeature = ref(null);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-74-const currentAIControlSettingsRequestId = ref(props.requestId || uuidv4());
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-75-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-76-//= == AI Control Permission Manager ===
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue:77:const aiControlPermissionManager = computed(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-78-  return store.state.permission.aiControlPermissionManager;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-79-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-80-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-81-const currentAIControlSettings = computed(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentCard.vue-82-  return aiControlPermissionManager.value.aiControlSettings;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-16-const { track } = useMixpanel();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-17-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-18-const store = useStore();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-19-const { t } = useI18n();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-20-
+packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue:21:const aiControlPermissionManager = computed(() => store.state.permission.aiControlPermissionManager);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-22-const hasPlanPermission = computed(() => store.getters['permission/hasPlanPermission']);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-23-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-24-const rootPath = '/system';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-25-const getPagePath = (path) => `${rootPath}/${path}`;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/components/SystemSideMenu.vue-26-

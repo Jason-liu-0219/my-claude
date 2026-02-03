@@ -1,0 +1,21 @@
+18-
+19-  async connect() {
+20-    const { thingName, derivant } = this;
+21-
+22-    if (!this.promise) {
+23-      this.promise = (async () => {
+24-        try {
+25-          const { clientId, mqttCred } = await SettingsProxyConnection.createDeviceControlToken({
+26-            thingName,
+27-            derivant,
+28:            scope: 'RelayProxy',
+29-          });
+30-
+31-          const mqttClient = await SettingsProxyConnection.createIoTConnection(clientId, mqttCred);
+32-
+33-          this.clientId = clientId;
+34-          this.mqttClient = mqttClient;
+35-          return mqttClient;
+36-        } catch (error) {
+37-          Log.error('SettingsProxyConnection.connect failed', error);
+38-          throw new Error('SettingsProxyConnection.connect failed');

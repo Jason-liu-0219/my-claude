@@ -1,0 +1,48 @@
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  57)   const moreActions = computed(() => {
+f442ea43170 (Jason.lu 2025-06-26 16:27:22 +0800  58)     const { isCurrentUser, isOwner: userIsOwner, isAdmin: userIsAdmin } = props.user;
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  59)     const actions = [
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  60)       {
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  61)         name: t('Edit username'),
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  62)         classList: [''],
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  63)         action: onClickEditUsername,
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  64)       },
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  65)     ];
+f8da796d658 (JasonLiu 2026-01-05 09:31:45 +0800  66)     // TODO: RBAC 可能還要檢查所有權限是否判斷正確被改亂了
+f8da796d658 (JasonLiu 2026-01-05 09:31:45 +0800  67)     if (true) {
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  68)       actions.push({
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  69)         name: t('Edit organization role'),
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  70)         classList: [''],
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  71)         action: onClickEditOrganizationRole,
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  72)       });
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  73)     }
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  74) 
+f8da796d658 (JasonLiu 2026-01-05 09:31:45 +0800  75)     if (!userIsOwner) {
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  76)       actions.push({
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  77)         name: t('Remove this user'),
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  78)         classList: ['danger'],
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  79)         action: onClickRemoveUser,
+f442ea43170 (Jason.lu 2025-06-26 16:27:22 +0800  80)         disabled: isCurrentUser,
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  81)       });
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  82)     }
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  83)     if (isOwner.value && userIsAdmin) {
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  84)       actions.push({
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  85)         name: t('Transfer ownership to this user'),
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  86)         classList: ['danger'],
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  87)         action: onClickTransferOrganization,
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  88)       });
+3ca2a9c55ce (JasonLiu 2025-12-22 13:19:20 +0800  89)     }
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  90)     if (enableResetMFA.value) {
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  91)       if (actions.length) {
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  92)         actions.push({
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  93)           classList: ['separator', 'border-separator'],
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  94)         });
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  95)       }
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  96)       actions.push({
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  97)         name: t('Reset MFA'),
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  98)         classList: [''],
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800  99)         action: onClickResetUserMFA,
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800 100)         disabled: !enableMFA.value,
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800 101)       });
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800 102)     }
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800 103)     return actions;
+117bcc425ba (Jason.lu 2025-06-26 13:08:33 +0800 104)   });

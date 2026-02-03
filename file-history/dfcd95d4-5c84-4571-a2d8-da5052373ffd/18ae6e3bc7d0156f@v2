@@ -1,0 +1,520 @@
+<template>
+  <div class="add-device-settings-container">
+    <div class="close-button">
+      <SvgIcon
+        iconClass="general_cross"
+        size="24px"
+        @click="popUpConfirmExitDialogue"
+      />
+    </div>
+    <div class="content">
+      <AddDeviceGenralHeader :description="description" />
+      <div
+        v-if="deviceType === ADD_DEVICE_INSPECT_TYPE.UNKNOWN"
+        class="device-id-pills"
+      >
+        {{ $t('Device ID') }}: {{ deviceIdForAddDevice }}
+      </div>
+      <div
+        v-if="deviceType === ADD_DEVICE_INSPECT_TYPE.VSS"
+        class="device-id-pills VSS"
+      >
+        <img
+          src="@/assets/VSS.png"
+          alt=""
+        />
+        <div class="pills-content">
+          <h6>{{ $t('VSS') }}</h6>
+          <span>{{ $t('Device ID') }}: {{ deviceIdForAddDevice }}</span>
+        </div>
+      </div>
+
+      <AppCheckBox
+        v-if="deviceType !== ADD_DEVICE_INSPECT_TYPE.VSS"
+        id="retain-original-settings-checkbox"
+        :modelValue="retainOriginalSettingsForAddDevice"
+        name="retainOriginalSettingsCheckbox"
+        class="retain-original-settings-checkbox"
+        :label="$t('Retain the original settings on the device')"
+        :disabled="isProcessing"
+        @update:modelValue="updateRetainOriginalSettingsForAddDevice"
+      />
+      <div
+        v-if="deviceType !== ADD_DEVICE_INSPECT_TYPE.VSS && !retainOriginalSettingsForAddDevice"
+        class="divider"
+      >
+        <div class="line" />
+        {{ $t('OR') }}
+        <div class="line" />
+      </div>
+
+      <div class="settings-form">
+        <div
+          v-if="deviceType !== ADD_DEVICE_INSPECT_TYPE.VSS && !retainOriginalSettingsForAddDevice"
+          class="device-name-group"
+        >
+          <h6>{{ $t('Device name') }}</h6>
+          <AppInputFields
+            id="device-name-input"
+            ref="DeviceNameInputRef"
+            v-model.trim="deviceName"
+            :maxLength="64"
+            data-testid="device-name-input"
+            :dataSRETestId="SRE_TEST_ID.DEVICE_NAME_INPUT"
+            :placeholder="$t('Device name')"
+            :displayError="isValidateFailed"
+            :validateRules="deviceNameValidateRules"
+            :validateBytes="true"
+            :disabled="isProcessing"
+          />
+        </div>
+        <div class="site-group">
+          <h6>{{ $t('Site') }}</h6>
+          <div
+            v-if="currentSelectedGroup"
+            :class="['select-group-button', { disabled: isProcessing }]"
+            :title="currentSelectedGroup.name"
+            :data-sre-testid="SRE_TEST_ID.DEVICE_SITE_SELECT_DROPDOWN"
+            @click="openSelectGroupDialogue"
+          >
+            <SvgIcon
+              class="icon"
+              iconClass="general_group_line"
+              size="20px"
+              outerSize="32px"
+            />
+            <h6 class="ellipsis">
+              {{ currentSelectedGroup.name }}
+            </h6>
+            <SvgIcon
+              class="icon arrow-container"
+              iconClass="general_right_line"
+              size="20px"
+              outerSize="32px"
+            />
+          </div>
+        </div>
+        <div
+          v-if="deviceType !== ADD_DEVICE_INSPECT_TYPE.VSS && !retainOriginalSettingsForAddDevice"
+          class="time-zone-group"
+        >
+          <h6>{{ $t('Time zone') }}</h6>
+          <AppDropdown
+            id="device-city-dropdown"
+            ref="deviceCityDropdown"
+            v-model="currentDeviceCity"
+            class="city-dropdown"
+            :options="cityOptions"
+            :autoScroll="true"
+            :disabled="isProcessing"
+            :searchable="true"
+          />
+        </div>
+        <div
+          v-if="retainOriginalSettingsForAddDevice"
+          class="retain-original-settings-description"
+        >
+          <span>
+            {{
+              // eslint-disable-next-line prettier/prettier, max-len
+              $t('The device name and timezone will retain their original settings as configured on the device. All you need to do is choose which site you want to add it to.',)
+            }}
+          </span>
+        </div>
+      </div>
+
+      <div class="buttons">
+        <button
+          class="ghost medium"
+          @click="goBack"
+        >
+          {{ $t('Go back') }}
+        </button>
+        <AppButton
+          class="solid medium"
+          :status="isProcessing ? 'processing' : 'default'"
+          :text="isProcessing ? $t('Adding...') : $t('Add')"
+          :data-sre-testid="SRE_TEST_ID.DEVICE_ADD_BUTTON"
+          @click="onAddClicked"
+        />
+      </div>
+
+      <AppFormErrorMessage
+        v-if="isAPIFailed"
+        class="form-error-message"
+        :message="errorMessage"
+      />
+    </div>
+    <ConfirmExitDialogue
+      ref="ConfirmExitDialogueRef"
+      :title="t('Are you sure you want to leave?')"
+      :content="t('Your changes will be lost if you leave.')"
+      @close="handleClose"
+    />
+    <SelectGroupDialogue
+      ref="SelectGroupDialogueRef"
+      :groups="sortedGroups"
+      :operateAction="onGroupSelected"
+      :defaultSelectedGroupId="currentSelectedGroup?.id"
+    />
+  </div>
+</template>
+
+<script setup>
+import { computed, ref, useTemplateRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import {
+  TIME_ZONE,
+  ADD_DEVICE_INSPECT_TYPE,
+  SRE_TEST_ID,
+  ADD_DEVICE_API_ERROR_KEYWORDS,
+  ADD_DEVICE_ERROR_MESSAGES,
+} from '@vivotek/const-vsaas';
+import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+import VendorHelper from '@vivotek/lib-vendor-helper';
+
+import ConfirmExitDialogue from '@/components/Dialogues/ConfirmExitDialogue.vue';
+import SelectGroupDialogue from '@/components/Group/SelectGroupDialogue.vue';
+import { useCheckInputErrorHelper } from '@/composables/useCheckFormHelper/checkErrorHelpers';
+import { useCheckFormHelper } from '@/composables/useCheckFormHelper/useCheckFormHelper';
+
+import AddDeviceGenralHeader from '../components/AddDeviceGenralHeader.vue';
+import { useAddDeviceStoreHelper } from '../composables/useAddDeviceStoreHelper/useAddDeviceStoreHelper';
+
+// beforeRouteEnter
+
+defineOptions({
+  beforeRouteEnter: () => {
+    const store = useStore();
+
+    if (!store.state.device.deviceIdForAddDevice) {
+      return { name: 'AddDeviceEnterDeviceId' };
+    }
+    return true;
+  },
+});
+
+const { t } = useI18n();
+const store = useStore();
+const router = useRouter();
+
+const {
+  deviceIdForAddDevice,
+  retainOriginalSettingsForAddDevice,
+  cacheForAddDevice,
+  updateRetainOriginalSettingsForAddDevice,
+  updateCacheForAddDevice,
+  fetchCreateDevice,
+} = useAddDeviceStoreHelper();
+
+const deviceName = ref('');
+const deviceType = computed(() => store.state.device.currentAddedDeviceType);
+
+// validate rules
+const deviceNameValidateRules = [VALIDATE_RULE_MAP.Required, VALIDATE_RULE_MAP.DeviceName];
+
+// city
+const DEFAULT_CITY = 'AmericaLosAngeles';
+const currentDeviceCity = ref(null);
+const cityOptions = computed(() => {
+  return Object.keys(TIME_ZONE.CITY_MAP).map((key) => ({
+    text: TIME_ZONE.CITY_MAP[key].text(t),
+    value: key,
+  }));
+});
+const currentSelectedGroup = ref(null);
+const description = computed(() => {
+  return deviceType.value === ADD_DEVICE_INSPECT_TYPE.VSS
+    ? t('Please assign your VSS to a site.')
+    : t(
+        'Name your device, assign your device to a site, and set up a time zone for your device based on its location.',
+      );
+});
+
+// default group
+const defaultGroup = ref(null);
+
+const sortedGroups = computed(() => {
+  return store.getters['group/sortedGroups']();
+});
+
+// select group dialogue
+const SelectGroupDialogueRef = useTemplateRef('SelectGroupDialogueRef');
+
+const openSelectGroupDialogue = () => {
+  SelectGroupDialogueRef.value.show();
+};
+
+const onGroupSelected = (isConfirm, groupId) => {
+  if (!isConfirm || currentSelectedGroup.value.id === groupId) {
+    return;
+  }
+
+  currentSelectedGroup.value = sortedGroups.value.find((item) => item.id === groupId);
+};
+
+// on add click
+
+const successCallback = async ({ isProcessing }) => {
+  const shouldUpdateDeviceNameAndCity =
+    deviceType.value !== ADD_DEVICE_INSPECT_TYPE.VSS && !retainOriginalSettingsForAddDevice.value;
+
+  await fetchCreateDevice({
+    mac: deviceIdForAddDevice.value,
+    organizationID: store.state.organization.currentOrganizationId,
+    deviceGroupID: currentSelectedGroup.value.id,
+    ...(shouldUpdateDeviceNameAndCity && {
+      name: deviceName.value,
+      city: currentDeviceCity.value,
+    }),
+  });
+  isProcessing.value = false;
+
+  router.push({ name: 'AddDeviceSuccess' });
+  setCache();
+};
+
+const errorCallback = ({ error, isProcessing, isAPIFailed, errorMessage }) => {
+  isProcessing.value = false;
+  isAPIFailed.value = true;
+
+  const { message } = error;
+  const { ALREADY_ADDED, INVALID_MAC, REACHED_LIMIT, ONLY_SUPPORT_FREE_PLAN, ORG_HAS_VSS } =
+    ADD_DEVICE_API_ERROR_KEYWORDS;
+
+  if (message.includes(ALREADY_ADDED)) {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES[ALREADY_ADDED](t);
+  } else if (message.includes(INVALID_MAC)) {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES[INVALID_MAC](t);
+  } else if (message.includes(REACHED_LIMIT)) {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES[REACHED_LIMIT](t);
+  } else if (message.includes(ONLY_SUPPORT_FREE_PLAN)) {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES[ONLY_SUPPORT_FREE_PLAN](t, VendorHelper.isMarchNetworks);
+  } else if (message.includes(ORG_HAS_VSS)) {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES[ORG_HAS_VSS](t, VendorHelper.isMarchNetworks);
+  } else {
+    errorMessage.value = ADD_DEVICE_ERROR_MESSAGES.DEFAULT(t);
+  }
+};
+
+const { checkInputError } = useCheckInputErrorHelper('DeviceNameInputRef');
+
+const { isValidateFailed, isProcessing, isAPIFailed, errorMessage, checkForm } = useCheckFormHelper({
+  successCallback,
+  errorCallback,
+  checkFormCallback: () => {
+    if (!retainOriginalSettingsForAddDevice.value && deviceType.value !== ADD_DEVICE_INSPECT_TYPE.VSS) {
+      const errors = checkInputError();
+      return errors;
+    }
+
+    return [];
+  },
+});
+
+const setCache = () => {
+  updateCacheForAddDevice({
+    city: currentDeviceCity.value,
+    group: currentSelectedGroup.value,
+  });
+};
+
+const onAddClicked = async () => {
+  await checkForm();
+};
+
+const goBack = () => {
+  router.push({ name: 'AddDeviceEnterDeviceId' });
+};
+
+const ConfirmExitDialogueRef = useTemplateRef('ConfirmExitDialogueRef');
+
+const popUpConfirmExitDialogue = () => {
+  ConfirmExitDialogueRef.value.show();
+};
+
+const handleClose = () => {
+  router.push('/device');
+};
+
+// init
+const selectedCityCache = computed(() => cacheForAddDevice.value.city);
+const selectedGroupCache = computed(() => cacheForAddDevice.value.group);
+
+const initial = () => {
+  currentDeviceCity.value = selectedCityCache.value || DEFAULT_CITY;
+  currentSelectedGroup.value = selectedGroupCache.value;
+
+  if (!currentSelectedGroup.value) {
+    const isUngroupedDevice = defaultGroup.value?.id === defaultGroup.value?.organizationID;
+    currentSelectedGroup.value = !isUngroupedDevice ? defaultGroup.value : sortedGroups.value.at(-1);
+  }
+};
+initial();
+</script>
+
+<style lang="less" scoped>
+.add-device-settings-container {
+  background-color: @color-surface03;
+  height: 100%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  padding-top: 86px;
+  box-sizing: border-box;
+
+  .close-button {
+    position: absolute;
+    top: 6px;
+    right: 21px;
+    &:hover {
+      .svg-icon {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.content {
+  width: max(400px);
+  display: flex;
+  flex-direction: column;
+
+  .device-id-pills {
+    margin-top: 24px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    gap: 16px;
+    background-color: @color-surface04;
+    color: @color-text01;
+
+    &.VSS {
+      display: flex;
+      align-items: center;
+      img {
+        width: 32px;
+        height: 32px;
+      }
+
+      .pills-content {
+        h6 {
+          font-size: 14px;
+          color: @color-text01;
+        }
+      }
+    }
+  }
+
+  .retain-original-settings-checkbox {
+    margin-top: 24px;
+  }
+
+  .divider {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    text-align: center;
+    color: @color-text04;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 12px;
+    .line {
+      width: 1px;
+      height: 1px;
+      background-color: @color-outline04;
+      flex: 1;
+    }
+  }
+
+  .settings-form {
+    margin-top: 12px;
+    .device-name-group {
+      > h6 {
+        margin-bottom: 8px;
+        color: @color-text03;
+      }
+      margin-top: 12px;
+    }
+
+    .site-group {
+      > h6 {
+        margin-bottom: 8px;
+        color: @color-text03;
+      }
+      margin-top: 12px;
+      .select-group-button {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        border: 1px solid @color-outline04;
+        border-radius: 4px;
+        background-color: @color-surface01;
+
+        &.disabled {
+          border-color: @color-outline04;
+          h6 {
+            color: @color-text06;
+          }
+        }
+
+        h6 {
+          margin: 0;
+          max-width: 290px;
+          color: @color-text01;
+        }
+
+        .arrow-container {
+          margin-left: auto;
+          color: @color-icon03;
+          background: @color-icon01;
+        }
+
+        .general_group_line {
+          margin: 0 2px 0 5px;
+        }
+
+        &:hover:not(.disabled) {
+          border: 1px solid @color-outline03;
+          border-radius: 4px;
+          .arrow-container {
+            color: @color-icon11;
+            background: @color-outline03;
+          }
+        }
+      }
+    }
+    .time-zone-group {
+      > h6 {
+        margin-bottom: 8px;
+        color: @color-text03;
+      }
+      margin-top: 12px;
+    }
+
+    .retain-original-settings-description {
+      margin-top: 8px;
+      color: @color-text03;
+      font-size: 12px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    margin-top: 24px;
+    justify-content: space-between;
+    gap: 20px;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .form-error-message {
+    margin-top: 24px;
+  }
+}
+</style>

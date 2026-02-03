@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "plugins": {
+    "serena@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/serena/27d2b86d72da",
+        "version": "27d2b86d72da",
+        "installedAt": "2026-01-18T07:18:32.036Z",
+        "lastUpdated": "2026-01-31T04:35:46.317Z",
+        "gitCommitSha": "96276205880a60fd66bbae981f5ab568e70c4cbf"
+      }
+    ],
+    "ralph-loop@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/liuhanwen/.claude/plugins/cache/claude-plugins-official/ralph-loop/27d2b86d72da",
+        "version": "27d2b86d72da",
+        "installedAt": "2026-01-24T16:15:04.930Z",
+        "lastUpdated": "2026-01-31T04:35:46.327Z",
+        "gitCommitSha": "e30768372b4150ca1bc0839d93283e8edc30d60d"
+      }
+    ],
+    "everything-claude-code@everything-claude-code": [
+      {
+        "scope": "user",
+        "installPath": "/Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0",
+        "version": "1.2.0",
+        "installedAt": "2026-01-29T14:57:24.364Z",
+        "lastUpdated": "2026-01-29T14:57:24.364Z",
+        "gitCommitSha": "675db95d53a82c842bfd9e402832fb890f2e502c"
+      }
+    ]
+  }
+}

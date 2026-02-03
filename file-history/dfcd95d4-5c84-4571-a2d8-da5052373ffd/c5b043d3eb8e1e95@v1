@@ -1,0 +1,213 @@
+<template>
+  <SideMenusLayout
+    :rightBasis="0"
+    :leftBasis="0"
+    class="management"
+  >
+    <template #center>
+      <div class="management-container">
+        <div class="title-wrapper">
+          <h4 class="bold">
+            {{ $t('Users') }}
+          </h4>
+          <div class="button-wrapper">
+            <button
+              v-if="hasRoleReadPermission"
+              class="ghost medium"
+              data-testid="role-settings-button"
+              @click="redirectToRoleSettings"
+            >
+              {{ $t('Role settings') }}
+            </button>
+            <button
+              v-if="hasInviteUserPermission"
+              class="solid medium with-icon"
+              data-testid="invite-user-button"
+              @click="showInviteUserDialogue()"
+            >
+              {{ $t('Invite User') }}
+              <svg-icon
+                iconClass="general_plus"
+                size="20px"
+                outerSize="32px"
+              />
+            </button>
+          </div>
+        </div>
+        <div class="content">
+          <UserManagementTable
+            :countPerPage="USER.COUNT_PER_PAGE"
+            :currentPageIndex="currentPageIndex"
+            :rowData="rowData"
+            :searchStatus="userStoreState.management.searchStatus"
+            :isUpdateUserLoading="isUpdateUserLoading"
+            :hasUpdateUserPermission="hasUpdateUserPermission"
+            :hasInviteUserPermission="hasInviteUserPermission"
+            @search="search"
+            @resendInvitation="showInviteUserDialogue"
+            @updateOrganizationRoleOfUser="updateOrganizationRoleOfUser"
+          />
+        </div>
+        <InviteUserDialogue
+          ref="inviteUserDialogueRef"
+          @onProceedToSetup="navigateToUserDetailPage"
+        />
+      </div>
+    </template>
+    <template #footer>
+      <FooterPagination
+        :pageCount="pageCount"
+        :currentPageIndex="currentPageIndex"
+        :rotating="false"
+        @goPreviousPage="goPreviousPage"
+        @goNextPage="goNextPage"
+      />
+    </template>
+  </SideMenusLayout>
+</template>
+
+<script setup>
+import { ref, computed, useTemplateRef, getCurrentInstance, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { SideMenusLayout } from '@vivotek/advanced-vue-components';
+import { USER, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+import FooterPagination from '@vivotek/vue-app-layouts/saas/CentralPanelFooter/FooterPagination.vue';
+
+import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+
+import InviteUserDialogue from './components/InviteUserDialogue.vue';
+import UserManagementTable from './components/UserManagementTable.vue';
+
+defineOptions({
+  name: 'UserManagement',
+});
+
+const { t } = useI18n();
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
+const { proxy } = getCurrentInstance();
+
+// ============================================================
+// User Table
+// ============================================================
+const users = computed(() => store.state.user.users);
+const isUpdateUserLoading = computed(() => store.state.user.updateUserLoading);
+
+const currentPageIndex = ref(1);
+const searchKeyword = ref('');
+
+const rowData = computed(() => {
+  return users.value.filter((item) => {
+    const array = [item.email, item.name];
+    return array.find((value) => value?.toLowerCase().includes(searchKeyword.value.toLowerCase()));
+  });
+});
+
+const pageCount = computed(() => {
+  const pageSize = Math.ceil(rowData.value.length / USER.COUNT_PER_PAGE);
+  return pageSize === 0 ? 1 : pageSize;
+});
+
+function search(keyword) {
+  currentPageIndex.value = 1;
+  searchKeyword.value = keyword;
+}
+
+function goPreviousPage() {
+  if (currentPageIndex.value === 1) {
+    return;
+  }
+  currentPageIndex.value -= 1;
+}
+
+function goNextPage() {
+  if (currentPageIndex.value >= pageCount.value) {
+    return;
+  }
+  currentPageIndex.value += 1;
+}
+
+async function updateOrganizationRoleOfUser({ user, roleId }) {
+  try {
+    await store.dispatch('user/updateOrganizationRoleOfUser', { userSub: user.userSub, roleId });
+    await store.dispatch('globalNotification/success', {
+      iconType: '',
+      message: t('Role updated successfully'),
+      timeout: 4000,
+      closable: true,
+    });
+  } catch (e) {
+    await store.dispatch('user/getUsersByOrganizationV2');
+    store.dispatch('globalNotification/error', {
+      iconType: '',
+      message: t('Role failed to update'),
+      timeout: 4000,
+      closable: true,
+    });
+  }
+}
+
+// ============================================================
+// Permissions
+// ============================================================
+const canDoOrg = store.getters['permission/canDoOrg'];
+const hasAnyDevicePermission = computed(() => store.getters['permission/hasAnyDevicePermission']);
+const hasInviteUserPermission = computed(
+  () => canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_USER_INVITE }) && hasAnyDevicePermission.value,
+);
+const hasUpdateUserPermission = computed(() => canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_USER_UPDATE }));
+const hasRoleReadPermission = computed(() => canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ROLE_READ }));
+
+// ============================================================
+// Invite User Dialogue
+// ============================================================
+const inviteUserDialogueRef = useTemplateRef('inviteUserDialogueRef');
+
+function showInviteUserDialogue(resendEmail = '') {
+  if (!resendEmail) {
+    proxy.$mixpanel.track(TRACK_EVENT_KEY.USERS_INVITE_USER);
+  }
+  inviteUserDialogueRef.value?.show(resendEmail);
+}
+
+// ============================================================
+// Navigation
+// ============================================================
+function navigateToUserDetailPage(email) {
+  router.push({
+    name: 'UserDetail',
+    params: { userEmail: email },
+    state: { openAccessSettings: true },
+  });
+}
+
+function redirectToRoleSettings() {
+  router.push({ name: 'OrganizationRoleManagement' });
+}
+
+// ============================================================
+// Lifecycle
+// ============================================================
+onMounted(async () => {
+  await Promise.all([store.dispatch('user/fetchDefaultRoleList'), store.dispatch('user/getUsersByOrganizationV2')]);
+
+  if (route.query.prefillEmail != null) {
+    inviteUserDialogueRef.value?.showPrefill(route.query.prefillEmail);
+  }
+});
+</script>
+
+<style scoped lang="less">
+.button-wrapper {
+  display: flex;
+  column-gap: 20px;
+
+  & > button {
+    max-width: 160px;
+  }
+}
+</style>

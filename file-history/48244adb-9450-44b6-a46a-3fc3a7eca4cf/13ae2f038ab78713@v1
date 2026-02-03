@@ -1,0 +1,159 @@
+import actions from './actions';
+
+describe('actions', () => {
+  describe('getUsersByOrganizationV2', () => {
+    it('should called getUsersByOrganizationV2 when searchStatus is not "loading"', async () => {
+      const mockUsers = [
+        {
+          email: 'aaa@email.com',
+          onBoard: true,
+          organizationID: 'orgID',
+          state: 'ACTIVE',
+          role: {
+            name: 'USER',
+            id: 'role-id-123',
+          },
+          username: 'aaa',
+        },
+      ];
+      const mockState = {
+        management: {
+          searchStatus: 'initial',
+        },
+      };
+      const mockCommit = vi.fn();
+      const mockRootGetters = {
+        'organization/currentOrganization': {
+          organizationID: 'orgID',
+        },
+      };
+      const mockRootState = {
+        apiService: {
+          listUserOfOrganizationV2: vi.fn().mockResolvedValue(mockUsers),
+        },
+        account: {
+          attributes: {
+            email: 'aaa@email.com',
+          },
+        },
+      };
+      const expectedUsers = [
+        {
+          ...mockUsers[0],
+          role: 'USER',
+          name: 'aaa',
+          organizationRole: {
+            name: 'USER',
+            id: 'role-id-123',
+          },
+          isAdmin: false,
+          isOwner: false,
+          isCurrentUser: true,
+        },
+      ];
+
+      await actions.getUsersByOrganizationV2({
+        state: mockState,
+        commit: mockCommit,
+        rootGetters: mockRootGetters,
+        rootState: mockRootState,
+      });
+
+      expect(mockRootState.apiService.listUserOfOrganizationV2).toBeCalledTimes(1);
+      expect(mockRootState.apiService.listUserOfOrganizationV2).toBeCalledWith({ organizationID: 'orgID' });
+      expect(mockCommit).toBeCalledWith('setSearchStatus', 'loading');
+      expect(mockCommit).toBeCalledWith('setUsers', { items: expectedUsers });
+      expect(mockCommit).toBeCalledWith('setSearchStatus', 'no-users');
+    });
+    it('should not called getUsersByOrganizationV2 when searchStatus is "loading"', async () => {
+      const mockState = {
+        management: {
+          searchStatus: 'loading',
+        },
+      };
+      const mockCommit = vi.fn();
+      const mockRootState = {
+        apiService: {
+          listUserOfOrganizationV2: vi.fn().mockResolvedValue(),
+        },
+      };
+
+      await actions.getUsersByOrganizationV2({
+        state: mockState,
+        commit: mockCommit,
+        rootState: mockRootState,
+      });
+
+      expect(mockRootState.apiService.listUserOfOrganizationV2).toBeCalledTimes(0);
+      expect(mockCommit).not.toBeCalledWith('setSearchStatus', 'loading');
+      expect(mockCommit).not.toBeCalledWith('setSearchStatus', 'no-users');
+    });
+    it('should called getUsersByOrganizationV2 with error', async () => {
+      const mockState = {
+        management: {
+          searchStatus: 'initial',
+        },
+      };
+      const mockCommit = vi.fn();
+      const mockRootGetters = {
+        'organization/currentOrganization': {
+          organizationID: 'orgID',
+        },
+      };
+      const mockRootState = {
+        apiService: {
+          listUserOfOrganizationV2: vi
+            .fn()
+            .mockRejectedValueOnce({ generalize: () => new Error('listUserOfOrganizationV2 failed') }),
+        },
+      };
+
+      await expect(
+        actions.getUsersByOrganizationV2({
+          state: mockState,
+          commit: mockCommit,
+          rootGetters: mockRootGetters,
+          rootState: mockRootState,
+        }),
+      ).rejects.toThrow(new Error('listUserOfOrganizationV2 failed'));
+      expect(mockCommit).toBeCalledWith('setSearchStatus', 'no-users');
+    });
+  });
+
+  describe('updateOrganizationUsername', () => {
+    it('should called updateOrganizationUsername', async () => {
+      const mockRootGetters = {
+        'organization/currentOrganization': {
+          organizationID: 'orgID',
+        },
+      };
+      const mockRootState = {
+        apiService: {
+          updateOrganizationUsername: vi.fn().mockResolvedValue(),
+        },
+      };
+      const mockCommit = vi.fn();
+      const mockGetters = {
+        getUserByEmail: vi.fn().mockReturnValue({ email: 'aaa@email.com' }),
+      };
+
+      await actions.updateOrganizationUsername(
+        {
+          commit: mockCommit,
+          getters: mockGetters,
+          rootState: mockRootState,
+          rootGetters: mockRootGetters,
+        },
+        { email: 'aaa@email.com', username: 'newUsername' },
+      );
+
+      expect(mockRootState.apiService.updateOrganizationUsername).toBeCalledTimes(1);
+      expect(mockRootState.apiService.updateOrganizationUsername).toBeCalledWith({
+        organizationID: 'orgID',
+        email: 'aaa@email.com',
+        username: 'newUsername',
+      });
+      expect(mockCommit).toBeCalledWith('updateUserName', { userEmail: 'aaa@email.com', name: 'newUsername' });
+    });
+  });
+});

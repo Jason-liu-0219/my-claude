@@ -1,0 +1,120 @@
+<template>
+  <AppDropdown
+    :modelValue="modelValue"
+    :options="roleOptions"
+    :placeholder="placeholder"
+    :isError="isError"
+    :showErrorMessage="showErrorMessage"
+    :disabled="disabled"
+    :loading="isLoading"
+    :hasMore="hasMoreData"
+    :loadError="hasLoadError"
+    data-testid="device-role-dropdown"
+    @optionClick="onOptionClick"
+    @toggleDropdown="onToggleDropdown"
+    @loadMore="fetchRoles"
+  />
+</template>
+
+<script setup>
+import { computed, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { isOwner } from '@/utils/RoleHelper';
+
+const props = defineProps({
+  modelValue: {
+    type: [String],
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+  isError: {
+    type: Boolean,
+    default: false,
+  },
+  showErrorMessage: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+  initialDisplayText: {
+    type: String,
+    default: '',
+  },
+});
+
+const emit = defineEmits(['selected']);
+
+const { t } = useI18n();
+const store = useStore();
+
+const selectUserDeviceRoles = computed(() => store.state.user.detail.selectUserDeviceRoles);
+const isLoading = computed(() => selectUserDeviceRoles.value.loading);
+const hasLoadError = computed(() => selectUserDeviceRoles.value.loadError);
+const hasMoreData = computed(() => selectUserDeviceRoles.value.hasMore);
+const allRoles = computed(() => store.getters['user/allSelectUserDeviceRoles']);
+
+const roleOptions = computed(() => {
+  const options = allRoles.value
+    .filter((role) => !isOwner(role))
+    .map((role) => ({
+      text: role.name,
+      value: role.id,
+      disabled: role.isAssignable === false,
+    }));
+
+  const hasMatch = options.some((opt) => opt.value === props.modelValue);
+  if (!hasMatch && props.modelValue && props.initialDisplayText) {
+    options.unshift({
+      text: props.initialDisplayText,
+      value: props.modelValue,
+      disabled: false,
+    });
+  }
+
+  options.unshift({
+    text: t('No Access'),
+    value: '',
+    disabled: false,
+  });
+
+  return options;
+});
+
+const onOptionClick = (option) => {
+  const roleId = option.value;
+
+  if (roleId === '') {
+    emit('selected', null);
+    return;
+  }
+
+  const role = allRoles.value.find((r) => r.id === roleId);
+  emit('selected', role || null);
+};
+
+const onToggleDropdown = async (isOpen) => {
+  if (isOpen) {
+    await fetchRoles();
+  }
+};
+
+const fetchRoles = async () => {
+  try {
+    await store.dispatch('user/fetchSelectUserDeviceRoles');
+  } catch (error) {
+    console.error('Failed to fetch device roles:', error);
+  }
+};
+
+onMounted(async () => {
+  await fetchRoles();
+});
+</script>

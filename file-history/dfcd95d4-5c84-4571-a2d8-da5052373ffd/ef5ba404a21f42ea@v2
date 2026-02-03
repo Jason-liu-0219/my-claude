@@ -1,0 +1,191 @@
+import { StorageServiceManager } from '@vivotek/lib-vsaas-storage';
+import { VsaasNVR, VsaasCameraExt, VsaasNVRCameraExt as NVRCameraExt, deviceType } from '@vivotek/device';
+import { sortingUtils } from '@vivotek/lib-utility';
+import OpenApiService from '@/singletons/OpenApiService';
+import DeviceFactory from '@/utils/DeviceFactory';
+import ApiService from '@/singletons/ApiService';
+
+const device = {
+  namespaced: true,
+  state: {
+    uninitializedDevices: {},
+    searchStatus: 'initial',
+    deviceMap: {
+      nvr: new Map(),
+      bridge: new Map(),
+      camera: new Map(),
+      nvrchannel: new Map(),
+      unknownDevice: new Map(),
+    },
+    isFetchingData: false,
+    isFetchedOutdatedFirmwareDevice: false,
+    outdatedFirmwareDeviceList: [],
+    dependencies: {
+      'ApiService:v1': ApiService,
+      StorageServiceManager: new StorageServiceManager(),
+    },
+  },
+  getters: {
+    allDevicesMap(state, getters) {
+      const mergedMap = Object.values(state.deviceMap).reduce((acc, map) => new Map([...acc, ...map]), new Map());
+
+      return Object.fromEntries(mergedMap);
+    },
+    devicesAISearchMap(state, getters) {
+      return getters.availableCameraDevices.reduce((acc, item) => {
+        acc[item.aiObjectSearchKey] = item;
+        return acc;
+      }, {});
+    },
+    isAvailableDevice(state, getters) {
+      return (deviceId) => Object.keys(getters.allDevicesMap).includes(deviceId);
+    },
+    availableDevices(state) {
+      const allValues = Object.values(state.deviceMap).flatMap((map) => Array.from(map.values()));
+
+      return allValues
+        .map((item) => {
+          if (item instanceof NVRCameraExt) {
+            item.nvr = state.deviceMap.nvr.get(item.thingName);
+          }
+          return item;
+        })
+        .filter((item) => item.type !== 'unknown');
+    },
+    availableCameraDevices(state, getters) {
+      return getters.availableDevices.filter((item) => item instanceof VsaasCameraExt || item instanceof NVRCameraExt);
+    },
+    availableNVRCameraDevices(state, getters) {
+      return getters.availableDevices.filter((item) => item instanceof NVRCameraExt);
+    },
+    availableVsaasCameraDevices(state, getters) {
+      return getters.availableDevices.filter((item) => item instanceof VsaasCameraExt);
+    },
+    filteredDevices(state, getters) {
+      return (searchText) =>
+        getters.availableDevices.filter(
+          (item) => item.displayName?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1,
+        );
+    },
+    availableNVRDevices(state, getters) {
+      return getters.availableDevices
+        .filter((item) => item instanceof VsaasNVR)
+        .map((nvr) => {
+          nvr.channels = getters.availableNVRCameraDevices.filter((item) => nvr.mac === item.nvrMac);
+          return nvr;
+        });
+    },
+    groupDevicesMap(state, getters) {
+      // NOTE: NVR does not belong to any group
+      const map = new Map();
+
+      getters.availableCameraDevices.forEach((item) => {
+        const groupId = item.options.groupId ?? item.options.derivationInfo?.groupId;
+
+        if (!map.has(groupId)) {
+          map.set(groupId, []);
+        }
+        map.get(groupId).push(item);
+      });
+
+      map.forEach((devices) => {
+        devices.sort((a, b) => sortingUtils.sortByLocalCompare(a, b, 'displayName'));
+      });
+
+      return Object.fromEntries(map);
+    },
+    getAvailableDevicesWithPermission(state, getters, rootState, rootGetters) {
+      return (permission) => {
+        return getters.availableDevices;
+      };
+    },
+    getAvailableCameraDevicesWithPermission(state, getters, rootState, rootGetters) {
+      return (permission) => {
+        // XXX: introduce permission
+        return getters.availableCameraDevices;
+      };
+    },
+    getAvailableVsaasCamerasWithPermission(state, getters, rootState, rootGetters) {
+      return (permission) => {
+        // XXX: introduce permission
+        return getters.availableVsaasCameraDevices;
+      };
+    },
+  },
+  actions: {
+    async createDevice({ commit, state }, options) {
+      return DeviceFactory.create({
+        ...options,
+      }).injectDependencies(state.dependencies);
+    },
+    async fetchDevices({ commit, state, rootGetters }) {
+      if (state.isFetchingData) {
+        return;
+      }
+      commit('setIsFetchingData', true);
+      const result = await OpenApiService.get({ path: 'devices' });
+      commit('setDevices', { devices: result.data, groupsMap: rootGetters['group/groupsMap'] });
+      commit('setIsFetchingData', false);
+    },
+    async getDeviceAiLicense({ rootGetters }, deviceId) {
+      try {
+        const response = await ApiService.useAuthService(rootGetters['account/authService']).requestToIoTServer({
+          method: 'GET',
+          apiName: `v1/devices/${deviceId}/ai-licenses`,
+        });
+        return response;
+      } catch (error) {
+        console.error('Failed to get device AI license:', error);
+        throw error;
+      }
+    },
+    async updateDeviceAiModelsStatus({ rootGetters }, { deviceId, newModelStatus }) {
+      try {
+        const response = await ApiService.useAuthService(rootGetters['account/authService']).requestToIoTServer({
+          method: 'PUT',
+          apiName: `v1/devices/${deviceId}/ai-licenses`,
+          body: { features: newModelStatus },
+        });
+        return response;
+      } catch (error) {
+        console.error('Failed to UPDATE device AI Model status:', error);
+        throw error;
+      }
+    },
+  },
+  mutations: {
+    setIsFetchingData(state, nextToken) {
+      state.isFetchingData = !!nextToken;
+    },
+    setDevices(state, { groupsMap, devices }) {
+      // deviceType CAMERA and NVRCAMERA are from Open API
+      const deviceTypes = [deviceType.CAMERA, deviceType.NVRCAMERA, 'CAMERA', 'NVRCAMERA'];
+      const availableDevices = devices.filter((deviceItem) => {
+        const type = deviceItem.deviceType || deviceItem.type;
+        return deviceTypes.includes(type);
+      });
+
+      availableDevices.forEach((item) => {
+        const currentDevice = DeviceFactory.create({
+          options: {
+            deviceId: item.deviceId,
+            apiToken: OpenApiService.getToken(),
+            apiDomain: import.meta.env.VITE_OPENAPI_DOMAIN,
+            ...item,
+          },
+        }).injectDependencies(state.dependencies);
+
+        if (currentDevice instanceof NVRCameraExt) {
+          currentDevice.nvr = state.deviceMap.nvr.get(currentDevice.thingName);
+        }
+
+        if (groupsMap && groupsMap[currentDevice.siteID]) {
+          currentDevice.groupName = groupsMap[currentDevice.siteID]?.name;
+        }
+        state.deviceMap[currentDevice.type].set(currentDevice.deviceId, currentDevice);
+      });
+    },
+  },
+};
+
+export default device;

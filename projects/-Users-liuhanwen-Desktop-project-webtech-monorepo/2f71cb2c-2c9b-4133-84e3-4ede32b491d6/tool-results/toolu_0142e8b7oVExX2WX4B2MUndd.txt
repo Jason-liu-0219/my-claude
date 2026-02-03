@@ -1,0 +1,33 @@
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:314:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:316:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:433:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:437:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:486:    removeDeviceConfirm(isCancel) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:495:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:507:          this.$refs.removeDeviceDialog.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:202:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:203:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:287:const removeDeviceDialog = ref(null);
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:492:  removeDeviceDialog.value.show();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:497:  removeDeviceDialog.value.show();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:525:const removeDeviceConfirm = (isCancel) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:533:      removeDeviceDialog.value.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:544:      removeDeviceDialog.value.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:218:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:219:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:335:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:339:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:375:    removeDeviceConfirm(isCancel) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:383:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:394:          this.$refs.removeDeviceDialog.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:232:      it('should called removeDeviceDialog , and set currentDeleteItems = parameter.mac', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:235:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:238:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:243:      it('should called removeDeviceDialog , and set currentDeleteItems = parameters mac', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:246:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:251:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:256:    describe('removeDeviceConfirm', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:261:        w.vm.removeDeviceConfirm(isCancel);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:298:        w.vm.$refs.removeDeviceDialog.onDeleteSuccess = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:299:        await w.vm.removeDeviceConfirm(isCancel);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:302:        expect(w.vm.$refs.removeDeviceDialog.onDeleteSuccess).toHaveBeenCalledTimes(1);

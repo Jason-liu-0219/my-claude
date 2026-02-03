@@ -1,0 +1,319 @@
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-924-  updateDeviceSystemGeneralSettings: async ({ thingName, derivant, data }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-925-    return ApiService.requestToApiServer({
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-926-      apiPath: `v1/device-system-general/${thingName}/${derivant}`,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-927-      method: 'PATCH',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-928-      data,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-929-      contentType: HTTP_CONTENT_TYPE.JSON_MERGE_PATCH,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-930-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-931-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js:932:  resetNvrPassword: async (data) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-933-    return ApiService.requestToApiServer({
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-934-      apiPath: 'v1/nvr-password-reset',
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-935-      method: 'POST',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-936-      data,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-937-      contentType: HTTP_CONTENT_TYPE.JSON,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-938-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-939-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-940-  getDailySnapshotSummary: async ({ beginDate, derivant, endDate, thingName, checkOnly }) => {
+--
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-367-      type: Number,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-368-      default: 1,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-369-    },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-370-    hasManageDevicePermission: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-371-      type: Boolean,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-372-      default: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-373-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-374-  },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:375:  emits: ['tableLengthChanged', 'onSetNvrPassword', 'currentPageChanged', 'doFilter', 'devicesSorted'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-376-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-377-    return {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-378-      searchKeyword: '',
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-379-      selectedDevices: [],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-380-      sortedDevices: [],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-381-      currentSortTypes: [],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-382-      columnTypes: [],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-383-      columnOptionTitle: this.$t('Show column'),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-403-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-404-      if (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-405-        item.isNVRCamera &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-406-        item.nvr &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-407-        !item.nvr.wizardFinished &&
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-408-        this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-409-      ) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-410-        if (this.isOwner || this.isAdmin) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:411:          this.$emit('onSetNvrPassword', item.nvr);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-412-        }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-413-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-414-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-415-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-416-      const { deviceId, nvr } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-417-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-418-      if (!this.canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-419-        return;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-179-        w.vm.getTableButtons = vi.fn().mockReturnValue([]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-180-        w.vm.$router.push = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-181-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-182-        w.vm.onClickSetting(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-183-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-184-        expect(w.vm.$router.push).toHaveBeenCalledTimes(0);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-185-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-186-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:187:      it('should emit onSetNvrPassword when device is NVR camera with unfinished wizard and user is owner', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-188-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-189-        const item = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-190-          ...rowData[0],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-191-          isNVRCamera: true,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-192-          nvr: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-193-            wizardFinished: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-194-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-195-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-196-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-197-        w.vm.getTableButtons = vi.fn().mockReturnValue([{ name: 'Settings' }]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-198-        w.vm.isOwner = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-199-        w.vm.isAdmin = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-200-        w.vm.$router.push = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-201-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-202-        w.vm.onClickSetting(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-203-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:204:        expect(w.emitted('onSetNvrPassword')).toBeTruthy();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:205:        expect(w.emitted('onSetNvrPassword')[0]).toEqual([item.nvr]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-206-        expect(w.vm.$router.push).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-207-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-208-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:209:      it('should emit onSetNvrPassword when device is NVR camera with unfinished wizard and user is admin', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-210-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-211-        const item = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-212-          ...rowData[0],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-213-          isNVRCamera: true,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-214-          nvr: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-215-            wizardFinished: false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-216-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-217-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-218-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-219-        w.vm.getTableButtons = vi.fn().mockReturnValue([{ name: 'Settings' }]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-220-        w.vm.isOwner = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-221-        w.vm.isAdmin = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-222-        w.vm.$router.push = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-223-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-224-        w.vm.onClickSetting(item);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-225-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:226:        expect(w.emitted('onSetNvrPassword')).toBeTruthy();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:227:        expect(w.emitted('onSetNvrPassword')[0]).toEqual([item.nvr]);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-228-        expect(w.vm.$router.push).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-229-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-230-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-231-    describe('onClickDeleteDevice', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-232-      it('should called removeDeviceDialog , and set currentDeleteItems = parameter.mac', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-233-        const w = createWrapper({ rowData, groups });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-234-        const item = rowData[0];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-235-        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+--
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-278-      type: Number,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-279-      default: 1,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-280-    },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-281-    hasManageDevicePermission: {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-282-      type: Boolean,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-283-      default: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-284-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-285-  },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:286:  emits: ['doFilter', 'currentPageChanged', 'tableLengthChanged', 'onSetNvrPassword', 'devicesSorted'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-287-  data() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-288-    return {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-289-      searchKeyword: '',
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-290-      selectedDevices: [],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-291-      sortedDevices: [],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-292-      currentSortTypes: [],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-293-      columnTypes: [],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-294-      columnOptionTitle: this.$t('Show column'),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-305-    ...mapActions('device', ['batchDeleteDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-306-    ...mapActions('group', ['batchMoveDeviceToGroup']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-307-    onClickSetting(item) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-308-      if (this.isRenewalOverdue) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-309-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-310-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-311-
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-312-      if (!item.wizardFinished && this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:313:        this.$emit('onSetNvrPassword', item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-314-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-315-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-316-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-317-      const { deviceId } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-318-
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-319-      if (!this.canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-320-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-321-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-21-vi.mock('vue-router', () => ({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-22-  useRoute: () => ({ query: mockRouteQuery }),
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-23-  useRouter: () => ({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-24-    push: vi.fn(),
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-25-    replace: mockRouterReplace,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-26-  }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-27-}));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-28-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:29:const resetNvrPasswordMock = vi.fn();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-30-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-31-// Create a mock for getCurrentInstance and context provide
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-32-vi.mock('vue', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-33-  const actual = await vi.importActual('vue');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-34-  return {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-35-    ...actual,
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-36-    getCurrentInstance: () => ({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-37-      appContext: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-38-        config: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-39-          globalProperties: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-40-            $context: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-41-              provide: () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-42-                return {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:43:                  resetNvrPassword: resetNvrPasswordMock,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-44-                };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-45-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-46-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-47-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-48-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-49-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-50-    }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-51-  };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-71-  afterEach(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-72-    vi.clearAllMocks();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-73-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-74-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-75-  describe('API call', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-76-    beforeEach(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-77-      vi.clearAllMocks();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-78-    });
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:79:    it('should call resetNvrPassword on mounted', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:80:      resetNvrPasswordMock.mockResolvedValue({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-81-      createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-82-      await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-83-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:84:      expect(resetNvrPasswordMock).toHaveBeenCalledWith(expectedPayload);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-85-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-86-    describe('When api call is success', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-87-      it('should replace to success page when API call is successful with email query param', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:88:        resetNvrPasswordMock.mockResolvedValue({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-89-        createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-90-        await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-91-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-92-        expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-93-          name: 'NVRForgotPasswordSuccess',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-94-          query: { email: mockRouteQuery.email },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-95-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-96-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-97-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-98-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-99-    describe('When api call is failed', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-100-      it('should replace to error page with errorCode 404 when API call fails with 404 error', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:101:        resetNvrPasswordMock.mockRejectedValue({ cause: { status: 404 } });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-102-        createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-103-        await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-104-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-105-        expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-106-          name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-107-          query: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-108-            errorCode: '404',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-109-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-110-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-111-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-112-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-113-      it('should replace to error page with errorCode 500 when API call fails with 500 error', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:114:        resetNvrPasswordMock.mockRejectedValue({ cause: { status: 500 } });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-115-        createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-116-        await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-117-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-118-        expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-119-          name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-120-          query: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-121-            errorCode: '500',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-122-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-123-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-124-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-125-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-126-      it('should replace to error page without errorCode when API call fails with an unknown error', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:127:        resetNvrPasswordMock.mockRejectedValue(new Error('Some network error'));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-128-        createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-129-        await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-130-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-131-        expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-132-          name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-133-          query: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-134-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-135-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-143-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-144-    it('should replace to error page without errorCode when query params are missing', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-145-      mockRouteQuery.payload = undefined;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-146-      mockRouteQuery.email = undefined;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-147-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-148-      createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-149-      await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-150-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:151:      expect(resetNvrPasswordMock).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-152-      expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-153-        name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-154-        query: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-155-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-156-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-157-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-158-    it('should replace to error page without errorCode when query payload is missing', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-159-      mockRouteQuery.payload = undefined;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-160-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-161-      createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-162-      await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-163-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:164:      expect(resetNvrPasswordMock).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-165-      expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-166-        name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-167-        query: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-168-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-169-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-170-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-171-    it('should replace to error page without errorCode when query email is missing', async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-172-      mockRouteQuery.email = undefined;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-173-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-174-      createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-175-      await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-176-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:177:      expect(resetNvrPasswordMock).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-178-      expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-179-        name: 'NVRForgotPasswordError',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-180-        query: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-181-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-182-    });
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:183:    it('should call resetNvrPassword with correct payload when query params are present', async () => {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:184:      resetNvrPasswordMock.mockResolvedValue({});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-185-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-186-      createWrapper();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-187-      await flushPromises();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-188-
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js:189:      expect(resetNvrPasswordMock).toHaveBeenCalledWith(expectedPayload);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-190-      expect(mockRouterReplace).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-191-        name: 'NVRForgotPasswordSuccess',
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-192-        query: {
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-193-          email: mockRouteQuery.email,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-194-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-195-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-196-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.test.js-197-  });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-29-      return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-30-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-31-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-32-    const { email, payload } = route.query;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-33-    if (!payload || !email) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-34-      throw new Error('Missing query parameters');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-35-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-36-    const parsedPayload = JSON.parse(payload);
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue:37:    await instance.appContext.config.globalProperties.$context.provide('ApiService').resetNvrPassword(parsedPayload);
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-38-    router.replace({ name: 'NVRForgotPasswordSuccess', query: { email } });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-39-  } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-40-    const errorCode = error.cause?.status?.toString();
+packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-41-    router.replace({ name: 'NVRForgotPasswordError', query: { errorCode } });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-42-  } finally {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-43-    isLoading.value = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-44-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/NVRForgotPassword/index.vue-45-});

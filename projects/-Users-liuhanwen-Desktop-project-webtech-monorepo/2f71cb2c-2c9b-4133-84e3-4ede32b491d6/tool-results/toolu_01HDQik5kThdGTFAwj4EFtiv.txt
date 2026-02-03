@@ -1,0 +1,5 @@
+Found 4 files
+packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.test.js
+packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/composables/useUserMFAHelper.js
+packages/app-vsaas-portal/src/pages/user/detail/components/UserProfile/UserProfile.vue
+packages/app-vsaas-oblivionis/openspec/changes/migrate-user-management-components/tasks.md

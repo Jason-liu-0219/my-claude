@@ -1,0 +1,280 @@
+<template>
+  <div
+    v-if="currentOrganization"
+    class="grid mx-auto gap-4 w-[720px]"
+  >
+    <SystemCard>
+      <div class="flex items-center gap-6">
+        <VsaasAvatar
+          :displayName="organizationDisplayName"
+          :dataType="AVATAR_DATA_TYPE.ORGANIZATION"
+        />
+        <div class="flex-1 flex flex-col gap-2 text-foreground-primary">
+          <div class="text-label-md">{{ t('Organization name') }}</div>
+          <div class="text-body-lg">{{ currentOrganization.organizationName }}</div>
+        </div>
+        <VsaasButton
+          :text="t('Edit')"
+          :variant="BUTTON_VARIENT.SECONDARY"
+          @click="popupDialogue('editNameDialogue')"
+        />
+      </div>
+    </SystemCard>
+
+    <SystemCard>
+      <div class="flex items-center justify-between text-foreground-primary">
+        <div class="text-label-md">{{ t('License plan') }}</div>
+        <div class="flex items-center gap-2">
+          <template v-if="currentLicensePlans.length">
+            <LicenseBadge
+              v-for="license in currentLicensePlans"
+              :key="license"
+              :license="license"
+            />
+          </template>
+          <template v-else>-</template>
+        </div>
+      </div>
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center justify-between text-foreground-primary">
+          <div class="text-label-md">{{ t('Data storage location') }}</div>
+          <div class="text-body-md">{{ storageLocationText }}</div>
+        </div>
+        <div class="text-helper-lg text-foreground-secondary">
+          {{ storageLocationDescription }}
+        </div>
+      </div>
+    </SystemCard>
+
+    <SystemCard v-if="hasOwnerPrivilege">
+      <div
+        v-for="(action, index) in ownershipActions"
+        :key="index"
+        class="flex flex-col gap-3"
+      >
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col align-center gap-2">
+            <div class="text-label-md text-foreground-primary">{{ action.title }}</div>
+            <div
+              v-if="action.subtitle"
+              class="text-body-md text-foreground-secondary flex items-center gap-3"
+            >
+              {{ action.subtitle }}
+            </div>
+          </div>
+          <VsaasButton
+            :icon="action.button.icon"
+            :text="action.button.text"
+            :variant="action.button.variant"
+            @click="action.button.handler"
+          />
+        </div>
+        <div class="text-helper-lg text-foreground-secondary">
+          {{ action.description }}
+        </div>
+      </div>
+    </SystemCard>
+    <ChangeOrganizationNameDialogue
+      ref="editNameDialogue"
+      :organization="currentOrganization"
+      :operateAction="updateOrganizationName"
+    />
+    <DeleteOrganizationDialogue
+      ref="deleteOrganizationDialogue"
+      :organization="currentOrganization"
+      :operateAction="deleteOrganization"
+    />
+    <UnableDeleteOrganizationDialogue ref="unableDeleteOrganizationDialogue" />
+    <TransferOrganizationOwnerDialogue
+      ref="transferOrganizationOwnerDialogue"
+      :organization="currentOrganization"
+      :adminList="organizationAdminList"
+      :operateAction="transferOrganizationOwner"
+    />
+    <AppDialogue
+      ref="unableTransferOrganizationOwnerDialogue"
+      class="unable-transfer-organization-owner-dialogue"
+      name="unableTransferOrganizationOwnerDialogue"
+      :title="t('Unable to transfer ownership')"
+    >
+      <template #content>
+        <div class="dialogue-content">
+          <div class="content">
+            <p>{{ t('To transfer ownership, please add another admin to your organization and try again.') }}</p>
+          </div>
+        </div>
+      </template>
+      <template #rightControl>
+        <button
+          class="primary primary-button"
+          @click="hideUnableTransferOrganizationOwnerDialogue"
+        >
+          {{ t('OK') }}
+        </button>
+      </template>
+      <template #leftControl>
+        <div
+          class="link"
+          @click="redirectToUserManagement"
+        >
+          {{ t('Go to users') }}
+        </div>
+      </template>
+    </AppDialogue>
+  </div>
+</template>
+
+<script setup>
+import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { COUNTRY as countryList } from '@vivotek/const-vsaas';
+import { AVATAR_DATA_TYPE, BUTTON_VARIENT, VsaasButton } from '@vivotek/vsaas-vue-components';
+
+import ChangeOrganizationNameDialogue from '@/components/Dialogues/ChangeOrganizationNameDialogue.vue';
+import DeleteOrganizationDialogue from '@/components/Dialogues/DeleteOrganizationDialogue.vue';
+import TransferOrganizationOwnerDialogue from '@/components/Dialogues/TransferOrganizationOwnerDialogue.vue';
+import UnableDeleteOrganizationDialogue from '@/pages/system/components/UnableDeleteOrganizationDialogue.vue';
+import LicenseBadge from '@/pages/system/reskin/components/LicenseBadge.vue';
+import SystemCard from '@/pages/system/reskin/components/SystemCard.vue';
+
+const store = useStore();
+const router = useRouter();
+const { t } = useI18n();
+
+// === Dialogues ===
+const editNameDialogue = ref(null);
+const deleteOrganizationDialogue = ref(null);
+const unableDeleteOrganizationDialogue = ref(null);
+const transferOrganizationOwnerDialogue = ref(null);
+const unableTransferOrganizationOwnerDialogue = ref(null);
+const popupDialogue = (key) => {
+  const dialogueMap = {
+    editNameDialogue: editNameDialogue.value,
+    deleteOrganizationDialogue: deleteOrganizationDialogue.value,
+    unableDeleteOrganizationDialogue: unableDeleteOrganizationDialogue.value,
+    transferOrganizationOwnerDialogue: transferOrganizationOwnerDialogue.value,
+    unableTransferOrganizationOwnerDialogue: unableTransferOrganizationOwnerDialogue.value,
+  };
+  dialogueMap[key]?.show();
+};
+
+// === Update Organization Name ===
+const currentOrganization = computed(() => store.getters['organization/currentOrganization']);
+const organizationDisplayName = computed(() => {
+  return currentOrganization.value?.organizationName?.slice(0, 1).toUpperCase() || '';
+});
+const updateOrganizationName = (payload) => store.dispatch('organization/updateOrganizationName', payload);
+
+// === Organization General Info ===
+const currentLicensePlans = computed(() => store.getters['organization/currentLicensePlans']);
+const storageLocation = computed(() => store.getters['organization/storageLocation']);
+const storageLocationText = computed(() => {
+  const primaryLocation = countryList()
+    .find((c) => c.value === storageLocation.value)
+    ?.i18n(t);
+  return primaryLocation || '-';
+});
+const storageLocationDescription = computed(() => {
+  return t(
+    "This is the location where your organization's video and image data is stored. Contact support if you need further assistance.",
+  );
+});
+
+// === Privilege Related ===
+// should add back role control when privilege system is ready
+const isOwner = computed(() => store.getters['account/isOwner']);
+const account = computed(() => store.state.account);
+const hasOwnerPrivilege = computed(() => {
+  return isOwner.value;
+});
+const username = computed(() => {
+  return isOwner.value ? account.value.name : '--';
+});
+const ownershipActions = computed(() => [
+  {
+    title: t('Organization owner'),
+    subtitle: username.value,
+    description: transferOrganizationDescription.value,
+    button: {
+      text: t('Transfer'),
+      variant: BUTTON_VARIENT.SECONDARY,
+      handler: handleTransferOwner,
+    },
+  },
+  {
+    title: t('Delete organization'),
+    subtitle: null,
+    description: deleteOrganizationDescription.value,
+    button: {
+      icon: 'trash-2',
+      text: t('Delete'),
+      variant: BUTTON_VARIENT.DESTRUCTIVE,
+      handler: handleDeleteOrganization,
+    },
+  },
+]);
+
+// === Transfer Organization Owner ===
+const users = computed(() => store.state.user.users);
+const organizationAdminList = computed(() => {
+  return users.value.filter((user) => user.role?.name?.toUpperCase() === 'ADMIN');
+});
+const enableTransferOrganizationOwner = computed(() => {
+  return hasOwnerPrivilege.value && organizationAdminList.value.length > 0;
+});
+const transferOrganizationDescription = computed(() => {
+  return t('Organization owner will be the only key contact with System Integrator.');
+});
+const transferOrganizationOwner = async (payload) => {
+  await store.dispatch('organization/transferOrganizationOwner', payload);
+  window.location.reload();
+};
+const handleTransferOwner = () => {
+  if (!hasOwnerPrivilege.value) {
+    return;
+  }
+  if (enableTransferOrganizationOwner.value) {
+    popupDialogue('transferOrganizationOwnerDialogue');
+    return;
+  }
+  popupDialogue('unableTransferOrganizationOwnerDialogue');
+};
+const hideUnableTransferOrganizationOwnerDialogue = () => {
+  unableTransferOrganizationOwnerDialogue.value?.hide();
+};
+const redirectToUserManagement = () => {
+  router.push({ name: 'UserManagement' });
+};
+
+// === Delete Organization ===
+const deviceCount = computed(() => store.getters['device/deviceCount']);
+const enableDeleteOrganization = computed(() => {
+  return isOwner.value && users.value.length === 1 && deviceCount.value === 0;
+});
+const deleteOrganizationDescription = computed(() => {
+  return t(
+    'The organization can only be deleted when all devices are deleted and all users (except organization owner) are removed from the organization.',
+  );
+});
+const deleteOrganization = async (payload) => {
+  await store.dispatch('organization/deleteOrganization', payload);
+  window.location.reload();
+};
+const handleDeleteOrganization = () => {
+  if (enableDeleteOrganization.value) {
+    popupDialogue('deleteOrganizationDialogue');
+    return;
+  }
+  popupDialogue('unableDeleteOrganizationDialogue');
+};
+
+// === API ===
+const getUsersByOrganizationV2 = () => store.dispatch('user/getUsersByOrganizationV2');
+
+onMounted(() => {
+  getUsersByOrganizationV2();
+});
+</script>

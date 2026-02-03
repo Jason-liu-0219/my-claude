@@ -1,0 +1,180 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-31-    this.codec = codec;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-32-    this.mediaCodec = mediaCodec || DEFAULT_MEDIA_CODEC_MAP[codec];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-33-
+packages/lib-rtsp-player/src/media/WebCodecsController.js:34:    this.waitingForKeyframe = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-35-    this.isCodecReady = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-36-    this.isPlaybackReady = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-37-    this.isConfiguring = false;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-183-   *
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-184-   * @param {object} packet
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-185-   * @param {Uint8Array} packet.data Encoded payload (Annex B or AVCC as expected by decoder).
+packages/lib-rtsp-player/src/media/WebCodecsController.js:186:   * @param {boolean} packet.isKeyframe True if this packet is a keyframe.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-187-   * @param {number} packet.timestamp Timestamp in milliseconds
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-188-   * @param {number} packet.height
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-189-   * @param {number} packet.width
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-202-      preroll,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-203-    } = packet;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-204-
+packages/lib-rtsp-player/src/media/WebCodecsController.js:205:    if (!data || (!isKeyframe && this.waitingForKeyframe)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-206-      return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-207-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-208-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-209-    if (isKeyframe) {
+packages/lib-rtsp-player/src/media/WebCodecsController.js:210:      this.waitingForKeyframe = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-211-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-212-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-213-    const uTimestamp = (timestamp ?? 0) * 1000;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-328-    this.isDraining = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-329-    this.isConfiguring = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-330-    this.isPlaybackReady = false;
+packages/lib-rtsp-player/src/media/WebCodecsController.js:331:    this.waitingForKeyframe = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-332-    this.frameBudget = Infinity;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-333-    this.onStepDone = null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.js-334-  }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-148-    ctrl.destroy();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-149-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-150-
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js:151:  it('queues until keyframe, configures on keyframe, then decodes', async () => {
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js-152-    getVideoDecoderSupportedConfig.mockResolvedValue({ codec: 'avc1.42E01E', codedWidth: 640, codedHeight: 360 });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-153-    const video = setupDOM();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-154-    const ctrl = new WebCodecsController(video, 'H264', 'avc1.42E01E', false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-155-    await Promise.resolve();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-156-
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js:157:    // Non-keyframe ignored while waiting for keyframe
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-158-    await ctrl.appendPacket({
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js-159-      data: new Uint8Array([1]), timestamp: 1, isKeyframe: false, width: 640, height: 360
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-160-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-177-    const ctrl = new WebCodecsController(video, 'H264', 'avc1.42E01E', false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-178-    await Promise.resolve();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-179-
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js:180:    // Configure decoder first with a keyframe (mark as preroll so output is discarded)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-181-    await ctrl.appendPacket({
+packages/lib-rtsp-player/src/media/WebCodecsController.test.js-182-      data: new Uint8Array([1]), timestamp: 1, isKeyframe: true, width: 640, height: 360, preroll: true
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/media/WebCodecsController.test.js-183-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-30-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-31-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-32-  get isFrame() {
+packages/lib-rtsp-player/src/model/NALU_H265.js:33:    return this.isKeyFrame || this.ntype === NALU_TYPE.TYPE_HEVC.NDR;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-34-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-35-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-36-  get isKeyframe() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-38-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-39-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-40-  /*
+packages/lib-rtsp-player/src/model/NALU_H265.js:41:   * Although IDR_W_RADL is the standard keyframe type in H.265,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-42-   * we use this legacy-compatible check for frames suitable for decoder initialization,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-43-   * including SEI frames with recovery points.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-44-   */
+packages/lib-rtsp-player/src/model/NALU_H265.js:45:  get isKeyFrameOrSEI() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-46-    return this.isKeyframe || this.isSEI;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-47-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/model/NALU_H265.js-48-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-79-      data,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-80-      applicationData,
+packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-81-      meta: {
+packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js:82:        isKeyframe: !!trunk.isKeyframe || !!trunk.isKeyFrameOrSEI,
+packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-83-        codec: this.codec,
+packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-84-        mediaCodec: this.track.codec,
+packages/lib-rtsp-player/src/remuxer/AbstractRemuxer.js-85-        width: this.track.width,
+--
+packages/lib-rtsp-player/src/remuxer/H265Parser.js-9- * It handles:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-10- * - Parsing SPS to extract resolution info
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-11- * - Parsing PPS and VPS
+packages/lib-rtsp-player/src/remuxer/H265Parser.js:12: * - Identifying IDR/NDR/SEI keyframes
+packages/lib-rtsp-player/src/remuxer/H265Parser.js:13: * - Managing "firstFound" to ensure decoding only starts after keyframe
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-14- * - Attaching sliceType to NAL units
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-15- *
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-16- * This parser updates the given track object with parsed SPS/PPS/VPS/width/height.
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-57-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-58-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-59-  /**
+packages/lib-rtsp-player/src/remuxer/H265Parser.js:60:   * Patch keyframe metadata when unexpected NAL type occurs
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-61-   * @param {NALU} nal
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-62-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-63-  handleUnexpectedNAL(nal) {
+--
+packages/lib-rtsp-player/src/remuxer/H265Parser.js-87-      case NALU_TYPE.TYPE_HEVC.NDR:
+packages/lib-rtsp-player/src/remuxer/H265Parser.js-88-      case NALU_TYPE.TYPE_HEVC.IDR:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-89-        unit.sliceType = parseSliceHeader(unit.data);
+packages/lib-rtsp-player/src/remuxer/H265Parser.js:90:        if (unit.isKeyFrameOrSEI && !this.firstFound) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-91-          this.firstFound = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-92-        }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Parser.js-93-        return this.firstFound;
+--
+packages/lib-rtsp-player/src/remuxer/H264Parser.js-6- * It handles:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-7- * - Parsing SPS to extract resolution and codec info
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-8- * - Parsing PPS
+packages/lib-rtsp-player/src/remuxer/H264Parser.js:9: * - Identifying IDR/NDR keyframes
+packages/lib-rtsp-player/src/remuxer/H264Parser.js:10: * - Managing "firstFound" to ensure we only process after a keyframe
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-11- * - Attaching sliceType to NAL units
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-12- *
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-13- * This parser updates the given track object with parsed SPS/PPS/codec/width/height.
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-14- */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-15-class H264Parser {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-16-  constructor(track) {
+packages/lib-rtsp-player/src/remuxer/H264Parser.js:17:    this.firstFound = false; // Whether a keyframe has been found to start decoding
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-18-    this.track = track; // Video track metadata (e.g., width, height, codec, sps, pps)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-19-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-20-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-43-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-44-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-45-  /**
+packages/lib-rtsp-player/src/remuxer/H264Parser.js:46:   * Patch keyframe metadata when unexpected NAL type occurs
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-47-   * @param {NALU} nal
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-48-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H264Parser.js-49-  handleUnexpectedNAL(nal) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-29-  composeFrameInfo(trunk) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-30-    const { vps, sps, pps } = this.track;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-31-
+packages/lib-rtsp-player/src/remuxer/H265Remuxer.js:32:    if (!trunk.isKeyFrameOrSEI || !vps?.length || !sps?.length || !pps?.length) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-33-      return null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-34-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-35-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-48-   * @param {Uint8Array} packet
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-49-   */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-50-  storeLastGOP(trunk, packet) {
+packages/lib-rtsp-player/src/remuxer/H265Remuxer.js:51:    if (trunk.isKeyFrameOrSEI) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-52-      this.lastGopPackets = [packet];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-53-    } else if (this.lastGopPackets.length) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/remuxer/H265Remuxer.js-54-      this.lastGopPackets.push(packet);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-5-let decoder = null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-6-let isPlaybackReady = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-7-let isCodecReady = false;
+packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js:8:let waitingForKeyframe = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-9-let codedWidth = 0;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-10-let codedHeight = 0;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-11-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-34-  isCodecReady = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-35-  isPaused = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-36-  isDraining = false;
+packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js:37:  waitingForKeyframe = true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-38-  frameBudget = Infinity;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-39-  onStepResolve = null;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-40-  prerollMap.clear();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-126-        codec, mediaCodec, packet, timestampMs, isKeyframe, height, width, preroll
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-127-      } = data;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-128-
+packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js:129:      if (waitingForKeyframe && !isKeyframe) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-130-        break;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-131-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-132-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-133-      if (isKeyframe) {
+packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js:134:        waitingForKeyframe = false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-135-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-136-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/lib-rtsp-player/src/workers/web-codecs-decoder.worker.js-137-      const uTimestamp = (timestampMs ?? 0) * 1000;

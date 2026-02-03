@@ -1,0 +1,347 @@
+<template>
+  <AppDialogue
+    ref="dialogue"
+    width="828px"
+    class="select-user-dialogue"
+    :primaryText="currentState === DIALOGUE.STATE.PROCESSING ? $t('Sending...') : $t('Send')"
+    :buttonIconStatusMapping="buttonIconStatusMapping"
+    :state="currentState"
+    @confirm="confirm"
+  >
+    <template #header>
+      <h5 class="header-title bold">{{ t('Select user to send the copy of view') }}</h5>
+      <h3
+        class="selected-user bold"
+        :class="{ 'no-select': selectedUsers.length === 0 }"
+      >
+        {{ selectedUsersTitle }}
+      </h3>
+      <h6 class="selected-hint">
+        {{
+          // eslint-disable-next-line max-len, prettier/prettier
+          t('Selected users will receive a copy of this view. They can customize their copy without affecting your original view.',)
+        }}
+      </h6>
+    </template>
+    <template #content>
+      <div class="dialog-content">
+        <AppSearchInputWithFilter
+          v-if="onBoardUsers.length"
+          v-model:searchKeyword="searchKeyword"
+          v-model:filterTypes="filterTypes"
+          :selectedLength="selectedUsers.length"
+          :placeholderText="placeholderText"
+          :sortTypeOptions="sortTypeOptions"
+        />
+
+        <template v-if="filteredUsers.length">
+          <div class="select-all-wrapper">
+            <AppCheckBox
+              v-model.lazy="isSelectAll"
+              class="select-all-checkbox"
+              :label="t('All')"
+              :indeterminate="isIndeterminateSelection"
+              :disabled="!filteredUsers.length || searchKeyword.length > 0"
+              @click.prevent="toggleAll"
+            />
+          </div>
+          <div class="user-list">
+            <div
+              v-for="user in filteredUsers"
+              :key="user.email"
+              class="user"
+            >
+              <AppCheckBox
+                v-model="selectedUsers"
+                :value="user.email"
+              />
+              <AppAvatar
+                :name="user.name"
+                :role="user.isOwner ? USER_ROLE.OWNER : user.isAdmin ? USER_ROLE.ADMIN : USER_ROLE.USER"
+                roleIconStyle="smaller"
+              />
+              <div class="user-info">
+                <h6
+                  :title="user.name"
+                  class="bold user-name"
+                  v-text="user.name"
+                />
+                <span
+                  :title="user.email"
+                  class="user-email"
+                  v-text="user.email"
+                />
+              </div>
+            </div>
+          </div>
+        </template>
+        <template v-else>
+          <div class="empty-block">
+            <SvgIcon
+              :iconClass="emptyIconClass"
+              iconPrefix="illustration"
+              :iconTheme="$theme.value"
+              size="100px"
+              stateless
+            />
+            <h6>{{ emptyText }}</h6>
+          </div>
+        </template>
+      </div>
+    </template>
+    <template
+      v-if="currentState === DIALOGUE.STATE.ERROR"
+      #errorMessage
+    >
+      <AppFormErrorMessage :message="$t('Failed to send. Try again.')" />
+    </template>
+  </AppDialogue>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { AppSearchInputWithFilter } from '@vivotek/advanced-vue-components';
+import { DIALOGUE, USER_ROLE } from '@vivotek/const-vsaas';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+import useFilterByKeyword from '@/composables/useFilterByKeyword/useFilterByKeyword';
+import useSelectAll from '@/composables/useSelectAll/useSelectAll';
+import { PERMISSION_ORG_SCOPE } from '@/constants/Permission';
+
+const store = useStore();
+
+const { t } = useI18n({ useScope: 'global' });
+const dialogue = ref(null);
+
+const sortTypeOptions = ref([
+  {
+    text: t('Name'),
+    value: 'name',
+  },
+  {
+    text: t('Email'),
+    value: 'email',
+  },
+]);
+const filterTypes = ref(['name', 'email']);
+
+const selectedUsers = ref([]);
+
+const searchKeyword = ref('');
+
+const selectedUsersTitle = computed(() => {
+  return t('0 user is selected | 1 user is selected | {count} users are selected', {
+    count: selectedUsers.value.length,
+  });
+});
+
+const onBoardUsers = computed(() => store.getters['user/onBoardUsers']);
+const onBoardUsersWithoutMe = computed(() =>
+  onBoardUsers.value.filter((user) => user.email !== store.getters['account/email']),
+);
+
+const { filteredList: filteredUsers } = useFilterByKeyword({
+  rawData: onBoardUsersWithoutMe,
+  keyword: searchKeyword,
+  filterTypes,
+});
+
+const { toggleAll, isSelectAll, isIndeterminateSelection } = useSelectAll({
+  selectedModelValue: selectedUsers,
+  rawData: filteredUsers,
+  filterCallback: (user) => user.email,
+});
+
+const emptyText = computed(() => {
+  if (filteredUsers.value.length === 0 && searchKeyword.value.length > 0) {
+    return t('No search results');
+  }
+  if (onBoardUsers.value.length === 0) {
+    return t('No users in the organization');
+  }
+  return '';
+});
+
+const emptyIconClass = computed(() => {
+  if (filteredUsers.value.length === 0 && searchKeyword.value.length > 0) {
+    return 'search_failed';
+  }
+
+  return 'list';
+});
+
+const placeholderText = computed(() => {
+  if (filterTypes.value.length !== 1) {
+    return t('Search');
+  }
+  const currentTypeText = sortTypeOptions.value.find(({ value }) => value === filterTypes.value[0])?.text;
+
+  return `${t('Search')} "${currentTypeText}"`;
+});
+
+const currentState = ref(DIALOGUE.STATE.DEFAULT);
+
+const buttonIconStatusMapping = computed(() => {
+  return {
+    [DIALOGUE.STATE.DEFAULT]: [
+      { status: selectedUsers.value.length === 0 ? 'disabled' : '', icon: '' },
+      { status: '', icon: '' },
+    ],
+    [DIALOGUE.STATE.PROCESSING]: [
+      { status: 'loading', icon: 'status_loading_1st_solid_dark' },
+      { status: 'disabled', icon: '' },
+    ],
+    [DIALOGUE.STATE.SUCCESS]: [
+      { status: 'success', icon: 'general_success_line' },
+      { status: 'disabled', icon: '' },
+    ],
+    [DIALOGUE.STATE.ERROR]: [
+      { status: '', icon: 'general_error_line' },
+      { status: '', icon: '' },
+    ],
+  };
+});
+
+const confirm = async (isConfirm) => {
+  const hasSendCopyPermission = store.getters['permission/canDoOrg']({
+    scope: PERMISSION_ORG_SCOPE.ORG_CUSTOMIZE_VIEW_SEND_COPY,
+  });
+  if (!isConfirm || currentState.value !== DIALOGUE.STATE.DEFAULT || !hasSendCopyPermission) {
+    return;
+  }
+  currentState.value = DIALOGUE.STATE.PROCESSING;
+  try {
+    await store.dispatch('view/copyView', {
+      emails: selectedUsers.value,
+    });
+
+    currentState.value = DIALOGUE.STATE.SUCCESS;
+
+    setTimeout(() => {
+      hide();
+    }, 2000);
+  } catch (error) {
+    console.error(error);
+    currentState.value = DIALOGUE.STATE.ERROR;
+  }
+};
+
+const hide = () => {
+  dialogue.value.hide();
+};
+
+const show = () => {
+  currentState.value = DIALOGUE.STATE.DEFAULT;
+  selectedUsers.value = [];
+  searchKeyword.value = '';
+  dialogue.value.show();
+};
+
+defineExpose({ show });
+</script>
+
+<style lang="less" scoped>
+.select-user-dialogue {
+  .header {
+    h3 {
+      color: @color-text01;
+    }
+    .selected-user {
+      margin-top: 20px;
+      color: @color-primary;
+      &.no-select {
+        color: @color-text03;
+      }
+    }
+    .selected-hint {
+      margin-top: 10px;
+      color: @color-text03 !important;
+    }
+  }
+
+  .confirm-modal-content {
+    .main-wrapper {
+      .dialog-content {
+        display: flex;
+        flex-direction: column;
+        height: 387px;
+      }
+      .select-all-wrapper {
+        height: 40px;
+        padding-left: 20px;
+        margin-top: 16px;
+        .select-all-checkbox {
+          :deep(.label-box.with-label .svg-icon) {
+            margin-right: 20px;
+          }
+          :deep(.text) {
+            font-size: 12px;
+            color: @color-text05;
+            font-weight: 700;
+          }
+        }
+      }
+
+      .user-list {
+        flex: 1;
+        overflow-y: auto;
+        width: 100%;
+        box-sizing: border-box;
+
+        .user {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          padding: 14px 20px;
+          background-color: @color-surface02;
+          box-sizing: border-box;
+
+          &:not(:last-child) {
+            border-bottom: 1px solid @color-outline05;
+          }
+          .user-info {
+            h6 {
+              .text-ellipsis;
+              color: @color-text02;
+              &.user-name {
+                width: 178px;
+                margin-right: 42px;
+                color: @color-text01;
+              }
+            }
+            span {
+              width: 200px;
+              .text-ellipsis;
+              &.user-email {
+                color: @color-text05;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 130%;
+              }
+            }
+          }
+          .app-avatar {
+            width: 32px;
+            height: 32px;
+            margin: 0 20px;
+          }
+        }
+      }
+
+      .empty-block {
+        flex: 1;
+        padding: 0px 40px;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="less">
+.select-user-dialogue .confirm-modal-content .main-wrapper .control.in-row {
+  margin-top: 0;
+}
+</style>

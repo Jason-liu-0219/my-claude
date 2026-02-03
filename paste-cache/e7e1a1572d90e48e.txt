@@ -1,0 +1,101 @@
+  // --------- oursky version ---------
+  async fetchNextAvailableResourceRoles(
+    { state, commit, dispatch },
+    { includeSystemRole = false, resourceKinds = [] } = {},
+  ) {
+    try {
+      if (state.allAvailableResourceRolesLoading) {
+        return;
+      }
+      commit('setAvailableResourceRolesLoading', true);
+      commit('clearAvailableResourceRolesError');
+
+      let hasNewRecord = false;
+      const page = [];
+      if (state.allAvailableResourceRolesPage === 1 && includeSystemRole) {
+        hasNewRecord = true;
+      }
+
+      if (hasNewRecord) {
+        commit('setAvailableResourceRoles', page);
+        commit('setAvailableResourceRolesNextPage');
+      }
+
+      const hasMorePage = true;
+      commit('setAvailableResourceRolesHasMorePage', hasMorePage);
+      commit('setAvailableResourceRolesLoading', false);
+    } catch (error) {
+      commit('setAvailableResourceRolesError', {
+        message: 'Failed to load resource roles list',
+        details: error.message || 'Unknown error occurred',
+        code: error.code || 'FETCH_ERROR',
+      });
+      commit('setAvailableResourceRolesLoading', false);
+      Log.error('Failed to fetch next available resource roles:', error);
+      throw error;
+    }
+  },
+
+  async assignDeviceRoles({ dispatch }, { userId, userSub, rolesToAssign }) {
+    try {
+      if (rolesToAssign.length === 0) {
+        Log.debug('No device roles to assign');
+        return { success: true };
+      }
+
+      await apiServiceInterface.grantResources({ userId: userSub, rolePairs: rolesToAssign });
+
+      Log.debug('Device roles assigned successfully', { count: rolesToAssign.length });
+      return { success: true };
+    } catch (error) {
+      Log.error('Failed to assign device roles:', error);
+      throw error;
+    }
+  },
+
+  async unassignDeviceRoles({ dispatch }, { userId, userSub, resourceIdsToRevoke }) {
+    try {
+      if (resourceIdsToRevoke.length === 0) {
+        Log.debug('No device roles to unassign');
+        return { success: true };
+      }
+
+      await apiServiceInterface.revokeResources({ userId: userSub, resourceIds: resourceIdsToRevoke });
+
+      Log.debug('Device roles unassigned successfully', { count: resourceIdsToRevoke.length });
+      return { success: true };
+    } catch (error) {
+      Log.error('Failed to unassign device roles:', error);
+      throw error;
+    }
+  },
+
+  async assignToDevice({ dispatch }, { deviceId, updatePairs }) {
+    try {
+      if (updatePairs.length === 0) {
+        Log.debug('No device roles to assign');
+        return { success: true };
+      }
+
+      Log.debug('Assigned users to device with role successfully', { count: updatePairs.length });
+      return { success: true };
+    } catch (error) {
+      Log.error('Failed to assign users to device:', error);
+      throw error;
+    }
+  },
+
+  async unassignFromDevice({ dispatch }, { deviceId, userSubs }) {
+    try {
+      if (userSubs.length === 0) {
+        Log.debug('No user to unassign');
+        return { success: true };
+      }
+
+      Log.debug('Unassigned users from device successfully', { count: userSubs.length });
+      return { success: true };
+    } catch (error) {
+      Log.error('Failed to unassign device roles:', error);
+      throw error;
+    }
+  },

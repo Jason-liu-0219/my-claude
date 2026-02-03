@@ -1,0 +1,136 @@
+<template>
+  <AppDropdown
+    :modelValue="modelValue"
+    :options="roleOptions"
+    :placeholder="placeholder"
+    :isError="isError"
+    :showErrorMessage="showErrorMessage"
+    :disabled="disabled"
+    :loading="isLoading"
+    :hasMore="hasMoreData"
+    :loadError="hasLoadError"
+    data-testid="organization-role-form-dropdown"
+    @update:modelValue="onSelect"
+    @toggleDropdown="onToggleDropdown"
+    @loadMore="fetchRoles"
+  />
+</template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+
+import { isOwner } from '@/utils/RoleHelper';
+
+defineProps({
+  modelValue: {
+    type: [String],
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+  isError: {
+    type: Boolean,
+    default: false,
+  },
+  showErrorMessage: {
+    type: Boolean,
+    default: false,
+  },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const store = useStore();
+
+// ============ Mock Data Configuration ============
+// TODO: Set to false for production
+const USE_MOCK_DATA = true;
+const MOCK_TOTAL_PAGES = 6;
+const MOCK_ITEMS_PER_PAGE = 10;
+// =================================================
+
+// Internal state
+const roles = ref([]);
+const loadPage = ref(0);
+const isLoading = ref(false);
+const hasLoadError = ref(false);
+
+// Computed
+const hasMoreData = computed(() => {
+  if (USE_MOCK_DATA) {
+    return loadPage.value < MOCK_TOTAL_PAGES;
+  }
+  // For real API, check if we have more pages (implement based on API response)
+  return false;
+});
+
+const roleOptions = computed(() => {
+  return roles.value
+    .filter((role) => !isOwner(role))
+    .map((role) => ({
+      text: role.name,
+      value: role.id,
+      disabled: !role.isManageable,
+    }));
+});
+
+// Mock data generator
+const generateMockRoles = (page) => {
+  return Array.from({ length: MOCK_ITEMS_PER_PAGE }, (_, i) => ({
+    id: `mock-role-${page}-${i}`,
+    name: `Role ${page * MOCK_ITEMS_PER_PAGE + i + 1}`,
+    isManageable: true,
+    permissions: [],
+  }));
+};
+
+// Fetch roles (mock or real API)
+const fetchRoles = async () => {
+  if (isLoading.value || !hasMoreData.value) {
+    return;
+  }
+
+  isLoading.value = true;
+  hasLoadError.value = false;
+
+  try {
+    if (USE_MOCK_DATA) {
+      // Simulate network delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const newRoles = generateMockRoles(loadPage.value);
+      roles.value = [...roles.value, ...newRoles];
+    } else {
+      // Real API calls
+      await Promise.all([
+        store.dispatch('role/queryOrganizationDefaultRoles'),
+        store.dispatch('role/queryOrganizationCustomRoles'),
+      ]);
+      roles.value = store.getters['role/organizationRoles'];
+    }
+    loadPage.value += 1;
+  } catch (err) {
+    console.error('Failed to load organization roles:', err);
+    hasLoadError.value = true;
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const onSelect = (roleId) => {
+  emit('update:modelValue', roleId);
+};
+
+const onToggleDropdown = (isOpen) => {
+  // Auto-fetch first page when opening dropdown
+  if (isOpen && roles.value.length === 0) {
+    fetchRoles();
+  }
+};
+</script>

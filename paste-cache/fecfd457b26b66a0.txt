@@ -1,0 +1,746 @@
+<template>
+  <AppDialogue
+    ref="modal"
+    class="device-access-dialogue"
+    data-testid="device-access-dialogue"
+    name="DeviceAccessDialogue"
+    :closeWhenClickButton="closeOnSelect"
+    :title="dialogueTitle"
+    :subTitle="subTitle"
+    :primaryText="isProcessing ? $t('Selecting') : $t('Select')"
+    :buttonIconStatusMapping="buttonIconStatusMapping"
+    :state="modalState"
+    height="720px"
+    width="1116px"
+    @confirm="handleConfirm"
+  >
+    <template #content>
+      <div class="content-wrapper">
+        <div class="hint">
+          <h3 class="bold">
+            {{ selectedLengthHint }}
+          </h3>
+        </div>
+        <div class="dialogue-content">
+          <div class="left-menu">
+            <DeviceGroupList
+              :multiple="multiple"
+              :groupList="sites"
+              :currentSelectedGroups="currentSelectedSites"
+              :currentSelectedDevices="currentSelectedDevices"
+              :focusGroupId="focusSiteId"
+              :isSearching="isSearching"
+              @toggleSelectedGroups="toggleSelectedSites"
+              @changeFocusGroup="changeFocusSiteAndClearInput"
+            />
+          </div>
+          <div class="center-view">
+            <div class="search-container">
+              <AppInputFields
+                id="search-device-fields"
+                v-model.lazy="searchName"
+                class="search-input"
+                type="search"
+                :disabled="devices.length === 0"
+                @input="searchInputChange"
+              />
+            </div>
+            <div
+              v-if="hasSearchResult && currentFocusSiteInfo"
+              class="site-header-container"
+            >
+              <h6 class="site-hint">
+                {{ currentFocusSiteInfo }}
+              </h6>
+            </div>
+            <div
+              v-if="hasSearchResult"
+              class="site-batch-assign-container"
+            >
+              <h6 class="site-batch-selector-hint">
+                {{ t('Update Selected Devices Access') }}
+              </h6>
+              <div class="site-batch-assign-selector">
+                <DeviceRoleDropdown
+                  class="device-role-dropdown"
+                  :modelValue="currentBatchAssignRoleId"
+                  :placeholder="t('Select Role to assign')"
+                  :disabled="isBatchAssignDisabled"
+                  @selected="batchAssignRole"
+                />
+              </div>
+            </div>
+            <div
+              v-if="hasSearchResult"
+              ref="siteList"
+              class="site-list"
+            >
+              <div
+                v-for="(_site, index) in filteredSites"
+                :key="index"
+                class="site-wrapper"
+              >
+                <h6
+                  v-if="displayDevices[_site.id]"
+                  class="site-title"
+                  :title="_site.name"
+                >
+                  {{ _site.name }}
+                </h6>
+                <div
+                  v-if="displayDevices[_site.id]"
+                  class="site-device-container"
+                >
+                  <template v-if="multiple">
+                    <AppCheckBox
+                      v-model.lazy="isSelectAllMap[_site.id]"
+                      :indeterminate="checkIsSelectIndeterminate(_site.devices)"
+                      :disabled="_site.devices.length === 0"
+                      @click.prevent="selectAll(_site.id)"
+                    />
+                  </template>
+                  <span>
+                    {{ DEVICE_OF_GROUP_TYPE_LABEL[_site.type] }}
+                  </span>
+                </div>
+                <AppDeviceList
+                  class="site-device-list"
+                  :multiple="multiple"
+                  :selectMode="!multiple"
+                  :devicesData="displayDevices[_site.id]"
+                  :activeDeviceId="activeDeviceId"
+                  :defaultSelectedDevices="currentSelectedDevices"
+                  :enableListItemActive="false"
+                  :shouldDisplayThumbnail="shouldDisplayThumbnail(_site.type)"
+                  @toggleSelectedDevices="toggleSelectedDevices"
+                  @selectDevice="selectDevice"
+                >
+                  <template #rear="{ device }">
+                    <DeviceIndicator
+                      v-if="device.nvrName"
+                      :device="device"
+                    />
+                    <DeviceIndicator
+                      v-if="device.vssName"
+                      :device="device"
+                    />
+                  </template>
+                  <template #dropdown="{ device }">
+                    <DeviceRoleDropdown
+                      class="device-role-dropdown"
+                      :modelValue="deviceRoles[device.deviceId]?.roleId || ''"
+                      :placeholder="$t('Select Role')"
+                      :initialDisplayText="deviceRoles[device.deviceId]?.roleName || ''"
+                      @selected="(role) => updateDeviceRole(device.deviceId, role)"
+                    />
+                  </template>
+                </AppDeviceList>
+              </div>
+            </div>
+            <div
+              v-else
+              class="no-result-container"
+            >
+              <SvgIcon
+                class="no-result-icon"
+                :iconClass="`search_failed`"
+                size="100px"
+              />
+              <h6 class="text">
+                {{ $t('No search results') }}
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+    <template
+      v-if="isError"
+      #errorMessage
+    >
+      <AppFormErrorMessage :message="errorMessage" />
+    </template>
+  </AppDialogue>
+</template>
+
+<script setup>
+import { ref, computed, watch, useTemplateRef, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { DeviceIndicator, DeviceGroupList, AppDeviceList } from '@vivotek/advanced-vue-components';
+import { DIALOGUE, GROUP_TYPES } from '@vivotek/const-vsaas';
+
+import DeviceRoleDropdown from '@/components/Dropdowns/DeviceRoleDropdown.vue';
+import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
+import { composeDeviceId, useDeviceRoleHelper } from '@/pages/user/detail/composables/useDeviceRoleHelper';
+
+const props = defineProps({
+  multiple: {
+    type: Boolean,
+    default: true,
+  },
+  availableDevices: {
+    type: Array,
+    default: () => null,
+  },
+  closeOnSelect: {
+    type: Boolean,
+    default: false,
+  },
+  title: {
+    type: String,
+    default: null,
+  },
+  subTitle: {
+    type: String,
+    default: null,
+  },
+  userId: {
+    type: String,
+    default: () => '',
+  },
+});
+
+const emit = defineEmits(['success']);
+
+const store = useStore();
+const { t } = useI18n();
+
+const modal = useTemplateRef('modal');
+const siteList = useTemplateRef('siteList');
+
+const modalState = ref(DIALOGUE.STATE.DEFAULT);
+const searchName = ref('');
+const currentSelectedDevices = ref([]);
+const currentSelectedSites = ref([]);
+const isSearching = ref(false);
+const focusSiteId = ref('');
+const deviceRoles = ref({});
+const originalGrantedDevices = ref(new Map());
+const batchAssignRoleId = ref({});
+
+const groupState = computed(() => store.state.group);
+const sortedGroups = computed(() => store.getters['group/sortedGroups']);
+const userDetailGrantedDevices = computed(() => store.getters['user/detailDeviceOverview']);
+const getAvailableDevicesWithPermission = computed(() =>
+  store.getters['device/getAvailableDevicesWithPermission'](PERMISSION_DEVICE_SCOPE.DEVICE_ALL_USERS),
+);
+const errorMessage = computed(() => {
+  if (isError.value) {
+    return t('Failed to assign device roles');
+  }
+  return '';
+});
+
+const devices = computed(() => {
+  if (props.availableDevices) {
+    return props.availableDevices;
+  }
+  return getAvailableDevicesWithPermission.value || [];
+});
+
+const { processSelectedDevices, processRemovedDevices, updateSelectedDevicesWithParentChannel } =
+  useDeviceRoleHelper(devices);
+
+const DEVICE_OF_GROUP_TYPE_LABEL = computed(() => ({
+  [GROUP_TYPES.VSS]: t('VSS'),
+  [GROUP_TYPES.NVR]: t('NVR'),
+  [GROUP_TYPES.BRIDGE]: t('Bridge'),
+  [GROUP_TYPES.SITE]: t('Cameras'),
+}));
+
+const sites = computed(() => {
+  const groupsValue = sortedGroups.value();
+  const result = groupsValue
+    .map((group) => ({
+      ...group,
+      devices: devices.value.filter((device) => device.options?.deviceGroupID === group.id),
+    }))
+    .filter((group) => group.devices.length > 0);
+  return result;
+});
+
+const availableDevicesId = computed(() => {
+  return devices.value.map((device) => device.deviceId);
+});
+
+const isSelectAllMap = computed(() => {
+  return sites.value.reduce(
+    (acc, group) => ({
+      ...acc,
+      [group.id]: group.devices.every((item) => currentSelectedDevices.value.includes(item.deviceId)),
+    }),
+    {},
+  );
+});
+
+const isProcessing = computed(() => {
+  return modalState.value === DIALOGUE.STATE.PROCESSING;
+});
+
+const isError = computed(() => {
+  return modalState.value === DIALOGUE.STATE.ERROR;
+});
+
+const isInvalidSelection = computed(() => {
+  return currentSelectedDevices.value.length === 0;
+});
+
+const activeDeviceId = computed(() => {
+  return groupState.value.activeDeviceId;
+});
+
+const dialogueTitle = computed(() => {
+  return props.title || t('Select Devices');
+});
+
+const selectedLengthHint = computed(() => {
+  const count = currentSelectedDevices.value.length;
+  return t('0 device is selected | 1 device is selected | {count} devices are selected', { count });
+});
+
+const filteredSites = computed(() => {
+  if (isSearching.value) {
+    return sites.value;
+  }
+
+  return sites.value.filter((item) => focusSiteId.value === item.id);
+});
+
+const hasSearchResult = computed(() => {
+  return Object.entries(displayDevices.value).length > 0;
+});
+
+const displayDevices = computed(() => {
+  const displayResult = {};
+  const isSearchingValue = isSearching.value;
+  const searchNameValue = searchName.value;
+
+  sites.value.forEach((group) => {
+    let result = group.devices;
+    if (isSearchingValue) {
+      result = result.filter((item) => item.displayName.toLowerCase().includes(searchNameValue.toLowerCase()));
+    }
+    if (result.length > 0) {
+      displayResult[group.id] = result;
+    }
+  });
+  return displayResult;
+});
+
+const buttonIconStatusMapping = computed(() => {
+  return {
+    ...DIALOGUE.PRIMARY_ACITON_BUTTON_MAPPING,
+    [DIALOGUE.STATE.DEFAULT]: [
+      { status: isInvalidSelection.value ? 'disabled' : '', icon: '' },
+      { status: '', icon: '' },
+    ],
+  };
+});
+
+const currentFocusSite = computed(() => {
+  if (!focusSiteId.value) {
+    return null;
+  }
+  return sites.value.find((site) => site.id === focusSiteId.value) || null;
+});
+
+const currentFocusSiteInfo = computed(() => {
+  if (!currentFocusSite.value) {
+    return null;
+  }
+
+  const totalDevices = currentFocusSite.value.devices.length;
+  const selectedDevices = currentFocusSite.value.devices.filter((device) =>
+    currentSelectedDevices.value.includes(device.deviceId),
+  ).length;
+
+  return `${t('Selected Devices in')} ${currentFocusSite.value.name} (${selectedDevices}/${totalDevices})`;
+});
+
+const currentFocusSiteSelectedDevices = computed(() => {
+  if (!currentFocusSite.value || isSearching.value) {
+    return [];
+  }
+  return currentFocusSite.value.devices.filter((device) => currentSelectedDevices.value.includes(device.deviceId));
+});
+
+const currentBatchAssignRoleId = computed({
+  get: () => batchAssignRoleId.value[focusSiteId.value] || '',
+  set: (value) => {
+    if (focusSiteId.value) {
+      batchAssignRoleId.value = {
+        ...batchAssignRoleId.value,
+        [focusSiteId.value]: value,
+      };
+    }
+  },
+});
+
+const isBatchAssignDisabled = computed(() => {
+  return currentFocusSiteSelectedDevices.value.length === 0;
+});
+
+/**
+ * initialize selected devices and roles
+ * only select devices that exist in availableDevicesId
+ */
+const initializeSelectedDevicesAndRoles = () => {
+  if (!userDetailGrantedDevices.value || userDetailGrantedDevices.value.length === 0) {
+    return;
+  }
+  const selectedDeviceIds = [];
+  const roleMapping = {};
+  const availableDeviceIdsSet = new Set(availableDevicesId.value);
+
+  originalGrantedDevices.value.clear();
+  userDetailGrantedDevices.value.forEach((grantedDevice) => {
+    const deviceId = composeDeviceId(grantedDevice.thingName, grantedDevice.derivant);
+    originalGrantedDevices.value.set(deviceId, { ...grantedDevice });
+
+    // only select devices that exist in availableDevicesId
+    if (availableDeviceIdsSet.has(deviceId)) {
+      selectedDeviceIds.push(deviceId);
+      roleMapping[deviceId] = {
+        roleId: grantedDevice.roleId || '',
+        roleName: grantedDevice.roleName || '',
+      };
+    }
+  });
+
+  currentSelectedDevices.value = selectedDeviceIds;
+  deviceRoles.value = roleMapping;
+};
+
+const changeFocusSite = (siteId) => {
+  focusSiteId.value = siteId;
+};
+
+const setFirstSiteToDefaultFocusSite = () => {
+  if (!sites.value.length) {
+    return;
+  }
+  const defaultFocusSiteId = sites.value[0].id;
+  changeFocusSite(defaultFocusSiteId);
+};
+
+const clearInput = () => {
+  searchName.value = '';
+  isSearching.value = false;
+};
+
+const setDefault = () => {
+  modalState.value = DIALOGUE.STATE.DEFAULT;
+  batchAssignRoleId.value = {};
+  clearInput();
+  setFirstSiteToDefaultFocusSite();
+  initializeSelectedDevicesAndRoles();
+};
+
+const openDialogue = () => {
+  setDefault();
+  modal.value?.show();
+};
+
+const selectDevice = (deviceId) => {
+  if (props.multiple) {
+    return;
+  }
+  currentSelectedDevices.value = [deviceId];
+};
+
+const getSiteDevicesId = (siteId) => {
+  return sites.value
+    .filter((site) => siteId.includes(site.id))
+    .map((item) => item.devices)
+    .flat()
+    .map((device) => device.deviceId)
+    .filter((deviceId) => availableDevicesId.value.indexOf(deviceId) >= 0);
+};
+
+const getIndeterminateGroupDevices = (indeterminateSites) => {
+  const indeterminateSiteDevicesId = getSiteDevicesId(indeterminateSites);
+  return currentSelectedDevices.value.filter((deviceId) => indeterminateSiteDevicesId.includes(deviceId));
+};
+
+const toggleSelectedSites = (selectedSites, indeterminateSites = []) => {
+  const indeterminateSiteDevices = getIndeterminateGroupDevices(indeterminateSites);
+  const fullySelectedSites = selectedSites.filter((group) => !indeterminateSites.includes(group));
+  const fullySelectedDevices = getSiteDevicesId(fullySelectedSites);
+  currentSelectedSites.value = selectedSites;
+  currentSelectedDevices.value = [...fullySelectedDevices, ...indeterminateSiteDevices];
+};
+
+const changeFocusSiteAndClearInput = (siteId) => {
+  clearInput();
+  changeFocusSite(siteId);
+  if (siteList.value) {
+    siteList.value.scrollTop = 0;
+  }
+};
+
+const checkIsSelectIndeterminate = (siteDevices) => {
+  if (devices.value.length === 0 || !siteDevices || siteDevices.length === 0) {
+    return false;
+  }
+  const devicesId = siteDevices.map((item) => item.deviceId);
+  return (
+    devicesId.every((item) => currentSelectedDevices.value.includes(item)) === false &&
+    devicesId.some((item) => currentSelectedDevices.value.includes(item))
+  );
+};
+
+const searchInputChange = (input) => {
+  if (!input) {
+    isSearching.value = false;
+    setFirstSiteToDefaultFocusSite();
+    return;
+  }
+  isSearching.value = true;
+};
+
+const shouldDisplayThumbnail = (siteType) => {
+  return siteType !== GROUP_TYPES.NVR && siteType !== GROUP_TYPES.BRIDGE && siteType !== GROUP_TYPES.VSS;
+};
+
+const updateDeviceRole = (deviceId, role) => {
+  deviceRoles.value[deviceId] = {
+    roleId: role?.id || '',
+    roleName: role?.name || '',
+  };
+};
+
+const handleConfirm = async (isConfirm) => {
+  if (!isConfirm) {
+    return;
+  }
+
+  if (!props.closeOnSelect) {
+    modalState.value = DIALOGUE.STATE.PROCESSING;
+  }
+
+  const grantedDevicesMap = new Map();
+  const selectedDeviceIdsSet = new Set(currentSelectedDevices.value);
+
+  processSelectedDevices(currentSelectedDevices.value, deviceRoles.value, selectedDeviceIdsSet, grantedDevicesMap);
+  processRemovedDevices(originalGrantedDevices.value, selectedDeviceIdsSet, grantedDevicesMap);
+
+  const grantedDevices = Array.from(grantedDevicesMap.values());
+
+  try {
+    await store.dispatch('user/assignDeviceRole', { userId: props.userId, assignments: grantedDevices });
+    modalState.value = DIALOGUE.STATE.SUCCESS;
+    emit('success');
+  } catch (error) {
+    modalState.value = DIALOGUE.STATE.ERROR;
+  }
+};
+
+const toggleSelectedDevices = ({ selectedDevices }) => {
+  currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(selectedDevices, currentSelectedDevices.value);
+};
+
+const selectAll = (groupId) => {
+  const devicesId = displayDevices.value[groupId].map((device) => device.deviceId);
+  const currentSelected = currentSelectedDevices.value;
+  const isAllSelected = devicesId.every((deviceId) => currentSelectedDevices.value.includes(deviceId));
+
+  if (isAllSelected) {
+    const targetSelectedDevices = currentSelected.filter((deviceId) => !devicesId.includes(deviceId));
+    currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(targetSelectedDevices, currentSelected);
+  } else {
+    const targetSelectedDevices = [...new Set([...currentSelected, ...devicesId])];
+    currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(targetSelectedDevices, currentSelected);
+  }
+};
+
+const batchAssignRole = (role) => {
+  if (!role || isBatchAssignDisabled.value) {
+    return;
+  }
+
+  currentBatchAssignRoleId.value = role.id;
+
+  currentFocusSiteSelectedDevices.value.forEach((device) => {
+    deviceRoles.value[device.deviceId] = {
+      roleId: role.id,
+      roleName: role.name,
+    };
+  });
+};
+
+defineExpose({
+  openDialogue,
+});
+
+watch(
+  currentSelectedDevices,
+  (newValue) => {
+    currentSelectedSites.value = sites.value
+      .filter((site) => site.devices.some((device) => newValue.includes(device.deviceId)))
+      .map((item) => item.id);
+  },
+  { immediate: true },
+);
+
+onMounted(async () => {
+  setFirstSiteToDefaultFocusSite();
+  await store.dispatch('user/fetchDefaultDeviceRoleList');
+});
+</script>
+
+<style lang="less" scoped>
+.device-access-dialogue {
+  cursor: default;
+
+  .main-wrapper {
+    > div:not(.header) {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      flex: 1;
+      > div {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+    }
+  }
+
+  .site-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+  .search-container {
+    display: flex;
+    flex-direction: row;
+  }
+  .search-input {
+    position: relative;
+    width: 300px;
+    height: 32px;
+  }
+  .hint {
+    padding-bottom: 20px;
+    border-bottom: 1px solid @color-surface05;
+    h3 {
+      color: @color-primary;
+      line-height: 37px;
+    }
+    h6 {
+      color: @color-text03;
+      line-height: 20px;
+      margin-top: 10px;
+      &.error {
+        color: @color-alert;
+      }
+    }
+  }
+  .site-header-container {
+    padding: 18px 18px 18px 0;
+  }
+  .site-hint,
+  .site-batch-selector-hint {
+    font-weight: 700;
+    font-size: 14px;
+    color: @color-text01;
+  }
+  .site-batch-assign-container {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    padding: 18px 0;
+  }
+  .site-batch-assign-selector {
+    width: 30%;
+  }
+  .dialogue-content {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    min-height: 0;
+    padding-top: 10px;
+
+    .left-menu {
+      background-color: @color-surface03;
+      border-right: 1px solid #000;
+      height: 100%;
+    }
+    .center-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin-left: 20px;
+      overflow-x: hidden;
+      height: 100%;
+    }
+  }
+  .site-list {
+    overflow-y: auto;
+    height: 440px;
+    margin-bottom: 20px;
+    .site-device-list {
+      :deep(.device) {
+        h6 {
+          max-width: 500px;
+        }
+        .svg-icon {
+          &[data-state='active'] {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+  .site-title {
+    font-weight: bold;
+    padding: 18px;
+    font-size: 16px;
+    align-items: center;
+    line-height: 24px;
+    .text-ellipsis;
+  }
+  .site-device-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px;
+    background-color: @color-surface07;
+
+    :deep(.check-box .svg-icon) {
+      margin-right: 10px;
+    }
+  }
+  .no-result-container {
+    height: 440px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  :deep(.single-device) {
+    width: 100%;
+  }
+}
+
+:deep(.device-wrapper) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  & .device {
+    width: 100%;
+  }
+
+  & .device-role-dropdown {
+    width: 30%;
+  }
+}
+</style>

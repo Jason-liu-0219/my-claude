@@ -1,0 +1,134 @@
+---
+name: worktree-pr
+description: Use when user wants to work on a task in isolation using git worktree, then create PR and self-review. Triggers on keywords like "worktree", "獨立開發", "開新分支處理", "worktree pr", "隔離開發".
+version: 2.0.0
+---
+
+# Worktree PR Skill
+
+使用 Git Worktree 快速處理任務，完成後自動發 PR 並進行 self review。
+
+---
+
+## 使用方式
+
+```bash
+/worktree-pr fix/bug-name "修復某個問題"
+```
+
+---
+
+## 核心流程
+
+```
+1. git fetch origin main
+2. git worktree add （基於最新 main）
+3. 處理任務（修改程式碼）
+4. git commit & push
+5. gh pr create
+6. 自動 self review（提交到 GitHub）
+```
+
+---
+
+## 執行步驟
+
+### Step 1：建立 Worktree（基於最新 main）
+
+```bash
+BRANCH_NAME="fix/bug-name"
+REPO_ROOT=$(git rev-parse --show-toplevel)
+WORKTREE_DIR="${REPO_ROOT}/../worktrees/${BRANCH_NAME//\//-}"
+
+# 必須：取得最新 main
+git fetch origin main --prune
+
+# 建立 worktree
+git worktree add "$WORKTREE_DIR" -b "$BRANCH_NAME" origin/main
+
+# 進入 worktree
+cd "$WORKTREE_DIR"
+```
+
+### Step 2：處理任務
+
+在 worktree 目錄中進行程式碼修改。
+
+### Step 3：Commit & Push
+
+```bash
+git add .
+git commit -m "fix(vsaas-portal): 修復描述"
+git push -u origin "$BRANCH_NAME"
+```
+
+### Step 4：建立 PR
+
+```bash
+FIRST_COMMIT=$(git log origin/main..HEAD --format="%s" | tail -1)
+
+gh pr create \
+  --base main \
+  --title "$FIRST_COMMIT" \
+  --body "## Changes
+$(git log origin/main..HEAD --format="- %s")
+
+## Checklist
+- [ ] Code follows project conventions
+- [ ] Build passes locally"
+```
+
+### Step 5：Self Review
+
+```bash
+PR_NUMBER=$(gh pr view --json number -q '.number')
+REPO=$(gh repo view --json nameWithOwner -q '.nameWithOwner')
+COMMIT_ID=$(gh pr view --json headRefOid -q '.headRefOid')
+
+# 建立 review（含行內評論）
+cat > /tmp/review.json << JSONEOF
+{
+  "commit_id": "${COMMIT_ID}",
+  "body": "## Self Review\n\n✅ 已確認邏輯正確\n\n**評分**: ⭐⭐⭐⭐⭐",
+  "event": "COMMENT",
+  "comments": [
+    {
+      "path": "path/to/file.vue",
+      "line": 42,
+      "side": "RIGHT",
+      "body": "👍 修改正確"
+    }
+  ]
+}
+JSONEOF
+
+gh api -X POST "/repos/${REPO}/pulls/${PR_NUMBER}/reviews" --input /tmp/review.json
+```
+
+---
+
+## 清理
+
+```bash
+# 回到主目錄
+cd "$REPO_ROOT"
+
+# 移除 worktree
+git worktree remove "$WORKTREE_DIR"
+```
+
+---
+
+## 注意事項
+
+1. **必須從最新 main 開始**：`git fetch origin main` 不可省略
+2. **Self review 使用 COMMENT**：因為不能 approve 自己的 PR
+
+---
+
+## 更新日誌
+
+### v2.0.0 (2025-02-01)
+- 大幅簡化，專注核心流程
+- 移除不必要的步驟（安裝依賴、跑測試）
+- 重點：快速處理 → 發 PR → self review

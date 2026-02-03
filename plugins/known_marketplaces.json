@@ -1,0 +1,26 @@
+{
+  "claude-plugins-official": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    },
+    "installLocation": "/Users/liuhanwen/.claude/plugins/marketplaces/claude-plugins-official",
+    "lastUpdated": "2026-02-03T01:13:17.629Z"
+  },
+  "anthropic-agent-skills": {
+    "source": {
+      "source": "github",
+      "repo": "anthropics/skills"
+    },
+    "installLocation": "/Users/liuhanwen/.claude/plugins/marketplaces/anthropic-agent-skills",
+    "lastUpdated": "2026-01-18T07:27:25.043Z"
+  },
+  "everything-claude-code": {
+    "source": {
+      "source": "github",
+      "repo": "affaan-m/everything-claude-code"
+    },
+    "installLocation": "/Users/liuhanwen/.claude/plugins/marketplaces/everything-claude-code",
+    "lastUpdated": "2026-01-29T14:57:03.738Z"
+  }
+}

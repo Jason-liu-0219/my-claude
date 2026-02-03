@@ -1,0 +1,247 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-22-vi.mock('@/constants/Page', () => ({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-23-  PAGE_PERMISSION: {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-24-    view_group: (pm) => pm.has('view_group'),
+packages/app-vsaas-portal/src/store/permission/getters.test.js-25-    archive: {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-26-      orgScope: [],
+packages/app-vsaas-portal/src/store/permission/getters.test.js-27-      deviceScope: ['/device/archive/read'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-28-    },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-29-    'detection/vca-detection': {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-30-      orgScope: [],
+packages/app-vsaas-portal/src/store/permission/getters.test.js-31-      deviceScope: ['/device/vca/read'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-32-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-33-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-34-}));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-35-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-36-describe('store/permission/getters', () => {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:37:  describe('hasPagePermission', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-38-    it('should return true if route has no permission requirement', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-39-      router.resolve.mockReturnValue({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-40-        meta: {},
+packages/app-vsaas-portal/src/store/permission/getters.test.js-41-        params: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-42-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-43-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-44-      const state = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-45-        rbacPermissionManager: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-46-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-47-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:48:      expect(getters.hasPagePermission(state)('/some-path')).toEqual(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-49-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-50-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-51-    it('should return false if rbacPermissionManager is not initialized', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-52-      router.resolve.mockReturnValue({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-53-        meta: { permission: 'view_group' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-54-        params: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-55-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-56-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-57-      const state = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-58-        rbacPermissionManager: null,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-59-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-60-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:61:      expect(getters.hasPagePermission(state)('/group')).toEqual(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-62-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-63-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-64-    describe('with deviceId parameter (single device check)', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-65-      it('should check only specified device when deviceId is in route params', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-66-        router.resolve.mockReturnValue({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-67-          meta: { permission: 'detection/vca-detection' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-68-          params: { deviceId: 'camera-001' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-69-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-70-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-71-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-72-          canDoDevice: vi.fn().mockImplementation(({ deviceId }) => deviceId === 'camera-001'),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-73-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-74-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-75-        const state = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-76-          rbacPermissionManager: mockRbacPermissionManager,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-85-        const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-86-          'device/availableDevices': [
+packages/app-vsaas-portal/src/store/permission/getters.test.js-87-            { deviceId: 'camera-001', thingName: 'camera-001' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-88-            { deviceId: 'camera-002', thingName: 'camera-002' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-89-          ],
+packages/app-vsaas-portal/src/store/permission/getters.test.js-90-          'device/allDevicesMap': {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-91-            'camera-001': { deviceId: 'camera-001', thingName: 'camera-001' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-92-            'camera-002': { deviceId: 'camera-002', thingName: 'camera-002' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-93-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-94-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-95-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-96-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-97-          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-98-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-99-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:100:        const result = getters.hasPagePermission(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-101-          state,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-102-          $getters,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-103-          rootState,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-104-          rootGetters,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-105-        )('/device/camera-001/detection/vca-detection');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-106-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-107-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-108-        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledTimes(1);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-109-        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-110-          deviceId: 'camera-001',
+packages/app-vsaas-portal/src/store/permission/getters.test.js-111-          scope: '/device/vca/read',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-112-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-113-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-114-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-115-      it('should return false when specified device is not in availableDevices', () => {
+--
+packages/app-vsaas-portal/src/store/permission/getters.test.js-134-            poeSwitches: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-135-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-136-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-137-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-138-        const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-139-          'device/availableDevices': [{ deviceId: 'camera-001', thingName: 'camera-001' }],
+packages/app-vsaas-portal/src/store/permission/getters.test.js-140-          'device/allDevicesMap': {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-141-            'camera-001': { deviceId: 'camera-001', thingName: 'camera-001' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-142-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-143-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-144-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-145-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-146-          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-147-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-148-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:149:        const result = getters.hasPagePermission(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-150-          state,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-151-          $getters,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-152-          rootState,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-153-          rootGetters,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-154-        )('/device/camera-999/detection/vca-detection');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-155-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-156-        expect(result).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-157-        expect(mockRbacPermissionManager.canDoDevice).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-158-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-159-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-160-      it('should handle deviceId with colon prefix', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-161-        router.resolve.mockReturnValue({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-162-          meta: { permission: 'detection/vca-detection' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-163-          params: { deviceId: 'device:camera-001' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-164-        });
+--
+packages/app-vsaas-portal/src/store/permission/getters.test.js-176-            rbacPermissionManager: mockRbacPermissionManager,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-177-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-178-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-179-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-180-        const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-181-          'device/availableDevices': [{ deviceId: 'camera-001', thingName: 'device:camera-001' }],
+packages/app-vsaas-portal/src/store/permission/getters.test.js-182-          'device/allDevicesMap': {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-183-            'device:camera-001': { deviceId: 'camera-001', thingName: 'device:camera-001' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-184-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-185-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-186-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-187-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-188-          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-189-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-190-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:191:        const result = getters.hasPagePermission(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-192-          state,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-193-          $getters,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-194-          rootState,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-195-          rootGetters,
+packages/app-vsaas-portal/src/store/permission/getters.test.js-196-        )('/device/device:camera-001/detection/vca-detection');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-197-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-198-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-199-        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-200-          deviceId: 'camera-001',
+packages/app-vsaas-portal/src/store/permission/getters.test.js-201-          scope: '/device/vca/read',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-202-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-203-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-204-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-205-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-206-    describe('without deviceId parameter (all devices check)', () => {
+--
+packages/app-vsaas-portal/src/store/permission/getters.test.js-223-            rbacPermissionManager: mockRbacPermissionManager,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-224-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-225-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-226-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-227-        const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-228-          'device/availableDevices': [
+packages/app-vsaas-portal/src/store/permission/getters.test.js-229-            { deviceId: 'camera-001', thingName: 'camera-001' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-230-            { deviceId: 'camera-002', thingName: 'camera-002' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-231-          ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-232-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-233-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-234-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-235-          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-236-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-237-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:238:        const result = getters.hasPagePermission(state, $getters, rootState, rootGetters)('/archive');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-239-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-240-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-241-        // Should have been called for both devices (short-circuits on second)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-242-        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-243-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-244-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-245-      it('should return false when no device has permission', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-246-        router.resolve.mockReturnValue({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-247-          meta: { permission: 'archive' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-248-          params: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-249-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-250-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-251-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-252-          canDoDevice: vi.fn().mockReturnValue(false),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-253-        };
+--
+packages/app-vsaas-portal/src/store/permission/getters.test.js-261-            rbacPermissionManager: mockRbacPermissionManager,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-262-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-263-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-264-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-265-        const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-266-          'device/availableDevices': [
+packages/app-vsaas-portal/src/store/permission/getters.test.js-267-            { deviceId: 'camera-001', thingName: 'camera-001' },
+packages/app-vsaas-portal/src/store/permission/getters.test.js-268-            { deviceId: 'camera-002', thingName: 'camera-002' },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-269-          ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-270-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-271-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-272-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-273-          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-274-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-275-
+packages/app-vsaas-portal/src/store/permission/getters.test.js:276:        const result = getters.hasPagePermission(state, $getters, rootState, rootGetters)('/archive');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-277-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-278-        expect(result).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-279-        // Should have checked all devices
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-280-        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledTimes(2);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-281-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-282-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-283-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-284-  describe('hasPlanPermission', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-285-    it('should return false if planPermissionManager is empty', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-286-      const state = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-287-        planPermissionManager: null,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-288-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-289-      const rootGetters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js-290-        'device/availableNVRCameraDevices': 2,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-291-      };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-2-import router from '@/router/router';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-3-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-4-const getters = {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-5-  hasPermission(state, $getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-6-    return (object, id) => true; // 準備棄用
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-7-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-8-  canCreate(state, $getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-9-    return (object, id) => true; // 準備棄用
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-10-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-11-  canUpdate(state, $getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-12-    return (object, id) => true; // 準備棄用
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-13-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-14-  canDelete(state, $getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-15-    return (object, id) => true; // 準備棄用
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-16-  },
+packages/app-vsaas-portal/src/store/permission/getters.js:17:  hasPagePermission(state, $getters, rootState, rootGetters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-18-    return (path) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-19-      if (!state.rbacPermissionManager) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-20-        return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-21-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-22-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-23-      const routeData = router.resolve(path);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-24-      const { permission } = routeData.meta;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-25-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-26-      if (!permission) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-27-        return true;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-28-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-29-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-30-      const deviceId = routeData.params?.deviceId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-31-      const { deviceScope, orgScope } = PAGE_PERMISSION[permission];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-32-

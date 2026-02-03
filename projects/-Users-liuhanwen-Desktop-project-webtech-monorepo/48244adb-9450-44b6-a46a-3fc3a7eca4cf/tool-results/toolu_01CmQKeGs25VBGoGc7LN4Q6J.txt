@@ -1,0 +1,143 @@
+     1→import { ref, computed, watch } from 'vue';
+     2→import { useI18n } from 'vue-i18n';
+     3→import { useStore } from 'vuex';
+     4→
+     5→/**
+     6→ * Device Access related logic
+     7→ * @param {import('vue').Ref} currentUser - The user being viewed
+     8→ */
+     9→export default function useDeviceAccessHelper(currentUser) {
+    10→  const store = useStore();
+    11→  const { t } = useI18n();
+    12→
+    13→  const selectedSites = ref([]);
+    14→
+    15→  const deviceOverview = computed(() => store.getters['user/detailDeviceOverview']);
+    16→  const isLoading = computed(() => store.getters['user/detailIsLoading']);
+    17→  const myDevices = computed(() => store.getters['device/availableCameraDevices'] || []);
+    18→  const mySites = computed(() => store.getters['group/groupsList'] || []);
+    19→
+    20→  const findMyDeviceInfo = (thingName, derivant) => {
+    21→    return myDevices.value.find(
+    22→      (device) => device.thingName === thingName && (device.options?.derivant === derivant || derivant === 'none'),
+    23→    );
+    24→  };
+    25→
+    26→  const findSiteName = (siteId) => {
+    27→    const group = mySites.value.find((g) => g.id === siteId);
+    28→    return group?.name || '-';
+    29→  };
+    30→
+    31→  /**
+    32→   * Transform API raw data (grantedDevices) into sites structure
+    33→   */
+    34→  const sites = computed(() => {
+    35→    const grantedDevices = deviceOverview.value || [];
+    36→    if (grantedDevices.length === 0) {
+    37→      return [];
+    38→    }
+    39→
+    40→    const siteMap = new Map();
+    41→
+    42→    grantedDevices.forEach((grantedDevice) => {
+    43→      const { thingName, derivant, siteId, roleId, roleName } = grantedDevice;
+    44→
+    45→      if (!siteMap.has(siteId)) {
+    46→        siteMap.set(siteId, {
+    47→          id: siteId,
+    48→          name: findSiteName(siteId),
+    49→          devices: [],
+    50→        });
+    51→      }
+    52→
+    53→      const myDeviceInfo = findMyDeviceInfo(thingName, derivant);
+    54→
+    55→      siteMap.get(siteId).devices.push({
+    56→        id: `${thingName}-${derivant}`,
+    57→        thingName,
+    58→        derivant,
+    59→        name: myDeviceInfo?.displayName || thingName,
+    60→        type: myDeviceInfo?.type || 'camera',
+    61→        role: roleName,
+    62→        roleId,
+    63→      });
+    64→    });
+    65→
+    66→    return Array.from(siteMap.values());
+    67→  });
+    68→
+    69→  watch(
+    70→    [selectedSites, sites],
+    71→    ([newSelectedSites, newSites]) => {
+    72→      if (newSelectedSites.length === 0 && newSites.length > 0) {
+    73→        selectedSites.value = newSites.map((site) => site.id);
+    74→      }
+    75→    },
+    76→    { immediate: true },
+    77→  );
+    78→
+    79→  const totalAccess = computed(() => {
+    80→    return sites.value.reduce((total, site) => total + site.devices.length, 0);
+    81→  });
+    82→
+    83→  const isOverviewEmpty = computed(() => totalAccess.value === 0);
+    84→
+    85→  const tableSearchStatus = computed(() => {
+    86→    if (isLoading.value) {
+    87→      return 'loading';
+    88→    }
+    89→    if (isOverviewEmpty.value) {
+    90→      return 'no-device-group';
+    91→    }
+    92→    return '';
+    93→  });
+    94→
+    95→  const siteOptions = computed(() => {
+    96→    return sites.value.map((site) => ({
+    97→      value: site.id,
+    98→      text: site.name,
+    99→    }));
+   100→  });
+   101→
+   102→  const filteredSites = computed(() => {
+   103→    if (selectedSites.value.length === 0) {
+   104→      return sites.value;
+   105→    }
+   106→    return sites.value.filter((site) => selectedSites.value.includes(site.id));
+   107→  });
+   108→
+   109→  const filterTitle = computed(() => {
+   110→    if (selectedSites.value.length === 0 || selectedSites.value.length === sites.value.length) {
+   111→      return t('All');
+   112→    }
+   113→    return selectedSites.value
+   114→      .map((id) => sites.value.find((site) => site.id === id)?.name)
+   115→      .filter(Boolean)
+   116→      .join(', ');
+   117→  });
+   118→
+   119→  const fetchDeviceAccess = async () => {
+   120→    if (!currentUser.value?.userSub) {
+   121→      return;
+   122→    }
+   123→    await store.dispatch('user/fetchUserGrantedDevices', { userSub: currentUser.value.userSub });
+   124→  };
+   125→
+   126→  return {
+   127→    selectedSites,
+   128→    sites,
+   129→    totalAccess,
+   130→    isLoading,
+   131→    isOverviewEmpty,
+   132→    tableSearchStatus,
+   133→    siteOptions,
+   134→    filteredSites,
+   135→    filterTitle,
+   136→    fetchDeviceAccess,
+   137→  };
+   138→}
+   139→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

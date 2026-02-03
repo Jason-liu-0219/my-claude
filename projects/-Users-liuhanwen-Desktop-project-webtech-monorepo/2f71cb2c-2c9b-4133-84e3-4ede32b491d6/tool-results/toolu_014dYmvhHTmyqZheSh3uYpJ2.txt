@@ -1,0 +1,1211 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-262-   * @returns {boolean} True if user has permission, false otherwise
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-263-   */
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:264:  canDoOrg({ scope }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-265-    if (!scope || typeof scope !== 'string' || !scope.trim()) {
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:266:      Log.warn('Invalid scope parameter for canDoOrg', { scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-267-      return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-268-    }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-288-   * @returns {boolean} True if user has permission, false otherwise
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-289-   */
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:290:  canDoDevice({ deviceId, scope }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-291-    if (deviceId == null || (typeof deviceId !== 'string' && typeof deviceId !== 'number')) {
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:292:      Log.warn('Invalid deviceId parameter for canDoDevice', { deviceId, scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-293-      return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-294-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-295-    if (!scope || typeof scope !== 'string' || !scope.trim()) {
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:296:      Log.warn('Invalid scope parameter for canDoDevice', { deviceId, scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-297-      return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js-298-    }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-230-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-231-      // Test if policies work by checking actual permissions
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:232:      const hasOrgAdminPermission = manager.canDoOrg({ scope: '/org/admin-restricted' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-233-      expect(hasOrgAdminPermission).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-234-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:235:      const hasDevicePermission = manager.canDoDevice({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-236-        deviceId: '123',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-237-        scope: '/device/view',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-394-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-395-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:396:  describe('canDoOrg', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-397-    beforeEach(async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-398-      await initializeManager();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-402-      const enforceSyncSpy = vi.spyOn(manager.enforcer, 'enforceSync');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-403-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:404:      const result = manager.canDoOrg({ scope: '/org/admin-restricted' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-405-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-406-      expect(result).toBe(true);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-409-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-410-    it('should return false for invalid scope', () => {
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:411:      const result = manager.canDoOrg({ scope: '' });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-412-      expect(result).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-413-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-414-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-415-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:416:  describe('canDoDevice', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-417-    beforeEach(async () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-418-      await initializeManager();
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-422-      const enforceSyncSpy = vi.spyOn(manager.enforcer, 'enforceSync');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-423-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:424:      const result = manager.canDoDevice({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-425-        deviceId: '123:none',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-426-        scope: '/device/view',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-434-      const enforceSyncSpy = vi.spyOn(manager.enforcer, 'enforceSync');
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-435-
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:436:      const result = manager.canDoDevice({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-437-        deviceId: 'camera:channel1',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-438-        scope: '/device/view',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-444-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-445-    it('should return false for invalid deviceId', () => {
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:446:      const result = manager.canDoDevice({
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-447-        deviceId: null,
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js-448-        scope: '/device/settings',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-70-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-71-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:72:          canDoDevice: vi.fn().mockImplementation(({ deviceId }) => deviceId === 'camera-001'),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-73-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-74-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-95-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-96-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:97:          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-98-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-99-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-106-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-107-        expect(result).toBe(true);
+packages/app-vsaas-portal/src/store/permission/getters.test.js:108:        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/store/permission/getters.test.js:109:        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-110-          deviceId: 'camera-001',
+packages/app-vsaas-portal/src/store/permission/getters.test.js-111-          scope: '/device/vca/read',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-120-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-121-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:122:          canDoDevice: vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-123-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-124-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-144-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-145-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:146:          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-147-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-148-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-155-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-156-        expect(result).toBe(false);
+packages/app-vsaas-portal/src/store/permission/getters.test.js:157:        expect(mockRbacPermissionManager.canDoDevice).not.toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-158-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-159-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-165-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-166-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:167:          canDoDevice: vi.fn().mockReturnValue(true),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-168-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-169-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-186-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-187-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:188:          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-189-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-190-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-197-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-198-        expect(result).toBe(true);
+packages/app-vsaas-portal/src/store/permission/getters.test.js:199:        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/store/permission/getters.test.js-200-          deviceId: 'camera-001',
+packages/app-vsaas-portal/src/store/permission/getters.test.js-201-          scope: '/device/vca/read',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-212-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-213-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:214:          canDoDevice: vi.fn().mockImplementation(({ deviceId }) => deviceId === 'camera-002'),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-215-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-216-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-233-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-234-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:235:          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-236-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-237-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-240-        expect(result).toBe(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-241-        // Should have been called for both devices (short-circuits on second)
+packages/app-vsaas-portal/src/store/permission/getters.test.js:242:        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalled();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-243-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-244-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-250-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-251-        const mockRbacPermissionManager = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:252:          canDoDevice: vi.fn().mockReturnValue(false),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-253-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-254-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-271-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-272-        const $getters = {
+packages/app-vsaas-portal/src/store/permission/getters.test.js:273:          canDoDevice: getters.canDoDevice(state),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-274-        };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-275-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-278-        expect(result).toBe(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-279-        // Should have checked all devices
+packages/app-vsaas-portal/src/store/permission/getters.test.js:280:        expect(mockRbacPermissionManager.canDoDevice).toHaveBeenCalledTimes(2);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-281-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.test.js-282-    });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-300-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-301-
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:302:      const canDoDeviceUnlock = this.canDoDevice({
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-303-        deviceId: device.deviceId,
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-304-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_UNLOCK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-306-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-307-      return (
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:308:        !this.isFreePlan && !device.isUnknownDevice && this.getBindingObjects(device).length > 0 && canDoDeviceUnlock
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-309-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-310-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-314-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-315-
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:316:      const canDoDeviceTwoWayAudio = this.canDoDevice({
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-317-        deviceId: device.deviceId,
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-318-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-320-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-321-      if (device.isSupportTwoWayAudio && this.twoWayAudioFeatureToggle) {
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:322:        return canDoDeviceTwoWayAudio;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-323-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-324-
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:325:      const canDoDeviceTalkDown = this.getAssociatedSpeakers(device)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-326-        .filter((speaker) => speaker)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-327-        .some((speaker) =>
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:328:          this.canDoDevice({
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-329-            deviceId: speaker.deviceId,
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-330-            scope: PERMISSION_DEVICE_SCOPE.DEVICE_TALKDOWN,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-337-        !device.isUnknownDevice &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-338-        this.getAssociatedSpeakers(device).length > 0 &&
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:339:        canDoDeviceTalkDown
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-340-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-341-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-450-    ...mapState('externalDevice', ['speakerOnCall']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-451-    ...mapGetters('accessControl', ['currentProvider', 'getDeviceBindingObjects']),
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:452:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-453-    canHandleHotkey() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-454-      const stream = this.activeDeviceView.services?.stream;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-487-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-488-
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue:489:      return this.canDoDevice({
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-490-        deviceId: this.activeDeviceView.deviceId,
+packages/app-vsaas-portal/src/components/Player/PlayerWrapper.vue-491-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-38-            return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-39-          }
+packages/app-vsaas-portal/src/store/permission/getters.js:40:          return deviceScope.some((scope) => $getters.canDoDevice({ deviceId: targetDevice.deviceId, scope }));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-41-        }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-42-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-43-        const availableDevices = rootGetters['device/availableDevices'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-44-        return deviceScope.some((scope) =>
+packages/app-vsaas-portal/src/store/permission/getters.js:45:          availableDevices.some((device) => $getters.canDoDevice({ deviceId: device.deviceId, scope })),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-46-        );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-47-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-48-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-49-      if (orgScope.length) {
+packages/app-vsaas-portal/src/store/permission/getters.js:50:        return orgScope.some((scope) => $getters.canDoOrg({ scope }));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-51-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-52-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-54-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-55-  },
+packages/app-vsaas-portal/src/store/permission/getters.js:56:  canDoOrg(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-57-    return ({ scope }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-58-      if (!state.rbacPermissionManager) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-59-        return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-60-      }
+packages/app-vsaas-portal/src/store/permission/getters.js:61:      return state.rbacPermissionManager.canDoOrg({ scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-62-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-63-  },
+packages/app-vsaas-portal/src/store/permission/getters.js:64:  canDoDevice(state) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-65-    return ({ deviceId, scope }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-66-      if (!state.rbacPermissionManager) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-67-        return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-68-      }
+packages/app-vsaas-portal/src/store/permission/getters.js:69:      return state.rbacPermissionManager.canDoDevice({ deviceId, scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-70-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/permission/getters.js-71-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-127-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-128-      return getters.availableCameraDevices.filter((device) =>
+packages/app-vsaas-portal/src/store/device/getters.js:129:        rootGetters['permission/canDoDevice']({ scope, deviceId: device.deviceId }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-130-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-131-    };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-137-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-138-      return getters.availableVsaasCameraDevices.filter((device) =>
+packages/app-vsaas-portal/src/store/device/getters.js:139:        rootGetters['permission/canDoDevice']({ scope, deviceId: device.deviceId }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-140-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-141-    };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-169-    return ({ scope }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-170-      return getters.availableDevices.filter((device) =>
+packages/app-vsaas-portal/src/store/device/getters.js:171:        rootGetters['permission/canDoDevice']({
+packages/app-vsaas-portal/src/store/device/getters.js-172-          deviceId: device.deviceId,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-173-          scope,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-190-      return devices.some((device) => {
+packages/app-vsaas-portal/src/store/device/getters.js-191-        const deviceId = typeof device === 'string' ? device : ComposeVsaasDeviceId(device);
+packages/app-vsaas-portal/src/store/device/getters.js:192:        return !rootGetters['permission/canDoDevice']({ deviceId, scope });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-193-      });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/getters.js-194-    };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-6-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-7-const SIDE_MENU_OF_DEVICE_TYPE_MAP = {
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:8:  camera: ({ device, t, supportVcaEvents, canDoDevice, supportList = [], remoteConfig = {} }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-9-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:10:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:11:    const hasVcaPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-12-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-13-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-205-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-206-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:207:  nvr: ({ device, t, canDoDevice }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-208-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:209:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-210-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-211-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-241-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-242-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:243:  nvrchannel: ({ device, t, canDoDevice, remoteConfig = {} }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-244-    const deviceId = device?.deviceId;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-245-    const nvrDeviceId = device?.nvr?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:246:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:247:    const hasNvrSettingsPermission = canDoDevice?.({
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-248-      deviceId: nvrDeviceId,
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-249-      scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-285-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-286-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:287:  unknownDevice: ({ device, t, canDoDevice }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-288-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:289:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-290-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-291-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-322-  ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-323-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:324:  bridge: ({ device, t, canDoDevice }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-325-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:326:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-327-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-328-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-352-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-353-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:354:  vss: ({ device, t, canDoDevice }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-355-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:356:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-357-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-358-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-371-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-372-
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:373:  vsschannel: ({ device, t, canDoDevice }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-374-    const deviceId = device?.deviceId;
+packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js:375:    const hasSettingsPermission = canDoDevice?.({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-376-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/DeviceSettingsMenu.js-377-    return [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-121-    ...mapGetters('organization', ['isFreePlan', 'snoozeUntil', 'currentOrganization']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-122-    ...mapGetters('account', ['shouldDisplaySnoozeAllForMe']),
+packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue:123:    ...mapGetters('permission', ['canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-124-    ...mapGetters('si', ['hasReseller']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-125-    ...mapState('organization', ['hints']),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-129-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-130-    showUpgradePlan() {
+packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue:131:      return this.isFreePlan && this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-132-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-133-    shouldShowHintButton() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-135-        this.shouldDisplayAddResellerHint &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-136-        !this.hasReseller &&
+packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue:137:        this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-138-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Headers/AppHeaders/AppHeader.vue-139-    },
+--
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-168-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-169-    ...mapState('permission', ['aiControlPermissionManager']),
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:170:    ...mapGetters('permission', ['hasPagePermission', 'hasPlanPermission', 'canPlanUpdate', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-171-    ...mapGetters('organization', ['isLicenseGranted', 'isFreePlan']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-172-    ...mapGetters('license', ['shouldShowLicenseInformationHint']),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-232-        this.isFreePlan &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-233-        !VendorHelper.isMarchNetworks &&
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:234:        this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-235-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-236-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.test.js-192-        },
+packages/app-vsaas-portal/src/pages/device/management/index.test.js-193-        getters: {
+packages/app-vsaas-portal/src/pages/device/management/index.test.js:194:          canDoDevice: () => () => true,
+packages/app-vsaas-portal/src/pages/device/management/index.test.js:195:          canDoOrg: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.test.js-196-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.test.js-197-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-406-        item.nvr &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-407-        !item.nvr.wizardFinished &&
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:408:        this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-409-      ) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-410-        if (this.isOwner || this.isAdmin) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-416-      const { deviceId, nvr } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-417-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:418:      if (!this.canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-419-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-420-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-461-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-462-
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:463:      if (!this.canDoDevice({ deviceId: item.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-464-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-465-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-555-                },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-556-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:557:                hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-558-                  deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-559-                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-569-          },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-570-          disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:571:          hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-572-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-573-        ...(!isUnknownDevice &&
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-588-                },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-589-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:590:                hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-591-                  deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-592-                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-605-                },
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-606-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:607:                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-608-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-609-            ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-638-    ...mapGetters('account', ['isOwner', 'isAdmin']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-639-    ...mapGetters('organization', ['isFreePlan', 'isRenewalOverdue']),
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:640:    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-641-    selectedLengthHint() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue-642-      const count = this.selectedDevices.length;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-281-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-282-// Permission checks
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:283:const canDoDevice = store.getters['permission/canDoDevice'];
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:284:const canDoOrg = store.getters['permission/canDoOrg'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-285-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-286-// Component refs
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-473-  const { deviceId } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-474-
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:475:  if (!canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-476-    return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-477-  }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-571-            },
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-572-            disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:573:            hasPermission: canDoDevice({
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-574-              deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-575-              scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-587-            },
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-588-            disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:589:            hasPermission: canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-590-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-591-        ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-601-            },
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-602-            disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:603:            hasPermission: canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-604-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue-605-        ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-221-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-222-
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:223:      if (!this.canDoDevice({ deviceId: item.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-224-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-225-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-283-                },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-284-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:285:                hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-286-                  deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-287-                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-297-          },
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-298-          disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:299:          hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-300-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-301-      ].filter((action) => action.hasPermission);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-329-    ...mapGetters('device', ['allDevicesMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-330-    ...mapGetters('organization', ['isRenewalOverdue']),
+packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue:331:    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-332-    tableHeaderList() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/ExternalDeviceManagementTable.vue-333-      switch (this.deviceType) {
+--
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-137-        namespaced: true,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-138-        getters: {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:139:          canDoDevice: () => () => true,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:140:          canDoOrg: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-141-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js-142-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-73-const isBannerVisible = ref(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-74-
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue:75:const canDoOrg = (scope) => store.getters['permission/canDoOrg']({ scope });
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue:76:const shouldShowActionButton = computed(() => canDoOrg(PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-77-const organizationLicensePhase = computed(() => store.getters['organization/licensePhase']);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-78-const isRenewalOverdue = computed(() => store.getters['organization/isRenewalOverdue']);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-89-    (isGracePeriod.value || isRenewalOverdue.value) &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-90-    !VendorHelper.isMarchNetworks &&
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue:91:    canDoOrg(PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-92-);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.vue-93-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-310-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-311-
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:312:      if (!item.wizardFinished && this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-313-        this.$emit('onSetNvrPassword', item.instance);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-314-        return;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-317-      const { deviceId } = item;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-318-
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:319:      if (!this.canDoDevice({ deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-320-        return;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-321-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-450-                },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-451-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:452:                hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-453-                  deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-454-                  scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-466-                },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-467-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:468:                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-469-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-470-            ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-480-                },
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-481-                disabled: false,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:482:                hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-483-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-484-            ]
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-500-    ...mapState('device', ['searchStatus']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-501-    ...mapGetters('organization', ['isRenewalOverdue']),
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:502:    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-503-    selectedLengthHint() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue-504-      const count = this.selectedDevices.length;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-288-    ...mapGetters('group', ['groupsMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-289-    ...mapGetters('organization', ['isRenewalOverdue', 'isDarkReleaseLicenseControlUnlimited']),
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:290:    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-291-    hasDeviceSettingPermission() {
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:292:      return this.canDoDevice({ deviceId: this.device.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-293-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-294-    hasDeleteDevicePermission() {
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:295:      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-296-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-297-    displayDeviceInformation() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-344-      return this.associatedDevices.some(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-345-        (device) =>
+packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue:346:          !device || !this.canDoDevice({ deviceId: device.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-347-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/NetworkSpeakerDetailPanel.vue-348-    },
+--
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.test.js-21-      namespaced: true,
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.test.js-22-      getters: {
+packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.test.js:23:        canDoOrg: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.test.js-24-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Banners/LicenseNotificationBanner.test.js-25-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-176-    ...mapGetters('group', ['groupsMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-177-    ...mapGetters('organization', ['isFreePlan', 'isRenewalOverdue']),
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:178:    ...mapGetters('permission', ['canDoDevice', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-179-    hasDeviceSettingPermission() {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:180:      return this.canDoDevice({ deviceId: this.device.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-181-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-182-    hasDeleteDevicePermission() {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue:183:      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-184-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/components/BridgeDetailPanel.vue-185-    disableFeature() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-34-  const isTwoWayAudioOnCall = computed(() => deviceTwoWayAudioService.value?.isOnCall);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-35-
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js:36:  const canDoDeviceTwoWayAudio = computed(() => {
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js:37:    return store.getters['permission/canDoDevice']({
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-38-      deviceId: deviceId.value,
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-39-      scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-42-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-43-  const isSupportTwoWayAudio = computed(
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js:44:    () => currentDevice.value?.isSupportTwoWayAudio && canDoDeviceTwoWayAudio.value,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-45-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.js-46-
+--
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-384-              action: this.openEditSiteInformationDialogue,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-385-              disabled: false,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:386:              hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-387-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-388-            {
+--
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-391-              action: this.openDeleteGroupDialogue,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-392-              disabled: false,
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:393:              hasPermission: this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED }),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-394-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-395-          ].filter((action) => action.hasPermission);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-415-    ...mapGetters('group', ['validGroups', 'isGroupFetchingData']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-416-    ...mapGetters('organization', ['isFreePlan']),
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:417:    ...mapGetters('permission', ['canDoOrg']),
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-418-    currentSelectedGroupId: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-419-      get() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-459-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-460-    hasCreateGroupPermission() {
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue:461:      return this.canDoOrg({
+packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-462-        scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Group/DeviceManagementGroupList.vue-463-      });
+--
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-15-    'externalDevice/onCallSpeaker': null,
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-16-    'externalDevice/networkSpeakerMapByDeviceId': {},
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:17:    'permission/canDoDevice': vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-18-  },
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-19-  commit: vi.fn(),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-48-    // Reset mocks
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-49-    mockStore.commit.mockClear();
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:50:    mockStore.getters['permission/canDoDevice'].mockClear();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-51-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-52-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-78-
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-79-      / Mock permission: only speaker1 and speaker3 have permission
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:80:      mockStore.getters['permission/canDoDevice'].mockImplementation(({ deviceId }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-81-        return deviceId === 'speaker1' || deviceId === 'speaker3';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-82-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-108-
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-109-      / Mock permission: no speakers have permission
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:110:      mockStore.getters['permission/canDoDevice'].mockReturnValue(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-111-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-112-      const { networkSpeakerOptions } = useNetworkSpeaker({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-132-
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-133-      / Mock permission: all speakers have permission
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:134:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-135-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-136-      const { networkSpeakerOptions } = useNetworkSpeaker({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-153-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-154-
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:155:    it('should call canDoDevice with correct parameters', () => {
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-156-      mockSpeakers.value = [{ deviceId: 'speaker1', displayName: 'Speaker 1' }];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-157-
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:158:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-159-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-160-      // eslint-disable-next-line no-unused-vars
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-173-      // eslint-disable-next-line no-unused-vars
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-174-      const test = networkSpeakerOptions.value;
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:175:      expect(mockStore.getters['permission/canDoDevice']).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-176-        deviceId: 'speaker1',
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-177-        scope: '/device/talkdown',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-181-    it('should reactively update when speakers change', () => {
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-182-      mockSpeakers.value = [{ deviceId: 'speaker1', displayName: 'Speaker 1' }];
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js:183:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-184-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.test.js-185-      const { networkSpeakerOptions } = useNetworkSpeaker({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-473-      'availableNetworkSpeakers',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-474-    ]),
+packages/app-vsaas-portal/src/pages/device/management/index.vue:475:    ...mapGetters('permission', ['canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-476-    groupListDevices() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-477-      return [...this.availableCameraDevices, ...this.availableNVRDevices];
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-779-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-780-    hasCreateDevicePermission() {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:781:      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-782-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/management/index.vue-783-    currentDeviceGroupId() {
+--
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-15-  getters: {
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-16-    'device/allDevicesMap': {},
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:17:    'permission/canDoDevice': vi.fn(),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-18-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-19-};
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-46-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-47-    // Reset mocks
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:48:    mockStore.getters['permission/canDoDevice'].mockClear();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-49-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-50-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-56-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-57-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:58:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-59-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-60-      const { isSupportTwoWayAudio } = useTwoWayAudio({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-79-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-80-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:81:      mockStore.getters['permission/canDoDevice'].mockReturnValue(false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-82-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-83-      const { isSupportTwoWayAudio } = useTwoWayAudio({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-102-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-103-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:104:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-105-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-106-      const { isSupportTwoWayAudio } = useTwoWayAudio({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-119-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-120-
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:121:    it('should call canDoDevice with correct parameters', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-122-      mockStore.getters['device/allDevicesMap'] = {
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-123-        device1: {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-125-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-126-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:127:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-128-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-129-      const { isSupportTwoWayAudio } = useTwoWayAudio({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-143-      const test = isSupportTwoWayAudio.value;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-144-
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:145:      expect(mockStore.getters['permission/canDoDevice']).toHaveBeenCalledWith({
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-146-        deviceId: 'device1',
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-147-        scope: '/device/settings',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-184-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-185-        };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:186:        mockStore.getters['permission/canDoDevice'].mockReturnValue(permission);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-187-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-188-        const { isSupportTwoWayAudio } = useTwoWayAudio({
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-210-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-211-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:212:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-213-      mockSelectedSpeakerDeviceId.value = 'speaker2'; // Different from deviceId
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-214-
+--
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-235-        device1: mockDevice,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-236-      };
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:237:      mockStore.getters['permission/canDoDevice'].mockReturnValue(true);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-238-      mockSelectedSpeakerDeviceId.value = 'device1'; // Same as deviceId
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js-239-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.js-29-    return speakers.value
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.js-30-      .filter((speaker) => {
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.js:31:        const canDoTalkDown = store.getters['permission/canDoDevice']({
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.js-32-          deviceId: speaker.deviceId,
+packages/app-vsaas-portal/src/components/Speakers/composables/useNetworkSpeaker.js-33-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_TALKDOWN,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-73-  },
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-74-  computed: {
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue:75:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-76-    isSystemEvent() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-77-      return SYSTEM_EVENT.EVENTS.includes(this.ruleEvent.eventType);
+--
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-96-      const everyoneRuleDeviceId = everyoneRule?.thingName ? `${everyoneRule.thingName}/${everyoneRule.derivant}` : '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-97-
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue:98:      const hasSnoozeForOnlyMePermission = this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-99-        deviceId: onlyMeRuleDeviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-100-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_READ,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-101-      });
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue:102:      const hasSnoozeForEveryOnePermission = this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-103-        deviceId: everyoneRuleDeviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/DeviceSnoozeRuleCard.vue-104-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_SNOOZE_FOR_ORG,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.test.js-73-        },
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.test.js-74-        getters: {
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.test.js:75:          canDoOrg: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.test.js-76-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.test.js-77-      },
+--
+packages/app-vsaas-portal/src/pages/view/list/index.test.js-135-        getters: {
+packages/app-vsaas-portal/src/pages/view/list/index.test.js-136-          hasPermission: () => () => true,
+packages/app-vsaas-portal/src/pages/view/list/index.test.js:137:          canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.test.js-138-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.test.js-139-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-119-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-120-    hasEveryonePermission(rule) {
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue:121:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-122-        deviceId: rule.thingName,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-123-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_SNOOZE_FOR_ORG,
+--
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-127-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-128-    ...mapGetters('notification', ['snoozeRulesDeviceMap']),
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue:129:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-130-    totalCount() {
+packages/app-vsaas-portal/src/pages/notification/message-center/components/SnoozeRuleSidebar/SnoozeRuleSidebar.vue-131-      return this.totalRulesCount > 99 ? '99+' : this.totalRulesCount;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-244-    ...mapGetters('device', ['availableCameraDevices', 'filteredDevices']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-245-    ...mapGetters('organization', ['currentOrganization']),
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue:246:    ...mapGetters('permission', ['canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-247-    groups() {
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-248-      const { sortType, sortOrder, searchName: searchText } = this;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-318-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-319-    shouldDisplayEditDeviceGroup() {
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue:320:      return this.canDoOrg({
+packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-321-        scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/components/GroupDeviceList.vue-322-      });
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-364-      return source.some((device) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-365-        const deviceId = ComposeVsaasDeviceId(device);
+packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue:366:        const hasPermission = this.canDoDevice({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-367-          deviceId,
+packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-368-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_READ,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-377-    ...mapGetters('accessControl', ['currentProvider']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-378-    ...mapGetters('alarm', ['activeAlarm', 'hasUnsetCityAlarm', 'areAllSourcesLoaded']),
+packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue:379:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-380-    ...mapGetters('user', ['getUsernameByEmail']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AlarmManagement.vue-381-    pageCount() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-215-const currentProvider = computed(() => store.getters['accessControl/currentProvider']);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-216-const currentViewPageDevices = computed(() => store.getters['view/currentViewPageDevices']);
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue:217:const canDoDevice = store.getters['permission/canDoDevice'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-218-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-219-// ===component template===
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-238-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-239-
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue:240:  const result = canDoDevice({
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-241-    deviceId: activeDevice.value.deviceId,
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/ListViewPlayersWrapper.vue-242-    scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-324-    ...mapGetters('device', ['allDevicesMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-325-    ...mapGetters('accessControl', ['currentProvider']),
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:326:    ...mapGetters('permission', ['hasPagePermission', 'canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-327-    ...mapGetters('notification', ['snoozeRulesDeviceMap', 'shouldDisplaySnoozeRule']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-328-    ruleNameInformation() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-384-        (this.isAccessEvent && !ACCESS_CONTROL.EVENTS_WITH_STREAMING.includes(this.event.type)) ||
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-385-        (this.isSensorEvent && this.event.bindingDevices.length === 0) ||
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:386:        !this.canDoDevice({ scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK, deviceId: this.event.device.deviceId })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-387-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-388-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-413-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-414-    shouldDisplayVcaSetting() {
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:415:      const hasVcaSettingPermission = this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-416-        deviceId: this.event.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-417-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_VCA_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-436-        return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-437-      }
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:438:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-439-        deviceId: this.event.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-440-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_READ,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-445-        this.showLoading ||
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-446-        this.reportedAlarmStatus.show ||
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue:447:        this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-448-          deviceId: this.event.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterInformationPanel.vue-449-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_FEEDBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-199-    ...mapState(['account', 'notification']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-200-    ...mapGetters('organization', ['isFreePlan']),
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue:201:    ...mapGetters('permission', ['hasPlanPermission', 'hasPermission', 'canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-202-    ...mapGetters('device', ['availableNVRDevices']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-203-    tabsOptions() {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-219-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-220-    hasArchivePermission() {
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue:221:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-222-        deviceId: this.event.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-223-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_CREATE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-235-        this.isEventInHalfHour &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-236-        this.hasPlanPermission('device/reportfalsealarm') &&
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue:237:        this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-238-          deviceId: this.event.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/components/MessageCenterDetailPanel.vue-239-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-298-      'activeGroupCurrentPageDevices',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-299-    ]),
+packages/app-vsaas-portal/src/pages/group/index.vue:300:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-301-    currentGroup() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-302-      return this.activeGroup || {};
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-343-      }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/group/index.vue-344-
+packages/app-vsaas-portal/src/pages/group/index.vue:345:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/group/index.vue-346-        deviceId: this.activeDeviceView.deviceId,
+packages/app-vsaas-portal/src/pages/group/index.vue-347-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-6-const useInfomationPermissionHelper = ({ device, supportEditMap }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-7-  const store = useStore();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js:8:  const canDoDevice = store.getters['permission/canDoDevice'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-9-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-10-  const supportEdit = (key) => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-12-      !!supportEditMap?.value[key] &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-13-      supportEditMap.value[key].onClick &&
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js:14:      canDoDevice({ deviceId: device.value.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-15-    return result;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-16-  };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-17-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-18-  const hasUpdateDeviceSystemPermission = computed(() => {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js:19:    return canDoDevice({ deviceId: device.value.deviceId, scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-20-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useInfomationPermissionHelper.js-21-
+--
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.test.js-86-        getters: {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.test.js-87-          hasPlanPermission: () => () => true,
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.test.js:88:          canDoOrg: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.test.js-89-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.test.js-90-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-597-    ...mapGetters('device', ['availableNVRDevices', 'allDevicesMap', 'existingDeviceTypes', 'availableVSSDevices']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-598-    ...mapGetters('organization', ['currentOrganization', 'isFreePlan']),
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:599:    ...mapGetters('permission', ['hasPlanPermission', 'canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-600-    ...mapGetters('notification', {
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-601-      isFetchingEventsInBatches: 'isFetchingData',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-650-            id,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-651-            device: this.allDevicesMap[ComposeVsaasDeviceId(item.source)],
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:652:            hasEventReadPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-653-              deviceId: item.source.thingName,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-654-              scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_READ,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-917-        this.isFalseAlarmEvent &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-918-        this.hasPlanPermission('device/reportfalsealarm') &&
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:919:        this.canDoDevice({
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-920-          deviceId: this.selectedEvent.device.deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-921-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_FEEDBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-934-      return Object.values(this.snoozeRules).some((rule) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-935-        const deviceId = `${rule.thingName}/${rule.derivant}`;
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue:936:        return this.canDoDevice({
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-937-          deviceId,
+packages/app-vsaas-portal/src/pages/notification/message-center/index.vue-938-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_EVENT_READ,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-8-const useTemplateConditionHelper = ({ device, supportEdit }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-9-  const store = useStore();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js:10:  const canDoDevice = store.getters['permission/canDoDevice'];
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js:11:  const canDoOrg = store.getters['permission/canDoOrg'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-12-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-13-  const shouldDisplayEditIcon = (key) => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-21-  const shouldDisplayChangeButton = (key) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-22-    if (key === DEVICE_INFO_MENU_TYPE.NVR) {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js:23:      return canDoDevice({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-24-        deviceId: device.value.nvr.deviceId,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-25-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-28-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-29-    if (key === DEVICE_INFO_MENU_TYPE.VSS) {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js:30:      return canDoDevice({
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-31-        deviceId: device.value.vss.deviceId,
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-32-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-35-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-36-    if (key === DEVICE_INFO_MENU_TYPE.GROUP_NAME) {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js:37:      if (!canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED })) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-38-        return false;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useTemplateConditionHelper.js-39-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-859-      'allDevicesMap',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-860-    ]),
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue:861:    ...mapGetters('permission', ['hasPlanPermission', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-862-    ...mapGetters('externalDevice', ['getSpeakerByMac']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-863-    canConfigureWebhook() {
+packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue:864:      return this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_SYSTEM_ALARM });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-865-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/EditAlarmModal/EditAlarmModalStepAction.vue-866-    availableDevices() {
+--
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-60-        namespaced: true,
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-61-        getters: {
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js:62:          canDoOrg: options?.canDoOrg ?? (() => () => true),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-63-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-64-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-217-          {
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-218-            isOwner: false,
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js:219:            canDoOrg: () => () => false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-220-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.test.js-221-        );
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-477-  },
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-478-  computed: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue:479:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-480-    shareTypeOptions() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-481-      const options = [
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-496-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-497-    canDoSharePlayback() {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue:498:      return this.canDoDevice({
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-499-        deviceId: this.deviceId,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.vue-500-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-205-    ...mapGetters('device', ['deviceCount']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-206-    ...mapGetters('account', ['isOwner']),
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue:207:    ...mapGetters('permission', ['canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-208-    ...mapState('user', ['users']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-209-    ...mapState(['account']),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-221-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-222-    infoOptions() {
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue:223:      const canRenameOrg = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-224-      const primaryLocation = countryList()
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-225-        .find((c) => c.value === this.storageLocation)
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-247-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-248-    advancedOptions() {
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue:249:      const canTransferOwner = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_TRANSFER_OWNER });
+packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue:250:      const canDeleteOrg = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_DELETE });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-251-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/OrganizationDetails.vue-252-      return [
+--
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-17-        namespaced: true,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-18-        getters: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js:19:          canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-20-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-21-      },
+--
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-154-              namespaced: true,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-155-              getters: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js:156:                canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-157-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-158-            },
+--
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-189-              namespaced: true,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-190-              getters: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js:191:                canDoDevice: () => () => false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-192-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-193-            },
+--
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-223-              namespaced: true,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-224-              getters: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js:225:                canDoDevice: () => () => false,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-226-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-227-            },
+--
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-260-              namespaced: true,
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-261-              getters: {
+packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js:262:                canDoDevice: () => () => hasPermission,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-263-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Dialogues/ShareDevice/ShareDeviceSettings.test.js-264-            },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-52-      }),
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-53-      'permission/canUpdate': vi.fn(() => true),
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js:54:      'permission/canDoDevice': vi.fn(() => true),
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-55-      'device/getDeviceAssociatedSpeakers': vi.fn((device) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.test.js-56-        return device.deviceId === 'device1'
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-113-  },
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-114-  computed: {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:115:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-116-    moreActionArray() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-117-      return [
+--
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-119-          name: this.$t('Edit file name'),
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-120-          action: this.onClickEditName,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:121:          hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-122-            deviceId: this.item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-123-            scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_UPDATE,
+--
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-128-          disabled: !this.item.isReadyToDownload,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-129-          action: this.onClickDownloadArchive,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:130:          hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-131-            deviceId: this.item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-132-            scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DOWNLOAD,
+--
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-138-          disabled: !this.item.isReadyToDownload,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-139-          action: this.onClickShareArchive,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:140:          hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-141-            deviceId: this.item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-142-            scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_SHARE,
+--
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-147-          action: this.onClickDeleteArchive,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-148-          classList: ['danger'],
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:149:          hasPermission: this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-150-            deviceId: this.item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-151-            scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DELETE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-155-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-156-    hasArchivePlayPermission() {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue:157:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-158-        deviceId: this.item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable/ArchiveGridModeView.vue-159-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_PLAY,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-183-  },
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-184-  computed: {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue:185:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-186-    isPreparingDownload() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-187-      return this.isRegistering || this.archive?.status === 'GEN_MP4';
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-194-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-195-    shouldShowDownloadButton() {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue:196:      const hasDownloadArchivePermission = this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-197-        deviceId: this.archive.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-198-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DOWNLOAD,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-206-      return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-207-        !this.isShareMode &&
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue:208:        this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-209-          deviceId: this.archive.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveDetailPanel.vue-210-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_SHARE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.test.js-54-        },
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.test.js-55-        getters: {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.test.js:56:          canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.test.js-57-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.test.js-58-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-117-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-118-    playArchive(archive) {
+packages/app-vsaas-portal/src/pages/archive/management/index.vue:119:      const hasPlayArchivePermission = this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/index.vue-120-        deviceId: archive.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/index.vue-121-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_PLAY,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-162-    ...mapGetters('device', ['allDevicesMap']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-163-    ...mapGetters('organization', ['isFreePlan']),
+packages/app-vsaas-portal/src/pages/archive/management/index.vue:164:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-165-    pageCount() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/index.vue-166-      const pageSize = Math.ceil(this.rowData.length / this.COUNT_PER_PAGE);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-478-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-479-    canEditArchive(item) {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:480:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-481-        deviceId: item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-482-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_UPDATE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-484-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-485-    canDownloadArchive(item) {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:486:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-487-        deviceId: item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-488-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DOWNLOAD,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-490-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-491-    canShareArchive(item) {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:492:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-493-        deviceId: item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-494-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_SHARE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-496-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-497-    canDeleteArchive(item) {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:498:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-499-        deviceId: item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-500-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DELETE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-502-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-503-    canPlayArchive(item) {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:504:      return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-505-        deviceId: item.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-506-        scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_PLAY,
+--
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-510-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-511-    ...mapState('archive', ['status', 'isFetchingData']),
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:512:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-513-    tableHeaderList() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-514-      return this.currentTableViewMode !== TABLE_VIEW_MODE.GRID
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-604-    shouldDisplayMultipleDownloads() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-605-      return this.selectedArchives.every((archive) => {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:606:        return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-607-          deviceId: archive.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-608-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DOWNLOAD,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-612-    shouldDisplayMultipleDeletes() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-613-      return this.selectedArchives.every((archive) => {
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue:614:        return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-615-          deviceId: archive.device?.deviceId,
+packages/app-vsaas-portal/src/pages/archive/management/components/ArchiveManagementTable.vue-616-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_ARCHIVE_DELETE,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-175-    ...mapState('permission', ['aiControlPermissionManager']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-176-    ...mapGetters('device', ['allDevicesMap']),
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:177:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-178-    ...mapGetters('organization', ['supportList']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-179-    device() {
+--
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-221-          showFaceRecognitionEvent: this.aiControlPermissionManager.displayFaceRecognition,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-222-        },
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue:223:        canDoDevice: this.canDoDevice,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-224-        supportList: this.supportList,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.vue-225-        remoteConfig: this.remoteConfig,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.test.js-170-          ...permission.getters,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.test.js-171-          hasPermission: () => (opt) => true,
+packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.test.js:172:          canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.test.js-173-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/components/DeviceSettingsSideMenu.test.js-174-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-49-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-50-
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js:51:    const canDoDeviceUnlock = store.getters['permission/canDoDevice']({
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-52-      deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-53-      scope: PERMISSION_DEVICE_SCOPE.DEVICE_UNLOCK,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-54-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-55-
+packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js:56:    return !isFreePlan.value && !device.isUnknownDevice && bindingObjects.length > 0 && canDoDeviceUnlock;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-57-  };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/components/ListViewPlayersWrapper/composables/useDeviceDisplay.js-58-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-224-    ...mapState(['account']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-225-    ...mapGetters('organization', ['isLicenseGranted', 'isFreePlan']),
+packages/app-vsaas-portal/src/pages/system/index.vue:226:    ...mapGetters('permission', ['hasPlanPermission', 'canPlanUpdate', 'canDoOrg']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-227-    ...mapGetters('account', ['isOwner', 'isAdmin']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-228-    ...mapState('permission', ['aiControlPermissionManager']),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-236-        !this.isFreePlan &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-237-        this.$route.name === 'AlarmManagement' &&
+packages/app-vsaas-portal/src/pages/system/index.vue:238:        this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_SYSTEM_ALARM })
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-239-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-240-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-253-     */
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-254-    organizationMenu() {
+packages/app-vsaas-portal/src/pages/system/index.vue:255:      const adminRestricted = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_ADMIN_RESTRICTED });
+packages/app-vsaas-portal/src/pages/system/index.vue:256:      const alarmScope = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_SYSTEM_ALARM });
+packages/app-vsaas-portal/src/pages/system/index.vue:257:      const thirdPartyScope = this.canDoOrg({ scope: PERMISSION_ORG_SCOPE.ORG_SYSTEM_3RD_PARTY });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-258-      const hasPlan = (path) => this.hasPlanPermission(`/system/${path}`);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/index.vue-259-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-299-      'currentViewPageDevices',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-300-    ]),
+packages/app-vsaas-portal/src/pages/view/list/index.vue:301:    ...mapGetters('permission', ['canDoDevice']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-302-    currentViewId() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-303-      if (!this.hasView) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-342-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/view/list/index.vue-343-      return this.currentViewPageDevices.every((device) => {
+packages/app-vsaas-portal/src/pages/view/list/index.vue:344:        return this.canDoDevice({
+packages/app-vsaas-portal/src/pages/view/list/index.vue-345-          deviceId: device.deviceId,
+packages/app-vsaas-portal/src/pages/view/list/index.vue-346-          scope: PERMISSION_DEVICE_SCOPE.DEVICE_PLAYBACK,
+--
+packages/app-vsaas-portal/src/pages/system/components/AccessControl/index.test.js-81-        namespaced: true,
+packages/app-vsaas-portal/src/pages/system/components/AccessControl/index.test.js-82-        getters: {
+packages/app-vsaas-portal/src/pages/system/components/AccessControl/index.test.js:83:          canDoDevice: () => () => true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AccessControl/index.test.js-84-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/components/AccessControl/index.test.js-85-      },

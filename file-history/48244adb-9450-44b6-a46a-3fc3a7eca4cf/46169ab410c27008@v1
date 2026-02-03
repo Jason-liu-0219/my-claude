@@ -1,0 +1,231 @@
+import { USER_ROLE } from '@vivotek/const-vsaas';
+import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+import { getTagged } from '@vivotek/lib-utility';
+
+const Log = getTagged('store/account/action');
+
+function translateToUserObject(user, rootState, rootGetters) {
+  const roleInfo = user.role;
+  const roleName = roleInfo?.name || '';
+
+  return {
+    ...user,
+    role: roleName.toUpperCase(),
+    organizationRole: roleInfo,
+    name: user.username || user.email.split('@')[0],
+    isAdmin: roleName.toUpperCase() === USER_ROLE.ADMIN,
+    isOwner: roleName.toUpperCase() === USER_ROLE.OWNER,
+    isCurrentUser: user.email === rootState.account.attributes?.email,
+  };
+}
+
+const actions = {
+  // ============================================================
+  // Many Page Use
+  // ============================================================
+  async getUsersByOrganizationV2({ state, commit, rootGetters, rootState }) {
+    if (state.management.searchStatus === APP_TABLE_STATUS.LOADING) {
+      return;
+    }
+
+    try {
+      commit('resetUsers');
+      commit('setSearchStatus', APP_TABLE_STATUS.LOADING);
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+      const response = await rootState.apiService.listUserOfOrganizationV2({ organizationID });
+
+      const users = response.map((user) => translateToUserObject(user, rootState, rootGetters));
+      commit('setUsers', { items: users });
+    } catch (error) {
+      Log.error('getUsersByOrganizationV2 failed', error);
+      throw error.generalize ? error.generalize() : error;
+    } finally {
+      commit('setSearchStatus', APP_TABLE_STATUS.NO_USERS);
+    }
+  },
+
+  // ============================================================
+  // User Management Use
+  // ============================================================
+  async updateOrganizationRoleOfUser({ commit, getters, rootState }, { userSub, roleId }) {
+    try {
+      commit('setUpdateUserLoading', true);
+
+      await rootState.apiService.assignOrgRoles({
+        assignments: [{ userId: userSub, roleId }],
+      });
+
+      const role = getters.selectUserRolesMap.get(roleId) || { id: roleId, name: '' };
+      commit('updateUserOrganizationRole', { userSub, role });
+    } catch (error) {
+      throw error.generalize ? error.generalize() : error;
+    } finally {
+      commit('setUpdateUserLoading', false);
+    }
+  },
+
+  async inviteUserToOrganization(
+    { commit, getters, rootGetters, rootState },
+    { userName, email, locale, organizationRoleId },
+  ) {
+    try {
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+      const response = await rootState.apiService.setUserOfOrganization({
+        email,
+        locale,
+        username: userName,
+        organizationRoleID: organizationRoleId,
+        join: true,
+      });
+
+      const role = getters.allSelectUserRoles.find((r) => r.id === organizationRoleId);
+      commit(
+        'addUser',
+        translateToUserObject(
+          {
+            email,
+            organizationID,
+            role: { id: organizationRoleId, name: role?.name || '' },
+            username: userName,
+          },
+          rootState,
+          rootGetters,
+        ),
+      );
+
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async resendInvitation({ getters, rootGetters, rootState, commit }, { email, locale }) {
+    try {
+      const { organizationID } = rootGetters['organization/currentOrganization'];
+      const response = await rootState.apiService.inviteAgain({ organizationID, email, locale });
+
+      const targetUser = getters.getUserByEmail(email);
+      if (targetUser) {
+        commit('updateUser', translateToUserObject(targetUser, rootState, rootGetters));
+      }
+
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  // ============================================================
+  // User Detail Use
+  // ============================================================
+  async removeUserFromOrganization({ commit, rootState }, email) {
+    try {
+      const response = await rootState.apiService.setUserOfOrganization({
+        email,
+        join: false,
+      });
+      commit('deleteUser', { email });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async getUserMFA({ rootState }, { email }) {
+    try {
+      const response = await rootState.apiService.queryUserMFA({ email });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async disableUserMFA({ rootState }, { email }) {
+    try {
+      const response = await rootState.apiService.disableUserMFA({ email });
+      return response;
+    } catch (error) {
+      throw error.generalize();
+    }
+  },
+
+  async updateOrganizationUsername({ commit, getters, rootState, rootGetters }, { email, username }) {
+    const { organizationID } = rootGetters['organization/currentOrganization'];
+    try {
+      await rootState.apiService.updateOrganizationUsername({ organizationID, email, username });
+      const userEmail = getters.getUserByEmail(email).email;
+      commit('updateUserName', { userEmail, name: username });
+    } catch (error) {
+      Log.error('updateOrganizationUsername failed', error);
+      throw error.generalize();
+    }
+  },
+
+  async fetchUserGrantedDevices({ commit, rootState }, { userSub }) {
+    try {
+      commit('setDetailLoading', true);
+      const response = await rootState.apiService.getUserGrantedDevices({ userSub });
+      commit('setDetailDeviceOverview', response.grantedDevices || []);
+    } catch (error) {
+      Log.error('fetchUserGrantedDevices failed', error);
+      commit('setDetailDeviceOverview', []);
+    } finally {
+      commit('setDetailLoading', false);
+    }
+  },
+
+  // ============================================================
+  // Select User Roles (下拉選單)
+  // ============================================================
+  async fetchSelectUserRoles({ commit, state, rootState }) {
+    const { selectUserRoles } = state;
+    if (selectUserRoles.loading || !selectUserRoles.hasMore) {
+      return;
+    }
+
+    const ITEMS_PER_PAGE = 10;
+
+    commit('setSelectUserRolesLoading', true);
+    commit('setSelectUserRolesLoadError', false);
+
+    try {
+      const offset = selectUserRoles.page * ITEMS_PER_PAGE;
+      const params = new URLSearchParams({
+        type: 'org',
+        isCustomRole: true,
+        offset,
+        limit: ITEMS_PER_PAGE,
+      });
+      const { roles, total } = await rootState.apiService.listRoles(params.toString());
+      const loadedCount = offset + roles.length;
+
+      commit('addSelectUserRoles', roles);
+      commit('setSelectUserRolesPage', selectUserRoles.page + 1);
+      commit('setSelectUserRolesHasMore', loadedCount < total);
+    } catch (error) {
+      Log.error('fetchSelectUserRoles failed', error);
+      commit('setSelectUserRolesLoadError', true);
+    } finally {
+      commit('setSelectUserRolesLoading', false);
+    }
+  },
+
+  async fetchDefaultRoleList({ commit, rootState }) {
+    try {
+      const params = new URLSearchParams({
+        type: 'org',
+        isCustomRole: false,
+        offset: 0,
+        limit: 100,
+      });
+      const { roles } = await rootState.apiService.listRoles(params.toString());
+
+      commit('addSelectDefaultRoles', roles);
+    } catch (error) {
+      Log.error('fetchDefaultRoleList failed', error);
+      throw error.generalize ? error.generalize() : error;
+    }
+  },
+};
+
+export default actions;

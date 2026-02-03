@@ -1,0 +1,43 @@
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-570-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-571-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-572-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-573-const RestfulApiService = {
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-574-  getUser: async (userSub) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-575-    return ApiService.requestToApiServer({
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-576-      apiPath: `v1/users/${userSub}`,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-577-      method: 'GET',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-578-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-579-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js:580:  getUserGrantedDevices: async ({ userSub }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-581-    return ApiService.requestToApiServer({
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-582-      apiPath: `v1/users/${userSub}/granted-devices`,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-583-      method: 'GET',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-584-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-585-  },
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-586-  putUserLocale: async ({ userSub, locale }) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-587-    return ApiService.requestToApiServer({
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-588-      apiPath: `v1/users/${userSub}/locale`,
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-589-      method: 'PUT',
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js-590-      contentType: HTTP_CONTENT_TYPE.JSON,
+--
+packages/app-vsaas-portal/src/store/user/actions.js-156-      commit('updateUserName', { userEmail, name: username });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-157-    } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-158-      Log.error('updateOrganizationUsername failed', error);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-159-      throw error.generalize();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-160-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-161-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-162-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-163-  async fetchUserGrantedDevices({ commit, rootState }, { userSub }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-164-    try {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-165-      commit('setDetailLoading', true);
+packages/app-vsaas-portal/src/store/user/actions.js:166:      const response = await rootState.apiService.getUserGrantedDevices({ userSub });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-167-      commit('setDetailDeviceOverview', response.grantedDevices || []);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-168-    } catch (error) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-169-      Log.error('fetchUserGrantedDevices failed', error);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-170-      commit('setDetailDeviceOverview', []);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-171-    } finally {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-172-      commit('setDetailLoading', false);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-173-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-174-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-175-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/user/actions.js-176-  // ============================================================

@@ -1,0 +1,68 @@
+
+
+subscription subscribeRoleChange {
+    subscribeRoleChange {
+        reason
+        relatedSubs
+    }
+}
+
+subscription subscribeArchiveState {
+    subscribeArchiveState {
+        deviceGroupID: siteID
+        thingName
+        createdAt
+        status
+        videoLength
+        cloudSize
+    }
+}
+
+subscription subscribeDeviceState {
+    subscribeDeviceState {
+        derivant
+        deviceGroupID: siteID
+        fwUpdateState
+        mac
+        online
+        recording
+        sub
+        thingName
+    }
+}
+
+subscription subscribeOrganizationState {
+    subscribeOrganizationState {
+        isFreePlan
+        AIControlSetting {
+            uuid
+            termsAgreement {
+                agree
+                email
+                updatedAt
+            }
+            options {
+                facialRecognition {
+                    enable
+                    email
+                    updatedAt
+                }
+                licensePlateRecognition {
+                    enable
+                    email
+                    updatedAt
+                }
+            }
+        }
+        licensePhase
+    }
+}
+
+subscription subscribeUserTokenRevoke {
+    subscribeUserTokenRevoke {
+        userId
+        requestId
+        revokedAt
+        reason
+    }
+}

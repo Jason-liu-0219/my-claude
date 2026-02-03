@@ -1,0 +1,124 @@
+<template>
+  <AppDialogue
+    ref="changeOrganizationRoleDialogue"
+    class="changeOrganizationRoleDialogue"
+    name="changeOrganizationRoleDialogue"
+    :title="t('Edit organization role')"
+    :state="currentState"
+    :buttons="dialogueButtons"
+    data-testid="change-organization-role-dialogue"
+    overflowY="visible"
+  >
+    <template #content>
+      <div class="default-dialog-content">
+        <div class="input-wrapper">
+          <OrganizationRoleFormDropdown
+            v-model="selectedRoleId"
+            :disabled="isUpdateUserLoading"
+            :initialDisplayText="initialRoleName"
+          />
+        </div>
+      </div>
+    </template>
+    <template #errorMessage>
+      <AppFormErrorMessage
+        v-if="isError"
+        :message="t('Failed to save. Try again.')"
+      />
+    </template>
+  </AppDialogue>
+</template>
+
+<script setup>
+import { ref, computed, useTemplateRef } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useStore } from 'vuex';
+
+import { DIALOGUE } from '@vivotek/const-vsaas';
+
+import OrganizationRoleFormDropdown from '@/components/Dropdowns/OrganizationRoleFormDropdown.vue';
+
+const { t } = useI18n();
+const store = useStore();
+
+const props = defineProps({
+  user: {
+    type: Object,
+    required: true,
+  },
+  isUpdateUserLoading: {
+    type: Boolean,
+    required: true,
+  },
+});
+
+// Template refs
+const changeOrganizationRoleDialogue = useTemplateRef('changeOrganizationRoleDialogue');
+
+// State
+const currentState = ref(DIALOGUE.STATE.DEFAULT);
+const selectedRoleId = ref(props.user.organizationRole?.id || '');
+const initialRoleName = computed(() => props.user.organizationRole?.name || '');
+
+// Computed
+const dialogue = computed(() => changeOrganizationRoleDialogue.value);
+
+const dialogueButtons = computed(() => [
+  {
+    class: 'primary',
+    text: isProcessing.value ? t('Saving...') : t('Save'),
+    clickHandler: () => {
+      confirm();
+    },
+  },
+  {
+    class: 'ghost',
+    text: t('Cancel'),
+    clickHandler: () => {
+      hide();
+    },
+  },
+]);
+
+const isProcessing = computed(() => currentState.value === DIALOGUE.STATE.PROCESSING);
+const isError = computed(() => currentState.value === DIALOGUE.STATE.ERROR);
+
+// Methods
+const show = () => {
+  selectedRoleId.value = props.user.organizationRole?.id || '';
+  setState(DIALOGUE.STATE.DEFAULT);
+  dialogue.value.show();
+};
+
+const hide = () => {
+  dialogue.value.hide();
+  setState(DIALOGUE.STATE.DEFAULT);
+};
+
+const confirm = async () => {
+  const originalRoleId = props.user.organizationRole?.id || '';
+  if (selectedRoleId.value === originalRoleId) {
+    return;
+  }
+  const { userSub } = props.user;
+  setState(DIALOGUE.STATE.PROCESSING);
+  try {
+    await store.dispatch('user/updateOrganizationRoleOfUser', {
+      userSub,
+      roleId: selectedRoleId.value,
+    });
+    setState(DIALOGUE.STATE.SUCCESS);
+  } catch {
+    setState(DIALOGUE.STATE.ERROR);
+  }
+};
+
+const setState = (state) => {
+  currentState.value = state;
+};
+
+// Expose methods for parent component access
+defineExpose({
+  show,
+});
+</script>

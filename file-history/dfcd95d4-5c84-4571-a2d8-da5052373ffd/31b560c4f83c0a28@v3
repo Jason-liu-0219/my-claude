@@ -1,0 +1,247 @@
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unused-expressions */
+import { RECORDING_TYPE } from '@vivotek/const-vsaas';
+import VDSI from '../vdsi';
+import ComposeVsaasDeviceId from '../utility/composeVsaasDeviceId';
+
+export default class Configurator extends VDSI {
+  name = 'configurator';
+
+  // eslint-disable-next-line class-methods-use-this
+  get QUERIES() {
+    return [
+      'online',
+      'recording',
+      'model',
+      'mac',
+      'city',
+      'vss',
+      'vssMac',
+      'vssName',
+      'vssThingName',
+      'localIP',
+      'thingName',
+      'channel',
+      'deviceId',
+      'siteID',
+      'deviceGroupID', // Backward compatibility alias
+      'generalIconClass',
+      'statelessModelIcon',
+      'displayName',
+      'groupName',
+      'firmware',
+      'fisheye',
+      'isUnknownDevice',
+      'ptz',
+      'getBackendIdentifier',
+      'derivant',
+      'derivationDescriptor',
+      'wizardFinished',
+      'alertIconClass',
+      'isDualStream',
+      'recordingType',
+      'aiObjectSearchKey',
+      'vca',
+      'type',
+    ];
+  }
+
+  get type() {
+    return this.reference.options?.type;
+  }
+
+  get online() {
+    return window.forceOfflineMac === this.mac ? false : this.reference.options?.online;
+  }
+
+  get recording() {
+    return this.reference.options?.recording;
+  }
+
+  get model() {
+    return this.reference.options?.model;
+  }
+
+  get mac() {
+    return this.reference.options?.derivantMac;
+  }
+
+  get vssMac() {
+    return this.reference.options?.mac;
+  }
+
+  get city() {
+    return this.reference.options?.vss?.city;
+  }
+
+  get vssName() {
+    return this.reference.options?.vss?.displayName;
+  }
+
+  get vssThingName() {
+    return this.reference.options?.vss?.thingName;
+  }
+
+  get localIP() {
+    return this.reference.options?.ip;
+  }
+
+  get thingName() {
+    return this.reference.options?.thingName;
+  }
+
+  get derivant() {
+    return this.reference.options?.derivant;
+  }
+
+  get derivationDescriptor() {
+    if (this.reference.options?.derivantInfo) {
+      return this.reference.options?.derivantInfo.derivationDescriptor;
+    }
+    return this.derivant;
+  }
+
+  get deviceId() {
+    return ComposeVsaasDeviceId(this.reference.options);
+  }
+
+  get channel() {
+    return +this.reference.options.derivant.replace(/^\D+/g, '');
+  }
+
+  get cameraType() {
+    const map = {
+      fisheye: this.fisheye,
+      ptz: this.ptz
+    };
+
+    return Object.keys(map).find((key) => map[key]) || 'default';
+  }
+
+  get isUnknownDevice() {
+    return this.reference.options?.type === 'unknownDevice';
+  }
+
+  get wizardFinished() {
+    return true;
+  }
+
+  get generalIconClass() {
+    if (this.isUnknownDevice) {
+      return 'general_unknown_soild';
+    }
+
+    const type = this.cameraType;
+
+    if (this.recording && this.online) {
+      return `status_camera_${type}_recording`;
+    }
+
+    return this.online ? `status_camera_${type}` : `status_camera_${type}_disconnected`;
+  }
+
+  get alertIconClass() {
+    return null;
+  }
+
+  get statelessModelIcon() {
+    const type = this.cameraType;
+
+    return `status_camera_${type}`;
+  }
+
+  get displayName() {
+    return this.reference?.options?.name || this.reference?.options?.mac;
+  }
+
+  set displayName(value) {
+    this.reference.options.name = value;
+  }
+
+  get groupName() {
+    return this.reference.options?.groupName;
+  }
+
+  set groupName(value) {
+    this.reference.options.groupName = value;
+  }
+
+  get siteID() {
+    return this.reference.options.siteID || this.reference.options.deviceGroupID;
+  }
+
+  set siteID(value) {
+    this.reference.options.siteID = value;
+  }
+
+  // Backward compatibility alias
+  get deviceGroupID() {
+    return this.siteID;
+  }
+
+  set deviceGroupID(value) {
+    this.siteID = value;
+  }
+
+  get firmware() {
+    return this.reference.options?.firmware;
+  }
+
+  get fisheye() {
+    return this.reference.options?.fisheye || false;
+  }
+
+  get ptz() {
+    return this.reference.options?.ptz || false;
+  }
+
+  get vss() {
+    return this.reference.options?.vss;
+  }
+
+  set vss(val) {
+    this.reference.options.vss = val;
+  }
+
+  get isDualStream() {
+    return this.recordingType === RECORDING_TYPE.DUAL;
+  }
+
+  get recordingType() {
+    return this.reference.options?.recordingType ?? RECORDING_TYPE.DUAL;
+  }
+
+  get aiObjectSearchKey() {
+    return `${this.vssMac}_${this.derivant}`;
+  }
+
+  get vca() {
+    return this.reference.options?.vca;
+  }
+
+  queryConfiguration() {
+    return this.get('/vsaas/support').then((response) => {
+      const { info } = response?.data;
+      if (info) {
+        this.updateState({ support: info });
+      }
+      return info;
+    }).catch((err) => {
+      const errorMessage = err.message || err.statusText || 'queryConfiguration failed';
+      return Promise.reject(new Error(errorMessage));
+    });
+  }
+
+  getBackendIdentifier() {
+    const { thingName, derivant } = this;
+    return { thingName, derivant };
+  }
+
+  checkSupportFromOptions(service) {
+    if (!this.vss) {
+      return false;
+    }
+
+    return this.vss.options?.support?.includes(service);
+  }
+}

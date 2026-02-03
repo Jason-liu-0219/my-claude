@@ -1,0 +1,416 @@
+<template>
+  <div
+    class="object-info"
+    @mouseenter.stop="showCheckbox"
+    @mouseleave.stop="hideCheckbox"
+  >
+    <AppCheckBox
+      v-if="enableCheckbox"
+      v-model="isResultSelected"
+      class="show-input"
+      :class="{ show: checkboxClassShow }"
+      :disabled="disableCheckbox"
+      :title="disableString"
+    />
+    <div
+      class="info-wrapper"
+      :class="{ 'checkbox-show': checkboxClassShow }"
+    >
+      <h3 class="time">
+        {{ object.timeConfig.renderTime }}
+      </h3>
+      <div class="camera-info">
+        <InfoTooltip class="info-tooltip">
+          <template
+            v-if="isBetaEnabled"
+            #content
+          >
+            <template
+              v-for="item in tooltipContent"
+              :key="item.property"
+            >
+              <div class="row">
+                <div class="property ellipsis">{{ item.property }}</div>
+                <div class="value ellipsis">{{ item.value }}</div>
+              </div>
+            </template>
+          </template>
+          <template #reference>
+            <div class="camera-name-container">
+              <DeviceEventIndicator
+                v-if="isNVRCamera"
+                class="nvr-indicator"
+              />
+              <svg-icon
+                :iconClass="object.device.statelessModelIcon"
+                size="20px"
+              />
+              <h6 class="camera-name ellipsis">
+                {{ object.device.displayName }}
+              </h6>
+            </div>
+          </template>
+        </InfoTooltip>
+        <div class="buttom-wrapper">
+          <h6 class="datetime">
+            {{ object.timeConfig.renderDate }}
+          </h6>
+        </div>
+      </div>
+    </div>
+    <AppMoreButtonDropdown
+      v-track="{
+        eventName: mixpanelClickMoreOptionEventName,
+      }"
+      :actions="actions"
+      :width="24"
+      :height="24"
+      :dropdownClass="['light']"
+      :hideDropdownOnClick="true"
+      class="search-action-dropdown"
+    />
+  </div>
+  <div
+    v-if="isRDMode && object.isEvent && object.cardType === 'EventCard'"
+    class="debug-info"
+  >
+    <h6
+      v-if="object.isEvent && object?.eventObject?.face?.score"
+      class=""
+    >
+      score: {{ object.eventObject.face?.score }}
+    </h6>
+  </div>
+  <div
+    v-if="isRDMode && isLMResult"
+    class="debug-info"
+  >
+    <h6 :title="`score: ${object.debugInfo.score.toFixed(3)}`">score: {{ object.debugInfo.score.toFixed(3) }}</h6>
+    <h6 :title="`oid: ${object.oid}, mac: ${object.device.mac}`">oid: {{ object.oid }}</h6>
+  </div>
+</template>
+
+<script>
+import { mapActions, mapGetters } from 'vuex';
+import { DevelopmentEnvManager } from '@vivotek/lib-utility';
+import { DeviceEventIndicator } from '@vivotek/advanced-vue-components';
+import { VsaasNVRCamera as NVRCamera, VsaasNVRCameraExt as NVRCameraExt } from '@vivotek/device';
+import getImagePath from '@/utils/ImageHelper';
+import ruleIconMap from '@/constants/ruleIconMap';
+import AIObjectV2 from '@/models/AIObjectV2/AIObjectV2';
+import {
+  AI_HUB_EVENTINSIGHT_MAP,
+  AI_HUB_SEARCH_BY_TEXT_MAP,
+  AI_HUB_SEARCH_BY_FILTER_MAP,
+  ACTION_EVENTS,
+} from '@/constants/userTracking';
+import InfoTooltip from '@/components/InfoTooltip.vue';
+import { concatEventName } from '@/utils/userTrackingHelper';
+
+export default {
+  name: 'ObjectInfo',
+  components: {
+    InfoTooltip,
+    DeviceEventIndicator,
+  },
+  inject: ['getShowedSearchResultCount'],
+  props: {
+    object: {
+      type: Object,
+      required: true,
+    },
+    actions: {
+      type: Array,
+      required: true,
+      default: () => [],
+    },
+    enableCheckbox: {
+      type: Boolean,
+      require: false,
+      default: true,
+    },
+    disableCheckbox: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
+  },
+  emits: ['reachLimit'],
+  data() {
+    return {
+      isShowCheckbox: false,
+    };
+  },
+  methods: {
+    ...mapActions('caseVault', ['addVideo', 'removeVideo']),
+    showCheckbox() {
+      if (!this.enableCheckbox) {
+        return;
+      }
+      this.isShowCheckbox = true;
+    },
+    hideCheckbox() {
+      this.isShowCheckbox = false;
+    },
+  },
+  computed: {
+    ...mapGetters('search', [
+      'isEventSearchFeature',
+      'isThinkSearchFeature',
+      'getFeatureEventName',
+      'getLMPrompt',
+      'isReSearchMode',
+    ]),
+    ...mapGetters('caseVault', ['isVideoReachedLimit']),
+    ...mapGetters('group', ['groupsMap']),
+    checkboxClassShow() {
+      return this.object.selected || this.isShowCheckbox;
+    },
+    isResultSelected: {
+      set(value) {
+        if (this.isEventSearchFeature) {
+          this.$mixpanel.track(AI_HUB_EVENTINSIGHT_MAP.eventinsight_checkbox_click);
+        } else if (this.isThinkSearchFeature) {
+          this.$mixpanel.track(AI_HUB_SEARCH_BY_TEXT_MAP.search_by_text_checkbox_click);
+        } else {
+          this.$mixpanel.track(AI_HUB_SEARCH_BY_FILTER_MAP.search_by_filter_checkbox_click);
+        }
+        this.$mixpanel.track(
+          concatEventName([this.getFeatureEventName, ACTION_EVENTS.RESULT, ACTION_EVENTS.OBJECT_SELECTED]),
+          {
+            states: {
+              clicked: 'checkbox',
+              objects: [
+                {
+                  mac: this.object.device.mac,
+                  oid: this.object.oid,
+                  uid: this.object.uid,
+                  video_clip_duration: this.object.timeConfig.duration,
+                },
+              ],
+              searched_text_content: this.getLMPrompt,
+              searched_text_content_length: this.getLMPrompt.length,
+              on_research_mode: this.isReSearchMode,
+              result_count: this.getShowedSearchResultCount(),
+            },
+          },
+        );
+
+        if (value) {
+          if (this.isVideoReachedLimit) {
+            this.$emit('reachLimit');
+            return;
+          }
+          this.addVideo(this.object);
+        } else {
+          this.removeVideo(this.object);
+        }
+        this.object.selected = value;
+      },
+      get() {
+        return this.object.selected;
+      },
+    },
+    ruleIconSrc() {
+      if (!this.object.isEvent) {
+        return null;
+      }
+      const { type } = this.object.eventData;
+      if (type) {
+        const imageName = ruleIconMap[type];
+        return imageName ? getImagePath(imageName) : null;
+      }
+      return null;
+    },
+    isLMResult() {
+      return this.object instanceof AIObjectV2;
+    },
+    isRDMode() {
+      return DevelopmentEnvManager.rdMode;
+    },
+    isEvent() {
+      return this.object.isEvent;
+    },
+    siteName() {
+      if (this.object.device?.siteID && this.groupsMap[this.object.device.siteID]) {
+        return this.groupsMap[this.object.device.siteID].name;
+      }
+      return null;
+    },
+    mixpanelClickMoreOptionEventName() {
+      if (this.isEventSearchFeature) {
+        return AI_HUB_EVENTINSIGHT_MAP.eventinsight_click_more_option;
+      }
+      if (this.isThinkSearchFeature) {
+        return AI_HUB_SEARCH_BY_TEXT_MAP.search_by_text_click_more_option;
+      }
+      return AI_HUB_SEARCH_BY_FILTER_MAP.search_by_filter_click_more_option;
+    },
+    isBetaEnabled() {
+      return DevelopmentEnvManager.betaEnabled;
+    },
+    isNVRCamera() {
+      return this.object.device instanceof NVRCameraExt || this.object.device instanceof NVRCamera;
+    },
+    tooltipContent() {
+      return [
+        ...(this.siteName
+          ? [
+              {
+                property: this.$t('Site'),
+                value: this.siteName,
+              },
+            ]
+          : []),
+        ...(this.isNVRCamera && this.object.device.nvrName
+          ? [
+              {
+                property: this.$t('NVR'),
+                value: this.object.device.nvrName,
+              },
+            ]
+          : []),
+        {
+          property: this.$t('Camera'),
+          value: this.object.device.displayName,
+        },
+      ];
+    },
+    disableString() {
+      return this.disableCheckbox ? this.$t('“Add to case” is getting ready...') : null;
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.object-info {
+  display: flex;
+  background-color: @color-surface50;
+  align-items: center;
+  padding: 10px 0;
+  position: relative;
+  pointer-events: auto;
+  .show-input {
+    opacity: 0;
+    width: 0px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    &.show {
+      opacity: 1;
+      width: auto;
+    }
+  }
+  .info-wrapper {
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+    width: calc(100% - 32px);
+    z-index: 1;
+    &.checkbox-show {
+      transform: translateX(28px);
+      width: calc(100% - 70px);
+    }
+
+    .time {
+      color: @color-text11;
+    }
+    .buttom-wrapper {
+      display: flex;
+      margin-top: 4px;
+      align-items: center;
+
+      .datetime {
+        color: @color-text04;
+      }
+      .type-title {
+        color: @color-text04;
+        margin-left: 10px;
+        width: calc(100% - 70px);
+      }
+    }
+    .camera-info {
+      margin-left: 10px;
+      overflow: hidden;
+      .camera-name-container {
+        display: flex;
+        align-items: center;
+        .nvr-indicator {
+          color: @color-icon04;
+          background-color: @color-surface45;
+          margin-left: 0;
+          margin-right: 3px;
+        }
+        .camera-name {
+          line-height: 20px;
+          margin-left: 6px;
+          color: @color-text01;
+          font-size: 14px;
+        }
+      }
+      .info-tooltip {
+        .row {
+          display: flex;
+          align-items: center;
+          margin-bottom: 8px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          .property {
+            width: 55px;
+            color: @color-text04;
+            text-align: left;
+          }
+          .value {
+            color: @color-text01;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+  .rule-icon {
+    width: 25px;
+    position: absolute;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    img {
+      width: 100%;
+    }
+  }
+  .search-action-dropdown {
+    margin-left: auto;
+    margin-right: 2px;
+    :deep(.more-button-icon-container) {
+      border-radius: 6px;
+      &:hover {
+        background-color: @color-surface05;
+      }
+      &.active,
+      &:active {
+        background-color: @color-surface05;
+      }
+      .action-icon {
+        padding: 0;
+      }
+    }
+  }
+}
+
+.debug-info {
+  display: flex;
+  gap: 0 10px;
+  margin-top: -8px;
+  z-index: 1;
+  position: relative;
+}
+.fade-enter {
+  opacity: 1;
+}
+.fade-leave {
+  opacity: 0;
+}
+</style>

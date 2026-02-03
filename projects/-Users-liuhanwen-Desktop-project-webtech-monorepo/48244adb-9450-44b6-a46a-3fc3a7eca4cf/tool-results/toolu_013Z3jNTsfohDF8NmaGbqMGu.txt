@@ -1,0 +1,328 @@
+     1→
+     2→# Device related fragments
+     3→fragment DeviceInfo on DeviceInfo {
+     4→  mac
+     5→  organizationID
+     6→  name
+     7→  type
+     8→  thingName
+     9→  city
+    10→  derivant
+    11→  derivantMac
+    12→  ip
+    13→  firmware
+    14→  fwUpgradeVersion
+    15→  fwUpgradeState
+    16→  model
+    17→  modelType
+    18→  online
+    19→  deviceGroupID: siteID
+    20→  fisheye
+    21→  ptz
+    22→  recording
+    23→  recordingCapacityDays
+    24→  recordingType
+    25→  timezone
+    26→  vca {
+    27→    capability
+    28→    version
+    29→  }
+    30→  auth
+    31→  storageCapacity
+    32→  archiveLimitedSize
+    33→  wizardFinished
+    34→  support
+    35→  sipUsername
+    36→  retentionDaysByUser
+    37→  maxRetentionDays
+    38→  isTimelapseEnabled
+    39→  sharedLink {
+    40→		id
+    41→		enabled
+    42→		password
+    43→		expireTime
+    44→		canPlayback
+    45→		url
+    46→	}
+    47→  contractInfo {
+    48→    mainPlan {
+    49→      planType
+    50→      additionalInfo
+    51→      state
+    52→    }
+    53→    addOnPlans {
+    54→      planType
+    55→      additionalInfo
+    56→      state
+    57→    }
+    58→    otherPlans {
+    59→      planType
+    60→      additionalInfo
+    61→      state
+    62→    }
+    63→  }
+    64→  protocol
+    65→}
+    66→
+    67→fragment DeviceGroup on DeviceGroup {
+    68→  id
+    69→  name
+    70→  organizationID
+    71→  owner
+    72→  location {
+    73→    latitude
+    74→    longitude
+    75→    address
+    76→  }
+    77→}
+    78→
+    79→# Organization related fragments
+    80→fragment MyOrganization on MyOrganization {
+    81→  organizationID
+    82→  organizationName
+    83→  onBoard
+    84→  inviterEmail
+    85→  licensePhase
+    86→  licenseMainPlans
+    87→  isFreePlan
+    88→  storageLocation
+    89→  isRequiredMFA
+    90→  username
+    91→  snoozeUntil
+    92→  eventDelayTimeSeconds
+    93→  support
+    94→}
+    95→
+    96→fragment OrganizationAlarmSetting on OrganizationAlarmSetting {
+    97→  actions
+    98→  alarmID
+    99→  alarmName
+   100→  createdBy
+   101→  events
+   102→  scheduleBitwise
+   103→  getSettingsURL
+   104→  putSettingsURL
+   105→  enable
+   106→  pauseUntil
+   107→  city
+   108→}
+   109→
+   110→fragment OrganizationIPSpeaker on OrganizationIPSpeaker {
+   111→  mac
+   112→  name
+   113→  organizationID
+   114→  thingName
+   115→  type
+   116→  model
+   117→  auth
+   118→  volume
+   119→  sipUsername
+   120→  associatedDevices {
+   121→    thingName
+   122→    derivant
+   123→  }
+   124→}
+   125→
+   126→# User management related fragments
+   127→fragment UserManagement on UserManagmentV2 {
+   128→  email
+   129→  organizationID
+   130→  userSub
+   131→  state
+   132→  onBoard
+   133→  username
+   134→  role {
+   135→    id
+   136→    name
+   137→  }
+   138→  isAssignable
+   139→}
+   140→
+   141→# Archive related fragments
+   142→fragment Archive on Archive {
+   143→  thingName
+   144→  createdAt
+   145→  filename
+   146→  creatorNickname
+   147→  creatorEmail
+   148→  startAt
+   149→  endAt
+   150→  owner
+   151→  status
+   152→  videoLength
+   153→  videoSize
+   154→  taskArn
+   155→  id
+   156→  sharedToken
+   157→  updatedAt
+   158→  derivant
+   159→  cloudSize
+   160→  sharedLink {
+   161→    enabled
+   162→    password
+   163→    expireTime
+   164→    enableDownload
+   165→    url
+   166→  }
+   167→}
+   168→
+   169→fragment SharedArchive on GetSharedArchiveCookieOutput {
+   170→  cookie
+   171→  createdAt
+   172→  creatorEmail
+   173→  deviceGroupName
+   174→  deviceName
+   175→  fileName
+   176→  orgName
+   177→  startAt
+   178→  videoLength
+   179→  thingName
+   180→  storageLocation
+   181→  passwordRequired
+   182→  status
+   183→  bucketName
+   184→  region
+   185→  enableDownload
+   186→}
+   187→
+   188→# Message related fragments
+   189→fragment MessageItem on MessageItem {
+   190→  source {
+   191→    derivant
+   192→    thingName
+   193→  }
+   194→  eventID
+   195→  time
+   196→  type
+   197→  name
+   198→  localtime
+   199→  starttime
+   200→  thumbnails3key
+   201→  information
+   202→  profileID
+   203→  recognizedThumbnailS3Keys
+   204→  sceneThumbnailS3Keys
+   205→  messageTypeID
+   206→  plateNumber
+   207→}
+   208→
+   209→# Access control related fragments
+   210→fragment AccessControlMessage on AccessControlWebhookEvent {
+   211→  id
+   212→  integrationId
+   213→  eventId
+   214→  eventType
+   215→  providerEventType
+   216→  actorId
+   217→  actorName
+   218→  actorEmail
+   219→  objectType
+   220→  objectId
+   221→  objectName
+   222→  createdTime
+   223→  createdTimestamp
+   224→  offset
+   225→  bindingDevices {
+   226→    thingName
+   227→    derivant
+   228→  }
+   229→}
+   230→
+   231→fragment AccessControlLock on AccessControlLock {
+   232→  lockId
+   233→  lockType
+   234→  lockName
+   235→  lockStatus
+   236→}
+   237→
+   238→fragment AccessControlBinding on AccessControlBinding {
+   239→  lockId
+   240→  lockType
+   241→  lockName
+   242→}
+   243→
+   244→# Audit log related fragments
+   245→fragment AuditLog on AuditLog {
+   246→  eventCategory
+   247→  eventName
+   248→  target
+   249→  datetime
+   250→  user
+   251→  username
+   252→  ip
+   253→  location
+   254→  details
+   255→}
+   256→
+   257→# Webhook related fragments
+   258→fragment Webhook on Webhook {
+   259→  organizationID
+   260→  webhookID
+   261→  name
+   262→  url
+   263→  sender
+   264→  httpMethod
+   265→  authType
+   266→  disableHTTPCerts
+   267→  contentType
+   268→  headers {
+   269→    key
+   270→    value
+   271→  }
+   272→  payload
+   273→  alarmIDBindings
+   274→}
+   275→
+   276→fragment CloudTestWebhook on CloudTestWebhookOutput {
+   277→  status
+   278→  errorMessage
+   279→  httpCode
+   280→  httpResponse
+   281→}
+   282→
+   283→# SIService related fragments
+   284→fragment SIService on SIService {
+   285→  companyID
+   286→  companyName
+   287→  phoneNumber
+   288→  email
+   289→  enableRemoteAccess
+   290→  autoSendSystemEvent
+   291→}
+   292→
+   293→# Snooze rule related fragments
+   294→fragment SnoozeRule on SnoozeRule {
+   295→  id
+   296→  device {
+   297→    thingName
+   298→    derivant
+   299→  }
+   300→  eventType
+   301→  ruleName
+   302→  snoozeFor
+   303→  snoozeUntil
+   304→  editorEmail
+   305→  messageTypeID
+   306→}
+   307→
+   308→# Credential related fragments
+   309→fragment Credential on Credential {
+   310→  accessKeyId
+   311→  secretAccessKey
+   312→  sessionToken
+   313→}
+   314→
+   315→# API key related fragments
+   316→fragment ApiKey on ApiKey {
+   317→  keyID
+   318→  keyName
+   319→  enabled
+   320→  createdAt
+   321→  expiresAt
+   322→}
+   323→
+   324→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

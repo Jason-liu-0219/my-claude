@@ -1,0 +1,21 @@
+// 將按鍵繫結關係放在此檔案中以覆寫預設auto[]
+[
+    {
+        "key": "shift+alt+e",
+        "command": "copilot-labs.use-brush-picker",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+alt+cmd+e",
+        "command": "-copilot-labs.use-brush-picker",
+        "when": "editorTextFocus"
+    },
+    {
+        "key": "shift+enter",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b\r"
+        },
+        "when": "terminalFocus"
+    }
+]

@@ -1,0 +1,1164 @@
+2026-02-01T14:26:56.038Z [DEBUG] High write ratio: blit=1104, write=6595 (85.7% writes), screen=76x184
+2026-02-01T14:26:56.308Z [DEBUG] Getting matching hook commands for SessionEnd with query: clear
+2026-02-01T14:26:56.308Z [DEBUG] Found 2 hook matchers in settings
+2026-02-01T14:26:56.308Z [DEBUG] Matched 2 unique hooks for query "clear" (2 before deduplication)
+2026-02-01T14:26:56.319Z [DEBUG] High write ratio: blit=0, write=5958 (100.0% writes), screen=76x184
+2026-02-01T14:26:56.322Z [DEBUG] Started caffeinate to prevent sleep
+2026-02-01T14:26:56.324Z [DEBUG] AutoUpdaterWrapper: Installation type: native
+2026-02-01T14:26:56.337Z [DEBUG] SessionEnd:clear [node "${CLAUDE_PLUGIN_ROOT}/scripts/hooks/evaluate-session.js"] completed with status 0
+2026-02-01T14:26:56.337Z [DEBUG] Hook output does not start with {, treating as plain text
+2026-02-01T14:26:56.347Z [DEBUG] SessionEnd:clear [node "${CLAUDE_PLUGIN_ROOT}/scripts/hooks/session-end.js"] completed with status 0
+2026-02-01T14:26:56.347Z [DEBUG] Hook output does not start with {, treating as plain text
+2026-02-01T14:26:56.347Z [DEBUG] Cleared all session hooks for session 60ede122-2e11-4919-b730-524b547e3e9a
+2026-02-01T14:26:56.348Z [DEBUG] Getting matching hook commands for SessionStart with query: clear
+2026-02-01T14:26:56.348Z [DEBUG] Found 1 hook matchers in settings
+2026-02-01T14:26:56.348Z [DEBUG] Matched 1 unique hooks for query "clear" (1 before deduplication)
+2026-02-01T14:26:56.360Z [DEBUG] Full reset (shrink->below): prevHeight=76, nextHeight=14, viewport=58
+2026-02-01T14:26:56.363Z [DEBUG] [claudeai-mcp] Checking gate (cached)...
+2026-02-01T14:26:56.363Z [DEBUG] [claudeai-mcp] Gate returned: false
+2026-02-01T14:26:56.363Z [DEBUG] [claudeai-mcp] Disabled via gate
+2026-02-01T14:26:56.371Z [DEBUG] MCP server "claude-in-chrome": Calling MCP tool: set_permission_mode
+2026-02-01T14:26:56.378Z [DEBUG] Hook output does not start with {, treating as plain text
+2026-02-01T14:26:56.378Z [DEBUG] Hook SessionStart:clear (SessionStart) success:
+[SessionStart] Found 6 recent session(s)
+[SessionStart] Latest: /Users/liuhanwen/.claude/sessions/2026-02-01-webtech-monorepo-session.tmp
+[SessionStart] Package manager: pnpm (package.json)
+2026-02-01T14:26:56.379Z [DEBUG] FileHistory: Added snapshot for 505b67e9-4302-4ac0-b1be-97e419c0054f, tracking 0 files
+2026-02-01T14:26:56.385Z [DEBUG] MCP server "claude-in-chrome": Tool 'set_permission_mode' completed successfully in 14ms
+2026-02-01T14:26:56.394Z [DEBUG] Stopped caffeinate, allowing sleep
+2026-02-01T14:26:56.704Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T14:26:56.705Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T14:27:56.398Z [DEBUG] Getting matching hook commands for Notification with query: idle_prompt
+2026-02-01T14:27:56.398Z [DEBUG] Found 0 hook matchers in settings
+2026-02-01T14:27:56.398Z [DEBUG] Matched 0 unique hooks for query "idle_prompt" (0 before deduplication)
+2026-02-01T14:44:55.186Z [DEBUG] Detected change to /Users/liuhanwen/.claude/settings.json
+2026-02-01T14:44:55.194Z [DEBUG] Settings changed from userSettings, updating AppState
+2026-02-01T14:44:55.199Z [DEBUG] Replacing all deny rules for destination 'projectSettings' with 4 rule(s): ["Write(./.husky/**)","Write(./.husky/*)","Edit(./.husky/**)","Edit(./.husky/*)"]
+2026-02-01T14:44:55.199Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 88 rule(s): ["Bash(git remote add:*)","Bash(git fetch:*)","Bash(git rev-list:*)","Read(//Users/liuhanwen/Desktop/**)","Bash(git commit:*)","Bash(pnpm lint:*)","Bash(git log:*)","Bash(lsof:*)","Bash(curl:*)","Bash(node --version:*)","Bash(pnpm list:*)","Bash(brew list:*)","Read(//usr/local/bin/**)","Bash(open:*)","mcp__chrome-devtools__navigate_page","mcp__chrome-devtools__list_network_requests","Bash(pnpm --version:*)","Bash(nvm install:*)","Bash(nvm alias:*)","Bash(npm --version:*)","Bash(nvm use:*)","Bash(pnpm store prune:*)","Bash(rm:*)","Bash(pnpm install:*)","Bash(npx update-browserslist-db@latest)","Bash(ping:*)","Bash(pnpm test:unit:*)","Bash(pnpm --filter @vivotek/const-vsaas exec grep:*)","mcp__serena__search_for_pattern","mcp__serena__activate_project","Bash(cat:*)","Bash(echo:*)","Bash(code --version:*)","Bash(ln:*)","Bash(chmod:*)","Bash(~/.zshrc)","mcp__sequential-thinking__sequentialthinking","mcp__serena__initial_instructions","mcp__serena__get_current_config","mcp__serena__get_symbols_overview","Bash(find:*)","WebSearch","mcp__serena__find_file","WebFetch(domain:www.vivotek.com)","Bash(pnpm build:*)","Bash(node -e:*)","mcp__serena__find_symbol","Skill(vue3)","mcp__ide__getDiagnostics","Skill(debug)","Skill(debug-investigator)","Bash(for dir in user role alarm site floorplan account)","Bash(do echo '=== $dir ===' grep -r \"permission\\\\|isOwner\\\\|isAdmin\" /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/$dir)","Bash(grep:*)","mcp__plugin_serena_serena__find_symbol","mcp__plugin_serena_serena__activate_project","mcp__plugin_serena_serena__search_for_pattern","mcp__plugin_serena_serena__read_file","Bash(git grep:*)","mcp__plugin_serena_serena__get_symbols_overview","mcp__plugin_serena_serena__replace_content","Bash(gh pr view:*)","WebFetch(domain:github.com)","Bash(/opt/homebrew/bin/gh pr view 6621)","Bash(/usr/local/bin/gh pr view 6621)","Bash(~/bin/gh pr:*)","Bash(/opt/homebrew/bin/gh pr diff 6621)","Bash(pnpm vitest run:*)","Bash(pnpm eslint:*)","mcp__acp__Bash","mcp__acp__Write","Bash(git worktree add:*)","Bash(git worktree:*)","Bash(git checkout:*)","Bash(git pull:*)","mcp__acp__Edit","mcp__plugin_serena_serena__get_current_config","mcp__chrome-devtools__list_pages","mcp__chrome-devtools__take_snapshot","mcp__chrome-devtools__click","mcp__chrome-devtools__take_screenshot","Bash(git rebase:*)","Bash(npx eslint:*)","Bash(git add:*)","Bash(pnpm prepare:*)","Bash(git push:*)","Bash(gh pr create:*)","Bash(gh pr edit 6689 --title \"fix\\(vsaas-portal\\): allow re-selecting same role in device access dropdown\" --body \"$\\(cat <<''EOF''\n## Summary\n- Use `@optionClick` instead of `@update:modelValue` to trigger selection event\n- This ensures the `selected` event fires even when clicking the same option\n- Fixes batch assign dropdown not responding when re-selecting the same role\n\n## Problem\nWhen using \"Update Selected Devices Access\" dropdown in DeviceAccessDialogue:\n1. User selects some devices\n2. User chooses a role from the dropdown\n3. User selects more devices\n4. User clicks the same role again → nothing happens\n\nThe root cause is that `AppDropdown` uses `vue3-multiselect`, which doesn''t emit `update:modelValue` when selecting the same value. However, `optionClick` event fires on every click.\n\n## Test plan\n- [ ] Open User Detail → Device Access\n- [ ] Select some devices and assign a role\n- [ ] Select additional devices\n- [ ] Click the same role again in \"Update Selected Devices Access\" dropdown\n- [ ] Verify the role is applied to newly selected devices\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\nEOF\n\\)\")"]
+2026-02-01T14:58:31.111Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T14:58:31.112Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T15:05:53.117Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/ux-bug-analyzer/SKILL.md
+2026-02-01T15:05:53.118Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-01T15:05:53.136Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2026-02-01T15:05:53.137Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-01T15:05:53.137Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-01T15:05:53.137Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-01T15:05:53.137Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-01T15:05:53.137Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T15:05:53.137Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-01T15:05:53.140Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-01T15:05:53.140Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-01T15:05:53.140Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-01T15:05:53.143Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T15:05:53.143Z [DEBUG] Total plugin skills loaded: 16
+2026-02-01T15:05:53.143Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-01T15:05:53.143Z [DEBUG] Total plugin commands loaded: 26
+2026-02-01T15:05:53.143Z [DEBUG] Loaded 39 unique skills (managed: 0, user: 38, project: 0, legacy commands: 1)
+2026-02-01T15:05:53.143Z [DEBUG] getSkills returning: 39 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-01T15:05:53.455Z [ERROR] Failed to save config with lock: Error: Lock file is already being held
+2026-02-01T15:05:53.457Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.56636.1769958353457
+2026-02-01T15:05:53.457Z [DEBUG] Preserving file permissions: 100600
+2026-02-01T15:05:53.458Z [DEBUG] Temp file written successfully, size: 20540 bytes
+2026-02-01T15:05:53.458Z [DEBUG] Applied original permissions to temp file
+2026-02-01T15:05:53.458Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.56636.1769958353457 to /Users/liuhanwen/.claude.json
+2026-02-01T15:05:53.458Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-02-01T15:05:53.458Z [DEBUG] Passes eligibility cached for org 065d80f4-0c0b-447b-8ed8-c1700f3890eb: true
+2026-02-01T15:26:07.417Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/ux-bug-analyzer/SKILL.md
+2026-02-01T15:26:07.418Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-01T15:26:07.438Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-01T15:26:07.438Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-01T15:26:07.438Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-01T15:26:07.438Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-01T15:26:07.438Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-01T15:26:07.438Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T15:26:07.438Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-01T15:26:07.445Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-01T15:26:07.445Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-01T15:26:07.445Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-01T15:26:07.448Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T15:26:07.448Z [DEBUG] Total plugin skills loaded: 16
+2026-02-01T15:26:07.448Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-01T15:26:07.448Z [DEBUG] Total plugin commands loaded: 26
+2026-02-01T15:26:07.449Z [DEBUG] Loaded 39 unique skills (managed: 0, user: 38, project: 0, legacy commands: 1)
+2026-02-01T15:26:07.449Z [DEBUG] getSkills returning: 39 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-01T15:28:30.780Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T15:28:30.781Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T15:58:31.886Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T15:58:31.890Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T16:17:36.368Z [DEBUG] Detected change to /Users/liuhanwen/Desktop/project/webtech-monorepo/.claude/settings.local.json
+2026-02-01T16:17:36.371Z [DEBUG] Settings changed from localSettings, updating AppState
+2026-02-01T16:17:36.373Z [DEBUG] Replacing all deny rules for destination 'projectSettings' with 4 rule(s): ["Write(./.husky/**)","Write(./.husky/*)","Edit(./.husky/**)","Edit(./.husky/*)"]
+2026-02-01T16:17:36.373Z [DEBUG] Replacing all allow rules for destination 'localSettings' with 89 rule(s): ["Bash(git remote add:*)","Bash(git fetch:*)","Bash(git rev-list:*)","Read(//Users/liuhanwen/Desktop/**)","Bash(git commit:*)","Bash(pnpm lint:*)","Bash(git log:*)","Bash(lsof:*)","Bash(curl:*)","Bash(node --version:*)","Bash(pnpm list:*)","Bash(brew list:*)","Read(//usr/local/bin/**)","Bash(open:*)","mcp__chrome-devtools__navigate_page","mcp__chrome-devtools__list_network_requests","Bash(pnpm --version:*)","Bash(nvm install:*)","Bash(nvm alias:*)","Bash(npm --version:*)","Bash(nvm use:*)","Bash(pnpm store prune:*)","Bash(rm:*)","Bash(pnpm install:*)","Bash(npx update-browserslist-db@latest)","Bash(ping:*)","Bash(pnpm test:unit:*)","Bash(pnpm --filter @vivotek/const-vsaas exec grep:*)","mcp__serena__search_for_pattern","mcp__serena__activate_project","Bash(cat:*)","Bash(echo:*)","Bash(code --version:*)","Bash(ln:*)","Bash(chmod:*)","Bash(~/.zshrc)","mcp__sequential-thinking__sequentialthinking","mcp__serena__initial_instructions","mcp__serena__get_current_config","mcp__serena__get_symbols_overview","Bash(find:*)","WebSearch","mcp__serena__find_file","WebFetch(domain:www.vivotek.com)","Bash(pnpm build:*)","Bash(node -e:*)","mcp__serena__find_symbol","Skill(vue3)","mcp__ide__getDiagnostics","Skill(debug)","Skill(debug-investigator)","Bash(for dir in user role alarm site floorplan account)","Bash(do echo '=== $dir ===' grep -r \"permission\\\\|isOwner\\\\|isAdmin\" /Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/$dir)","Bash(grep:*)","mcp__plugin_serena_serena__find_symbol","mcp__plugin_serena_serena__activate_project","mcp__plugin_serena_serena__search_for_pattern","mcp__plugin_serena_serena__read_file","Bash(git grep:*)","mcp__plugin_serena_serena__get_symbols_overview","mcp__plugin_serena_serena__replace_content","Bash(gh pr view:*)","WebFetch(domain:github.com)","Bash(/opt/homebrew/bin/gh pr view 6621)","Bash(/usr/local/bin/gh pr view 6621)","Bash(~/bin/gh pr:*)","Bash(/opt/homebrew/bin/gh pr diff 6621)","Bash(pnpm vitest run:*)","Bash(pnpm eslint:*)","mcp__acp__Bash","mcp__acp__Write","Bash(git worktree add:*)","Bash(git worktree:*)","Bash(git checkout:*)","Bash(git pull:*)","mcp__acp__Edit","mcp__plugin_serena_serena__get_current_config","mcp__chrome-devtools__list_pages","mcp__chrome-devtools__take_snapshot","mcp__chrome-devtools__click","mcp__chrome-devtools__take_screenshot","Bash(git rebase:*)","Bash(npx eslint:*)","Bash(git add:*)","Bash(pnpm prepare:*)","Bash(git push:*)","Bash(gh pr create:*)","Bash(gh pr edit 6689 --title \"fix\\(vsaas-portal\\): allow re-selecting same role in device access dropdown\" --body \"$\\(cat <<''EOF''\n## Summary\n- Use `@optionClick` instead of `@update:modelValue` to trigger selection event\n- This ensures the `selected` event fires even when clicking the same option\n- Fixes batch assign dropdown not responding when re-selecting the same role\n\n## Problem\nWhen using \"Update Selected Devices Access\" dropdown in DeviceAccessDialogue:\n1. User selects some devices\n2. User chooses a role from the dropdown\n3. User selects more devices\n4. User clicks the same role again → nothing happens\n\nThe root cause is that `AppDropdown` uses `vue3-multiselect`, which doesn''t emit `update:modelValue` when selecting the same value. However, `optionClick` event fires on every click.\n\n## Test plan\n- [ ] Open User Detail → Device Access\n- [ ] Select some devices and assign a role\n- [ ] Select additional devices\n- [ ] Click the same role again in \"Update Selected Devices Access\" dropdown\n- [ ] Verify the role is applied to newly selected devices\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\nEOF\n\\)\")","mcp__plugin_serena_serena__list_dir"]
+2026-02-01T16:19:59.716Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/vsaas-mfe/SKILL.md
+2026-02-01T16:19:59.718Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-01T16:19:59.751Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2026-02-01T16:19:59.751Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-01T16:19:59.751Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-01T16:19:59.751Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-01T16:19:59.751Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-01T16:19:59.751Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T16:19:59.751Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-01T16:19:59.754Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-01T16:19:59.754Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-01T16:19:59.754Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-01T16:19:59.759Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-01T16:19:59.759Z [DEBUG] Total plugin skills loaded: 16
+2026-02-01T16:19:59.759Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-01T16:19:59.759Z [DEBUG] Total plugin commands loaded: 26
+2026-02-01T16:19:59.760Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-01T16:19:59.760Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-01T16:20:00.102Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.56636.1769962800102
+2026-02-01T16:20:00.102Z [DEBUG] Preserving file permissions: 100600
+2026-02-01T16:20:00.103Z [DEBUG] Temp file written successfully, size: 20625 bytes
+2026-02-01T16:20:00.103Z [DEBUG] Applied original permissions to temp file
+2026-02-01T16:20:00.103Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.56636.1769962800102 to /Users/liuhanwen/.claude.json
+2026-02-01T16:20:00.103Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-02-01T16:20:00.104Z [DEBUG] Passes eligibility cached for org 065d80f4-0c0b-447b-8ed8-c1700f3890eb: true
+2026-02-01T16:28:30.782Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T16:28:30.783Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T17:06:06.526Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: ECONNREFUSED
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T17:06:06.527Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: ECONNREFUSED
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T17:06:09.725Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNREFUSED, ECONNREFUSED)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T17:06:09.725Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNREFUSED, ECONNREFUSED)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNREFUSED, ECONNREFUSED)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T17:41:14.313Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T17:41:14.315Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T17:41:28.504Z [ERROR] Error: Error: 1P event logging: 6 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T17:41:28.505Z [ERROR] Error: Error: {"message":"Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T18:22:09.510Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T18:22:09.511Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T18:22:13.057Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T18:22:13.060Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T18:55:05.853Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T18:55:05.858Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T19:42:06.607Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T19:42:06.608Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T20:25:18.232Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T20:25:18.243Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T21:09:05.144Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T21:09:05.146Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T21:41:13.639Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T21:41:13.640Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T21:41:17.002Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T21:41:17.005Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T22:26:05.444Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:26:05.445Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:26:05.445Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:26:05.573Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:26:05.573Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:42:29.495Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:42:29.496Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T22:42:33.421Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T22:42:33.422Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-01T23:27:48.485Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T23:27:48.486Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-01T23:27:51.999Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-01T23:27:52.000Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T00:00:42.507Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T00:00:42.508Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T00:00:45.864Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T00:00:45.865Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T00:30:45.791Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T00:30:45.792Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T00:46:03.392Z [ERROR] Error: Error: 1P event logging: 5 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T00:46:03.393Z [ERROR] Error: Error: {"message":"Failed to export 5 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 5 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:03:54.375Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:03:54.376Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:03:57.747Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T01:03:57.748Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T01:33:54.346Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:33:54.347Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:33:57.706Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T01:33:57.708Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T01:46:06.222Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/webtech-monorepo-patterns/SKILL.md
+2026-02-02T01:46:06.223Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T01:46:06.247Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2026-02-02T01:46:06.247Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T01:46:06.247Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T01:46:06.247Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T01:46:06.247Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T01:46:06.247Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T01:46:06.247Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T01:46:06.252Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T01:46:06.252Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T01:46:06.252Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T01:46:06.254Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T01:46:06.254Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T01:46:06.254Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T01:46:06.254Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T01:46:06.257Z [DEBUG] Loaded 41 unique skills (managed: 0, user: 40, project: 0, legacy commands: 1)
+2026-02-02T01:46:06.257Z [DEBUG] getSkills returning: 41 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T01:46:06.517Z [DEBUG] Failed to fetch and cache passes eligibility
+2026-02-02T01:46:06.517Z [ERROR] AxiosError: Error
+    at Tb (/$bunfs/root/claude:41:1143)
+    at <anonymous> (/$bunfs/root/claude:46:10080)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:861:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:48:2147)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T01:47:19.390Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/webtech-monorepo-patterns/SKILL.md
+2026-02-02T01:47:19.391Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T01:47:19.413Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T01:47:19.413Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T01:47:19.413Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T01:47:19.413Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T01:47:19.413Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T01:47:19.413Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T01:47:19.413Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T01:47:19.417Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T01:47:19.417Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T01:47:19.417Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T01:47:19.419Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T01:47:19.419Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T01:47:19.419Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T01:47:19.419Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T01:47:19.419Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T01:47:19.420Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T02:12:39.280Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T02:12:39.281Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T02:46:29.710Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T02:46:29.711Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T02:46:33.085Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T02:46:33.087Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T03:19:08.520Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T03:19:08.520Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T03:19:11.890Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T03:19:11.891Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T03:51:39.523Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T03:51:39.523Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T03:51:42.892Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T03:51:42.893Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T04:27:20.504Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T04:27:20.504Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T04:27:23.874Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T04:27:23.875Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T05:11:57.635Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T05:11:57.636Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T05:12:01.037Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T05:12:01.041Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T05:42:39.387Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T05:42:39.388Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T05:42:42.920Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T05:42:42.929Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T06:12:24.833Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T06:12:24.834Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T06:42:24.801Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T06:42:24.803Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T07:12:24.871Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T07:12:24.874Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T07:15:34.964Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:15:34.965Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:15:34.985Z [DEBUG] Passes: Cache stale, returning cached data and refreshing in background
+2026-02-02T07:15:34.985Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:15:34.985Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:15:34.985Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:15:34.985Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:15:34.985Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:15:34.985Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:15:34.989Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:15:34.989Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:15:34.989Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:15:34.991Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:15:34.991Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:15:34.991Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:15:34.991Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:15:34.993Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:15:34.993Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:15:35.219Z [DEBUG] Failed to fetch and cache passes eligibility
+2026-02-02T07:15:35.219Z [ERROR] AxiosError: Error
+    at Tb (/$bunfs/root/claude:41:1143)
+    at <anonymous> (/$bunfs/root/claude:46:10080)
+    at emit (node:events:92:22)
+    at endReadableNT (internal:streams/readable:861:50)
+    at processTicksAndRejections (native:7:39)
+    at request (/$bunfs/root/claude:48:2147)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T07:16:34.269Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:16:34.270Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:16:34.296Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:16:34.296Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:16:34.296Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:16:34.296Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:16:34.296Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:16:34.296Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:16:34.296Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:16:34.299Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:16:34.299Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:16:34.300Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:16:34.302Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:16:34.302Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:16:34.302Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:16:34.302Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:16:34.303Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:16:34.303Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:27:51.150Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:27:51.150Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:27:51.177Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:27:51.177Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:27:51.177Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:27:51.177Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:27:51.177Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:27:51.177Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:27:51.177Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:27:51.180Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:27:51.180Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:27:51.180Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:27:51.181Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:27:51.181Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:27:51.181Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:27:51.181Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:27:51.183Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:27:51.183Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:27:57.601Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:27:57.601Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:27:57.623Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:27:57.623Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:27:57.623Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:27:57.623Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:27:57.623Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:27:57.623Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:27:57.623Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:27:57.626Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:27:57.626Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:27:57.626Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:27:57.627Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:27:57.627Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:27:57.627Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:27:57.627Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:27:57.628Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:27:57.628Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:28:06.951Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:28:06.951Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:28:06.971Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:28:06.971Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:28:06.971Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:06.971Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:06.971Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:28:06.971Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:06.971Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:28:06.976Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:28:06.976Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:28:06.976Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:28:06.979Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:06.979Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:28:06.979Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:28:06.979Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:28:06.980Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:28:06.980Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:28:10.590Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:28:10.591Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:28:10.614Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:28:10.614Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:28:10.614Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:10.614Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:10.614Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:28:10.614Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:10.614Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:28:10.617Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:28:10.617Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:28:10.617Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:28:10.619Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:10.619Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:28:10.619Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:28:10.619Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:28:10.620Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:28:10.620Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:28:17.218Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:28:17.218Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:28:17.248Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:28:17.248Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:28:17.248Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:17.248Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:17.248Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:28:17.248Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:17.248Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:28:17.251Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:28:17.251Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:28:17.251Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:28:17.253Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:17.253Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:28:17.253Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:28:17.253Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:28:17.254Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:28:17.254Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:28:27.333Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/worktree-pr/SKILL.md
+2026-02-02T07:28:27.334Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:28:27.355Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:28:27.355Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:28:27.355Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:27.355Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:28:27.355Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:28:27.355Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:27.355Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:28:27.367Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:28:27.367Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:28:27.367Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:28:27.369Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:28:27.369Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:28:27.369Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:28:27.369Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:28:27.370Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:28:27.370Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T07:42:24.851Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T07:42:24.852Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T07:47:31.081Z [DEBUG] Detected skill change: /Users/liuhanwen/.claude/skills/pr-review-analyzer.md
+2026-02-02T07:47:31.086Z [DEBUG] Loading skills from: managed=/Library/Application Support/ClaudeCode/.claude/skills, user=/Users/liuhanwen/.claude/skills, project=[]
+2026-02-02T07:47:31.110Z [DEBUG] Passes: Using fresh cached eligibility data
+2026-02-02T07:47:31.110Z [DEBUG] getPluginSkills: Processing 3 enabled plugins
+2026-02-02T07:47:31.110Z [DEBUG] Checking plugin serena: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:47:31.110Z [DEBUG] Checking plugin ralph-loop: skillsPath=none, skillsPaths=0 paths
+2026-02-02T07:47:31.110Z [DEBUG] Checking plugin everything-claude-code: skillsPath=none, skillsPaths=2 paths
+2026-02-02T07:47:31.110Z [DEBUG] Attempting to load skills from plugin everything-claude-code skillsPaths: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/, /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:47:31.110Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/ for plugin everything-claude-code
+2026-02-02T07:47:31.113Z [DEBUG] Loaded 16 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/skills/
+2026-02-02T07:47:31.113Z [DEBUG] Loading from skillPath: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/ for plugin everything-claude-code
+2026-02-02T07:47:31.113Z [DEBUG] Loaded 3 commands from plugin ralph-loop default directory
+2026-02-02T07:47:31.114Z [DEBUG] Loaded 0 skills from plugin everything-claude-code custom path: /Users/liuhanwen/.claude/plugins/cache/everything-claude-code/everything-claude-code/1.2.0/commands/
+2026-02-02T07:47:31.114Z [DEBUG] Total plugin skills loaded: 16
+2026-02-02T07:47:31.114Z [DEBUG] Loaded 23 commands from plugin everything-claude-code default directory
+2026-02-02T07:47:31.114Z [DEBUG] Total plugin commands loaded: 26
+2026-02-02T07:47:31.115Z [DEBUG] Loaded 40 unique skills (managed: 0, user: 39, project: 0, legacy commands: 1)
+2026-02-02T07:47:31.115Z [DEBUG] getSkills returning: 40 skill dir commands, 16 plugin skills, 1 bundled skills
+2026-02-02T08:12:24.842Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T08:12:24.843Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T08:42:24.844Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T08:42:24.846Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T09:12:24.786Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T09:12:24.789Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T09:42:24.980Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T09:42:24.985Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T10:12:25.061Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T10:12:25.062Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T10:56:38.369Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T10:56:38.370Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T11:26:37.916Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T11:26:37.920Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T11:56:37.938Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T11:56:37.939Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T12:26:37.950Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T12:26:37.956Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T12:57:03.267Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T12:57:03.268Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T13:11:20.298Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T13:11:20.309Z [ERROR] Error: Error: 1P event logging: 6 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T13:11:20.309Z [ERROR] Error: Error: {"message":"Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T13:27:46.061Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T13:27:46.062Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T13:57:45.601Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T13:57:45.603Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T14:29:22.136Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T14:29:22.137Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T14:59:21.944Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T14:59:21.946Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T15:31:07.198Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-02T15:31:07.201Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-02T16:19:02.660Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:19:02.661Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:19:02.662Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:19:02.787Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:19:02.787Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:51:04.659Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:51:04.659Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:51:04.660Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:51:04.765Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T16:51:04.766Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T17:22:13.658Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T17:22:13.658Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T17:22:13.659Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T17:22:13.777Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T17:22:13.778Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:04:06.769Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:04:06.769Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:04:06.770Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:04:06.781Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:04:06.782Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:33:16.634Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:33:16.634Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:33:16.634Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:33:16.738Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T18:33:16.738Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T19:22:21.625Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T19:22:21.625Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T19:22:21.625Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T19:22:21.738Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T19:22:21.738Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:08:21.631Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:08:21.632Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:08:21.633Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:08:21.727Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:08:21.727Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:24:25.950Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T20:24:25.951Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T21:28:10.673Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T21:28:10.674Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T21:28:10.675Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T21:28:10.775Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T21:28:10.775Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:08:03.680Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:08:03.680Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:08:03.680Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:08:03.793Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:08:03.793Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:37:16.692Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:37:16.692Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:37:16.692Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:37:16.805Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T22:37:16.805Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:11:08.661Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:11:08.662Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:11:08.662Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:11:08.773Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:11:08.773Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:38:16.671Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:38:16.672Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:38:16.672Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:38:16.783Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-02T23:38:16.783Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T00:27:05.681Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T00:27:05.682Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T00:27:05.682Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T00:27:05.789Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T00:27:05.789Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:00:00.660Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:00:00.660Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:00:00.661Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:00:00.767Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:00:00.767Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:28:46.508Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: ECONNREFUSED
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:28:46.508Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: ECONNREFUSED
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:28:51.428Z [ERROR] Error: Error: 1P event logging: 5 events failed to export (code=ECONNREFUSED, ECONNREFUSED)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T01:28:51.428Z [ERROR] Error: Error: {"message":"Failed to export 5 events (code=ECONNREFUSED, ECONNREFUSED)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 5 events (code=ECONNREFUSED, ECONNREFUSED)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:06:37.576Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-03T02:06:37.577Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install
+2026-02-03T02:23:19.697Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:23:19.782Z [ERROR] Error: Error: 1P event logging: 6 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:23:19.782Z [ERROR] Error: Error: {"message":"Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 6 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:55:39.675Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:55:39.676Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:55:39.678Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:55:39.778Z [ERROR] Error: Error: 1P event logging: 1 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T02:55:39.778Z [ERROR] Error: Error: {"message":"Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 1 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T03:29:44.676Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T03:29:44.676Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T03:29:44.677Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T03:29:44.768Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T03:29:44.768Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:04:55.665Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:04:55.666Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:04:55.666Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:04:55.767Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:04:55.767Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:46:26.642Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:46:26.644Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:46:26.644Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:46:26.742Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (unknown)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T04:46:26.743Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T05:15:19.668Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T05:15:19.669Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T05:15:19.669Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T05:15:19.770Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T05:15:19.771Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:04:43.728Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:04:43.728Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:04:43.729Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:04:43.839Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:04:43.839Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:49:22.684Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:49:22.684Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:49:22.684Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:49:22.794Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T06:49:22.794Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T07:17:19.658Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T07:17:19.659Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T07:17:19.659Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T07:17:19.768Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T07:17:19.768Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:05:25.680Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:05:25.680Z [ERROR] Error: Error: Failed to fetch version from https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest: timeout of 30000ms exceeded
+    at Pq8 (/$bunfs/root/claude:3587:4064)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:05:25.680Z [ERROR] Error: Error: {"message":"Operation timed out.","originalLine":"188","originalColumn":"112927","line":"188","column":"112927","sourceURL":"/$bunfs/root/claude","stack":"Error: Operation timed out.\n    at <anonymous> (/$bunfs/root/claude:188:112927)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:16930)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:05:25.781Z [ERROR] Error: Error: 1P event logging: 3 events failed to export (code=ECONNABORTED, timeout of 10000ms exceeded)
+    at queueFailedEvents (/$bunfs/root/claude:202:2350)
+    at async doExport (/$bunfs/root/claude:202:1257)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:05:25.781Z [ERROR] Error: Error: {"message":"Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)","originalLine":"202","originalColumn":"1409","line":"202","column":"1409","sourceURL":"/$bunfs/root/claude","stack":"Error: Failed to export 3 events (code=ECONNABORTED, timeout of 10000ms exceeded)\n    at doExport (/$bunfs/root/claude:202:1409)\n    at processTicksAndRejections (native:7:39)","name":"Error"}
+    at error (/$bunfs/root/claude:1722:25028)
+    at <anonymous> (/$bunfs/root/claude:188:42062)
+    at ZZD (/$bunfs/root/claude:188:42606)
+    at <anonymous> (/$bunfs/root/claude:189:17366)
+    at processTicksAndRejections (native:7:39)
+2026-02-03T08:19:29.107Z [DEBUG] Checking for native installer update to version 2.1.29
+2026-02-03T08:19:29.108Z [DEBUG] Found 2.1.29 at /Users/liuhanwen/.local/bin/claude, skipping install

@@ -1,0 +1,41 @@
+  Task: Rename GraphQL Field deviceGroupID to siteID                                                      
+                                                                                                          
+  Objective                                                                                               
+                                                                                                          
+  Refactor the listDeviceInfoOfOrganization GraphQL query response field from deviceGroupID to siteID     
+  across the monorepo.                                                                                    
+                                                                                                          
+  Scope                                                                                                   
+                                                                                                          
+  The following packages must be checked and updated:                                                     
+                                                                                                          
+  1. packages/app-vsaas-portal - Main VSaaS Portal application                                            
+  2. packages/app-vsaas-ai - AI modules (VortexAI)                                                        
+  3. core/ - Core libraries                                                                               
+                                                                                                          
+  Requirements                                                                                            
+                                                                                                          
+  1. GraphQL Schema/Fragments                                                                             
+    - Update the DeviceInfo fragment or related queries in .gql/.graphql files                            
+    - Change field name from deviceGroupID to siteID                                                      
+  2. TypeScript/JavaScript Usage                                                                          
+    - Find and replace all references to deviceGroupID that originate from listDeviceInfoOfOrganization   
+  response                                                                                                
+    - Update destructuring, property access, and variable assignments accordingly                         
+  3. Vue Components                                                                                       
+    - Update any template bindings or computed properties using deviceGroupID                             
+  4. Verification                                                                                         
+    - Ensure no remaining references to the old field name deviceGroupID in the context of                
+  listDeviceInfoOfOrganization                                                                            
+    - Confirm type definitions are updated if applicable                                                  
+                                                                                                          
+  Search Patterns                                                                                         
+                                                                                                          
+  listDeviceInfoOfOrganization                                                                            
+  deviceGroupID                                                                                           
+  DeviceInfo (fragment)                                                                                   
+                                                                                                          
+  Deliverables                                                                                            
+                                                                                                          
+  - List all modified files                                                                               
+  - Confirm completion across all three project scopes (vsaas-portal, ai, core) 

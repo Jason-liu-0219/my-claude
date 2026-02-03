@@ -1,0 +1,26 @@
+Found 25 files
+packages/app-vsaas-portal/src/graphql/mutations.gql
+packages/app-vsaas-portal/src/graphql/fragments.gql
+packages/app-vsaas-portal/src/graphql/subscriptions.gql
+packages/app-vsaas-portal/src/store/device/mutations.js
+packages/app-vsaas-portal/src/store/group/actions.test.js
+packages/app-vsaas-portal/src/store/group/actions.js
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/floorplan/edit/index.vue
+packages/app-vsaas-portal/src/pages/device/management/index.vue
+packages/app-vsaas-portal/src/store/device/getters.js
+packages/app-vsaas-portal/src/store/device/actions.test.js
+packages/app-vsaas-portal/src/store/device/actions.js
+packages/app-vsaas-portal/src/pages/device/management/index.test.js
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue
+packages/app-vsaas-portal/src/store/device/mutations.test.js
+packages/app-vsaas-portal/src/store/device/getters.test.js
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.js
+packages/app-vsaas-portal/src/graphql/queries.gql
+packages/app-vsaas-portal/src/pages/device/AddDevice/AddDeviceSettings/AddDeviceSettings.vue
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDeviceRelatedHelper.js
+packages/app-vsaas-portal/src/models/UserBehavierTracking/DeviceUserBehaviorTrackingService.test.js
+packages/app-vsaas-portal/src/models/TableInterface/CameraTableData.js
+packages/app-vsaas-portal/src/pages/group/index.test.js
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js

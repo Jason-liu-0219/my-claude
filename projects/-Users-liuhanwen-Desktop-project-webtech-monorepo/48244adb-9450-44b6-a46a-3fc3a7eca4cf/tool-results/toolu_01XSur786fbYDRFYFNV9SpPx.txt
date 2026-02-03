@@ -1,0 +1,256 @@
+     1→import { LAYOUT_COUNT } from '@vivotek/advanced-vue-components';
+     2→import { GROUP_TYPES } from '@vivotek/const-vsaas';
+     3→import { VsaasNVR, VsaasBridge, VsaasVSS } from '@vivotek/device';
+     4→import { utils, sortingUtils } from '@vivotek/lib-utility';
+     5→
+     6→import DeviceFactory from '@/models/Device/DeviceFactory';
+     7→
+     8→const getDevicePages = (layout, devices) => {
+     9→  const pages = [];
+    10→  const views = [];
+    11→  if (!devices.length) {
+    12→    pages.push({ layout, view: views.slice() });
+    13→  } else {
+    14→    devices.forEach((device) => {
+    15→      const viewcell = device;
+    16→
+    17→      if (viewcell) {
+    18→        views.push(viewcell);
+    19→      }
+    20→
+    21→      if (views.length === LAYOUT_COUNT[layout]) {
+    22→        pages.push({ layout, view: views.slice() });
+    23→        views.splice(0, views.length);
+    24→      }
+    25→    });
+    26→    if (views.length !== 0) {
+    27→      new Array(LAYOUT_COUNT[layout] - views.length).fill({}).forEach(() => {
+    28→        const defaultViewCell = DeviceFactory({ services: [] });
+    29→        views.push(defaultViewCell);
+    30→      });
+    31→      pages.push({ layout, view: views.slice() });
+    32→    }
+    33→  }
+    34→  return pages;
+    35→};
+    36→
+    37→export default {
+    38→  groupsList(state, getters) {
+    39→    return Object.values(getters.groupsMap);
+    40→  },
+    41→  groupsMap(state, getters, rootState, rootGetters) {
+    42→    const groupMap = state.rawGroupsMap;
+    43→    const deviceOfGroupsMap = rootGetters['device/groupDevicesMap'];
+    44→
+    45→    const result = Object.values(groupMap).reduce((acc, group) => {
+    46→      const targetDevices = deviceOfGroupsMap[group.id] || [];
+    47→      acc[group.id] = { devices: targetDevices, ...group };
+    48→      return acc;
+    49→    }, {});
+    50→    return result;
+    51→  },
+    52→  groupsMapWithoutUnknownDevice(state, getters, rootState) {
+    53→    const unknownDeviceMap = rootState.device.deviceMap.unknownDevice;
+    54→
+    55→    const result = Object.values(getters.groupsMap).reduce((acc, group) => {
+    56→      const filteredUnknownDevices = group.devices.filter((device) => !unknownDeviceMap.has(device.deviceId));
+    57→      acc[group.id] = {
+    58→        ...group,
+    59→        devices: filteredUnknownDevices,
+    60→      };
+    61→
+    62→      return acc;
+    63→    }, {});
+    64→
+    65→    return result;
+    66→  },
+    67→  activeDeviceView(state, getters) {
+    68→    const view = getters.activePageLayoutInfo?.[state.activeViewIndex];
+    69→    if (!view) {
+    70→      const defaultDevice = DeviceFactory({ services: [] });
+    71→      return defaultDevice;
+    72→    }
+    73→    return view;
+    74→  },
+    75→  activeGroup(state, getters) {
+    76→    return getters.groupsMap[state.activeGroupId];
+    77→  },
+    78→  activePageLayoutInfo(state, getters) {
+    79→    return getters.activeGroupPages[state.activePageIndex]?.view || [];
+    80→  },
+    81→  sortedGroups(state, getters, rootState, rootGetters) {
+    82→    const { organizationID } = rootGetters['organization/currentOrganization'];
+    83→    return ({
+    84→      sortType = 'name',
+    85→      sortOrder = 'asc',
+    86→      searchText = '',
+    87→      includeVSS = false,
+    88→      includeNVR = false,
+    89→      includeBridge = false,
+    90→      excludeUnknownDevice = false,
+    91→    } = {}) => {
+    92→      let groups = getters.validGroups;
+    93→
+    94→      const sortByAsc = (a, b) => {
+    95→        if (a.id === organizationID) {
+    96→          return 1;
+    97→        }
+    98→        if (b.id === organizationID) {
+    99→          return -1;
+   100→        }
+   101→        return sortingUtils.sortByASC(a, b, 'name');
+   102→      };
+   103→
+   104→      switch (sortType) {
+   105→        case 'name':
+   106→          if (sortOrder === 'asc') {
+   107→            groups.sort(sortByAsc);
+   108→          } else {
+   109→            // desc
+   110→            groups.sort(sortByAsc).reverse();
+   111→          }
+   112→          break;
+   113→        default:
+   114→      }
+   115→
+   116→      if (includeBridge) {
+   117→        const bridgeGroup = {
+   118→          devices: rootGetters['device/availableDevices'].filter((device) => device instanceof VsaasBridge),
+   119→          id: 'bridge',
+   120→          index: 998,
+   121→          name: 'Bridge',
+   122→          type: GROUP_TYPES.BRIDGE,
+   123→        };
+   124→        groups = [bridgeGroup, ...groups];
+   125→      }
+   126→
+   127→      if (includeVSS) {
+   128→        const vssGroup = {
+   129→          devices: rootGetters['device/availableDevices'].filter((device) => device instanceof VsaasVSS),
+   130→          id: 'vss',
+   131→          index: 1000,
+   132→          name: 'VSS',
+   133→          type: GROUP_TYPES.VSS,
+   134→        };
+   135→        groups = [vssGroup, ...groups];
+   136→      }
+   137→
+   138→      if (includeNVR) {
+   139→        const nvrGroup = {
+   140→          devices: rootGetters['device/availableDevices'].filter((device) => device instanceof VsaasNVR),
+   141→          id: 'nvr',
+   142→          index: 999,
+   143→          name: 'NVR',
+   144→          type: GROUP_TYPES.NVR,
+   145→        };
+   146→        groups = [nvrGroup, ...groups];
+   147→      }
+   148→
+   149→      if (excludeUnknownDevice) {
+   150→        const unknownDeviceMap = rootState.device.deviceMap.unknownDevice;
+   151→
+   152→        groups = groups.map((group) => {
+   153→          const filteredUnknownDevices = group.devices.filter(({ deviceId }) => !unknownDeviceMap.has(deviceId));
+   154→          return {
+   155→            ...group,
+   156→            devices: filteredUnknownDevices,
+   157→          };
+   158→        });
+   159→      }
+   160→
+   161→      if (searchText === '' || !groups) {
+   162→        return groups;
+   163→      }
+   164→
+   165→      return groups.filter((group) => group.name?.toLowerCase().indexOf(searchText.toLowerCase()) !== -1);
+   166→    };
+   167→  },
+   168→  validGroups(state, getters) {
+   169→    if (!getters.groupsList) {
+   170→      return [];
+   171→    }
+   172→
+   173→    return getters.groupsList
+   174→      .filter((group) => group.name !== '')
+   175→      .map((group, index) => ({
+   176→        index: +index,
+   177→        type: GROUP_TYPES.SITE,
+   178→        ...group,
+   179→      }));
+   180→  },
+   181→  idOfGroupsList(state, getters) {
+   182→    return getters.validGroups.map((item) => item.id);
+   183→  },
+   184→  activeGroupAvailableDevices(state, getters, rootState, rootGetters) {
+   185→    const devices = getters.activeGroupPageLayoutInfo
+   186→      .filter((info) => info.deviceId !== '')
+   187→      .map((info) => rootGetters['device/availableDevices'].find((device) => device.deviceId === info.deviceId))
+   188→      .filter((info) => !!info);
+   189→
+   190→    return devices;
+   191→  },
+   192→  activeGroupPageLayoutInfo(state, getters) {
+   193→    if (!getters.activeGroup) {
+   194→      return [];
+   195→    }
+   196→    return getters.activeGroupPages
+   197→      .map((page, pageIndex) =>
+   198→        page.view.map((view, viewIndex) => ({
+   199→          pageIndex,
+   200→          viewIndex,
+   201→          deviceId: view.deviceId || '',
+   202→        })),
+   203→      )
+   204→      .flat();
+   205→  },
+   206→  pageCount(state, getters) {
+   207→    return getters.activeGroupPages.length || 1;
+   208→  },
+   209→  currentPageIndex(state, getters) {
+   210→    return getters.pageCount ? state.activePageIndex + 1 : 1;
+   211→  },
+   212→  currentLayout(state) {
+   213→    return state.layout;
+   214→  },
+   215→  activeGroupPages(state, getters, rootState, rootGetters) {
+   216→    if (
+   217→      !getters.activeGroup ||
+   218→      utils.isEmptyObject(getters.activeGroup) ||
+   219→      !rootGetters['device/groupDevicesMap'][state.activeGroupId]
+   220→    ) {
+   221→      return [];
+   222→    }
+   223→    const sortByAsc = (a, b) => {
+   224→      if (a.isUnknownDevice) {
+   225→        return 1;
+   226→      }
+   227→      if (b.isUnknownDevice) {
+   228→        return -1;
+   229→      }
+   230→
+   231→      return sortingUtils.sortByASC(a, b, 'displayName');
+   232→    };
+   233→    const sortedDevices = rootGetters['device/groupDevicesMap'][state.activeGroupId].sort(sortByAsc);
+   234→    return getDevicePages(getters.currentLayout, sortedDevices).filter((page) => page.layout !== '');
+   235→  },
+   236→  activeGroupCurrentPageDevices(state, getters, rootState, rootGetters) {
+   237→    const allDevicesMap = rootGetters['device/allDevicesMap'];
+   238→    return getters.activePageLayoutInfo.map((view) => allDevicesMap?.[view.deviceId] || {});
+   239→  },
+   240→  defaultGroup(state, getters) {
+   241→    return getters.sortedGroups()[0] || null;
+   242→  },
+   243→  isGroupFetchingData(state) {
+   244→    return state.isFetchingData;
+   245→  },
+   246→  // Get all the group except 'Ungrouped Cameras'
+   247→  validGroupsExcludingOrganization(state, getters, rootState, rootGetters) {
+   248→    const { organizationID } = rootGetters['organization/currentOrganization'];
+   249→    return getters.validGroups.filter((group) => group.id !== organizationID);
+   250→  },
+   251→};
+   252→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

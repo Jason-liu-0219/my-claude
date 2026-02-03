@@ -1,0 +1,589 @@
+import { describe, it, expect, beforeEach } from 'vitest';
+import { DEVICE_TYPE } from '@vivotek/const-vsaas';
+
+import {
+  composeDeviceId,
+  parseDeviceId,
+  isNvrChannel,
+  isVssChannel,
+  isParentDevice,
+  getParentDeviceId,
+  isChannelOfParent,
+  useDeviceRoleHelper,
+  DEFAULT_VIEWER_ROLE_ID,
+} from './useDeviceRoleHelper';
+
+describe('useDeviceRoleHelper', () => {
+  let mockDevices;
+
+  beforeEach(() => {
+    mockDevices = {
+      value: [
+        // NVR parent
+        {
+          deviceId: 'nvr-001',
+          type: DEVICE_TYPE.NVR,
+          groupId: 'site-1',
+        },
+        // NVR Channels
+        {
+          deviceId: 'nvr-001:ch1',
+          type: DEVICE_TYPE.NVR_CHANNEL,
+          groupId: 'site-1',
+          nvr: { deviceId: 'nvr-001' },
+        },
+        {
+          deviceId: 'nvr-001:ch2',
+          type: DEVICE_TYPE.NVR_CHANNEL,
+          groupId: 'site-1',
+          nvr: { deviceId: 'nvr-001' },
+        },
+        // VSS parent
+        {
+          deviceId: 'vss-001',
+          type: DEVICE_TYPE.VSS,
+          groupId: 'site-2',
+        },
+        // VSS Channels
+        {
+          deviceId: 'vss-001:ch1',
+          type: DEVICE_TYPE.VSS_CHANNEL,
+          groupId: 'site-2',
+          vss: { deviceId: 'vss-001' },
+        },
+        // Regular Camera
+        {
+          deviceId: 'camera-001',
+          type: DEVICE_TYPE.CAMERA,
+          groupId: 'site-3',
+        },
+      ],
+    };
+  });
+
+  describe('composeDeviceId', () => {
+    it('should compose thingName and derivant', () => {
+      expect(composeDeviceId('device-001', 'ch1')).toBe('device-001:ch1');
+    });
+
+    it('should return only thingName when derivant is "none"', () => {
+      expect(composeDeviceId('device-001', 'none')).toBe('device-001');
+    });
+
+    it('should return only thingName when derivant is empty', () => {
+      expect(composeDeviceId('device-001', '')).toBe('device-001');
+      expect(composeDeviceId('device-001', null)).toBe('device-001');
+      expect(composeDeviceId('device-001', undefined)).toBe('device-001');
+    });
+  });
+
+  describe('parseDeviceId', () => {
+    it('should parse deviceId with derivant', () => {
+      expect(parseDeviceId('device-001:ch1')).toEqual({
+        thingName: 'device-001',
+        derivant: 'ch1',
+      });
+    });
+
+    it('should parse deviceId without derivant', () => {
+      expect(parseDeviceId('device-001')).toEqual({
+        thingName: 'device-001',
+        derivant: 'none',
+      });
+    });
+  });
+
+  describe('Device Type Checks', () => {
+    describe('isNvrChannel', () => {
+      it('should correctly identify NVR channel', () => {
+        const nvrChannel = mockDevices.value[1];
+        expect(isNvrChannel(nvrChannel)).toBe(true);
+      });
+
+      it('should reject non-NVR channel devices', () => {
+        const camera = mockDevices.value[5];
+        const vssChannel = mockDevices.value[4];
+        expect(isNvrChannel(camera)).toBe(false);
+        expect(isNvrChannel(vssChannel)).toBe(false);
+      });
+
+      it('should handle null/undefined', () => {
+        expect(isNvrChannel(null)).toBe(false);
+        expect(isNvrChannel(undefined)).toBe(false);
+      });
+    });
+
+    describe('isVssChannel', () => {
+      it('should correctly identify VSS channel', () => {
+        const vssChannel = mockDevices.value[4];
+        expect(isVssChannel(vssChannel)).toBe(true);
+      });
+
+      it('should reject non-VSS channel devices', () => {
+        const camera = mockDevices.value[5];
+        const nvrChannel = mockDevices.value[1];
+        expect(isVssChannel(camera)).toBe(false);
+        expect(isVssChannel(nvrChannel)).toBe(false);
+      });
+
+      it('should handle null/undefined', () => {
+        expect(isVssChannel(null)).toBe(false);
+        expect(isVssChannel(undefined)).toBe(false);
+      });
+    });
+
+    describe('isParentDevice', () => {
+      it('should correctly identify NVR parent', () => {
+        const nvr = mockDevices.value[0];
+        expect(isParentDevice(nvr)).toBe(true);
+      });
+
+      it('should correctly identify VSS parent', () => {
+        const vss = mockDevices.value[3];
+        expect(isParentDevice(vss)).toBe(true);
+      });
+
+      it('should reject non-parent devices', () => {
+        const camera = mockDevices.value[5];
+        const nvrChannel = mockDevices.value[1];
+        expect(isParentDevice(camera)).toBe(false);
+        expect(isParentDevice(nvrChannel)).toBe(false);
+      });
+
+      it('should handle null/undefined', () => {
+        expect(isParentDevice(null)).toBe(false);
+        expect(isParentDevice(undefined)).toBe(false);
+      });
+    });
+
+    describe('getParentDeviceId', () => {
+      it('should return parent id for NVR channel', () => {
+        const nvrChannel = mockDevices.value[1];
+        expect(getParentDeviceId(nvrChannel)).toBe('nvr-001');
+      });
+
+      it('should return parent id for VSS channel', () => {
+        const vssChannel = mockDevices.value[4];
+        expect(getParentDeviceId(vssChannel)).toBe('vss-001');
+      });
+
+      it('should return null for non-channel devices', () => {
+        const camera = mockDevices.value[5];
+        const nvr = mockDevices.value[0];
+        expect(getParentDeviceId(camera)).toBeNull();
+        expect(getParentDeviceId(nvr)).toBeNull();
+      });
+
+      it('should handle null/undefined', () => {
+        expect(getParentDeviceId(null)).toBeNull();
+        expect(getParentDeviceId(undefined)).toBeNull();
+      });
+    });
+  });
+
+  describe('isChannelOfParent', () => {
+    it('should correctly identify NVR channel belongs to its parent', () => {
+      const nvrParent = mockDevices.value[0];
+      const nvrChannel = mockDevices.value[1];
+
+      expect(
+        isChannelOfParent({
+          channelDevice: nvrChannel,
+          parentDevice: nvrParent,
+        }),
+      ).toBe(true);
+    });
+
+    it('should correctly identify VSS channel belongs to its parent', () => {
+      const vssParent = mockDevices.value[3];
+      const vssChannel = mockDevices.value[4];
+
+      expect(
+        isChannelOfParent({
+          channelDevice: vssChannel,
+          parentDevice: vssParent,
+        }),
+      ).toBe(true);
+    });
+
+    it('should identify channel does not belong to wrong parent', () => {
+      const nvrParent = mockDevices.value[0];
+      const vssChannel = mockDevices.value[4];
+
+      expect(
+        isChannelOfParent({
+          channelDevice: vssChannel,
+          parentDevice: nvrParent,
+        }),
+      ).toBe(false);
+    });
+
+    it('should identify channel from different NVR', () => {
+      const nvr1 = {
+        deviceId: 'nvr-002',
+        type: DEVICE_TYPE.NVR,
+      };
+      const nvrChannel = mockDevices.value[1]; // belongs to nvr-001
+
+      expect(
+        isChannelOfParent({
+          channelDevice: nvrChannel,
+          parentDevice: nvr1,
+        }),
+      ).toBe(false);
+    });
+
+    it('should return false when channelDevice is null', () => {
+      const nvrParent = mockDevices.value[0];
+
+      expect(
+        isChannelOfParent({
+          channelDevice: null,
+          parentDevice: nvrParent,
+        }),
+      ).toBe(false);
+    });
+
+    it('should return false when parentDevice is null', () => {
+      const nvrChannel = mockDevices.value[1];
+
+      expect(
+        isChannelOfParent({
+          channelDevice: nvrChannel,
+          parentDevice: null,
+        }),
+      ).toBe(false);
+    });
+  });
+
+  describe('useDeviceRoleHelper Composable', () => {
+    describe('processSelectedDevices', () => {
+      let processSelectedDevices = null;
+      beforeEach(() => {
+        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
+        processSelectedDevices = deviceRoleHelper.processSelectedDevices;
+      });
+      it('should process selected regular device', () => {
+        const currentSelectedDevices = ['camera-001'];
+        const deviceRoles = {
+          'camera-001': {
+            roleId: 'role-supervisor',
+            roleName: 'supervisor',
+          },
+        };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(1);
+        expect(grantedDevicesMap.get('camera-001')).toEqual({
+          thingName: 'camera-001',
+          derivant: 'none',
+          roleId: 'role-supervisor',
+        });
+      });
+
+      it('should process device without roleId', () => {
+        const currentSelectedDevices = ['camera-001'];
+        const deviceRoles = {};
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.get('camera-001').roleId).toBe('');
+      });
+
+      it('should auto-add parent with viewer role when selecting NVR channel', () => {
+        const currentSelectedDevices = ['nvr-001:ch1'];
+        const deviceRoles = {
+          'nvr-001:ch1': {
+            roleId: 'role-supervisor',
+            roleName: 'supervisor',
+          },
+        };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        expect(grantedDevicesMap.get('nvr-001:ch1')).toEqual({
+          thingName: 'nvr-001',
+          derivant: 'ch1',
+          roleId: 'role-supervisor',
+        });
+        expect(grantedDevicesMap.get('nvr-001')).toEqual({
+          thingName: 'nvr-001',
+          derivant: 'none',
+          roleId: DEFAULT_VIEWER_ROLE_ID,
+        });
+      });
+
+      it('should auto-add parent with viewer role when selecting VSS channel', () => {
+        const currentSelectedDevices = ['vss-001:ch1'];
+        const deviceRoles = { 'vss-001:ch1': 'role-operator' };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        expect(grantedDevicesMap.get('vss-001')).toEqual({
+          thingName: 'vss-001',
+          derivant: 'none',
+          roleId: DEFAULT_VIEWER_ROLE_ID,
+        });
+      });
+
+      it('should not duplicate parent when it is already selected', () => {
+        const currentSelectedDevices = ['nvr-001', 'nvr-001:ch1'];
+        const deviceRoles = {
+          'nvr-001': {
+            roleId: 'role-operator',
+            roleName: 'operator',
+          },
+          'nvr-001:ch1': {
+            roleId: 'role-supervisor',
+            roleName: 'supervisor',
+          },
+        };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        // parent should keep its original role
+        expect(grantedDevicesMap.get('nvr-001').roleId).toBe('role-operator');
+      });
+
+      it('should not overwrite parent when already in grantedDevicesMap', () => {
+        const currentSelectedDevices = ['nvr-001:ch1'];
+        const deviceRoles = { 'nvr-001:ch1': 'role-supervisor' };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        // Pre-add parent
+        grantedDevicesMap.set('nvr-001', {
+          thingName: 'nvr-001',
+          derivant: 'none',
+          roleId: 'role-custom',
+        });
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        // should not overwrite existing parent
+        expect(grantedDevicesMap.get('nvr-001').roleId).toBe('role-custom');
+      });
+
+      it('should process multiple devices', () => {
+        const currentSelectedDevices = ['camera-001', 'nvr-001:ch1', 'vss-001:ch1'];
+        const deviceRoles = {
+          'camera-001': 'role-supervisor',
+          'nvr-001:ch1': 'role-operator',
+          'vss-001:ch1': 'role-viewer',
+        };
+        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
+        const grantedDevicesMap = new Map();
+
+        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(5); // 3 devices + 2 parents
+        expect(grantedDevicesMap.has('camera-001')).toBe(true);
+        expect(grantedDevicesMap.has('nvr-001')).toBe(true);
+        expect(grantedDevicesMap.has('nvr-001:ch1')).toBe(true);
+        expect(grantedDevicesMap.has('vss-001')).toBe(true);
+        expect(grantedDevicesMap.has('vss-001:ch1')).toBe(true);
+      });
+    });
+
+    describe('processRemovedDevices', () => {
+      let processRemovedDevices = null;
+      beforeEach(() => {
+        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
+        processRemovedDevices = deviceRoleHelper.processRemovedDevices;
+      });
+      it('should set removed devices to roleId: null', () => {
+        const originalGrantedDevices = new Map([
+          ['camera-001', { thingName: 'camera-001', derivant: 'none', roleId: 'role-supervisor' }],
+        ]);
+        const selectedDeviceIdsSet = new Set([]);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.get('camera-001')).toEqual({
+          thingName: 'camera-001',
+          derivant: 'none',
+          roleId: null,
+        });
+      });
+
+      it('should set channels roleId to null when removing an NVR parent', () => {
+        const originalGrantedDevices = new Map([
+          ['nvr-001', { thingName: 'nvr-001', derivant: 'none', roleId: 'role-operator' }],
+          ['nvr-001:ch1', { thingName: 'nvr-001', derivant: 'ch1', roleId: 'role-supervisor' }],
+          ['nvr-001:ch2', { thingName: 'nvr-001', derivant: 'ch2', roleId: 'role-supervisor' }],
+        ]);
+        const selectedDeviceIdsSet = new Set([]);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(3);
+        expect(grantedDevicesMap.get('nvr-001').roleId).toBeNull();
+        expect(grantedDevicesMap.get('nvr-001:ch1').roleId).toBeNull();
+        expect(grantedDevicesMap.get('nvr-001:ch2').roleId).toBeNull();
+      });
+
+      it('should set channels roleId to null when removing a VSS parent', () => {
+        const originalGrantedDevices = new Map([
+          ['vss-001', { thingName: 'vss-001', derivant: 'none', roleId: 'role-operator' }],
+          ['vss-001:ch1', { thingName: 'vss-001', derivant: 'ch1', roleId: 'role-supervisor' }],
+        ]);
+        const selectedDeviceIdsSet = new Set([]);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        expect(grantedDevicesMap.get('vss-001').roleId).toBeNull();
+        expect(grantedDevicesMap.get('vss-001:ch1').roleId).toBeNull();
+      });
+
+      it('should not process devices that are still selected', () => {
+        const originalGrantedDevices = new Map([
+          ['camera-001', { thingName: 'camera-001', derivant: 'none', roleId: 'role-supervisor' }],
+        ]);
+        const selectedDeviceIdsSet = new Set(['camera-001']);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(0);
+      });
+
+      it('should only remove channels that belong to the parent', () => {
+        const originalGrantedDevices = new Map([
+          ['nvr-001', { thingName: 'nvr-001', derivant: 'none', roleId: 'role-operator' }],
+          ['nvr-001:ch1', { thingName: 'nvr-001', derivant: 'ch1', roleId: 'role-supervisor' }],
+          ['vss-001:ch1', { thingName: 'vss-001', derivant: 'ch1', roleId: 'role-viewer' }],
+        ]);
+        const selectedDeviceIdsSet = new Set(['vss-001:ch1']);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(2);
+        expect(grantedDevicesMap.has('nvr-001')).toBe(true);
+        expect(grantedDevicesMap.has('nvr-001:ch1')).toBe(true);
+        expect(grantedDevicesMap.has('vss-001:ch1')).toBe(false);
+      });
+
+      it('should handle empty originalGrantedDevices', () => {
+        const originalGrantedDevices = new Map();
+        const selectedDeviceIdsSet = new Set([]);
+        const grantedDevicesMap = new Map();
+
+        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
+
+        expect(grantedDevicesMap.size).toBe(0);
+      });
+    });
+
+    describe('updateSelectedDevicesWithParentChannel', () => {
+      let updateSelectedDevicesWithParentChannel = null;
+      beforeEach(() => {
+        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
+        updateSelectedDevicesWithParentChannel = deviceRoleHelper.updateSelectedDevicesWithParentChannel;
+      });
+
+      it('should remove channels when NVR parent is deselected', () => {
+        const currentSelected = ['nvr-001', 'nvr-001:ch1', 'nvr-001:ch2'];
+        const targetSelected = ['nvr-001:ch1']; // deselect parent
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toEqual([]);
+      });
+
+      it('should remove channels when VSS parent is deselected', () => {
+        const currentSelected = ['vss-001', 'vss-001:ch1'];
+        const targetSelected = ['vss-001:ch1']; // deselect parent
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toEqual([]);
+      });
+
+      it('should auto-add NVR parent when channel is selected', () => {
+        const currentSelected = [];
+        const targetSelected = ['nvr-001:ch1'];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toContain('nvr-001:ch1');
+        expect(result).toContain('nvr-001');
+      });
+
+      it('should auto-add VSS parent when channel is selected', () => {
+        const currentSelected = [];
+        const targetSelected = ['vss-001:ch1'];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toContain('vss-001:ch1');
+        expect(result).toContain('vss-001');
+      });
+
+      it('should not duplicate parent when already selected', () => {
+        const currentSelected = ['nvr-001'];
+        const targetSelected = ['nvr-001', 'nvr-001:ch1'];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result.filter((id) => id === 'nvr-001')).toHaveLength(1);
+      });
+
+      it('should handle regular devices without parent logic', () => {
+        const currentSelected = [];
+        const targetSelected = ['camera-001'];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toEqual(['camera-001']);
+      });
+
+      it('should handle mixed selection with channels and regular devices', () => {
+        const currentSelected = [];
+        const targetSelected = ['camera-001', 'nvr-001:ch1', 'vss-001:ch1'];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toContain('camera-001');
+        expect(result).toContain('nvr-001:ch1');
+        expect(result).toContain('nvr-001');
+        expect(result).toContain('vss-001:ch1');
+        expect(result).toContain('vss-001');
+      });
+
+      it('should handle empty selections', () => {
+        const result = updateSelectedDevicesWithParentChannel([], []);
+
+        expect(result).toEqual([]);
+      });
+
+      it('should handle deselecting all devices', () => {
+        const currentSelected = ['camera-001', 'nvr-001'];
+        const targetSelected = [];
+
+        const result = updateSelectedDevicesWithParentChannel(targetSelected, currentSelected);
+
+        expect(result).toEqual([]);
+      });
+    });
+  });
+});

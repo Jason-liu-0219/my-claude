@@ -1,0 +1,221 @@
+import {
+  STREAM_CONNECTION_STEP as STEP,
+  STREAM_CONNECTION_STATUS as STATUS,
+  STREAM_CONNECTION_TRACKING_KEY as TRACKING_KEY,
+  DEVICE_TYPE,
+} from '@vivotek/const-vsaas';
+import { VivotekDeviceServiceInterface as VDSI } from '@vivotek/device';
+import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+import { getTagged } from '@vivotek/lib-utility';
+
+const Log = getTagged('DeviceUserBehaviorTrackingService');
+
+export default class DeviceUserBehaviorTrackingService extends VDSI {
+  name = 'deviceUserBehaviorTrackingService';
+
+  constructor(reference) {
+    super(reference);
+
+    this.reference = reference;
+    this.state = {
+      isTracked: false,
+      isTrackedWebRTC: false,
+      map: new Map(),
+      channel: null,
+      allowTrackSuccessConnectionMap: {},
+    };
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get hasTracker() {
+    return !!global.__tracker;
+  }
+
+  initialTracking(channel) {
+    const allowGroupList =
+      RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.ALLOW_CONNECTION_TRACKING_MAP) || {};
+
+    this.state.isTracked = false;
+    this.state.channel = channel;
+    this.state.allowTrackSuccessConnectionMap = allowGroupList;
+  }
+
+  log({ key, value }) {
+    if (!this.hasTracker) {
+      return;
+    }
+
+    if (this.state.map.has(key) && this.state.map.get(key)) {
+      return;
+    }
+    this.state.map.set(key, value);
+    this.emit('log:updated', { key, value });
+  }
+
+  getLog(key) {
+    return this.state.map.get(key);
+  }
+
+  deleteLog(key) {
+    this.state.map.delete(key);
+    this.emit('log:deleted', { key });
+  }
+
+  trackConnection(step, optionalPayload = {}) {
+    if (!this.hasTracker) {
+      return;
+    }
+
+    if (this.state.isTracked) {
+      return;
+    }
+
+    this.state.isTracked = true;
+
+    const { city, mac } = this.reference;
+
+    const devicePayload = {
+      device_city: city,
+      device_mac: btoa(mac),
+    };
+
+    const currentStep = STEP[step];
+    const status = STATUS[step] ?? STATUS.OK;
+
+    const timePayloadMap = {
+      WEBRTC: [],
+      RTSP: [TRACKING_KEY.WEBRTC_TIME],
+      GET_FRAME: [TRACKING_KEY.WEBRTC_TIME, TRACKING_KEY.RTSP_TIME],
+      OK: [TRACKING_KEY.WEBRTC_TIME, TRACKING_KEY.RTSP_TIME, TRACKING_KEY.GET_FRAME_TIME],
+    };
+
+    const timePayload = timePayloadMap[currentStep].reduce((acc, key) => {
+      switch (key) {
+        case TRACKING_KEY.RTSP_TIME:
+          if (this.state.channel?.describeDoneTimestamp && this.state.channel?.createTime) {
+            acc[key] = (this.state.channel.describeDoneTimestamp - this.state.channel.createTime) / 1000;
+          }
+          break;
+        case TRACKING_KEY.GET_FRAME_TIME:
+          if (this.state.channel?.onPlayTimestamp && this.state.channel?.describeDoneTimestamp) {
+            acc[key] = (this.state.channel.onPlayTimestamp - this.state.channel.describeDoneTime) / 1000;
+          }
+          break;
+        case TRACKING_KEY.WEBRTC_TIME:
+          if (!this.state.isTrackedWebRTC) {
+            acc[key] = this.state.map.get(key) / 1000 || 0;
+          }
+          break;
+
+        default:
+          acc[key] = this.state.map.get(key) / 1000 || 0;
+          break;
+      }
+      return acc;
+    }, {});
+
+    const totalTime = Object.values(timePayload).reduce((acc, value) => {
+      return acc + value;
+    }, 0);
+
+    const payload = {
+      ...devicePayload,
+      status,
+      protocol: this.state.map.get(TRACKING_KEY.PROTOCOL),
+      mode: this.state.map.get(TRACKING_KEY.MODE),
+      type: this.state.map.get(TRACKING_KEY.TYPE),
+      total_time: totalTime,
+      ...timePayload,
+      ...optionalPayload,
+    };
+
+    this.state.isTrackedWebRTC = true;
+
+    try {
+      const canTrack = this.canTrack(status);
+
+      if (!canTrack) {
+        Log.log('can not track connection', {
+          payload,
+          deviceId: this.reference.deviceId,
+        });
+        return;
+      }
+
+      Log.log('track connection', {
+        payload,
+        deviceId: this.reference.deviceId,
+      });
+
+      this.fetchTracking('connection', payload);
+    } catch (error) {
+      Log.error('track connection error', error);
+    }
+  }
+
+  canTrack(status) {
+    if (status !== STATUS.OK) {
+      return false;
+    }
+
+    const { organizationID } = this.reference.options;
+    const { siteID } = this.reference;
+
+    const { allowTrackSuccessConnectionMap } = this.state;
+    const canTrackOrg = !!allowTrackSuccessConnectionMap?.[organizationID];
+    const canTrackGroup = !!allowTrackSuccessConnectionMap?.[organizationID]?.[siteID];
+    if (!canTrackOrg) {
+      return false;
+    }
+
+    // config sample:
+    // {
+    //   "org-id-1": {
+    //     {
+    //       "group id-1": {
+    //         // track specific devices under a specific group
+    //         "0002D1ABF6DC": { // specific channels under NVR
+    //           "channel": [1, 4, 8, 10, 32],
+    //         },
+    //         "0002D1ABF6DB": {}, // all channels under NVR
+    //         "0002D1ABF6DA": {} // VSAAS Camera MAC,
+    //       },
+    //       "group id-2": {} // track all devices under the group, VSAAS Camera, all channels under NVR
+    //     }
+    //   },
+    //   "org-id-2":{} // all devices under the org
+    // }
+
+    const trackOrgMap = allowTrackSuccessConnectionMap[organizationID];
+    const trackGroupMap = allowTrackSuccessConnectionMap[organizationID]?.[deviceGroupID];
+    const mac = this.reference?.mac;
+    const nvrMac = this.reference?.nvrMac;
+    const channel = this.reference?.channel;
+
+    const trackAll =
+      (canTrackOrg && Object.values(trackOrgMap).length === 0) ||
+      (canTrackGroup && Object.values(trackGroupMap).length === 0);
+
+    if (trackAll) {
+      return true;
+    }
+
+    const targetNVR = trackGroupMap?.[nvrMac];
+
+    switch (this.reference.type) {
+      case DEVICE_TYPE.NVR_CHANNEL:
+        return !!(targetNVR && (!targetNVR?.channel || (targetNVR.channel && targetNVR.channel.includes(channel))));
+
+      case DEVICE_TYPE.CAMERA:
+        return !!trackGroupMap?.[mac];
+
+      default:
+        return false;
+    }
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  fetchTracking(eventName, payload) {
+    global.__tracker?.track(eventName, payload);
+  }
+}

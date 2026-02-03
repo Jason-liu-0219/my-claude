@@ -1,0 +1,28 @@
+packages/app-vsaas-portal/src/router/dynamicVortexAIRouterLoader.js:3:import SettingsRoute from '@/pages/device/settings/route';
+packages/app-vsaas-portal/src/constants/Page.js:26:  ALARM_MANAGEMENT: 'system/alarm-management',
+packages/app-vsaas-portal/src/constants/Page.js:108:      path: 'system/alarm-management',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:133:      // Input: [['role-org-admin', '/org/admin-restricted'], ['role-device-admin', '/device/*']]
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:134:      // Output: "p, role-org-admin, /org/admin-restricted\np, role-device-admin, /device/*"
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:169:   * @param {string} options.scope - Permission scope to check (e.g., '/device/settings', '/org/admin-restricted')
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:203:      // scope: permission scope (e.g., '/device/*', '/org/admin-restricted')
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:261:   * @param {string} options.scope - Permission scope to check (e.g., '/org/admin-restricted', '/org/all-users')
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.js:287:   * @param {string} options.scope - Permission scope to check (e.g., '/device/*', '/device/settings')
+packages/app-vsaas-portal/src/models/Permission/PlanPermissionManager.js:38:  p, free, /system/alarm-management, read
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:33:    ['role-org-admin', '/org/admin-restricted'],
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:232:      const hasOrgAdminPermission = manager.canDoOrg({ scope: '/org/admin-restricted' });
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:291:        scope: '/device/settings',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:311:        scope: '/device/settings',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:339:        scope: '/device/settings',
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:404:      const result = manager.canDoOrg({ scope: '/org/admin-restricted' });
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:407:      expect(enforceSyncSpy).toHaveBeenCalledWith(`org/${mockOrgId}`, '/org/admin-restricted');
+packages/app-vsaas-portal/src/models/Permission/RbacPermissionManager.test.js:448:        scope: '/device/settings',
+packages/app-vsaas-portal/src/components/Speakers/composables/useTwoWayAudio.test.js:147:        scope: '/device/settings',
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1001: *   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1002: *   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1070: * //   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1071: * //   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1130: * //   { act: { name: '/device/settings/read' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1131: * //   { act: { name: '/device/settings/update' }, effect: 'allow' },
+packages/app-vsaas-portal/src/utils/RoleHelper.js:1216: *   { act: { name: '/device/settings' }, effect: 'allow' }, // This will be shown (whitelisted)
+
+[Showing results with pagination = limit: 100, offset: 0]

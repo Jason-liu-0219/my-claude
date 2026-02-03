@@ -1,0 +1,22 @@
+[
+  {
+    "content": "安裝 skill-seekers",
+    "status": "completed",
+    "activeForm": "安裝 skill-seekers"
+  },
+  {
+    "content": "用 skill-seekers 抓取 Vue 3 文件",
+    "status": "completed",
+    "activeForm": "抓取 Vue 3 文件"
+  },
+  {
+    "content": "手動建立 Vue 3 skill",
+    "status": "in_progress",
+    "activeForm": "建立 Vue 3 skill"
+  },
+  {
+    "content": "放到 ~/.claude/skills/vue3/",
+    "status": "pending",
+    "activeForm": "安裝到本機"
+  }
+]

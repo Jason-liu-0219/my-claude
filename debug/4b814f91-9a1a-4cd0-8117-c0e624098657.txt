@@ -1,0 +1,7 @@
+2026-01-18T06:54:57.087Z [DEBUG] Writing to temp file: /Users/liuhanwen/.claude.json.tmp.8463.1768719297087
+2026-01-18T06:54:57.087Z [DEBUG] Preserving file permissions: 100600
+2026-01-18T06:54:57.087Z [DEBUG] Temp file written successfully, size: 79 bytes
+2026-01-18T06:54:57.087Z [DEBUG] Applied original permissions to temp file
+2026-01-18T06:54:57.087Z [DEBUG] Renaming /Users/liuhanwen/.claude.json.tmp.8463.1768719297087 to /Users/liuhanwen/.claude.json
+2026-01-18T06:54:57.087Z [DEBUG] File /Users/liuhanwen/.claude.json written atomically
+2026-01-18T06:54:58.627Z [DEBUG] Skipping SessionEnd:prompt_input_exit hook execution - workspace trust not accepted

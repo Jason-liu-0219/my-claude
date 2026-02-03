@@ -1,0 +1,558 @@
+<template>
+  <div class="access-control">
+    <div class="access-control-header">
+      <div
+        class="go-back-button"
+        @click="goBackThirdPartyIntegration"
+      >
+        <SvgIcon
+          class="icon"
+          iconClass="general_arrow_left"
+          size="28px"
+          outerSize="62px"
+        />
+      </div>
+      <h4 class="bold">
+        {{ providerName }}
+      </h4>
+    </div>
+    <div
+      class="access-control-wrapper management"
+      data-testid="access-control-page"
+    >
+      <div
+        v-if="isLoading"
+        class="loading-container"
+      >
+        <SvgIcon
+          class="spinning"
+          iconClass="status_loading_1st_solid_dark"
+          size="60px"
+        />
+      </div>
+      <SideMenusLayout v-else>
+        <template #center>
+          <div class="management-container">
+            <div class="content">
+              <div class="title-wrapper">
+                <h6 class="title">
+                  {{ $t('Access control provider') }}
+                </h6>
+              </div>
+              <div class="provider">
+                <div class="provider-content">
+                  <ThirdPartyProviderLogo
+                    class="provider-logo"
+                    :provider="currentProvider"
+                  />
+                  <div
+                    v-if="systemErrorMessage"
+                    class="system-error-message"
+                  >
+                    <SvgIcon
+                      iconClass="general_hint"
+                      size="24px"
+                    />
+                    <h6>{{ systemErrorMessage }}</h6>
+                  </div>
+                </div>
+                <AppMoreButtonDropdown
+                  data-testid="more-action-dropdown"
+                  :actions="moreActionArray"
+                  :hideDropdownOnClick="true"
+                  class="action-selector"
+                />
+              </div>
+              <AccessControlTable
+                :provider="currentProvider"
+                :rowData="rowData"
+                :currentPageIndex="currentPageIndex"
+                :searchStatus="searchStatus"
+                :currentBindingObject="currentBindingObject"
+                :countPerPage="COUNT_PER_PAGE"
+                @clickBindingObject="onBindingObjectClick"
+                @connectCameras="editBindingCameras"
+                @doFilter="doFilter"
+              />
+            </div>
+          </div>
+        </template>
+        <template #right-menu>
+          <AccessControlDetails
+            :bindingObject="currentBindingObject"
+            :hasInvalidDevices="currentBindingObjectHasInvalidDevices"
+            @edit="editBindingCameras"
+          />
+        </template>
+        <template #footer="footer">
+          <CentralPanelFooter
+            ref="footerPanelRef"
+            :rightOpened="footer.rightOpened"
+            :shouldDisplayRightControl="true"
+            @toggleRight="footer.toggleRight"
+          >
+            <template #center-control>
+              <FooterPagination
+                :pageCount="pageCount"
+                :currentPageIndex="currentPageIndex"
+                :rotating="false"
+                @goPreviousPage="goPreviousPage"
+                @goNextPage="goNextPage"
+              />
+            </template>
+          </CentralPanelFooter>
+        </template>
+      </SideMenusLayout>
+    </div>
+    <DeviceSelectModal
+      ref="deviceSelectModalRef"
+      :selectedDevices="selectedDevicesId"
+      :availableDevices="devicesWithSettingsPermission"
+      :maximumSelectedCount="MAXIMUM_SOURCE_COUNT_PER_OBJECT"
+      :maximumSelectionHint="maximumSelectionHint"
+      :filterUnknownDevice="true"
+      :allowEmptySelection="true"
+      :closeOnSelect="false"
+      :errorMessage="$t('Failed to add device.')"
+      @confirm="handleSelectCameras"
+    />
+    <AccessControlUpdateInformationModal
+      ref="updateInformationModalRef"
+      :provider="currentProvider"
+      :updatedList="updatedObjectList"
+    />
+    <AccessControlReAuthorizeDialogue
+      ref="reAuthorizeDialogueRef"
+      :provider="currentProvider"
+      @reAuthorized="onCredentialsAdded"
+    />
+    <AccessControlRemoveDialogue
+      ref="removeDialogueRef"
+      :provider="currentProvider"
+      @removed="onRemoveSuccess"
+    />
+    <AccessControlUpdateFailedDialogue
+      ref="updateFailedDialogueRef"
+      @retryUpdate="removeNonexistentBindings"
+    />
+    <AccessControlIntegrationFailedDialogue ref="integrationFailedDialogueRef" />
+    <AccessControlIntegrationExistsDialogue
+      ref="integrationExistsDialogueRef"
+      :currentProvider="currentProvider"
+      :presetProvider="presetProvider"
+      @retry="initialize"
+    />
+  </div>
+</template>
+
+<script setup>
+import { ref, computed, nextTick, onMounted, getCurrentInstance, useTemplateRef } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+
+import { SideMenusLayout, DeviceSelectModal } from '@vivotek/advanced-vue-components';
+import { ACCESS_CONTROL } from '@vivotek/const-vsaas';
+import { composeVsaasDeviceId as ComposeVsaasDeviceId } from '@vivotek/device';
+import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+import { CentralPanelFooter, FooterPagination } from '@vivotek/vue-app-layouts';
+
+import ThirdPartyProviderLogo from '@/components/Logos/ThirdPartyProviderLogo.vue';
+import usePagination from '@/composables/usePagination/usePagination';
+import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
+
+import AccessControlDetails from './AccessControlDetails.vue';
+import AccessControlIntegrationExistsDialogue from './AccessControlIntegrationExistsDialogue.vue';
+import AccessControlIntegrationFailedDialogue from './AccessControlIntegrationFailedDialogue.vue';
+import AccessControlReAuthorizeDialogue from './AccessControlReAuthorizeDialogue.vue';
+import AccessControlRemoveDialogue from './AccessControlRemoveDialogue.vue';
+import AccessControlTable from './AccessControlTable.vue';
+import AccessControlUpdateFailedDialogue from './AccessControlUpdateFailedDialogue.vue';
+import AccessControlUpdateInformationModal from './AccessControlUpdateInformationModal.vue';
+
+defineOptions({ name: 'AccessControl' });
+
+const { proxy } = getCurrentInstance();
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
+
+// Constants
+const COUNT_PER_PAGE = 50;
+const { MAXIMUM_SOURCE_COUNT_PER_OBJECT } = ACCESS_CONTROL;
+
+// Refs
+const footerPanelRef = useTemplateRef('footerPanelRef');
+const deviceSelectModalRef = useTemplateRef('deviceSelectModalRef');
+const reAuthorizeDialogueRef = useTemplateRef('reAuthorizeDialogueRef');
+const removeDialogueRef = useTemplateRef('removeDialogueRef');
+const updateFailedDialogueRef = useTemplateRef('updateFailedDialogueRef');
+const updateInformationModalRef = useTemplateRef('updateInformationModalRef');
+const integrationFailedDialogueRef = useTemplateRef('integrationFailedDialogueRef');
+const integrationExistsDialogueRef = useTemplateRef('integrationExistsDialogueRef');
+
+const presetProvider = ref(null);
+const isLoading = ref(true);
+const searchKeyword = ref('');
+const systemErrorMessage = ref('');
+const selectedDevicesId = ref([]);
+const updatedObjectList = ref([]);
+const currentBindingObject = ref(null);
+
+// Computed & Getters
+const hasProviderIntegrated = computed(() => store.getters['accessControl/hasProviderIntegrated']);
+const currentProvider = computed(() => store.getters['accessControl/currentProvider']);
+const integration = computed(() => store.state.accessControl.integration);
+const allDevicesMap = computed(() => store.getters['device/allDevicesMap']);
+const isAvailableDevice = (id) => store.getters['device/isAvailableDevice'](id);
+const availableDevices = computed(() => store.getters['device/availableDevices']);
+const hasInvalidDevices = (devices) =>
+  store.getters['device/hasInvalidDevicesInScope']({
+    devices,
+    scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS,
+  });
+const getAvailableCameraDevicesWithPermission = store.getters['device/getAvailableDevicesWithScope'];
+
+const devicesWithSettingsPermission = computed(() =>
+  getAvailableCameraDevicesWithPermission({ scope: PERMISSION_DEVICE_SCOPE.DEVICE_SETTINGS }),
+);
+
+/**
+ * Check if any binding object has devices without DEVICE_SETTINGS permission
+ * Used to control Remove integration button visibility
+ */
+const hasAnyInvalidDevices = computed(
+  () => integration.value?.bindingObjects?.some((item) => hasInvalidDevices(item.devices)) ?? false,
+);
+
+const moreActionArray = computed(() => {
+  const actions = [];
+
+  if (integration.value?.canReauthorize) {
+    actions.push({
+      name: proxy.$t('Re-authorize'),
+      action: openReAuthorizeDialogue,
+    });
+  }
+
+  if (!hasAnyInvalidDevices.value) {
+    actions.push({
+      name: proxy.$t('Remove'),
+      classList: ['danger'],
+      action: openRemoveDialogue,
+    });
+  }
+
+  return actions;
+});
+
+const rowData = computed(() => {
+  return (
+    integration.value?.bindingObjects
+      ?.filter((item) => {
+        const array = [
+          item.objectName,
+          ...item.devices.map((device) => allDevicesMap.value[ComposeVsaasDeviceId(device)]?.displayName),
+        ];
+        return array.filter((value) => value?.toLowerCase().includes(searchKeyword.value.toLowerCase())).length;
+      })
+      .map((item) => ({
+        ...item,
+        id: item.id,
+        hasInvalidDevices: hasInvalidDevices(item.devices),
+      })) || []
+  );
+});
+
+const currentBindingObjectHasInvalidDevices = computed(() => hasInvalidDevices(currentBindingObject.value?.devices));
+
+const searchStatus = computed(() => {
+  if (isLoading.value) {
+    return APP_TABLE_STATUS.LOADING;
+  }
+  return rowData.value.length ? APP_TABLE_STATUS.NO_SMART_SENSORS : APP_TABLE_STATUS.SEARCHED;
+});
+
+const providerName = computed(() => ACCESS_CONTROL.PROVIDER_NAME[presetProvider.value || currentProvider.value]);
+
+const maximumSelectionHint = computed(() =>
+  proxy.$t('An access control points can be associated with up to {count} cameras.', {
+    count: MAXIMUM_SOURCE_COUNT_PER_OBJECT,
+  }),
+);
+
+const { currentPageIndex, pageCount, goPreviousPage, goNextPage, resetPageIndex } = usePagination(
+  computed(() => rowData.value?.length || 0),
+  { perPage: COUNT_PER_PAGE, initialPage: 1 },
+);
+
+// Methods
+async function expendRightMenu(object) {
+  currentBindingObject.value = object;
+  await nextTick();
+  footerPanelRef.value?.openRight(true);
+}
+
+function openReAuthorizeDialogue() {
+  reAuthorizeDialogueRef.value?.show();
+}
+
+function openRemoveDialogue() {
+  removeDialogueRef.value?.show();
+}
+
+function openUpdateFailedDialogue() {
+  updateFailedDialogueRef.value?.show();
+}
+
+function onBindingObjectClick(object) {
+  if (object.id === currentBindingObject.value?.id && !footerPanelRef.value?.rightOpened) {
+    footerPanelRef.value?.openRight(true);
+  } else if (object.id === currentBindingObject.value?.id) {
+    currentBindingObject.value = null;
+  } else {
+    expendRightMenu(object);
+  }
+}
+
+function editBindingCameras(object) {
+  currentBindingObject.value = object;
+  selectedDevicesId.value = object.devices
+    .map((deviceSource) => ComposeVsaasDeviceId(deviceSource))
+    .filter((id) => isAvailableDevice(id));
+  nextTick(() => {
+    deviceSelectModalRef.value?.openDialogue();
+  });
+}
+
+async function handleSelectCameras(deviceIdList) {
+  const devices = deviceIdList.map((id) => allDevicesMap.value[id].services.configurator.getBackendIdentifier());
+  try {
+    await integration.value.bindAccessControlObject({
+      ...currentBindingObject.value,
+      devices,
+    });
+    deviceSelectModalRef.value?.onSelectSuccess();
+  } catch {
+    deviceSelectModalRef.value?.onSelectFailed();
+  }
+}
+
+function onCredentialsAdded() {
+  systemErrorMessage.value = '';
+  isLoading.value = true;
+  return store.dispatch('accessControl/initIntegration').finally(() => {
+    isLoading.value = false;
+  });
+}
+
+function onRemoveSuccess() {
+  goBackThirdPartyIntegration();
+}
+
+async function removeNonexistentBindings() {
+  if (!integration.value) {
+    isLoading.value = false;
+    return;
+  }
+
+  isLoading.value = true;
+  await integration.value.removeNonexistentBindings(
+    availableDevices.value.map((device) => device.services.configurator.getBackendIdentifier()),
+  );
+  isLoading.value = false;
+  updatedObjectList.value = integration.value.removedObjects.map((object) => ({
+    ...object,
+    deviceList: object.devices.map((deviceSource) => {
+      const deviceId = ComposeVsaasDeviceId(deviceSource);
+      return allDevicesMap.value[deviceId];
+    }),
+  }));
+  if (updatedObjectList.value.length) {
+    nextTick(() => {
+      updateInformationModalRef.value?.show();
+    });
+  }
+}
+
+function doFilter(keyword) {
+  resetPageIndex();
+  searchKeyword.value = keyword;
+}
+
+function handleError(error) {
+  const errorMessage = error?.message || '';
+  if (errorMessage.includes('Remove nonexistent integration failed')) {
+    openUpdateFailedDialogue();
+    return;
+  }
+  if (errorMessage.includes('401')) {
+    systemErrorMessage.value = proxy.$t(
+      'Your access credentials are no longer authorized. Please re-authorize your credentials to regain access.',
+    );
+    return;
+  }
+  // error message for PDK only
+  if (errorMessage.includes('get pdk device states by cloudNode')) {
+    systemErrorMessage.value = proxy.$t(
+      "We've noticed issues accessing data from PDK due to a connection problem with the PDK Cloud Node. Please contact your reseller for assistance.",
+    );
+    return;
+  }
+  systemErrorMessage.value = proxy.$t(
+    "We've noticed that you may be experiencing issues accessing data from {provider}. Please contact your reseller for assistance.",
+    { provider: providerName.value },
+  );
+}
+
+async function addIntegrationWithPresetCredential() {
+  const { provider, token } = route.query;
+  if (!provider || !token) {
+    return;
+  }
+  presetProvider.value = Object.values(ACCESS_CONTROL.PROVIDERS).find(
+    (value) => value.toLowerCase() === String(provider).toLowerCase(),
+  );
+  if (hasProviderIntegrated.value) {
+    nextTick(() => {
+      integrationExistsDialogueRef.value?.show();
+    });
+    return;
+  }
+  const credentials = { configurationToken: token };
+  try {
+    await store.dispatch('accessControl/addIntegration', { provider: presetProvider.value, credentials });
+    await onCredentialsAdded();
+  } catch (error) {
+    integrationFailedDialogueRef.value?.openDialogue();
+  }
+}
+
+async function safeCall(fn) {
+  try {
+    await fn();
+  } catch (err) {
+    handleError(err);
+  }
+}
+
+async function initialize() {
+  isLoading.value = true;
+  currentBindingObject.value = null;
+  await safeCall(() => store.dispatch('accessControl/initIntegration'));
+  await addIntegrationWithPresetCredential();
+  await safeCall(removeNonexistentBindings);
+  isLoading.value = false;
+}
+
+function goBackThirdPartyIntegration() {
+  router.push({ name: 'ThirdPartyIntegration' });
+}
+
+onMounted(async () => {
+  await initialize();
+  if (!hasProviderIntegrated.value) {
+    goBackThirdPartyIntegration();
+  }
+});
+</script>
+
+<style lang="less" scoped>
+.access-control {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  > .access-control-header {
+    max-height: 62px;
+    background-color: @color-surface03;
+    border-bottom: 1px solid @color-line01;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    > .go-back-button {
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: @color-icon03;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        background: @color-surface04;
+      }
+    }
+  }
+}
+.access-control-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .loading-container {
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: @color-surface01;
+  }
+
+  .management-container {
+    .title-wrapper {
+      background-color: transparent;
+      height: 40px;
+      padding: 5px 0px;
+      h6 {
+        color: @color-text05;
+      }
+    }
+    .content {
+      padding-top: 45px;
+      padding-left: 36px;
+      padding-right: 36px;
+    }
+    .provider {
+      .provider-content {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        .provider-logo {
+          height: 64px;
+        }
+        .system-error-message {
+          border-radius: 4px;
+          background-color: @color-surface02;
+          display: flex;
+          align-items: center;
+          padding: 16px 24px;
+          margin-right: 40px;
+          .svg-icon {
+            color: @color-icon12;
+            margin-right: 10px;
+          }
+        }
+      }
+      display: flex;
+      padding: 24px 18px;
+      background-color: @color-surface03;
+      margin-bottom: 20px;
+      justify-content: space-between;
+    }
+  }
+
+  :deep(.select-device-modal) {
+    .hint h6.error {
+      color: @color-alert;
+    }
+  }
+}
+
+:deep(.group-device-list .single-device) {
+  cursor: initial;
+}
+</style>

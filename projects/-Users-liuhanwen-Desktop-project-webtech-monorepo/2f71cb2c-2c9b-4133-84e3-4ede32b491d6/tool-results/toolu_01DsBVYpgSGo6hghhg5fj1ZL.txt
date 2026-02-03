@@ -1,0 +1,664 @@
+     1→<template>
+     2→  <div
+     3→    class="add-external-device-modal"
+     4→    data-testid="add-external-device-modal"
+     5→  >
+     6→    <DeviceSelectModal
+     7→      ref="bridgeDeviceSelectModal"
+     8→      :multiple="false"
+     9→      :displayDeviceTypes="supportedBridgeTypes"
+    10→      :filterUnknownDevice="true"
+    11→      :selectedDevices="[]"
+    12→      :title="$t('Add your peripheral device via bridge')"
+    13→      :subTitle="dialogueSubTitle"
+    14→      @confirm="handleBridgeDeviceSelected"
+    15→    />
+    16→    <AppDialogue
+    17→      ref="addExternalDeviceDialogue"
+    18→      name="addExternalDeviceDialogue"
+    19→      class="add-external-device-dialogue"
+    20→      width="1116px"
+    21→      :buttons="[]"
+    22→      :title="$t('Add peripheral device')"
+    23→      :subTitle="dialogueSubTitle"
+    24→      :onClose="onDialogueClose"
+    25→    >
+    26→      <template #content>
+    27→        <div class="dialogue-content">
+    28→          <SvgIcon
+    29→            v-if="isSearching"
+    30→            class="spinning loading"
+    31→            iconClass="status_loading_1st_solid_dark"
+    32→            size="60px"
+    33→          />
+    34→          <div
+    35→            v-else-if="isEmpty"
+    36→            class="empty-block"
+    37→          >
+    38→            <SvgIcon
+    39→              iconClass="search_failed"
+    40→              size="100px"
+    41→            />
+    42→            <h6 v-text="$t('No devices on the LAN')" />
+    43→            <h6
+    44→              class="try-again-button"
+    45→              @click="searchExternalDevices"
+    46→              v-text="$t('Try again')"
+    47→            />
+    48→          </div>
+    49→          <div
+    50→            v-else
+    51→            class="content-wrapper"
+    52→          >
+    53→            <div class="search-input-wrapper">
+    54→              <AppInputFields
+    55→                id="search-speaker-input"
+    56→                v-model.trim="searchKeyword"
+    57→                type="search"
+    58→                class="search-input"
+    59→                :disabled="shouldDisableSearchInput"
+    60→              />
+    61→              <AppDropdown
+    62→                v-if="searchedDeviceTypeOptions.length"
+    63→                v-model="resultDeviceTypeFilter"
+    64→                :options="searchedDeviceTypeOptions"
+    65→              />
+    66→            </div>
+    67→            <SearchedExternalDeviceTable
+    68→              :rowData="displayExternalDevices"
+    69→              :class="{ 'is-empty': !displayExternalDevices.length }"
+    70→              @add="tryAddExternalDevice"
+    71→            />
+    72→          </div>
+    73→        </div>
+    74→      </template>
+    75→      <template #leftControl>
+    76→        <button
+    77→          v-if="!isFirstStep"
+    78→          class="naked previous-button"
+    79→          :disabled="isProcessing"
+    80→          @click="goPreviousStep"
+    81→        >
+    82→          <SvgIcon
+    83→            iconClass="general_left_line"
+    84→            size="20px"
+    85→          />
+    86→          {{ $t('Previous') }}
+    87→        </button>
+    88→      </template>
+    89→    </AppDialogue>
+    90→    <AppDialogue
+    91→      ref="authorizeDeviceDialogue"
+    92→      name="authorizeDeviceDialogue"
+    93→      class="auth-external-device-dialogue"
+    94→      :buttons="authDialogueButtons"
+    95→      :state="currentState"
+    96→      :title="$t('Add peripheral device')"
+    97→      :subTitle="$t('Provide a name and authentication credentials for this device')"
+    98→      :onClose="resetAuthStepData"
+    99→    >
+   100→      <template #content>
+   101→        <div class="dialogue-content">
+   102→          <div class="content-wrapper">
+   103→            <div class="device-info-wrapper">
+   104→              <SvgIcon
+   105→                :iconClass="selectedExternalDeviceInfo.icon"
+   106→                size="32px"
+   107→              />
+   108→              <div class="device-info">
+   109→                <h6 v-text="selectedExternalDeviceInfo.model" />
+   110→                <span v-text="`${$t('Device ID')}: ${selectedExternalDeviceInfo.mac}`" />
+   111→              </div>
+   112→            </div>
+   113→            <div class="auth-block">
+   114→              <h6 class="title bold">
+   115→                {{ $t('1. Name your device') }}
+   116→              </h6>
+   117→              <h6 class="label semi-bold">
+   118→                {{ $t('Device name') }}
+   119→              </h6>
+   120→              <div class="input-wrapper">
+   121→                <AppInputFields
+   122→                  id="external-device-name-input"
+   123→                  ref="externalDeviceNameInput"
+   124→                  v-model.trim="externalDeviceName"
+   125→                  :maxLength="deviceNameMaxLength"
+   126→                  :validateRules="deviceNameValidateRules"
+   127→                  :disabled="isProcessing || isSuccess"
+   128→                />
+   129→              </div>
+   130→            </div>
+   131→            <div class="auth-block">
+   132→              <h6 class="title bold">
+   133→                {{ $t('2. Authorize your device') }}
+   134→              </h6>
+   135→              <h6 class="label semi-bold">
+   136→                {{ $t('Device user name') }}
+   137→              </h6>
+   138→              <div class="input-wrapper">
+   139→                <AppInputFields
+   140→                  id="account-input"
+   141→                  ref="accountInput"
+   142→                  v-model.trim="account"
+   143→                  autocomplete="one-time-code"
+   144→                  data-testid="device-user-name-input"
+   145→                  :validateRules="authenticationValidationRules"
+   146→                  :disabled="isProcessing || isSuccess"
+   147→                />
+   148→              </div>
+   149→              <div class="block">
+   150→                <h6 class="label semi-bold">
+   151→                  {{ $t('Password') }}
+   152→                </h6>
+   153→                <div class="input-wrapper">
+   154→                  <AppInputFields
+   155→                    id="password-input"
+   156→                    ref="passwordInput"
+   157→                    v-model.trim="password"
+   158→                    type="password"
+   159→                    autocomplete="one-time-code"
+   160→                    data-testid="password-input"
+   161→                    :validateRules="authenticationValidationRules"
+   162→                    :disabled="isProcessing || isSuccess"
+   163→                  />
+   164→                </div>
+   165→              </div>
+   166→            </div>
+   167→          </div>
+   168→        </div>
+   169→      </template>
+   170→      <template
+   171→        v-if="serverErrorMessage"
+   172→        #errorMessage
+   173→      >
+   174→        <AppFormErrorMessage :message="serverErrorMessage" />
+   175→      </template>
+   176→    </AppDialogue>
+   177→  </div>
+   178→</template>
+   179→
+   180→<script>
+   181→import { mapState, mapGetters, mapActions } from 'vuex';
+   182→
+   183→import { DeviceSelectModal, DEVICE_TYPE_CONFIGS } from '@vivotek/advanced-vue-components';
+   184→import { DIALOGUE, DEVICE_TYPE, EXTERNAL_DEVICE } from '@vivotek/const-vsaas';
+   185→import { VALIDATE_RULE_MAP } from '@vivotek/lib-utility';
+   186→
+   187→import SearchedExternalDeviceTable from '@/pages/device/settings/components/SearchedExternalDeviceTable.vue';
+   188→
+   189→const DEVICE_TYPE_FILTER_ALL = 'ALL';
+   190→
+   191→export default {
+   192→  name: 'AddExternalDeviceModal',
+   193→  components: {
+   194→    DeviceSelectModal,
+   195→    SearchedExternalDeviceTable,
+   196→  },
+   197→  data() {
+   198→    const { DEVICES: EXTERNAL_DEVICES, TYPE } = EXTERNAL_DEVICE;
+   199→    return {
+   200→      currentStepIndex: 0,
+   201→      externalDeviceTypeFilter: null,
+   202→      selectedBridgeDevice: null,
+   203→      selectedExternalDevice: null,
+   204→      resultDeviceTypeFilter: DEVICE_TYPE_FILTER_ALL,
+   205→      externalDevices: [],
+   206→      externalDeviceName: '',
+   207→      authenticationValidationRules: [VALIDATE_RULE_MAP.Required],
+   208→      deviceNameValidateRules: [VALIDATE_RULE_MAP.Required, VALIDATE_RULE_MAP.DeviceName],
+   209→      account: '',
+   210→      password: '',
+   211→      currentState: DIALOGUE.STATE.DEFAULT,
+   212→      searchKeyword: '',
+   213→      isSearching: false,
+   214→      serverErrorMessage: '',
+   215→      networkSpeakerConfig: EXTERNAL_DEVICES[TYPE.NETWORK_SPEAKER],
+   216→      addSteps: Object.values(EXTERNAL_DEVICE.ADD_STEPS),
+   217→      DEVICE_TYPE,
+   218→    };
+   219→  },
+   220→  methods: {
+   221→    ...mapActions('externalDevice', ['createNetworkSpeaker', 'createPoESwitch', 'queryNetworkSpeakers']),
+   222→    async show({ externalDeviceTypeFilter = null, preselectedBridgeDevice }) {
+   223→      this.externalDeviceTypeFilter = externalDeviceTypeFilter;
+   224→      this.selectedBridgeDevice = preselectedBridgeDevice;
+   225→      // Open modal and optionally skip bridge selection if already preselected.
+   226→      const hasPreselectedBridge = !!this.selectedBridgeDevice;
+   227→      this.setDefault({ hasPreselectedBridge });
+   228→      await this.$nextTick();
+   229→      if (hasPreselectedBridge) {
+   230→        this.handleBridgeDeviceSelected([this.selectedBridgeDevice.deviceId]);
+   231→      } else {
+   232→        this.showBridgeSelectModal();
+   233→      }
+   234→    },
+   235→    showBridgeSelectModal() {
+   236→      this.$refs.bridgeDeviceSelectModal.openDialogue();
+   237→    },
+   238→    goPreviousStep() {
+   239→      this.resetAuthStepData();
+   240→      this.currentStepIndex -= 1;
+   241→      if (this.currentStepIndex === 0) {
+   242→        this.setDefault();
+   243→        this.$refs.addExternalDeviceDialogue.hide();
+   244→        this.showBridgeSelectModal();
+   245→      }
+   246→    },
+   247→    onAddExternalDeviceSuccess() {
+   248→      this.externalDevices = this.externalDevices.map((item) => {
+   249→        if (item.mac === this.selectedExternalDevice.mac) {
+   250→          return {
+   251→            ...item,
+   252→            deviceName: this.externalDeviceName,
+   253→            addStatus: EXTERNAL_DEVICE.ADD_STATUS.ADDED,
+   254→          };
+   255→        }
+   256→        return item;
+   257→      });
+   258→      this.setState(DIALOGUE.STATE.SUCCESS);
+   259→    },
+   260→    onAddExternalDeviceFailed(error) {
+   261→      if (error === EXTERNAL_DEVICE.ADD_DEVICE_ERROR.DEVICE_ERROR.AUTH_FAILED) {
+   262→        this.$refs.accountInput.setErrorMessage('');
+   263→        this.$refs.passwordInput.setErrorMessage(this.$t('Incorrect user name or password.'));
+   264→      } else if (error === EXTERNAL_DEVICE.ADD_DEVICE_ERROR.SERVER_MESSAGE.IN_ANOTHER_ORGANIZATION) {
+   265→        this.serverErrorMessage = this.$t('Device already added to another organization');
+   266→        this.externalDevices = this.externalDevices.map((item) => {
+   267→          if (item.mac === this.selectedExternalDevice.mac) {
+   268→            return {
+   269→              ...item,
+   270→              addStatus: EXTERNAL_DEVICE.ADD_STATUS.OCCUPIED,
+   271→            };
+   272→          }
+   273→          return item;
+   274→        });
+   275→      } else {
+   276→        this.serverErrorMessage = this.$t('Failed to add device. Try again.');
+   277→      }
+   278→      this.setState(DIALOGUE.STATE.ERROR);
+   279→    },
+   280→    onDialogueClose() {
+   281→      this.searchKeyword = '';
+   282→      this.resetBridgeDeviceIoTConnection();
+   283→    },
+   284→    handleBridgeDeviceSelected(devices) {
+   285→      const [deviceId] = devices;
+   286→      this.selectedBridgeDevice = this.allDevicesMap[deviceId];
+   287→      this.currentStepIndex = this.getStepIndex(EXTERNAL_DEVICE.ADD_STEPS.SEARCH);
+   288→      this.$nextTick(async () => {
+   289→        this.$refs.addExternalDeviceDialogue.show();
+   290→        await this.searchExternalDevices();
+   291→      });
+   292→    },
+   293→    getCreateDeviceHandler(info) {
+   294→      const handlerMap = {
+   295→        [EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER]: () => {
+   296→          const model = Object.keys(this.networkSpeakerConfig.MODEL_NAME).find(
+   297→            (key) => this.networkSpeakerConfig.MODEL_NAME[key] === this.selectedExternalDevice.model,
+   298→          );
+   299→          return this.createNetworkSpeaker({
+   300→            ...info,
+   301→            model,
+   302→            volume: this.networkSpeakerConfig.DEFAULT_VOLUME[model],
+   303→          });
+   304→        },
+   305→        [EXTERNAL_DEVICE.TYPE.POE_SWITCH]: () => this.createPoESwitch(info),
+   306→      };
+   307→      return handlerMap[this.selectedExternalDeviceType] ?? null;
+   308→    },
+   309→    createExternalDevice() {
+   310→      if (this.validateFields()) {
+   311→        return;
+   312→      }
+   313→      this.setState(DIALOGUE.STATE.PROCESSING);
+   314→      this.serverErrorMessage = '';
+   315→
+   316→      const authData = {
+   317→        account: this.account,
+   318→        password: this.password,
+   319→        mac: this.selectedExternalDevice.mac,
+   320→      };
+   321→
+   322→      const info = {
+   323→        ...authData,
+   324→        name: this.externalDeviceName,
+   325→        model: this.selectedExternalDevice.model,
+   326→        organizationID: this.currentOrganizationId,
+   327→        bridgeThingName: this.selectedBridgeDevice.thingName,
+   328→      };
+   329→
+   330→      const createDeviceFunction = this.getCreateDeviceHandler(info);
+   331→
+   332→      if (!createDeviceFunction) {
+   333→        this.onAddExternalDeviceFailed();
+   334→        return;
+   335→      }
+   336→
+   337→      this.selectedBridgeDevice.services.externalDeviceIoT
+   338→        .tryAuth(authData, this.selectedExternalDeviceType)
+   339→        .then(() => {
+   340→          createDeviceFunction()
+   341→            .then(() => this.onAddExternalDeviceSuccess())
+   342→            .catch((error) => {
+   343→              this.onAddExternalDeviceFailed(error?.message);
+   344→            });
+   345→        })
+   346→        .catch((error) => {
+   347→          this.onAddExternalDeviceFailed(error?.message);
+   348→        });
+   349→    },
+   350→    tryAddExternalDevice(item) {
+   351→      this.selectedExternalDevice = item;
+   352→      this.externalDeviceName = `Device ${this.totalAvailableDevicesCount + 1}`;
+   353→      this.$nextTick(() => {
+   354→        this.$refs.authorizeDeviceDialogue.show();
+   355→      });
+   356→    },
+   357→    async searchExternalDevices() {
+   358→      this.externalDevices = [];
+   359→      try {
+   360→        this.isSearching = true;
+   361→        const externalDevices = await this.selectedBridgeDevice.services.externalDeviceIoT.search(
+   362→          this.externalDeviceTypeFilter,
+   363→        );
+   364→        this.externalDevices = externalDevices.map((item) => {
+   365→          const existingDevice = this.availableExternalDevices.find((device) => device.mac === item.mac);
+   366→          return {
+   367→            ...item,
+   368→            deviceName: existingDevice?.displayName || '-',
+   369→            addStatus: existingDevice ? EXTERNAL_DEVICE.ADD_STATUS.ADDED : null,
+   370→          };
+   371→        });
+   372→      } finally {
+   373→        this.isSearching = false;
+   374→      }
+   375→    },
+   376→    resetAuthStepData() {
+   377→      this.setState(DIALOGUE.STATE.DEFAULT);
+   378→      this.externalDeviceName = '';
+   379→      this.account = '';
+   380→      this.password = '';
+   381→      this.serverErrorMessage = '';
+   382→    },
+   383→    resetSelectedBridgeDevice() {
+   384→      this.resetBridgeDeviceIoTConnection();
+   385→      this.selectedBridgeDevice = null;
+   386→      this.selectedExternalDevice = null;
+   387→    },
+   388→    resetBridgeDeviceIoTConnection() {
+   389→      this.selectedBridgeDevice?.services.externalDeviceIoT?.disconnect();
+   390→    },
+   391→    validateFields() {
+   392→      const inputs = [this.$refs.externalDeviceNameInput, this.$refs.accountInput, this.$refs.passwordInput];
+   393→      return inputs.some((input) => input.checkError().length > 0);
+   394→    },
+   395→    getStepIndex(step) {
+   396→      return this.addSteps.indexOf(step);
+   397→    },
+   398→    setState(state) {
+   399→      this.currentState = state;
+   400→    },
+   401→    setDefault({ hasPreselectedBridge = false } = {}) {
+   402→      this.setState(DIALOGUE.STATE.DEFAULT);
+   403→      this.resetAuthStepData();
+   404→      this.resultDeviceTypeFilter = DEVICE_TYPE_FILTER_ALL;
+   405→      this.currentStepIndex = 0;
+   406→
+   407→      this.addSteps = hasPreselectedBridge
+   408→        ? [EXTERNAL_DEVICE.ADD_STEPS.SEARCH]
+   409→        : Object.values(EXTERNAL_DEVICE.ADD_STEPS);
+   410→
+   411→      if (!hasPreselectedBridge) {
+   412→        this.resetSelectedBridgeDevice();
+   413→      }
+   414→    },
+   415→  },
+   416→  computed: {
+   417→    ...mapState('organization', ['currentOrganizationId']),
+   418→    ...mapGetters('device', [
+   419→      'allDevicesMap',
+   420→      'availableDevices',
+   421→      'availableBridgeDevices',
+   422→      'availableVsaasCameraDevices',
+   423→    ]),
+   424→    ...mapGetters('externalDevice', ['availableExternalDevices']),
+   425→    productName() {
+   426→      return this.$vendor.getVendorConfig().PRODUCT_NAME;
+   427→    },
+   428→    selectedExternalDeviceInfo() {
+   429→      if (!this.selectedExternalDevice) {
+   430→        return {};
+   431→      }
+   432→      const { mac, deviceType, model } = this.selectedExternalDevice;
+   433→      return {
+   434→        mac,
+   435→        icon: EXTERNAL_DEVICE.ICON[deviceType],
+   436→        model,
+   437→      };
+   438→    },
+   439→    selectedExternalDeviceType() {
+   440→      return this.selectedExternalDevice?.deviceType ?? null;
+   441→    },
+   442→    displayExternalDevices() {
+   443→      let filtered = this.externalDevices;
+   444→
+   445→      if (this.resultDeviceTypeFilter !== DEVICE_TYPE_FILTER_ALL) {
+   446→        filtered = filtered.filter((item) => item.deviceType === this.resultDeviceTypeFilter);
+   447→      }
+   448→
+   449→      if (this.searchKeyword) {
+   450→        const keyword = this.searchKeyword.toLowerCase();
+   451→        filtered = filtered.filter(
+   452→          (item) => item.mac.toLowerCase().includes(keyword) || item.model.toLowerCase().includes(keyword),
+   453→        );
+   454→      }
+   455→
+   456→      return filtered;
+   457→    },
+   458→    totalAvailableDevicesCount() {
+   459→      return this.availableDevices.length + this.availableExternalDevices.length;
+   460→    },
+   461→    bridgeDeviceOptions() {
+   462→      return this.selectedBridgeDevice
+   463→        ? [{ text: this.selectedBridgeDevice.displayName, value: this.selectedBridgeDevice.deviceId }]
+   464→        : [];
+   465→    },
+   466→    searchedDeviceTypeOptions() {
+   467→      if (this.externalDeviceTypeFilter) {
+   468→        return [];
+   469→      }
+   470→      return [
+   471→        {
+   472→          text: this.$t('All device types'),
+   473→          value: DEVICE_TYPE_FILTER_ALL,
+   474→        },
+   475→        ...Object.values(EXTERNAL_DEVICE.TYPE).map((type) => ({
+   476→          text: EXTERNAL_DEVICE.TYPE_NAME[type](this.$t.bind(this)),
+   477→          value: type,
+   478→        })),
+   479→      ];
+   480→    },
+   481→    currentStep() {
+   482→      return this.addSteps?.[this.currentStepIndex] ?? null;
+   483→    },
+   484→    dialogueSubTitle() {
+   485→      switch (this.currentStep) {
+   486→        case EXTERNAL_DEVICE.ADD_STEPS.SELECT_DEVICE:
+   487→          return this.$t(
+   488→            'Select a bridge device to connect your peripheral device to {product}. The bridge will detect compatible devices on your local network for management.',
+   489→            { product: this.productName },
+   490→          );
+   491→        case EXTERNAL_DEVICE.ADD_STEPS.SEARCH:
+   492→          return this.isSearching
+   493→            ? this.$t('Searching for devices on the LAN...')
+   494→            : this.$t(
+   495→                'Available peripheral devices on your LAN are shown below. Add devices to connect them to {product} through this bridge.',
+   496→                { product: this.productName },
+   497→              );
+   498→        default:
+   499→          return '';
+   500→      }
+   501→    },
+   502→    isEmpty() {
+   503→      return !this.isProcessing && !this.isSearching && !this.externalDevices?.length;
+   504→    },
+   505→    isProcessing() {
+   506→      return this.currentState === DIALOGUE.STATE.PROCESSING;
+   507→    },
+   508→    isSuccess() {
+   509→      return this.currentState === DIALOGUE.STATE.SUCCESS;
+   510→    },
+   511→    isFirstStep() {
+   512→      return this.currentStepIndex === 0;
+   513→    },
+   514→    authDialogueButtons() {
+   515→      return [
+   516→        {
+   517→          class: 'primary',
+   518→          text: this.isProcessing ? this.$t('Adding...') : this.$t('Add'),
+   519→          clickHandler: this.createExternalDevice,
+   520→        },
+   521→        {
+   522→          class: 'ghost',
+   523→          text: this.$t('Cancel'),
+   524→          clickHandler: () => {
+   525→            this.$refs.authorizeDeviceDialogue.hide();
+   526→          },
+   527→        },
+   528→      ];
+   529→    },
+   530→    deviceNameMaxLength() {
+   531→      return EXTERNAL_DEVICE.DEVICES[this.selectedExternalDeviceType]?.NAME_MAX_LENGTH;
+   532→    },
+   533→    supportedBridgeTypes() {
+   534→      if (this.externalDeviceTypeFilter === EXTERNAL_DEVICE.TYPE.NETWORK_SPEAKER) {
+   535→        return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.NETWORK_SPEAKER;
+   536→      }
+   537→
+   538→      if (this.externalDeviceTypeFilter === EXTERNAL_DEVICE.TYPE.POE_SWITCH) {
+   539→        return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.POE_SWITCH;
+   540→      }
+   541→
+   542→      return DEVICE_TYPE_CONFIGS.DEVICE_SELECTOR_MODAL.PORTAL.ADD_EXTERNAL_DEVICE_MODAL.DEFAULT;
+   543→    },
+   544→    shouldDisableSearchInput() {
+   545→      return !this.externalDevices.length && !this.searchKeyword;
+   546→    },
+   547→  },
+   548→};
+   549→</script>
+   550→
+   551→<style lang="less" scoped>
+   552→.auth-external-device-dialogue {
+   553→  .content-wrapper {
+   554→    width: 100%;
+   555→    display: flex;
+   556→    flex-direction: column;
+   557→    gap: 24px;
+   558→    padding: 16px 0 20px 0;
+   559→    .device-info-wrapper {
+   560→      background-color: @color-surface04;
+   561→      border-radius: 4px;
+   562→      border: 1px solid @color-outline04;
+   563→      display: flex;
+   564→      padding: 12px;
+   565→      .device-info {
+   566→        margin-left: 8px;
+   567→        display: flex;
+   568→        flex-direction: column;
+   569→        gap: 4px;
+   570→        h6 {
+   571→          color: @color-text01;
+   572→        }
+   573→        span {
+   574→          color: @color-text04;
+   575→        }
+   576→      }
+   577→    }
+   578→    .auth-block {
+   579→      display: flex;
+   580→      flex-direction: column;
+   581→      gap: 12px;
+   582→      h6.title {
+   583→        line-height: 20px;
+   584→      }
+   585→      h6.label {
+   586→        color: @color-text03;
+   587→      }
+   588→    }
+   589→  }
+   590→}
+   591→
+   592→.add-external-device-dialogue {
+   593→  .dialogue-content {
+   594→    border-top: 1px solid @color-surface05;
+   595→    display: flex;
+   596→    flex-direction: column;
+   597→    justify-content: center;
+   598→    padding: 0;
+   599→    padding-top: 20px;
+   600→    height: 450px;
+   601→    .empty-block {
+   602→      > h6 {
+   603→        margin: 0;
+   604→        line-height: 40px;
+   605→        color: @color-text04;
+   606→        &.try-again-button {
+   607→          cursor: pointer;
+   608→          line-height: 20px;
+   609→          color: @color-primary;
+   610→          &:hover {
+   611→            text-decoration: underline;
+   612→          }
+   613→        }
+   614→      }
+   615→    }
+   616→    .content-wrapper {
+   617→      flex: 1;
+   618→      display: flex;
+   619→      flex-direction: column;
+   620→      overflow: hidden;
+   621→      > h6 {
+   622→        line-height: 40px;
+   623→      }
+   624→      .search-input-wrapper {
+   625→        display: flex;
+   626→        align-items: center;
+   627→        gap: 16px;
+   628→        margin-bottom: 10px;
+   629→        > .search-input {
+   630→          width: 300px;
+   631→        }
+   632→        > .app-dropdown-wrapper {
+   633→          width: 180px;
+   634→          cursor: pointer;
+   635→        }
+   636→      }
+   637→      .is-empty {
+   638→        flex: 1;
+   639→        display: flex;
+   640→      }
+   641→    }
+   642→  }
+   643→  .previous-button {
+   644→    padding: 0 12px;
+   645→    .svg-icon {
+   646→      margin-right: 6px;
+   647→    }
+   648→  }
+   649→}
+   650→</style>
+   651→
+   652→<style lang="less">
+   653→.add-external-device-dialogue {
+   654→  .main-wrapper .header {
+   655→    height: 100px;
+   656→    align-items: flex-start;
+   657→  }
+   658→}
+   659→</style>
+   660→
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

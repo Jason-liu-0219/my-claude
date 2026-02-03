@@ -1,0 +1,171 @@
+/* eslint-disable no-unreachable */
+/* eslint-disable no-unused-expressions */
+import { DEVICE_TYPE } from '@vivotek/const-vsaas';
+import VDSI from '../vdsi';
+import ERROR_MESSAGE from '../constants/connectionError';
+import ComposeVsaasDeviceId from '../utility/composeVsaasDeviceId';
+import GetFirmwareState from '../utility/getFirmwareState';
+
+export default class Configurator extends VDSI {
+  name = 'configurator';
+
+  constructor(reference) {
+    super(reference);
+
+    this.updateState({
+      support: {},
+      ready: false
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  get QUERIES() {
+    return [
+      'online',
+      'localIP',
+      'mac',
+      'model',
+      'firmware',
+      'displayName',
+      'deviceId',
+      'generalIconClass',
+      'thingName',
+      'city',
+      'archiveLimitedSize',
+      'getBackendIdentifier',
+      'fwUpgradeState',
+      'derivant',
+      'wizardFinished',
+      'siteID',
+      'type'
+    ];
+  }
+
+  get online() {
+    return window.forceOfflineMac === this.mac ? false : this.reference.options?.online;
+  }
+
+  get model() {
+    return this.reference.options?.model;
+  }
+
+  get city() {
+    return this.reference.options?.city;
+  }
+
+  set city(value) {
+    this.reference.options.city = value;
+  }
+
+  get mac() {
+    return this.reference.options?.mac;
+  }
+
+  get siteID() {
+    return this.reference.options?.siteID;
+  }
+
+  get localIP() {
+    return this.reference.options?.ip;
+  }
+
+  get derivant() {
+    return this.reference.options?.derivant;
+  }
+
+  get thingName() {
+    return this.reference.options?.thingName;
+  }
+
+  get archiveLimitedSize() {
+    return this.reference.options?.archiveLimitedSize;
+  }
+
+  get deviceId() {
+    return ComposeVsaasDeviceId(this.reference.options);
+  }
+
+  get generalIconClass() {
+    if (this.fwUpgradeState === 'upgrading') {
+      return 'status_device_solid_updating';
+    }
+
+    return this.online ? 'general_device_solid' : 'general_device_disconnected_solid';
+  }
+
+  get fwUpgradeState() {
+    return GetFirmwareState(this.reference.options?.fwUpgradeState);
+  }
+
+  get displayName() {
+    return this.reference?.options?.name || this.reference?.options?.mac || '';
+  }
+
+  set displayName(value) {
+    this.reference.options.name = value;
+  }
+
+  get groupName() {
+    return this.reference.options?.groupName;
+  }
+
+  set groupName(val) {
+    this.reference.options.groupName = val;
+  }
+
+  get firmware() {
+    return this.reference.options?.firmware;
+  }
+
+  get wizardFinished() {
+    return this.reference.options?.wizardFinished || false;
+  }
+
+  set wizardFinished(val) {
+    this.reference.options.wizardFinished = val;
+  }
+
+  get type() {
+    return DEVICE_TYPE.NVR;
+  }
+
+  queryConfiguration() {
+    if (!this.reference.online) {
+      return Promise.reject(new Error(ERROR_MESSAGE.DEVICE_DISCONNECT));
+    }
+
+    return this.get('/vsaas/support').then((response) => {
+      const { info } = response?.data;
+      if (info) {
+        this.updateState({ support: info, ready: true });
+      }
+      return info;
+    }).catch((err) => {
+      const errorMessage = err.message || err.statusText || 'queryConfiguration failed';
+      return Promise.reject(new Error(errorMessage));
+    });
+  }
+
+  getBackendIdentifier() {
+    const { thingName } = this;
+    return { thingName, derivant: 'none' };
+  }
+
+  checkServiceSupport(service) {
+    if (!this.state.ready) {
+      return false;
+    }
+    return this.checkServiceVersionCompatible(service) && this.state.support[service] === 1;
+  }
+
+  checkServiceVersionCompatible(service) {
+    if (!this.state.ready) {
+      return false;
+    }
+    return Object.prototype.hasOwnProperty.call(this.state.support, service);
+  }
+
+  checkSupportFromOptions(service) {
+    return this.reference.options?.support?.includes(service);
+  }
+}

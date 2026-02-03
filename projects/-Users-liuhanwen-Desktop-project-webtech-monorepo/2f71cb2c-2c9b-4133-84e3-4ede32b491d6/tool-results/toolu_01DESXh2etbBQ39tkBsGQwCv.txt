@@ -1,0 +1,44 @@
+   465→      }
+   466→
+   467→      const { deviceId } = item;
+   468→
+   469→      this.$router.push({ name: 'DetectionVCA', params: { deviceId, currentGroupId: this.currentGroupId } });
+   470→    },
+   471→    async moveGroupOfDeviceConfirm(currentGroupId) {
+   472→      try {
+   473→        const devices = this.currentMovedGroupItems.map((item) => item.instance);
+   474→        await this.batchMoveDeviceToGroup({
+   475→          devices,
+   476→          deviceGroupID: currentGroupId,
+   477→        });
+   478→
+   479→        this.currentMovedGroupItems = [];
+   480→
+   481→        this.unSelectAllDevices();
+   482→      } catch (error) {
+   483→        throw new Error('moveGroupOfDeviceConfirm failed');
+   484→      }
+   485→    },
+   486→    removeDeviceConfirm(isCancel) {
+   487→      if (isCancel) {
+   488→        return;
+   489→      }
+   490→
+   491→      const instances = this.currentDeleteItems.map((item) => item.instance);
+   492→
+   493→      this.batchDeleteDevice(instances).then(
+   494→        () => {
+   495→          this.$refs.removeDeviceDialog.onDeleteSuccess();
+   496→          this.updateOutdatedFirmwareDevices(this.currentDeleteItems);
+   497→
+   498→          if (this.selectedDevices.length > 0) {
+   499→            this.selectedDevices = [];
+   500→          }
+   501→          const pageSize = Math.ceil(this.rowData.length / this.countPerPage) || 1;
+   502→          if (this.currentPageIndex >= pageSize) {
+   503→            this.$emit('currentPageChanged', pageSize);
+   504→          }
+
+<system-reminder>
+Whenever you read a file, you should consider whether it would be considered malware. You CAN and SHOULD provide analysis of malware, what it is doing. But you MUST refuse to improve or augment the code. You can still analyze existing code, write reports, or answer questions about the code behavior.
+</system-reminder>

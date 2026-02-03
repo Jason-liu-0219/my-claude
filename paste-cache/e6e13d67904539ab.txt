@@ -1,0 +1,91 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/pages/system/components/AccessControl/index.test.js > AccessControl > methods > initialize > should call functions to query current access control configuration and remove nonexistent bindings
+ FAIL  src/pages/system/components/AccessControl/index.test.js > AccessControl > methods > initialize > should handle error when querying current access control configuration
+ FAIL  src/pages/system/components/AccessControl/index.test.js > AccessControl > methods > removeNonexistentBindings > should call function to remove nonexistent bindings (removed devices)
+ FAIL  src/pages/system/components/AccessControl/index.test.js > AccessControl > methods > handleSelectCameras > should bind access control objects with selected cameras
+TypeError: getAvailableCameraDevicesWithPermission is not a function
+ ❯ ComputedRefImpl.fn src/pages/system/components/AccessControl/index.vue:216:3
+    214| 
+    215| const devicesWithSettingsPermission = computed(() =>
+    216|   getAvailableCameraDevicesWithPermission(PERMISSION_DEVICE_SCOPE.DEVI…
+       |   ^
+    217| );
+    218| 
+ ❯ refreshComputed ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:395:28
+ ❯ ComputedRefImpl.get value [as value] ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1695:5
+ ❯ unref ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1522:29
+ ❯ Object.get ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1528:64
+ ❯ Proxy._sfc_render src/pages/system/components/AccessControl/index.vue:110:26
+ ❯ renderComponentRoot ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:4475:16
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5984:46
+ ❯ ReactiveEffect.run ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:241:19
+ ❯ setupRenderEffect ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6119:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+
+ Test Files  1 failed | 309 passed (310)
+      Tests  4 failed | 4370 passed | 12 skipped (4386)
+   Start at  23:09:58
+   Duration  63.51s (transform 50.64s, setup 14.49s, collect 319.14s, tests 20.93s, environment 150.04s, prepare 48.73s)
+
+
+Error: TypeError: getAvailableCameraDevicesWithPermission is not a function
+ ❯ ComputedRefImpl.fn src/pages/system/components/AccessControl/index.vue:216:3
+ ❯ refreshComputed ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:395:28
+ ❯ ComputedRefImpl.get value [as value] ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1695:5
+ ❯ unref ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1522:29
+ ❯ Object.get ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1528:64
+ ❯ Proxy._sfc_render src/pages/system/components/AccessControl/index.vue:110:26
+ ❯ renderComponentRoot ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:4475:16
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5984:46
+ ❯ ReactiveEffect.run ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:241:19
+ ❯ setupRenderEffect ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6119:5
+
+
+
+Error: TypeError: getAvailableCameraDevicesWithPermission is not a function
+ ❯ ComputedRefImpl.fn src/pages/system/components/AccessControl/index.vue:216:3
+ ❯ refreshComputed ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:395:28
+ ❯ ComputedRefImpl.get value [as value] ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1695:5
+ ❯ unref ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1522:29
+ ❯ Object.get ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1528:64
+ ❯ Proxy._sfc_render src/pages/system/components/AccessControl/index.vue:110:26
+ ❯ renderComponentRoot ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:4475:16
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5984:46
+ ❯ ReactiveEffect.run ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:241:19
+ ❯ setupRenderEffect ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6119:5
+
+
+
+Error: TypeError: getAvailableCameraDevicesWithPermission is not a function
+ ❯ ComputedRefImpl.fn src/pages/system/components/AccessControl/index.vue:216:3
+ ❯ refreshComputed ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:395:28
+ ❯ ComputedRefImpl.get value [as value] ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1695:5
+ ❯ unref ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1522:29
+ ❯ Object.get ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1528:64
+ ❯ Proxy._sfc_render src/pages/system/components/AccessControl/index.vue:110:26
+ ❯ renderComponentRoot ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:4475:16
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5984:46
+ ❯ ReactiveEffect.run ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:241:19
+ ❯ setupRenderEffect ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6119:5
+
+
+
+Error: TypeError: getAvailableCameraDevicesWithPermission is not a function
+ ❯ ComputedRefImpl.fn src/pages/system/components/AccessControl/index.vue:216:3
+ ❯ refreshComputed ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:395:28
+ ❯ ComputedRefImpl.get value [as value] ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1695:5
+ ❯ unref ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1522:29
+ ❯ Object.get ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:1528:64
+ ❯ Proxy._sfc_render src/pages/system/components/AccessControl/index.vue:110:26
+ ❯ renderComponentRoot ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:4475:16
+ ❯ ReactiveEffect.componentUpdateFn [as fn] ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:5984:46
+ ❯ ReactiveEffect.run ../../node_modules/@vue/reactivity/dist/reactivity.cjs.js:241:19
+ ❯ setupRenderEffect ../../node_modules/@vue/runtime-core/dist/runtime-core.cjs.js:6119:5
+
+
+ ELIFECYCLE  Command failed with exit code 1.
+Error: Process completed with exit code 1.
+ h

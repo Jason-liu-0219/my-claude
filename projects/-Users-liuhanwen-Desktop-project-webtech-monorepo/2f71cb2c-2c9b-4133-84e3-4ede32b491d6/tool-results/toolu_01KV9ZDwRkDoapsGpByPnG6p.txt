@@ -1,0 +1,1139 @@
+packages/app-vsaas-portal/src/i18n/TranslationServerPlaceholderMapping.json:1:[Omitted long matching line]
+--
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1000-  "Detect vehicles occupacying a designated parking space.": "偵測車輛佔用指定的停車格。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1001-  "Detection": "偵測",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1002-  "Detection settings": "偵測設定",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1003-  "Detection type": "偵測類型",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1004-  "Detects and identifies faces in videos to assist in searching and recognition tasks. This feature is commonly used for security monitoring and access control purposes.": "偵測並識別影像中的臉孔，以協助搜尋和辨識任務。此功能通常用於安全監控和存取控制目的。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json:1005:  "Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.": "偵測並識別影像中的車牌，以協助車輛追蹤和辨識任務。此功能可增強停車管理和交通監控。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1006-  "Detects objects crossing a virtual trip-wire.": "偵測穿過虛擬線段的目標。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1007-  "Detects person gesture": "偵測人物姿勢",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1008-  "Determines how often a snapshot of the video is taken.": "決定擷圖頻率",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1009-  "Device": "裝置",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1010-  "Device Access Permission Updated": "裝置存取權限已更新",
+--
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1291-  "Expires at": "到期時間",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1292-  "Expires on": "到期日",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1293-  "Explore more": "探索更多",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1294-  "Explore now": "立即探索",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1295-  "Explore plans": "探索計畫",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json:1296:  "Explore {productName} license plans and latest package with features": "探索 {productName} 授權計畫和最新功能包",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1297-  "Export": "匯出",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1298-  "Export Data": "匯出資料",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1299-  "Export Job in Progress": "匯出工作進行中",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1300-  "Export List": "輸出清單",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-1301-  "Export Video": "匯出影像",
+--
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2837-  "The camera used to connect and add this speaker to { product }.": "此攝影機用於連線並將此喇叭新增至 {product}。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2838-  "The camera will remain available and can be placed again later.": "攝影機將繼續可用，並且可以稍後重新放置。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2839-  "The cameras under NVR will also be deleted.": "NVR 下的攝影機也會刪除。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2840-  "The cameras under VSS will also be deleted.": "VSS 下的攝影機也會刪除。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2841-  "The case name already exists.": "該事件名稱已存在。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json:2842:  "The cloud backup licenses have expired, and the cloud backup service has been suspended.": "雲端備份授權已過期，雲端備份服務已中止。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2843-  "The code you entered is invalid": "您輸入的代碼無效",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2844-  "The code you entered is invalid.": "您輸入的代碼無效。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2845-  "The credential you entered is invalid.": "您輸入的憑證無效。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2846-  "The credentials provided do not match a valid SSO account. Please check with your administrator for assistance.": "提供的憑證與有效的 SSO 帳戶不符。請洽系統管理員尋求協助。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2847-  "The current camera firmware version does not compatible with the web portal version.": "攝影機目前的韌體版本與入口網站的版本不相容。",
+--
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2853-  "The field can not be empty.": "此欄位不得為空白。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2854-  "The field cannot be empty.": "此欄位不得為空白。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2855-  "The file contains invalid content": "檔案包含無效內容",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2856-  "The following AI licenses have expired, and AI services have been suspended.": "以下的 AI 授權已到期，AI 服務已停用。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2857-  "The following camera licenses require activation or renewal.": "以下攝影機授權需要啟用或更新，",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json:2858:  "The following cloud backup licenses have expired, and the cloud backup service has been suspended.": "以下的雲端備份授權已過期，雲端備份服務已暫停。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2859-  "The following detection types and their existing rules will be disabled.": "以下偵測類型及其現有規則將被停用。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2860-  "The following detection types will be disabled.": "以下偵測類型將被停用。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2861-  "The following peripheral licenses require activation or renewal.": "以下周邊裝置授權需要啟用或更新，",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2862-  "The height of a license plate in video panel is more than {pixels}.": "影像面板中車牌高度超過 {pixels}。",
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json-2863-  "The horizontal angles are smaller than {angles}.": "水平角小於 {angles}。",
+--
+packages/app-vsaas-portal/src/i18n/languages/English.json-795-  "Click to upload or drag and drop": "Click to upload or drag and drop",
+packages/app-vsaas-portal/src/i18n/languages/English.json-796-  "Client ID": "Client ID",
+packages/app-vsaas-portal/src/i18n/languages/English.json-797-  "Client Secret": "Client Secret",
+packages/app-vsaas-portal/src/i18n/languages/English.json-798-  "Client time": "Client time",
+packages/app-vsaas-portal/src/i18n/languages/English.json-799-  "Cloud backup": "Cloud backup",
+packages/app-vsaas-portal/src/i18n/languages/English.json:800:[Omitted long matching line]
+packages/app-vsaas-portal/src/i18n/languages/English.json-801-  "Cloud storage": "Cloud storage",
+packages/app-vsaas-portal/src/i18n/languages/English.json-802-  "Cloud storage license": "Cloud storage license",
+packages/app-vsaas-portal/src/i18n/languages/English.json-803-  "Cocos (Keeling) Islands": "Cocos (Keeling) Islands",
+packages/app-vsaas-portal/src/i18n/languages/English.json-804-  "Codec": "Codec",
+packages/app-vsaas-portal/src/i18n/languages/English.json-805-  "Collapse": "Collapse",
+--
+packages/app-vsaas-portal/src/i18n/languages/English.json-1000-  "Detect vehicles occupacying a designated parking space.": "Detect vehicles occupacying a designated parking space.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1001-  "Detection": "Detection",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1002-  "Detection settings": "Detection settings",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1003-  "Detection type": "Detection type",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1004-  "Detects and identifies faces in videos to assist in searching and recognition tasks. This feature is commonly used for security monitoring and access control purposes.": "Detects and identifies faces in videos to assist in searching and recognition tasks. This feature is commonly used for security monitoring and access control purposes.",
+packages/app-vsaas-portal/src/i18n/languages/English.json:1005:  "Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.": "Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1006-  "Detects objects crossing a virtual trip-wire.": "Detects objects crossing a virtual trip-wire.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1007-  "Detects person gesture": "Detects person gesture",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1008-  "Determines how often a snapshot of the video is taken.": "Determines how often a snapshot of the video is taken.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1009-  "Device": "Device",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1010-  "Device Access Permission Updated": "Device Access Permission Updated",
+--
+packages/app-vsaas-portal/src/i18n/languages/English.json-1291-  "Expires at": "Expires at",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1292-  "Expires on": "Expires on",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1293-  "Explore more": "Explore more",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1294-  "Explore now": "Explore now",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1295-  "Explore plans": "Explore plans",
+packages/app-vsaas-portal/src/i18n/languages/English.json:1296:  "Explore {productName} license plans and latest package with features": "Explore {productName} license plans and latest package with features",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1297-  "Export": "Export",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1298-  "Export Data": "Export Data",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1299-  "Export Job in Progress": "Export Job in Progress",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1300-  "Export List": "Export List",
+packages/app-vsaas-portal/src/i18n/languages/English.json-1301-  "Export Video": "Export Video",
+--
+packages/app-vsaas-portal/src/i18n/languages/English.json-2837-  "The camera used to connect and add this speaker to { product }.": "The camera used to connect and add this speaker to { product }.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2838-  "The camera will remain available and can be placed again later.": "The camera will remain available and can be placed again later.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2839-  "The cameras under NVR will also be deleted.": "The cameras under NVR will also be deleted.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2840-  "The cameras under VSS will also be deleted.": "The cameras under VSS will also be deleted.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2841-  "The case name already exists.": "The case name already exists.",
+packages/app-vsaas-portal/src/i18n/languages/English.json:2842:  "The cloud backup licenses have expired, and the cloud backup service has been suspended.": "The cloud backup licenses have expired, and the cloud backup service has been suspended.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2843-  "The code you entered is invalid": "The code you entered is invalid",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2844-  "The code you entered is invalid.": "The code you entered is invalid.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2845-  "The credential you entered is invalid.": "The credential you entered is invalid.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2846-  "The credentials provided do not match a valid SSO account. Please check with your administrator for assistance.": "The credentials provided do not match a valid SSO account. Please check with your administrator for assistance.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2847-  "The current camera firmware version does not compatible with the web portal version.": "The current camera firmware version does not compatible with the web portal version.",
+--
+packages/app-vsaas-portal/src/i18n/languages/English.json-2853-  "The field can not be empty.": "The field can not be empty.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2854-  "The field cannot be empty.": "The field cannot be empty.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2855-  "The file contains invalid content": "The file contains invalid content",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2856-  "The following AI licenses have expired, and AI services have been suspended.": "The following AI licenses have expired, and AI services have been suspended.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2857-  "The following camera licenses require activation or renewal.": "The following camera licenses require activation or renewal.",
+packages/app-vsaas-portal/src/i18n/languages/English.json:2858:  "The following cloud backup licenses have expired, and the cloud backup service has been suspended.": "The following cloud backup licenses have expired, and the cloud backup service has been suspended.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2859-  "The following detection types and their existing rules will be disabled.": "The following detection types and their existing rules will be disabled.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2860-  "The following detection types will be disabled.": "The following detection types will be disabled.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2861-  "The following peripheral licenses require activation or renewal.": "The following peripheral licenses require activation or renewal.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2862-  "The height of a license plate in video panel is more than {pixels}.": "The height of a license plate in video panel is more than {pixels}.",
+packages/app-vsaas-portal/src/i18n/languages/English.json-2863-  "The horizontal angles are smaller than {angles}.": "The horizontal angles are smaller than {angles}.",
+--
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1000-  "Detect vehicles occupacying a designated parking space.": "指定された駐車スペースに車両が駐車しているかどうかを検出します。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1001-  "Detection": "検出",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1002-  "Detection settings": "検出設定",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1003-  "Detection type": "検出タイプ",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1004-  "Detects and identifies faces in videos to assist in searching and recognition tasks. This feature is commonly used for security monitoring and access control purposes.": "ビデオ内の顔を検出して特定し、検索や認識のタスクを支援します。この機能は、セキュリティ監視やアクセス制御の目的で一般的に使用されます。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json:1005:  "Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.": "ビデオ内のナンバープレートを検出して特定し、車両の追跡や認識のタスクを支援します。この機能は、駐車場管理や交通監視を強化します。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1006-  "Detects objects crossing a virtual trip-wire.": "仮想トリップワイヤを横切る物体を検出します。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1007-  "Detects person gesture": "人物のジェスチャーを検出します",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1008-  "Determines how often a snapshot of the video is taken.": "ビデオのスナップショットがどれくらいの頻度で撮影されるかを決定します。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1009-  "Device": "デバイス",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1010-  "Device Access Permission Updated": "デバイスアクセス権限が更新されました",
+--
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1291-  "Expires at": "有効期限",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1292-  "Expires on": "有効期限",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1293-  "Explore more": "詳しくは　",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1294-  "Explore now": "今すぐ探る",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1295-  "Explore plans": "プランを探る",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json:1296:  "Explore {productName} license plans and latest package with features": "{productName}のライセンスプランと最新のパッケージを検討してください。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1297-  "Export": "エクスポート",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1298-  "Export Data": "データのエクスポート",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1299-  "Export Job in Progress": "エクスポートジョブが進行中です",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1300-  "Export List": "エクスポートリスト",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-1301-  "Export Video": "ビデオをエクスポート",
+--
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2837-  "The camera used to connect and add this speaker to { product }.": "このカメラは、{product}にこのスピーカーを接続して追加するために使用されます。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2838-  "The camera will remain available and can be placed again later.": "カメラは引き続き利用可能で、後で再配置できます。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2839-  "The cameras under NVR will also be deleted.": "NVR 配下のカメラも削除されます。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2840-  "The cameras under VSS will also be deleted.": "VSS 配下のカメラも削除されます。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2841-  "The case name already exists.": "ケース名はすでに存在します。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json:2842:  "The cloud backup licenses have expired, and the cloud backup service has been suspended.": "クラウドバックアップライセンスが期限切れとなり、クラウドバックアップサービスが停止されています。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2843-  "The code you entered is invalid": "入力されたコードが無効です",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2844-  "The code you entered is invalid.": "入力されたコードが無効です。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2845-  "The credential you entered is invalid.": "入力された認証情報が無効です。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2846-  "The credentials provided do not match a valid SSO account. Please check with your administrator for assistance.": "提供された認証情報は有効なSSOアカウントと一致しません。管理者に確認してサポートを受けてください。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2847-  "The current camera firmware version does not compatible with the web portal version.": "現在のカメラのファームウェアバージョンは、Webポータルのバージョンと互換性がありません。",
+--
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2853-  "The field can not be empty.": "フィールドは空白にできません。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2854-  "The field cannot be empty.": "フィールドは空白にできません。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2855-  "The file contains invalid content": "ファイルに無効な内容が含まれています",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2856-  "The following AI licenses have expired, and AI services have been suspended.": "以下のAIライセンスが期限切れで、AIサービスが停止されています。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2857-  "The following camera licenses require activation or renewal.": "次のカメラのライセンスはアクティベーションまたは更新が必要です。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json:2858:  "The following cloud backup licenses have expired, and the cloud backup service has been suspended.": "次のクラウドバックアップのライセンスが期限切れで、サービスが停止されています。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2859-  "The following detection types and their existing rules will be disabled.": "次の検出タイプとそれに関連する既存のルールが無効になります。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2860-  "The following detection types will be disabled.": "次の検出タイプが無効になります。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2861-  "The following peripheral licenses require activation or renewal.": "次の周辺機器のライセンスはアクティベーションまたは更新が必要です。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2862-  "The height of a license plate in video panel is more than {pixels}.": "ビデオパネル内のナンバープレートの高さが {pixels} より大きいです。",
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json-2863-  "The horizontal angles are smaller than {angles}.": "水平角度が {angles} より小さいです。",
+--
+packages/app-vsaas-portal/src/store/license/getters.test.js:1:import { LICENSE_STATE, LICENSE_TYPE, CLOUD_BACKUP_LICENSE_TYPE, AI_LICENSE_TYPE } from '@/constants/License';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-3-import getters from './getters';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-5-const camera1 = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-6-  deviceId: 'camera1',
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-11-    },
+packages/app-vsaas-portal/src/store/license/getters.test.js-12-    addOnPlans: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-13-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-14-        state: LICENSE_STATE.VALID,
+packages/app-vsaas-portal/src/store/license/getters.test.js-15-        additionalInfo: '30',
+packages/app-vsaas-portal/src/store/license/getters.test.js:16:        planType: LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-17-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-18-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-19-        state: LICENSE_STATE.VALID,
+packages/app-vsaas-portal/src/store/license/getters.test.js-20-        planType: AI_LICENSE_TYPE.LPR,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-21-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-37-    },
+packages/app-vsaas-portal/src/store/license/getters.test.js-38-    addOnPlans: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-39-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-40-        state: LICENSE_STATE.VALID,
+packages/app-vsaas-portal/src/store/license/getters.test.js-41-        additionalInfo: '60',
+packages/app-vsaas-portal/src/store/license/getters.test.js:42:        planType: LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-43-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-44-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-45-        state: LICENSE_STATE.VALID,
+packages/app-vsaas-portal/src/store/license/getters.test.js-46-        planType: AI_LICENSE_TYPE.LPR,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-47-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-59-    },
+packages/app-vsaas-portal/src/store/license/getters.test.js-60-    addOnPlans: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-61-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-62-        state: LICENSE_STATE.EXPIRED,
+packages/app-vsaas-portal/src/store/license/getters.test.js-63-        additionalInfo: '90',
+packages/app-vsaas-portal/src/store/license/getters.test.js:64:        planType: LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-65-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-66-      {
+packages/app-vsaas-portal/src/store/license/getters.test.js-67-        state: LICENSE_STATE.EXPIRED,
+packages/app-vsaas-portal/src/store/license/getters.test.js-68-        planType: AI_LICENSE_TYPE.PPE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-69-      },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-271-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-272-    expect(result).toEqual({
+packages/app-vsaas-portal/src/store/license/getters.test.js-273-      [LICENSE_TYPE.X_PRO]: [camera1],
+packages/app-vsaas-portal/src/store/license/getters.test.js-274-      [LICENSE_TYPE.X_STD]: [camera2, camera4, camera6, camera7],
+packages/app-vsaas-portal/src/store/license/getters.test.js-275-      [LICENSE_TYPE.UNLICENSED]: [camera3],
+packages/app-vsaas-portal/src/store/license/getters.test.js:276:      [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:277:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+packages/app-vsaas-portal/src/store/license/getters.test.js:278:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+packages/app-vsaas-portal/src/store/license/getters.test.js:279:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:280:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:281:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:282:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js-283-        [LICENSE_STATE.EXPIRED]: [camera3],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-284-      },
+packages/app-vsaas-portal/src/store/license/getters.test.js-285-      [LICENSE_TYPE.AI]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-286-        [AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE]: [camera1],
+packages/app-vsaas-portal/src/store/license/getters.test.js-287-        [AI_LICENSE_TYPE.PPE]: [camera4],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-338-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-339-describe('cloudBackupLicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-340-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-341-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-342-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:343:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:344:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+packages/app-vsaas-portal/src/store/license/getters.test.js:345:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+packages/app-vsaas-portal/src/store/license/getters.test.js:346:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:347:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:348:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:349:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js-350-          [LICENSE_STATE.EXPIRED]: [camera3, camera4],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-351-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-352-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-353-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-354-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-355-    const result = getters.cloudBackupLicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-356-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-357-    expect(result).toEqual({
+packages/app-vsaas-portal/src/store/license/getters.test.js:358:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+packages/app-vsaas-portal/src/store/license/getters.test.js:359:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+packages/app-vsaas-portal/src/store/license/getters.test.js:360:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:361:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:362:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:363:      [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js-364-      [LICENSE_STATE.EXPIRED]: [camera3, camera4],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-365-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-366-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-367-});
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-368-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-369-describe('cloudBackup30LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-370-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-371-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-372-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:373:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-374-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-375-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-376-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-377-    const result = getters.cloudBackup30LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-378-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-382-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-383-describe('cloudBackup60LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-384-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-385-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-386-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:387:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-388-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-389-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-390-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-391-    const result = getters.cloudBackup60LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-392-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-396-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-397-describe('cloudBackup90LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-398-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-399-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-400-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:401:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [camera1],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-402-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-403-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-404-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-405-    const result = getters.cloudBackup90LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-406-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-410-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-411-describe('cloudBackup120LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-412-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-413-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-414-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:415:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [camera2],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-416-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-417-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-418-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-419-    const result = getters.cloudBackup120LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-420-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-424-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-425-describe('cloudBackup180LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-426-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-427-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-428-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:429:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [camera1],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-430-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-431-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-432-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-433-    const result = getters.cloudBackup180LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-434-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-438-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-439-describe('cloudBackup365LicensedVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-440-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-441-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-442-      cloudBackupLicensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:443:        [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [camera2],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-444-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-445-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-446-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-447-    const result = getters.cloudBackup365LicensedVsaasCamera({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-448-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-452-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-453-describe('cloudBackupExpiredVsaasCamera', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-454-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-455-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-456-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:457:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-458-          [LICENSE_STATE.EXPIRED]: [camera3, camera4],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-459-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-460-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-461-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-462-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-865-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-866-describe('isCloudBackup30Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-867-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-868-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-869-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:870:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:871:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-872-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-873-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-874-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-875-    const result = getters.isCloudBackup30Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-876-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-880-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-881-describe('isCloudBackup60Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-882-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-883-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-884-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:885:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:886:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-887-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-888-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-889-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-890-    const result = getters.isCloudBackup60Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-891-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-895-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-896-describe('isCloudBackup90Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-897-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-898-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-899-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:900:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:901:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-902-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-903-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-904-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-905-    const result = getters.isCloudBackup90Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-906-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-910-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-911-describe('isCloudBackup120Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-912-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-913-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-914-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:915:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:916:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-917-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-918-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-919-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-920-    const result = getters.isCloudBackup120Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-921-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-925-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-926-describe('isCloudBackup180Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-927-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-928-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-929-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:930:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:931:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-932-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-933-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-934-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-935-    const result = getters.isCloudBackup180Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-936-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-940-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-941-describe('isCloudBackup365Expiring', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-942-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-943-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-944-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:945:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:946:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-947-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-948-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-949-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-950-    const result = getters.isCloudBackup365Expiring({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-951-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-955-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-956-describe('cloudBackup30Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-957-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-958-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-959-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:960:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:961:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [camera1],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-962-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-963-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-964-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-965-    const result = getters.cloudBackup30Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-966-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-970-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-971-describe('cloudBackup60Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-972-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-973-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-974-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:975:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:976:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [camera2],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-977-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-978-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-979-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-980-    const result = getters.cloudBackup60Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-981-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-985-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-986-describe('cloudBackup90Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-987-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-988-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-989-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:990:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:991:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-992-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-993-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-994-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-995-    const result = getters.cloudBackup90Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-996-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1000-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1001-describe('cloudBackup120Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1002-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1003-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1004-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1005:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1006:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1007-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1008-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1009-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1010-    const result = getters.cloudBackup120Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1011-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1015-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1016-describe('cloudBackup180Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1017-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1018-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1019-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1020:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1021:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1022-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1023-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1024-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1025-    const result = getters.cloudBackup180Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1026-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1030-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1031-describe('cloudBackup365Count', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1032-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1033-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1034-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1035:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1036:          [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1037-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1038-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1039-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1040-    const result = getters.cloudBackup365Count({}, mockGetters);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1041-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1061-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1062-describe('cloudBackupExpiredCount', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1063-  it('should return an format result', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1064-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1065-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js:1066:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1067-          [LICENSE_STATE.EXPIRED]: [camera3],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1068-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1069-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1070-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1071-    const result = getters.cloudBackupExpiredCount({}, mockGetters);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1223-describe('isAnyLicenseExpired', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1224-  it('should return true when there is any license expired', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1225-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1226-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1227-        [LICENSE_TYPE.UNLICENSED]: [camera3],
+packages/app-vsaas-portal/src/store/license/getters.test.js:1228:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1229-          [LICENSE_STATE.EXPIRED]: [camera3],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1230-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1231-      },
+packages/app-vsaas-portal/src/store/license/getters.test.js-1232-      unlicensedNVRDevices: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js-1233-      unlicensedNetworkSpeaker: [],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1240-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1241-  it('should return false when there is no license expired', () => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1242-    const mockGetters = {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1243-      licensedVsaasCamera: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1244-        [LICENSE_TYPE.UNLICENSED]: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js:1245:        [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.test.js-1246-          [LICENSE_STATE.EXPIRED]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1247-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.test.js-1248-      },
+packages/app-vsaas-portal/src/store/license/getters.test.js-1249-      unlicensedNVRDevices: [],
+packages/app-vsaas-portal/src/store/license/getters.test.js-1250-      unlicensedNetworkSpeaker: [],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-1-import { DEVICE_TYPE, EXTERNAL_DEVICE } from '@vivotek/const-vsaas';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-2-
+packages/app-vsaas-portal/src/store/license/getters.js:3:import { LICENSE_STATE, LICENSE_TYPE, CLOUD_BACKUP_LICENSE_TYPE, AI_LICENSE_TYPE } from '@/constants/License';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-4-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-5-const createCloudBackupExpiringGetter = (type) => (state, getters) => {
+packages/app-vsaas-portal/src/store/license/getters.js:6:  return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][type].some(isCloudBackupExpiring);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-7-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-8-export default {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-9-  licensedVsaasCamera(state, getters, rootState, rootGetters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-10-    return rootGetters['device/availableVsaasCameraDevices']
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-11-      .filter((device) => !device.isUnknownDevice)
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-18-          } else if (checkMainLicenseType(LICENSE_TYPE.X_STD)(device)) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-19-            data[LICENSE_TYPE.X_STD].push(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-20-          }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-21-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-22-          if (isCloudBackupExpired(device)) {
+packages/app-vsaas-portal/src/store/license/getters.js:23:            data[LICENSE_TYPE.CLOUD_BACKUP][LICENSE_STATE.EXPIRED].push(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-24-          } else {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-25-            const cloudBackupType = Object.values(CLOUD_BACKUP_LICENSE_TYPE).find((licenseType) =>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-26-              checkCloudbackup(licenseType)(device),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-27-            );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-28-            if (cloudBackupType) {
+packages/app-vsaas-portal/src/store/license/getters.js:29:              data[LICENSE_TYPE.CLOUD_BACKUP][cloudBackupType].push(device);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-30-            }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-31-          }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-32-          const aiLicenses = device.contractInfo.addOnPlans.filter((addOn) =>
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-33-            Object.values(AI_LICENSE_TYPE).includes(addOn.planType),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-34-          );
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-46-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-47-        {
+packages/app-vsaas-portal/src/store/license/getters.js-48-          [LICENSE_TYPE.X_PRO]: [],
+packages/app-vsaas-portal/src/store/license/getters.js-49-          [LICENSE_TYPE.X_STD]: [],
+packages/app-vsaas-portal/src/store/license/getters.js-50-          [LICENSE_TYPE.UNLICENSED]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:51:          [LICENSE_TYPE.CLOUD_BACKUP]: {
+packages/app-vsaas-portal/src/store/license/getters.js:52:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:53:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:54:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:55:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:56:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180]: [],
+packages/app-vsaas-portal/src/store/license/getters.js:57:            [CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365]: [],
+packages/app-vsaas-portal/src/store/license/getters.js-58-            [LICENSE_STATE.EXPIRED]: [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-59-          },
+packages/app-vsaas-portal/src/store/license/getters.js-60-          [LICENSE_TYPE.AI]: {
+packages/app-vsaas-portal/src/store/license/getters.js-61-            [AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE]: [],
+packages/app-vsaas-portal/src/store/license/getters.js-62-            [AI_LICENSE_TYPE.PPE]: [],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-76-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-77-  unlicensedVsaasCamera(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-78-    return getters.licensedVsaasCamera[LICENSE_TYPE.UNLICENSED];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-79-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-80-  cloudBackupLicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:81:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-82-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-83-  cloudBackup30LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:84:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-85-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-86-  cloudBackup60LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:87:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-88-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-89-  cloudBackup90LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:90:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-91-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-92-  cloudBackup120LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:93:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-94-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-95-  cloudBackup180LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:96:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-97-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-98-  cloudBackup365LicensedVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:99:    return getters.cloudBackupLicensedVsaasCamera[CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-100-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-101-  cloudBackupExpiredVsaasCamera(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:102:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][LICENSE_STATE.EXPIRED];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-103-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-104-  aiLicensedVsaasCamera(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-105-    return getters.licensedVsaasCamera[LICENSE_TYPE.AI];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-106-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-107-  aiLicenseAdvancedAiBundleVsaasCamera(state, getters) {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-203-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-204-  speakerUnlicensedCount(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-205-    const bridgeSpeakerCount = getters.unlicensedNetworkSpeaker.length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-206-    return bridgeSpeakerCount;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-207-  },
+packages/app-vsaas-portal/src/store/license/getters.js:208:  isCloudBackup30Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30),
+packages/app-vsaas-portal/src/store/license/getters.js:209:  isCloudBackup60Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60),
+packages/app-vsaas-portal/src/store/license/getters.js:210:  isCloudBackup90Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90),
+packages/app-vsaas-portal/src/store/license/getters.js:211:  isCloudBackup120Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120),
+packages/app-vsaas-portal/src/store/license/getters.js:212:  isCloudBackup180Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180),
+packages/app-vsaas-portal/src/store/license/getters.js:213:  isCloudBackup365Expiring: createCloudBackupExpiringGetter(CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-214-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-215-  cloudBackup30Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:216:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-217-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-218-  cloudBackup60Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:219:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-220-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-221-  cloudBackup90Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:222:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-223-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-224-  cloudBackup120Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:225:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-226-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-227-  cloudBackup180Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:228:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-229-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-230-  cloudBackup365Count(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:231:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-232-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-233-  cloudBackupTotalCount(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-234-    return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-235-      getters.cloudBackup30Count +
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-236-      getters.cloudBackup60Count +
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-239-      getters.cloudBackup180Count +
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-240-      getters.cloudBackup365Count
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-241-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-242-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-243-  cloudBackupExpiredCount(state, getters) {
+packages/app-vsaas-portal/src/store/license/getters.js:244:    return getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][LICENSE_STATE.EXPIRED].length;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-245-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-246-  isAILicenseAdvancedAiBundleExpiring(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-247-    return getters.aiLicensedVsaasCamera[AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE].some(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-248-      isAILicenseExpiring(AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-249-    );
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-301-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-302-  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-303-  isAnyLicenseExpired(state, getters) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-304-    return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-305-      getters.licensedVsaasCamera[LICENSE_TYPE.UNLICENSED].length > 0 ||
+packages/app-vsaas-portal/src/store/license/getters.js:306:      getters.licensedVsaasCamera[LICENSE_TYPE.CLOUD_BACKUP][LICENSE_STATE.EXPIRED].length > 0 ||
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-307-      getters.unlicensedNVRDevices.length > 0 ||
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-308-      getters.unlicensedNetworkSpeaker.length > 0 ||
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-309-      getters.aiLicenseExpiredCount > 0
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-310-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-311-  },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-350-  device.contractInfo &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-351-  device.contractInfo.otherPlans.find((other) => other.planType === LICENSE_TYPE.NETWORK_SPEAKER)?.state ===
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-352-    LICENSE_STATE.EXPIRING;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-353-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-354-const isCloudBackupExpired = (device) =>
+packages/app-vsaas-portal/src/store/license/getters.js:355:  device.contractInfo.addOnPlans.find((addOn) => addOn.planType === LICENSE_TYPE.CLOUD_BACKUP)?.state ===
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-356-  LICENSE_STATE.EXPIRED;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-357-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-358-const isCloudBackupExpiring = (device) =>
+packages/app-vsaas-portal/src/store/license/getters.js:359:  device.contractInfo.addOnPlans.find((addOn) => addOn.planType === LICENSE_TYPE.CLOUD_BACKUP)?.state ===
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-360-  LICENSE_STATE.EXPIRING;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-361-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-362-const checkCloudbackup = (type) => (device) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-363-  const cloudBackupLicense = device.contractInfo.addOnPlans.find(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-364-    (addOn) =>
+packages/app-vsaas-portal/src/store/license/getters.js:365:      addOn.planType === LICENSE_TYPE.CLOUD_BACKUP &&
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-366-      addOn.additionalInfo === type.toString() &&
+packages/app-vsaas-portal/src/store/license/getters.js:367:      addOn.state !== LICENSE_STATE.EXPIRED,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-368-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-369-  return !!cloudBackupLicense;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-370-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-371-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-372-const isAILicenseExpiring = (planType) => (device) =>
+packages/app-vsaas-portal/src/store/license/getters.js:373:  device.contractInfo.addOnPlans.find((addOn) => addOn.planType === planType).state === LICENSE_STATE.EXPIRING;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-374-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/license/getters.js-375-const countChannels = (deviceList) => deviceList.reduce((count, device) => count + device.channels.length, 0);
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-160-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-161-    getNavigationComponent(page) {
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-162-      return this.isLicenseGranted(page) ? 'router-link' : 'div';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-163-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-164-    getTrackingConfig(page) {
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:165:      return this.isLicenseGranted(page) ? { eventName: NAVIGATION_TRACKING_MAP[page] } : {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-166-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-167-  },
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-168-  computed: {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-169-    ...mapState('permission', ['aiControlPermissionManager']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-170-    ...mapGetters('permission', ['hasPagePermission', 'hasPlanPermission', 'canPlanUpdate', 'canDoOrg']),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-235-      );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-236-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-237-    upgradeInfo() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-238-      return {
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-239-        title: this.$t('Upgrade your license plan!'),
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue:240:        description: this.$t('Explore {productName} license plans and latest package with features', {
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-241-          productName: VendorHelper.getVendorConfig().PRODUCT_NAME,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-242-        }),
+packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-243-        buttonText: this.$t('Explore plans'),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-244-      };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Navigations/Navigation.vue-245-    },
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-14-  VsaasVSSCamera as VSSCamera,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-15-} from '@vivotek/device';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-16-import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-17-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-18-import DeviceFactory from '@/models/Device/DeviceFactory';
+packages/app-vsaas-portal/src/store/device/mutations.js:19:import { convertMainLicense, convertCloudBackupLicense, convertAILicenseExpired } from '@/utils/LicenseHelper';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-20-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-21-const mutations = {
+packages/app-vsaas-portal/src/store/device/mutations.js-22-  setDevices(state, { items: devices, groupsMap, plan, dependencies }) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-23-    const excludedDeviceTypes = ['ipspeaker', 'poeSwitch'];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-24-    const devicesWithoutExternalDevice = devices.filter((device) => !excludedDeviceTypes.includes(device.type));
+--
+packages/app-vsaas-portal/src/store/device/mutations.js-31-          isBlockCameraVcaCapabilityAndSupport: true,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-32-        });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-33-      }
+packages/app-vsaas-portal/src/store/device/mutations.js-34-      device.sharedLink = item.sharedLink?.enabled ? item.sharedLink : { enabled: false };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-35-      device.mainLicense = convertMainLicense(item.contractInfo);
+packages/app-vsaas-portal/src/store/device/mutations.js:36:      device.cloudBackupLicense = convertCloudBackupLicense(item.contractInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-37-      device.aiLicenseExpired = convertAILicenseExpired(item.contractInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-38-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-39-      if (!state.deviceMap[item.type]) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-40-        state.deviceMap[item.type] = new Map();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/store/device/mutations.js-41-      }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-165-        },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-166-        {
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-167-          key: AI_CONSENT_SETTINGS.LICENSE_PLATE_RECOGNITION,
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-168-          title: this.$t('License plate recognition'),
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-169-          description: this.$t(
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue:170:            'Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-171-          ),
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-172-          icon: 'general_license_plate_recognition',
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-173-          lastModified: this.licensePlateRecognitionSetting.email,
+packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-174-          lastModifiedTime: this.licensePlateRecognitionSetting.updatedAt
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Cards/AIConsentCard/AIConsentFeature.vue-175-            ? this.formatDate(this.licensePlateRecognitionSetting.updatedAt)
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-83-  return {
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-84-    [LICENSE_TYPE.UNLICENSED]: LICENSE_TYPE.UNLICENSED,
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-85-    [LICENSE_TYPE.X_PRO]: LICENSE_TYPE.X_PRO.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-86-    [LICENSE_TYPE.X_STD]: LICENSE_TYPE.X_STD.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-87-    [LICENSE_TYPE.X_LITE]: LICENSE_TYPE.X_LITE.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue:88:    [LICENSE_TYPE.CLOUD_BACKUP]: LICENSE_TYPE.CLOUD_BACKUP.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-89-    [LICENSE_TYPE.NETWORK_SPEAKER]: LICENSE_TYPE.NETWORK_SPEAKER.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-90-    [AI_LICENSE_TYPE.PPE]: AI_LICENSE_TYPE.PPE.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-91-    [AI_LICENSE_TYPE.LPR]: AI_LICENSE_TYPE.LPR.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-92-    [AI_LICENSE_TYPE.FALL]: AI_LICENSE_TYPE.FALL.toLowerCase(),
+packages/app-vsaas-portal/src/components/Indicators/LicenseTypeIndicator.vue-93-    [AI_LICENSE_TYPE.THINK_ALERT]: AI_LICENSE_TYPE.THINK_ALERT.toLowerCase(),
+--
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:1:import { LICENSE_TYPE, CLOUD_BACKUP_LICENSE_TYPE, LICENSE_STATE, AI_LICENSE_TYPE } from '@/constants/License';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-2-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-3-export function convertMainLicense(contractInfo) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-4-  if (!contractInfo?.mainPlan) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-5-    return {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-6-      planType: LICENSE_TYPE.UNLICENSED,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-11-  return contractInfo.mainPlan;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-12-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-13-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-14-export function convertCloudBackupLicense(contractInfo) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-15-  const cloudBackupLicense = contractInfo?.addOnPlans?.find(
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:16:    (addOnLicense) => addOnLicense?.planType === LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-17-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-18-  if (!cloudBackupLicense) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-19-    return {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-20-      planType: LICENSE_TYPE.UNLICENSED,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-21-      additionalInfo: null,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-38-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-39-  return speakerLicense;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-40-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-41-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-42-export function convertAILicense(contractInfo, aiLicenseType) {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:43:  const aiLicense = contractInfo?.addOnPlans?.find((addOnLicense) => addOnLicense?.planType === aiLicenseType);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-44-  if (!aiLicense) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-45-    return {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-46-      planType: LICENSE_TYPE.UNLICENSED,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-47-      additionalInfo: null,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-48-      state: null,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-50-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-51-  return aiLicense;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-52-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-53-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-54-export function convertAILicenseExpired(contractInfo) {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:55:  const aiLicenses = contractInfo?.addOnPlans?.filter((addOnLicense) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-56-    return (
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:57:      Object.values(AI_LICENSE_TYPE).includes(addOnLicense?.planType) && addOnLicense?.state === LICENSE_STATE.EXPIRED
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-58-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-59-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-60-  return aiLicenses;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-61-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-62-
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-76-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-77-export function sortByCloudBackupLicense(firstLicenseItem, secondLicenseItem) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-78-  const aCloudBackupPlan = convertCloudBackupLicense(firstLicenseItem.contractInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-79-  const bCloudBackupPlan = convertCloudBackupLicense(secondLicenseItem.contractInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-80-
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:81:  const firstBackupLicense = `${aCloudBackupPlan.planType}${aCloudBackupPlan.additionalInfo}`;
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:82:  const secondBackupLicense = `${bCloudBackupPlan.planType}${bCloudBackupPlan.additionalInfo}`;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-83-
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:84:  const firstBackupLicenseOrder = CLOUD_BACKUP_LICENSE_TYPE[firstBackupLicense];
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:85:  const secondBackupLicenseOrder = CLOUD_BACKUP_LICENSE_TYPE[secondBackupLicense];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-86-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-87-  const licenseStateOrder = [LICENSE_STATE.EXPIRED, LICENSE_STATE.EXPIRING, LICENSE_STATE.VALID];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-88-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-89-  return (
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-90-    firstBackupLicenseOrder -
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-91-    secondBackupLicenseOrder +
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:92:    licenseStateOrder.indexOf(aCloudBackupPlan.state) -
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:93:    licenseStateOrder.indexOf(bCloudBackupPlan.state)
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-94-  );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-95-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-96-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-97-export function generateLicenseDevice(deviceList) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-98-  return deviceList.map((device) => {
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-127-  });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-128-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-129-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-130-export function generateCloudbackupLicenseDevice(deviceList) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-131-  return deviceList.map((device) => {
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:132:    const licenseInfo = convertCloudBackupLicense(device.contractInfo);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-133-    return {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-134-      ...device,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-135-      licenseType: licenseInfo.planType,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-136-      licenseLabel: `${licenseInfo.additionalInfo} Days`,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-137-      licenseState: licenseInfo.state,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-151-}
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-152-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-153-export function generateAILicenseExpiredDevice(deviceList) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-154-  return deviceList.map((device) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-155-    const licenseInfo = device.contractInfo.addOnPlans.find(
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:156:      (addOnLicense) =>
+packages/app-vsaas-portal/src/utils/LicenseHelper.js:157:        Object.values(AI_LICENSE_TYPE).includes(addOnLicense.planType) && addOnLicense.state === LICENSE_STATE.EXPIRED,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-158-    );
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-159-    return {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/utils/LicenseHelper.js-160-      ...device,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-161-      licenseType: licenseInfo.planType,
+packages/app-vsaas-portal/src/utils/LicenseHelper.js-162-      licenseState: licenseInfo.state,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-238-    scheduleType() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-239-      return Object.keys(bitwiseMap).find((key) => bitwiseMap[key] === JSON.stringify(this.backupSchedulesBitwise));
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-240-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-241-    expiredContent() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-242-      return `${this.$t(
+packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue:243:        'The cloud backup licenses have expired, and the cloud backup service has been suspended.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-244-      )}\n${this.$t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-245-        'The stored backup data is subject to daily deletion, and this deletion process will continue daily based on the retention period.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-246-      )}`;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-247-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-248-    licenseInfo() {
+packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue:249:      const licenseInfo = convertCloudBackupLicense(this.device.contractInfo);
+packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-250-      licenseInfo.label = licenseInfo.additionalInfo ? `${licenseInfo.additionalInfo} Days` : '';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-251-      return licenseInfo;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-252-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-253-    shouldShowFeatureBlocker() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/device/settings/RecordingAndStorage/CloudBackup.vue-254-      return this.licenseInfo.planType === LICENSE_TYPE.UNLICENSED;
+--
+packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-28-      [ADDON_TYPES.THINK]: {},
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-29-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-30-    this.mqttClient = new DeviceIoTClient({
+packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-31-      thingName: reference.thingName,
+packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-32-      derivant: reference.derivant,
+packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js:33:      scope: IOT_SCOPE.ADDON_LICENSE_ACK,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-34-    });
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-35-  }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-36-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-37-  get isIoTConnected() {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/models/IoT/AIModelDownload/AIModelDownloadService.js-38-    return this.mqttClient.connected;
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-146-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-147-const getNavigationComponent = (page) => {
+packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-148-  return isLicenseGranted.value(page) ? 'router-link' : 'div';
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-149-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-150-const getTrackingConfig = (page) => {
+packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue:151:  return isLicenseGranted.value(page) ? { eventName: NAVIGATION_TRACKING_MAP[page] } : {};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-152-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/components/reskin/Navigations/Navigation.vue-153-</script>
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-200-  contactResellerModal.value.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-201-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-202-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-203-const licenseCountClickHandler = (licenseInformationItem, licenseCountItem) => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-204-  return () => {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue:205:    showDeviceLicenseTableDialogue(licenseInformationItem.key, licenseCountItem.type, licenseCountItem.cloudBackupType);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-206-    track(TRACK_EVENT_KEY.SYSTEM_LICENSE_INFO_NUMBER_LICENSE_TYPE);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-207-  };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-208-};
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-209-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/index.vue-210-onMounted(() => {
+--
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-53-        'license/xProCount': 5,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-54-        'license/xStdCount': 3,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-55-        'license/cameraUnlicensedCount': 2,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-56-        'license/speakerCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-57-        'license/speakerUnlicensedCount': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:58:        'license/cloudBackupTotalCount': 2,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:59:        'license/cloudBackupExpiredCount': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:60:        'license/cloudBackup30Count': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:61:        'license/cloudBackup60Count': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:62:        'license/cloudBackup90Count': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:63:        'license/cloudBackup120Count': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:64:        'license/cloudBackup180Count': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js:65:        'license/cloudBackup365Count': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-66-        'license/aiLicensePPECount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-67-        'license/aiLicenseLPRCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-68-        'license/aiLicenseFallCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-69-        'license/aiLicenseThinkCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.test.js-70-        'license/aiLicenseExpiredCount': 0,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-41-    } else {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-42-      isOpenedDeviceList.value = [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-43-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-44-  };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-45-
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:46:  const showDeviceLicenseTableDialogue = (type, licenseType = '', cloudBackupType = '') => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-47-    activeDialogType.value = type;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-48-    activeDialogLicenseType.value = licenseType;
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-49-    const deviceType = cameraCount.value > 0 ? CAMERA_DEVICE_TYPE.CAMERA : CAMERA_DEVICE_TYPE.NVR;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-50-    changeActiveDeviceType(deviceType);
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-51-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-52-    if (type === LICENSE_BLOCK_KEY.CLOUD_STORAGE) {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:53:      activeDialogCloudBackupLicenseType.value = cloudBackupType || licenseType;
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-54-    }
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-55-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-56-    if (deviceLicenseTableDialogue.value?.show) {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-57-      deviceLicenseTableDialogue.value.show();
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-58-    }
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-89-            })
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-90-          : t('{count} peripheral licenses are having issues', {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-91-              count: store.getters['license/speakerUnlicensedCount'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-92-            }),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-93-      [LICENSE_BLOCK_KEY.CLOUD_STORAGE]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:94:        store.getters['license/cloudBackupExpiredCount'] === 1
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-95-          ? t('{count} cloud storage license is having issues', {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:96:              count: store.getters['license/cloudBackupExpiredCount'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-97-            })
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-98-          : t('{count} cloud storage licenses are having issues', {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:99:              count: store.getters['license/cloudBackupExpiredCount'],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-100-            }),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-101-      [LICENSE_BLOCK_KEY.AI]:
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-102-        store.getters['license/aiLicenseExpiredCount'] === 1
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-103-          ? t('{count} AI license is having issues', {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-104-              count: store.getters['license/aiLicenseExpiredCount'],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-109-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-110-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-111-    const normalTitleMap = {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-112-      [LICENSE_BLOCK_KEY.CAMERA]: `${t('Camera license')} - ${activeDialogLicenseType.value}: ${cameraCount.value + nvrCameraCount.value}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-113-      [LICENSE_BLOCK_KEY.SPEAKER]: `${t('Peripheral license')} - ${activeDialogLicenseType.value}: ${deviceList.value.length}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:114:      [LICENSE_BLOCK_KEY.CLOUD_STORAGE]: `${t('Cloud storage')} - ${activeDialogCloudBackupLicenseType.value} Days: ${deviceList.value.length}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-115-      [LICENSE_BLOCK_KEY.AI]: `${t('AI license')} - ${activeDialogLicenseType.value}: ${deviceList.value.length}`,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-116-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-117-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-118-    const title =
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-119-      (isActiveDialogLicenseTypeUnlicensed.value
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-130-      )}\n${t('To ensure uninterrupted access and maintain system security, please contact your reseller to renew or activate the license as soon as possible.')}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-131-      [LICENSE_BLOCK_KEY.SPEAKER]: `${t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-132-        'The following peripheral licenses require activation or renewal.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-133-      )}\n${t('Peripheral device services have been suspended. Please contact your reseller to renew or activate the license.')}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-134-      [LICENSE_BLOCK_KEY.CLOUD_STORAGE]: `${t(
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:135:        'The following cloud backup licenses have expired, and the cloud backup service has been suspended.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-136-      )}\n${t('The stored backup data is subject to daily deletion, and this deletion process will continue daily based on the retention period.')}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-137-      [LICENSE_BLOCK_KEY.AI]: `${t(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-138-        'The following AI licenses have expired, and AI services have been suspended.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-139-      )}\n${t('Please contact your reseller to proceed with the renewal.')}`,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-140-    };
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-229-        store.getters['license/licensedNetworkSpeaker'] || [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-230-      ),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-231-      [`${LICENSE_BLOCK_KEY.SPEAKER}-${LICENSE_TYPE.UNLICENSED}`]: generateLicenseSpeakerDevice(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-232-        store.getters['license/unlicensedNetworkSpeaker'] || [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-233-      ),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:234:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:235:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup30LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:236:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:237:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup60LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:238:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:239:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup90LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:240:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:241:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup120LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:242:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:243:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup180LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:244:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365}`]:
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:245:        generateCloudbackupLicenseDevice(store.getters['license/cloudBackup365LicensedVsaasCamera'] || []),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:246:      [`${LICENSE_BLOCK_KEY.CLOUD_STORAGE}-${LICENSE_TYPE.UNLICENSED}`]: generateCloudbackupLicenseDevice(
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:247:        store.getters['license/cloudBackupExpiredVsaasCamera'] || [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-248-      ),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-249-      [`${LICENSE_BLOCK_KEY.AI}-${AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE}`]: generateAILicenseDevice(
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-250-        store.getters['license/aiLicenseAdvancedAiBundleVsaasCamera'] || [],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-251-        AI_LICENSE_TYPE.ADVANCED_AI_BUNDLE,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-252-      ),
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-289-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-290-  const deviceList = computed(() => {
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-291-    const keyMap = {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-292-      [LICENSE_BLOCK_KEY.CAMERA]: `${activeDialogType.value}-${activeDialogDeviceType.value}-${activeDialogLicenseType.value}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-293-      [LICENSE_BLOCK_KEY.SPEAKER]: `${activeDialogType.value}-${activeDialogLicenseType.value}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js:294:      [LICENSE_BLOCK_KEY.CLOUD_STORAGE]: `${activeDialogType.value}-${activeDialogCloudBackupLicenseType.value}`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-295-      [LICENSE_BLOCK_KEY.AI]: `${activeDialogType.value}-${activeDialogLicenseType.value}`,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-296-    };
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-297-
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-298-    let result = deviceListMap.value[keyMap[activeDialogType.value]] || [];
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.js-299-
+--
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-73-        'license/xProNVRDevices': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-74-        'license/xStdNVRDevices': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-75-        'license/unlicensedNVRDevices': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-76-        'license/cameraUnlicensedCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-77-        'license/speakerUnlicensedCount': 0,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:78:        'license/cloudBackupExpiredCount': 1,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-79-        'license/licensedNetworkSpeaker': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-80-        'license/unlicensedNetworkSpeaker': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:81:        'license/cloudBackupLicensedVsaasCamera': {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-82-          30: [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-83-          60: [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-84-          90: [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-85-          120: [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-86-          180: [],
+--
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-91-              displayName: 'Camera 3',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-92-              mac: 'CC:DD:EE:FF:00:11',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-93-              contractInfo: {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-94-                addOnPlans: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-95-                  {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:96:                    planType: LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-97-                  },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-98-                ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-99-              },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-100-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-101-          ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-102-        },
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:103:        'license/cloudBackup30LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:104:        'license/cloudBackup60LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:105:        'license/cloudBackup90LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:106:        'license/cloudBackup120LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:107:        'license/cloudBackup180LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:108:        'license/cloudBackup365LicensedVsaasCamera': [],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:109:        'license/cloudBackupExpiredVsaasCamera': [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-110-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-111-            deviceId: 'camera3',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-112-            displayName: 'Camera 3',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-113-            mac: 'CC:DD:EE:FF:00:11',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-114-            contractInfo: {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-115-              addOnPlans: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-116-                {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js:117:                  planType: LICENSE_TYPE.CLOUD_BACKUP,
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-118-                },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-119-              ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-120-            },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-121-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformationDialogue.test.js-122-        ],
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-186-        ),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-187-        image: cloudStorageImage,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-188-        icon: 'general_cloud_solid',
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-189-        hint: t('Camera license required'),
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-190-        hintType: LICENSE_HINT_TYPE.INFO,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:191:        total: store.getters['license/cloudBackupTotalCount'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:192:        unlicensedCount: store.getters['license/cloudBackupExpiredCount'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-193-        licenseCount: [
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-194-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:195:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:196:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:197:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup30} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:198:            total: store.getters['license/cloudBackup30Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:199:            licenseState: convertHintState(store.getters['license/isCloudBackup30Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-200-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-201-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:202:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:203:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:204:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup60} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:205:            total: store.getters['license/cloudBackup60Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:206:            licenseState: convertHintState(store.getters['license/isCloudBackup60Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-207-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-208-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:209:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:210:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:211:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup90} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:212:            total: store.getters['license/cloudBackup90Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:213:            licenseState: convertHintState(store.getters['license/isCloudBackup90Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-214-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-215-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:216:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:217:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:218:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup120} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:219:            total: store.getters['license/cloudBackup120Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:220:            licenseState: convertHintState(store.getters['license/isCloudBackup120Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-221-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-222-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:223:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:224:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:225:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup180} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:226:            total: store.getters['license/cloudBackup180Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:227:            licenseState: convertHintState(store.getters['license/isCloudBackup180Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-228-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-229-          {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:230:            type: LICENSE_TYPE.CLOUD_BACKUP,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:231:            cloudBackupType: CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:232:            label: `${CLOUD_BACKUP_LICENSE_TYPE.cloudBackup365} Days`,
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:233:            total: store.getters['license/cloudBackup365Count'],
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js:234:            licenseState: convertHintState(store.getters['license/isCloudBackup365Expiring']),
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-235-          },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-236-        ],
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-237-      },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-238-      {
+packages/app-vsaas-portal/src/pages/system/licenseInformation/composables/useLicenseInformation.js-239-        key: LICENSE_BLOCK_KEY.AI,
+--
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-128-    },
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-129-    {
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-130-      key: AI_CONSENT_SETTINGS.LICENSE_PLATE_RECOGNITION,
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-131-      title: t('License plate recognition'),
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-132-      description: t(
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue:133:        'Detects and identifies license plates in videos to assist in vehicle tracking and recognition tasks. This feature enhances parking management and traffic monitoring.',
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-134-      ),
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-135-      lastModifiedAccount: props.licensePlateRecognitionSetting.email || '-',
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-136-      lastModifiedTime: props.licensePlateRecognitionSetting.updatedAt
+/Users/liuhanwen/Desktop/project/webtech-monorepo/packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-137-        ? formatDate(props.licensePlateRecognitionSetting.updatedAt)
+packages/app-vsaas-portal/src/pages/system/reskin/AIConsentSettings/components/AIConsentFeature.vue-138-        : '-',

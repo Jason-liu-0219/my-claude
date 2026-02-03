@@ -1,0 +1,875 @@
+import ApiServiceInterface from '@/singletons/ApiServiceInterface';
+
+import actions from './actions';
+
+vi.mock('@/singletons/ApiServiceInterface');
+
+const sessionStorageMock = (() => {
+  let store = {};
+
+  return {
+    getItem(key) {
+      return store[key] || null;
+    },
+    setItem(key, value) {
+      store[key] = value.toString();
+    },
+    removeItem(key) {
+      delete store[key];
+    },
+    clear() {
+      store = {};
+    },
+  };
+})();
+
+Object.defineProperty(window, 'sessionStorage', {
+  value: sessionStorageMock,
+});
+
+vi.mock('@/singletons/ApiServiceInterface');
+
+describe('actions', () => {
+  beforeEach(() => {
+    window.sessionStorage.clear();
+    vi.clearAllMocks();
+  });
+
+  describe('fetchGroupList', () => {
+    it('should commit, dispatch', async () => {
+      const spy = vi.spyOn(ApiServiceInterface, 'listSite').mockResolvedValue({
+        sites: [{ id: '1' }, { id: '2' }, { id: '3' }, { id: '4' }],
+      });
+
+      const dispatch = vi.fn();
+      const commit = vi.fn();
+      const getters = {
+        groupsMap: {},
+        defaultGroup: { id: '1' },
+      };
+      await actions.fetchGroupList({
+        state: { isFetchingData: false, activeGroupId: '1' },
+        dispatch,
+        commit,
+        getters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).toHaveBeenCalled();
+    });
+
+    it('should call device/fetchListDeviceInfoOfDeviceGroup when queryDevices = true', async () => {
+      const spy = vi.spyOn(ApiServiceInterface, 'listSite').mockResolvedValue({
+        sites: [{ id: '1' }, { id: '2' }],
+      });
+
+      const dispatch = vi.fn();
+      const commit = vi.fn();
+      const getters = {
+        groupsMap: {},
+        defaultGroup: { id: '123' },
+      };
+      await actions.fetchGroupList(
+        {
+          state: { isFetchingData: false, activeGroupId: null },
+          dispatch,
+          commit,
+          getters,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        { queryDevices: true },
+      );
+
+      expect(spy).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith('setActiveGroupId', '123');
+    });
+
+    it('should not call device/fetchListDeviceInfoOfDeviceGroup when queryDevices = false', async () => {
+      const spy = vi.spyOn(ApiServiceInterface, 'listSite').mockResolvedValue({
+        sites: [{ id: '1' }, { id: '2' }],
+      });
+
+      const dispatch = vi.fn();
+      const commit = vi.fn();
+      const getters = {
+        groupsMap: {},
+        defaultGroup: { id: '123' },
+      };
+      await actions.fetchGroupList(
+        {
+          state: { isFetchingData: false, activeGroupId: null },
+          dispatch,
+          commit,
+          getters,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        { queryDevices: false },
+      );
+
+      expect(spy).toHaveBeenCalled();
+      expect(dispatch).toHaveBeenCalledWith('setActiveGroupId', '123');
+    });
+  });
+
+  describe('setActiveGroupId', () => {
+    const getters = {
+      activeGroupAvailableDevices: [],
+    };
+    it('should commit setActiveGroupId', async () => {
+      const spy = vi.fn();
+      const dispatch = vi.fn();
+
+      const state = {
+        layout: '2x2',
+      };
+
+      await actions.setActiveGroupId(
+        {
+          state,
+          getters,
+          commit: spy,
+          dispatch,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        '3',
+      );
+
+      expect(spy).toBeCalledWith('setActiveGroupId', '3');
+      expect(dispatch).toBeCalledWith('changeLayout', { layout: '2x2' });
+    });
+    it('should dispatch changeLayout to reset layout ', async () => {
+      const spy = vi.fn();
+      const state = {
+        layout: '2x2',
+      };
+
+      await actions.setActiveGroupId(
+        {
+          state,
+          getters,
+          commit: vi.fn(),
+          dispatch: spy,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        '0',
+      );
+      expect(spy).toBeCalledWith('setLayout');
+      expect(spy).toBeCalledWith('changeLayout', { layout: '2x2' });
+    });
+    it('should dispatch resetAvailableDeviceUiSettings', async () => {
+      const spy = vi.fn();
+      const state = {
+        layout: '2x2',
+      };
+      await actions.setActiveGroupId(
+        {
+          state,
+          getters,
+          commit: vi.fn(),
+          dispatch: spy,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        '0',
+      );
+      expect(spy).toBeCalledWith('setLayout');
+      expect(spy).toBeCalledWith('resetAvailableDeviceUiSettings');
+    });
+  });
+
+  describe('setLayout', () => {
+    it('should use sessionStorage to set layout when sessionStorage has layout', () => {
+      const getItemSpy = vi.spyOn(window.sessionStorage, 'getItem');
+      const commit = vi.fn();
+      const mockActiveGroupAvailableDevices = [];
+      window.sessionStorage.setItem('layout', '2x2');
+
+      actions.setLayout({
+        state: {
+          layout: '3x3',
+        },
+        commit,
+        getters: {
+          activeGroupAvailableDevices: mockActiveGroupAvailableDevices,
+        },
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(getItemSpy).toBeCalledWith('layout');
+      expect(commit).toHaveBeenNthCalledWith(1, 'setLayout', '2x2');
+      expect(commit).toHaveBeenNthCalledWith(2, 'changeLayout', {
+        layout: '2x2',
+        devices: mockActiveGroupAvailableDevices,
+        pageIndex: 0,
+      });
+    });
+    it('should use state.layout to set layout when sessionStorage has not layout', () => {
+      const getItemSpy = vi.spyOn(window.sessionStorage, 'getItem');
+      const commit = vi.fn();
+      const mockActiveGroupAvailableDevices = [];
+
+      actions.setLayout({
+        state: {
+          layout: '3x3',
+        },
+        commit,
+        getters: {
+          activeGroupAvailableDevices: mockActiveGroupAvailableDevices,
+        },
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(getItemSpy).toBeCalledWith('layout');
+      expect(commit).toHaveBeenNthCalledWith(1, 'setLayout', '3x3');
+      expect(commit).toHaveBeenNthCalledWith(2, 'changeLayout', {
+        layout: '3x3',
+        devices: mockActiveGroupAvailableDevices,
+      });
+    });
+  });
+  describe('setActiveDeviceId', () => {
+    it('should commit setActivePageIndex, setActiveViewIndex', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const deviceIndex = 'test456';
+      const spy = vi.fn();
+      const dispatchSpy = vi.fn().mockResolvedValue();
+      const rootState = {
+        apiService: ApiServiceInterface,
+      };
+      const state = {
+        activeGroupId: 0,
+      };
+      const getters = {
+        validGroups: [{ name: 'test' }],
+        activeGroupPageLayoutInfo: [
+          {
+            pageIndex: 2,
+            viewIndex: 4,
+            deviceId: 'test456',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 1,
+            deviceId: 'e71ff6e7-cdfd-4769-90f3-98a9871625f4',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 2,
+            deviceId: '',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 3,
+            deviceId: '',
+          },
+        ],
+      };
+
+      const rootGetters = {
+        'device/allDevicesMap': {
+          test456: {
+            index: 0,
+            groupName: 'test',
+          },
+          'e71ff6e7-cdfd-4769-90f3-98a9871625f4': {
+            groupName: 'test',
+          },
+        },
+      };
+      await actions.setActiveDeviceId(
+        {
+          commit: spy,
+          dispatch: dispatchSpy,
+          state,
+          getters,
+          rootState,
+          rootGetters,
+        },
+        deviceIndex,
+      );
+
+      expect(spy).toBeCalledWith('setActiveDeviceId', deviceIndex);
+      expect(spy).toBeCalledWith('setActivePageIndex', 2);
+      expect(spy).toBeCalledWith('setActiveViewIndex', 4);
+    });
+
+    it('should commit empty setActiveDeviceId', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const deviceIndex = 'test456';
+      const spy = vi.fn();
+      const dispatchSpy = vi.fn().mockResolvedValue();
+      const rootState = {
+        device: {
+          devices: {
+            test456: {
+              index: 0,
+              groupName: 'test',
+            },
+            'e71ff6e7-cdfd-4769-90f3-98a9871625f4': {
+              groupName: 'test',
+            },
+          },
+        },
+      };
+      const state = {
+        activeDeviceId: 'test456',
+      };
+      const getters = {
+        validGroups: [{ name: 'test' }],
+        activeGroupPageLayoutInfo: [
+          {
+            pageIndex: 2,
+            viewIndex: 4,
+            deviceId: 'test456',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 1,
+            deviceId: 'e71ff6e7-cdfd-4769-90f3-98a9871625f4',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 2,
+            deviceId: '',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 3,
+            deviceId: '',
+          },
+        ],
+      };
+
+      await actions.setActiveDeviceId(
+        {
+          commit: spy,
+          dispatch: dispatchSpy,
+          state,
+          getters,
+          rootState,
+        },
+        deviceIndex,
+      );
+
+      expect(spy).toBeCalledWith('setActiveDeviceId', '');
+    });
+
+    it('should commit setActiveViewIndex = -1', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+      const deviceIndex = '3333';
+      const spy = vi.fn();
+      const dispatchSpy = vi.fn().mockResolvedValue();
+      const rootState = {
+        apiService: ApiServiceInterface,
+      };
+      const state = {
+        activeGroupId: 0,
+      };
+      const getters = {
+        validGroups: [{ name: 'test', id: '0' }],
+        activeGroupPageLayoutInfo: [
+          {
+            pageIndex: 2,
+            viewIndex: 4,
+            device_id: 'test456',
+            status: 'CAM_OFFLINE',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 1,
+            device_id: 'e71ff6e7-cdfd-4769-90f3-98a9871625f4',
+            status: 'CAM_OFFLINE',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 2,
+            device_id: '',
+            status: 'CAM_OFFLINE',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 3,
+            device_id: '',
+            status: 'CAM_OFFLINE',
+          },
+        ],
+      };
+
+      const rootGetters = {
+        'device/allDevicesMap': {
+          test456: {
+            groupName: 'test',
+          },
+          'e71ff6e7-cdfd-4769-90f3-98a9871625f4': {
+            groupName: 'test',
+          },
+        },
+      };
+
+      await actions.setActiveDeviceId(
+        {
+          commit: spy,
+          dispatch: dispatchSpy,
+          getters,
+          state,
+          rootState,
+          rootGetters,
+        },
+        deviceIndex,
+      );
+
+      expect(spy).toBeCalledWith('setActiveDeviceId', deviceIndex);
+      expect(spy).toBeCalledWith('setActiveViewIndex', -1);
+    });
+
+    it('should dispatch setActiveGroupId', async () => {
+      const deviceId = 'e71ff6e7-cdfd-4769-90f3-98a9871625f4';
+      const spy = vi.fn();
+      const dispatchSpy = vi.fn();
+      const state = {
+        activeGroupId: 0,
+      };
+      const rootState = {
+        apiService: ApiServiceInterface,
+        device: {
+          devices: {},
+        },
+      };
+      const getters = {
+        validGroups: [
+          { name: 'test', id: '0' },
+          { name: 'test1', id: '1' },
+        ],
+        activeGroupPageLayoutInfo: [
+          {
+            pageIndex: 2,
+            viewIndex: 4,
+            deviceId: 'test456',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 1,
+            deviceId: 'e71ff6e7-cdfd-4769-90f3-98a9871625f4',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 2,
+            deviceId: '',
+          },
+          {
+            pageIndex: 0,
+            viewIndex: 3,
+            deviceId: '',
+          },
+        ],
+      };
+      const rootGetters = {
+        'device/allDevicesMap': {
+          test456: {
+            groupName: 'test',
+          },
+          'e71ff6e7-cdfd-4769-90f3-98a9871625f4': {
+            groupName: 'test1',
+            siteID: '1',
+          },
+        },
+      };
+      actions.setActiveDeviceId(
+        {
+          commit: spy,
+          dispatch: dispatchSpy,
+          getters,
+          rootState,
+          rootGetters,
+          state,
+        },
+        deviceId,
+      );
+
+      expect(dispatchSpy).toBeCalledWith('setActiveGroupId', '1');
+    });
+  });
+
+  describe('goPreviousPage', () => {
+    it('should not commit goPreviousPage', () => {
+      const state = {
+        activePageIndex: 0,
+      };
+      const spy = vi.fn();
+
+      actions.goPreviousPage({
+        state,
+        commit: spy,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).not.toBeCalled();
+    });
+    it('should commit goPreviousPage', () => {
+      const state = {
+        activePageIndex: 1,
+      };
+      const spy = vi.fn();
+
+      actions.goPreviousPage({
+        state,
+        commit: spy,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).toBeCalledWith('goPreviousPage');
+    });
+  });
+
+  describe('changeLayout', () => {
+    it('should called sessionStorage.setItem', () => {
+      const spy = vi.fn();
+      const setItemSpy = vi.spyOn(window.sessionStorage, 'setItem');
+
+      actions.changeLayout(
+        {
+          dispatch: spy,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+          commit: vi.fn(),
+        },
+        { layout: '3x3' },
+      );
+
+      expect(spy).toBeCalledTimes(1);
+      expect(setItemSpy).toBeCalledWith('layout', '3x3');
+    });
+    it('should not called sessionStorage.setItem', () => {
+      const spy = vi.fn();
+      const setItemSpy = vi.spyOn(window.sessionStorage, 'setItem');
+
+      actions.changeLayout(
+        {
+          dispatch: spy,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+          commit: vi.fn(),
+        },
+        {},
+      );
+
+      expect(spy).toBeCalledTimes(1);
+      expect(setItemSpy).toBeCalledTimes(0);
+    });
+  });
+
+  describe('goNextPage', () => {
+    it('should commit goNextPage', () => {
+      const state = {
+        activePageIndex: 0,
+      };
+      const getters = {
+        pageCount: 2,
+      };
+
+      const spy = vi.fn();
+
+      actions.goNextPage({
+        state,
+        commit: spy,
+        getters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).toBeCalledWith('goNextPage');
+    });
+    it('should not commit goNextPage', () => {
+      const state = {
+        activePageIndex: 1,
+      };
+      const getters = {
+        pageCount: 2,
+      };
+
+      const spy = vi.fn();
+
+      actions.goNextPage({
+        state,
+        commit: spy,
+        getters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).not.toBeCalled();
+    });
+  });
+
+  describe('createGroup', () => {
+    it('should create group', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+
+      const mockSite = {
+        id: 'new-site-id',
+        name: 'name',
+        location: {
+          latitude: 123,
+          longitude: 123,
+          address: 'address',
+        },
+      };
+
+      const spy = vi.spyOn(ApiServiceInterface, 'createSite').mockResolvedValue(mockSite);
+      const commit = vi.fn().mockResolvedValue();
+      await actions.createGroup(
+        {
+          commit,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        {
+          name: 'name',
+          location: {
+            latitude: 123,
+            longitude: 123,
+            address: 'address',
+          },
+        },
+      );
+      vi.advanceTimersByTime(1000);
+      expect(spy).toBeCalledWith({
+        name: 'name',
+        location: {
+          latitude: 123,
+          longitude: 123,
+          address: 'address',
+        },
+      });
+      expect(commit).toBeCalledWith('addGroup', mockSite);
+    });
+  });
+
+  describe('removeGroup', () => {
+    it('should call ApiService and commit removeGroup', async () => {
+      vi.useFakeTimers({ shouldAdvanceTime: true });
+
+      const group = { id: 'aaa' };
+      const spy = vi.spyOn(ApiServiceInterface, 'deleteSite').mockResolvedValue();
+      const commit = vi.fn().mockResolvedValue();
+      await actions.removeGroup(
+        {
+          commit,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        group,
+      );
+
+      vi.advanceTimersByTime(1000);
+      expect(spy).toBeCalledWith({ siteId: 'aaa' });
+      expect(commit).toBeCalledWith('removeGroup', 'aaa');
+    });
+  });
+
+  describe('resetAvailableDeviceUiSettings', () => {
+    it('should call each activeGroupAvailableDevices resetState()', async () => {
+      const spyResetState = vi.fn();
+      const mockGetters = {
+        activeGroupAvailableDevices: [
+          {
+            services: {
+              ui: {
+                resetState: spyResetState,
+              },
+            },
+          },
+          {
+            services: {
+              ui: {
+                resetState: spyResetState,
+              },
+            },
+          },
+        ],
+      };
+      actions.resetAvailableDeviceUiSettings({
+        getters: mockGetters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+      expect(spyResetState).toBeCalledTimes(mockGetters.activeGroupAvailableDevices.length);
+    });
+  });
+
+  describe('updateAvailableDeviceUiSettingsFromLocalStorage', () => {
+    it('should call each availableCameraDevices updateFromLocalStorage()', async () => {
+      const spyUpdateFromLocalStorage = vi.fn();
+      const rootGetters = {
+        'device/availableCameraDevices': [
+          {
+            services: {
+              ui: {
+                updateFromLocalStorage: spyUpdateFromLocalStorage,
+              },
+            },
+          },
+          {
+            services: {
+              ui: {
+                updateFromLocalStorage: spyUpdateFromLocalStorage,
+              },
+            },
+          },
+        ],
+      };
+      actions.updateAvailableDeviceUiSettingsFromLocalStorage({
+        rootGetters,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+      expect(spyUpdateFromLocalStorage).toBeCalledTimes(rootGetters['device/availableCameraDevices'].length);
+    });
+  });
+
+  describe('resetGroupStatus', () => {
+    it('should commit', () => {
+      const mockGetters = {
+        defaultGroup: {
+          id: '1',
+        },
+      };
+      const spy = vi.fn();
+
+      actions.resetGroupStatus({
+        getters: mockGetters,
+        commit: spy,
+        rootState: {
+          apiService: ApiServiceInterface,
+        },
+      });
+
+      expect(spy).toBeCalledWith('setActiveGroupId', '1');
+    });
+  });
+
+  describe('batchMoveDeviceToGroup', () => {
+    it('should called moveDevicesToSite api', async () => {
+      const devices = [
+        {
+          deviceId: 'deviceA',
+          thingName: 'thing1',
+          options: {
+            derivant: 'none',
+          },
+        },
+      ];
+      const deviceGroupID = 'group1';
+      const commit = vi.fn().mockResolvedValue();
+      const rootGetters = {
+        'device/allDevicesMap': {
+          deviceA: {
+            options: {
+              deviceGroupID,
+            },
+          },
+        },
+        'group/groupsMap': {
+          group1: {
+            id: 'group1',
+            name: 'group1',
+          },
+        },
+      };
+      const rootState = {
+        apiService: ApiServiceInterface,
+      };
+      const spy = vi.spyOn(ApiServiceInterface, 'moveDevicesToSite').mockResolvedValue({
+        devices: [{ thingName: 'thing1', derivant: 'none', status: 'success' }],
+        summary: { total: 1, succeeded: 1, failed: 0 },
+      });
+
+      await actions.batchMoveDeviceToGroup(
+        {
+          commit,
+          rootGetters,
+          rootState,
+        },
+        { devices, deviceGroupID },
+      );
+
+      expect(spy).toBeCalledWith({
+        siteId: deviceGroupID,
+        devices: [{ thingName: 'thing1', derivant: 'none' }],
+      });
+      expect(commit).toHaveBeenCalledTimes(1);
+      expect(commit).toHaveBeenNthCalledWith(
+        1,
+        'device/updateDevice',
+        { device: rootGetters['device/allDevicesMap'].deviceA.options, groupName: 'group1' },
+        { root: true },
+      );
+    });
+  });
+
+  describe('updateGroupInformation', () => {
+    it('should called updateSite api', async () => {
+      const id = '11111111';
+      const name = 'testId';
+      const spy = vi.spyOn(ApiServiceInterface, 'updateSite').mockResolvedValue({
+        id,
+        name,
+      });
+      const rootGetters = {
+        'device/groupDevicesMap': {
+          11111111: ['cam1', 'cam2'],
+          22222222: [],
+        },
+      };
+      const commit = vi.fn().mockResolvedValue();
+
+      await actions.updateGroupInformation(
+        {
+          commit,
+          rootGetters,
+          rootState: {
+            apiService: ApiServiceInterface,
+          },
+        },
+        { id, name },
+      );
+
+      expect(spy).toBeCalledWith({ siteId: id, name });
+      expect(commit).toHaveBeenCalledTimes(2);
+      expect(commit).toHaveBeenNthCalledWith(1, 'updateGroup', { id: '11111111', name: 'testId' });
+      expect(commit).toHaveBeenNthCalledWith(
+        2,
+        'device/updateDevicesGroupName',
+        { group: { id: '11111111', name: 'testId' }, devices: ['cam1', 'cam2'] },
+        { root: true },
+      );
+    });
+  });
+});

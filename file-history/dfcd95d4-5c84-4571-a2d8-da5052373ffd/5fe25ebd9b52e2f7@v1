@@ -1,0 +1,155 @@
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+
+import { DIALOGUE, TRACK_EVENT_KEY } from '@vivotek/const-vsaas';
+import { CONNECTION_ERROR_MESSAGE } from '@vivotek/device';
+
+import { useI18nHelper } from '@/composables/useI18nHelper/useI18nHelper';
+import { useMixpanel } from '@/composables/useMixpanel/useMixpanel';
+
+const useDialogueHelper = ({ device, dialogueRefsMap, emit }) => {
+  const { t } = useI18nHelper();
+  const { track } = useMixpanel();
+  const store = useStore();
+
+  const shouldDisplayAdvanceContent = ref(false);
+  const dialogueState = ref(DIALOGUE.STATE.DEFAULT);
+  const dialogueContentText = t(
+    'A factory restore removes all of your settings. The device will be rebooted during the restore process.',
+  );
+  const restartDialogueContentText = t('Recording will stop while the service is restarting.');
+
+  const onToggleBlockClick = (toggleValue) => {
+    shouldDisplayAdvanceContent.value = toggleValue;
+  };
+
+  const onAdvanceOptionClicked = (actionType) => {
+    if (device.value.online) {
+      dialogueRefsMap[actionType].value?.show();
+      return;
+    }
+    dialogueRefsMap.disconnect.value?.show();
+  };
+
+  const onDialogueClose = () => {
+    dialogueState.value = DIALOGUE.STATE.DEFAULT;
+  };
+
+  const onAdvanceOptionConfirm = async (refKey) => {
+    dialogueState.value = DIALOGUE.STATE.PROCESSING;
+    try {
+      await device.value.services.maintenance?.[refKey]();
+      dialogueState.value = DIALOGUE.STATE.SUCCESS;
+    } catch (error) {
+      dialogueState.value = DIALOGUE.STATE.ERROR;
+      if (error.message === CONNECTION_ERROR_MESSAGE.CONNECTION_LIMIT_REACHED) {
+        dialogueRefsMap[refKey].value?.hide();
+        emit('error', error);
+      }
+    }
+  };
+
+  const onMoveGroupOfDeviceConfirm = async (currentGroupId) => {
+    try {
+      await store.dispatch('group/batchMoveDeviceToGroup', {
+        devices: [device.value],
+        siteID: currentGroupId,
+      });
+    } catch (error) {
+      throw new Error('onMoveGroupOfDeviceConfirm failed');
+    }
+  };
+
+  const isDialogueStateError = computed(() => {
+    return dialogueState.value === DIALOGUE.STATE.ERROR;
+  });
+
+  const rebootDialogueButtons = computed(() => {
+    return [
+      {
+        class: 'primary',
+        text: t('Reboot'),
+        clickHandler: () => {
+          onAdvanceOptionConfirm('reboot');
+
+          track(TRACK_EVENT_KEY.DEV_SETTINGS_REBOOT, {
+            type: device.value.options.type,
+          });
+        },
+      },
+      {
+        class: 'ghost',
+        text: t('Cancel'),
+        clickHandler: () => {
+          dialogueRefsMap.reboot.value?.hide();
+        },
+      },
+    ];
+  });
+
+  const restoreDialogueButtons = computed(() => {
+    return [
+      {
+        class: 'primary',
+        text: t('Restore'),
+        clickHandler: () => {
+          onAdvanceOptionConfirm('restore');
+          track(TRACK_EVENT_KEY.DEV_SETTINGS_RESTORE);
+        },
+      },
+      {
+        class: 'ghost',
+        text: t('Cancel'),
+        clickHandler: () => {
+          dialogueRefsMap.restore.value?.hide();
+        },
+      },
+    ];
+  });
+
+  const restartDialogueButtons = computed(() => {
+    return [
+      {
+        class: 'primary',
+        text: t('Restart'),
+        clickHandler: () => {
+          onAdvanceOptionConfirm('restart');
+          track(TRACK_EVENT_KEY.DEV_SETTINGS_RESTART);
+        },
+      },
+      {
+        class: 'ghost',
+        text: t('Cancel'),
+        clickHandler: () => {
+          dialogueRefsMap.restart.value?.hide();
+        },
+      },
+    ];
+  });
+
+  const disconnectDialogueButtons = ref([
+    {
+      class: 'solid',
+      text: t('OK'),
+    },
+  ]);
+
+  return {
+    shouldDisplayAdvanceContent,
+    dialogueContentText,
+    restartDialogueContentText,
+    dialogueState,
+    isDialogueStateError,
+    rebootDialogueButtons,
+    restoreDialogueButtons,
+    disconnectDialogueButtons,
+    restartDialogueButtons,
+    onToggleBlockClick,
+    onAdvanceOptionClicked,
+    onDialogueClose,
+    onMoveGroupOfDeviceConfirm,
+  };
+};
+
+export default useDialogueHelper;
+export { useDialogueHelper };

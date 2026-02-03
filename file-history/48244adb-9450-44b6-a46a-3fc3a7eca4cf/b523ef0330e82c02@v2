@@ -1,0 +1,87 @@
+<template>
+  <div
+    v-if="availableRecipients.length"
+    class="user-container"
+  >
+    <div
+      v-for="(user, index) in availableRecipients"
+      :key="index"
+      class="avatar-name"
+    >
+      <AppAvatar
+        :name="user.name || user.email"
+        :role="user.isOwner ? USER_ROLE.OWNER : user.isAdmin ? USER_ROLE.ADMIN : USER_ROLE.USER"
+        roleIconStyle="smaller"
+      />
+      <div class="name-wrapper">
+        <h6
+          :title="user.name"
+          v-text="user.name"
+        />
+        <span
+          :title="user.email"
+          v-text="user.email"
+        />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { USER_ROLE } from '@vivotek/const-vsaas';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+
+export default {
+  name: 'RecipientList',
+  components: {
+    AppAvatar,
+  },
+  props: {
+    recipients: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  computed: {
+    availableRecipients() {
+      return this.recipients.filter((user) => !!user);
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.user-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  .avatar-name {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    .name-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      overflow: hidden;
+      h6 {
+        .text-ellipsis;
+        color: @color-text01;
+        height: 20px;
+      }
+      span {
+        .text-ellipsis;
+        color: @color-text02;
+        flex-shrink: 0;
+      }
+    }
+    .app-avatar {
+      width: 28px;
+      height: 28px;
+    }
+  }
+}
+</style>

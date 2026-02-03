@@ -1,0 +1,11 @@
+2026-01-31T04:42:11.827Z [DEBUG] [Query.streamInput] Starting to process input stream
+2026-01-31T04:42:32.027Z [DEBUG] [Query.streamInput] Processing message 1: user
+2026-01-31T04:42:49.267Z [DEBUG] [Query.streamInput] Processing message 2: user
+2026-01-31T04:43:13.050Z [DEBUG] [Query.streamInput] Processing message 3: user
+2026-01-31T04:43:23.256Z [DEBUG] [Query.streamInput] Processing message 4: user
+2026-01-31T04:43:31.063Z [DEBUG] [Query.streamInput] Processing message 5: user
+2026-01-31T04:43:47.625Z [DEBUG] [Query.streamInput] Processing message 6: user
+2026-01-31T04:44:06.054Z [DEBUG] [Query.streamInput] Processing message 7: user
+2026-01-31T04:44:23.283Z [DEBUG] [Query.streamInput] Processing message 8: user
+2026-01-31T04:44:43.865Z [DEBUG] [Query.streamInput] Processing message 9: user
+2026-01-31T04:46:39.047Z [DEBUG] [Query.streamInput] Processing message 10: user

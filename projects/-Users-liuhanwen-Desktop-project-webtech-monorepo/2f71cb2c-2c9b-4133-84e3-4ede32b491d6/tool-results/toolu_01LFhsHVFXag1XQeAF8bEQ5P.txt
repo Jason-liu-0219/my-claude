@@ -1,0 +1,17 @@
+Found 16 files
+packages/app-vsaas-portal/src/store/device/actions.js
+packages/app-vsaas-portal/src/pages/device/management/index.vue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json
+packages/app-vsaas-portal/src/i18n/languages/English.json
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.vue
+packages/app-vsaas-portal/src/store/device/mutations.js
+packages/app-vsaas-portal/src/pages/site/components/SingleDeviceDisplay.vue
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue
+packages/app-vsaas-portal/src/models/Device/DeviceFactory.js
+packages/app-vsaas-portal/src/models/IoT/NVRSetupWizard/NvrSetupWizardService.js
+packages/app-vsaas-portal/src/pages/view/edit/components/SingleThumbnail.vue
+packages/app-vsaas-portal/src/components/Dialogues/SetNvrWizardDialogue.test.js

@@ -1,0 +1,107 @@
+packages/app-vsaas-portal/src/pages/device/management/index.vue:202:      ref="removeBridgeDeviceDialogue"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:203:      @confirm="removeBridgeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:217:      ref="removeExternalDeviceDialogue"
+packages/app-vsaas-portal/src/pages/device/management/index.vue:349:      this.$refs.removeBridgeDeviceDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/index.vue:354:        this.$refs.removeExternalDeviceDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/index.vue:357:    removeBridgeDeviceConfirm(isCancel) {
+packages/app-vsaas-portal/src/pages/device/management/index.vue:363:          this.$refs.removeBridgeDeviceDialogue.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/index.vue:367:          this.$refs.removeBridgeDeviceDialogue.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:184:    <MoveGroupOfDevicesDialogue
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:185:      ref="MoveGroupOfDevicesDialogueRef"
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:188:      :operateAction="onMoveGroupOfDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:204:import MoveGroupOfDevicesDialogue from '@/components/Group/MoveGroupOfDevicesDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:235:  moveGroupOfDevices: useTemplateRef('MoveGroupOfDevicesDialogueRef'),
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:256:        dialogueRefsMap.moveGroupOfDevices.value.show();
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/DeviceSettingsSystemInformation.vue:301:  onMoveGroupOfDeviceConfirm,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:50:          @click="onClickMoveGroupOfDevices"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:314:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:316:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:318:    <MoveGroupOfDevicesDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:319:      ref="MoveGroupOfDevicesDialogue"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:322:      :operateAction="moveGroupOfDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:337:import MoveGroupOfDevicesDialogue from '@/components/Group/MoveGroupOfDevicesDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:345:    MoveGroupOfDevicesDialogue,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:397:    ...mapActions('group', ['batchMoveDeviceToGroup']),
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:433:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:437:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:440:    onClickMoveGroupOfDevices() {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:443:      this.defaultMoveToGroupId = this.groups.find((group) => group.name === firstDevice.group).id;
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:444:      this.currentMovedGroupItems = this.selectedDevices;
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:447:        this.$refs.MoveGroupOfDevicesDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:450:    onClickMoveGroupOfDevice(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:455:        this.$refs.MoveGroupOfDevicesDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:471:    async moveGroupOfDeviceConfirm(currentGroupId) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:474:        await this.batchMoveDeviceToGroup({
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:483:        throw new Error('moveGroupOfDeviceConfirm failed');
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:486:    removeDeviceConfirm(isCancel) {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:495:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:507:          this.$refs.removeDeviceDialog.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:565:          classList: ['move-device-group'],
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.vue:568:            this.onClickMoveGroupOfDevice(device);
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js:18:    'A factory restore removes all of your settings. The device will be rebooted during the restore process.',
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js:52:  const onMoveGroupOfDeviceConfirm = async (currentGroupId) => {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js:54:      await store.dispatch('group/batchMoveDeviceToGroup', {
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js:59:      throw new Error('onMoveGroupOfDeviceConfirm failed');
+packages/app-vsaas-portal/src/pages/device/settings/system/DeviceSettingsSystemInformation/composables/useDialogueHelper.js:150:    onMoveGroupOfDeviceConfirm,
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:232:      it('should called removeDeviceDialog , and set currentDeleteItems = parameter.mac', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:235:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:238:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:243:      it('should called removeDeviceDialog , and set currentDeleteItems = parameters mac', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:246:        w.vm.$refs.removeDeviceDialog.show = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:251:        expect(w.vm.$refs.removeDeviceDialog.show).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:256:    describe('removeDeviceConfirm', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:261:        w.vm.removeDeviceConfirm(isCancel);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:298:        w.vm.$refs.removeDeviceDialog.onDeleteSuccess = vi.fn();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:299:        await w.vm.removeDeviceConfirm(isCancel);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:302:        expect(w.vm.$refs.removeDeviceDialog.onDeleteSuccess).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:308:    describe('moveGroupOfDeviceConfirm', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:309:      it('should called batchMoveDeviceToGroup', async () => {
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:311:        w.vm.batchMoveDeviceToGroup = vi.fn().mockResolvedValue();
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:314:        await w.vm.moveGroupOfDeviceConfirm('currentGroupId');
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:316:        expect(w.vm.batchMoveDeviceToGroup).toHaveBeenCalledTimes(1);
+packages/app-vsaas-portal/src/pages/device/management/components/DeviceManagementTable.test.js:379:      it('should return "settings", "move to", "delete" buttons for unknown device', () => {
+packages/app-vsaas-portal/src/pages/device/management/components/BridgeManagementTable.vue:283:    ...mapActions('group', ['batchMoveDeviceToGroup']),
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:202:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:203:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:216:    <MoveGroupOfDevicesDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:217:      ref="moveGroupOfDevicesDialogue"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:220:      :operateAction="moveGroupOfDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:237:import MoveGroupOfDevicesDialogue from '@/components/Group/MoveGroupOfDevicesDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:287:const removeDeviceDialog = ref(null);
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:288:const moveGroupOfDevicesDialogue = ref(null);
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:492:  removeDeviceDialog.value.show();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:497:  removeDeviceDialog.value.show();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:501:const onClickMoveGroupOfDevice = (item) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:506:    moveGroupOfDevicesDialogue.value.show();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:510:const moveGroupOfDeviceConfirm = async (groupId) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:513:    await store.dispatch('group/batchMoveDeviceToGroup', {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:521:    throw new Error('moveGroupOfDeviceConfirm failed');
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:525:const removeDeviceConfirm = (isCancel) => {
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:533:      removeDeviceDialog.value.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:544:      removeDeviceDialog.value.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:583:            classList: ['move-device-group'],
+packages/app-vsaas-portal/src/pages/device/management/components/VSSDeviceManagementTable.vue:586:              onClickMoveGroupOfDevice(device);
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:218:      ref="removeDeviceDialog"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:219:      @confirm="removeDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:232:    <MoveGroupOfDevicesDialogue
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:233:      ref="MoveGroupOfDevicesDialogue"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:236:      :operateAction="moveGroupOfDeviceConfirm"
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:250:import MoveGroupOfDevicesDialogue from '@/components/Group/MoveGroupOfDevicesDialogue.vue';
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:258:    MoveGroupOfDevicesDialogue,
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:306:    ...mapActions('group', ['batchMoveDeviceToGroup']),
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:335:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:339:      this.$refs.removeDeviceDialog.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:342:    onClickMoveGroupOfDevices() {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:345:      this.defaultMoveToGroupId = this.groups.find((group) => group.name === firstDevice.group).id;
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:346:      this.currentMovedGroupItems = this.selectedDevices;
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:349:        this.$refs.MoveGroupOfDevicesDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:352:    onClickMoveGroupOfDevice(item) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:357:        this.$refs.MoveGroupOfDevicesDialogue.show();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:360:    async moveGroupOfDeviceConfirm(currentGroupId) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:363:        await this.batchMoveDeviceToGroup({
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:372:        throw new Error('moveGroupOfDeviceConfirm failed');
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:375:    removeDeviceConfirm(isCancel) {
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:383:          this.$refs.removeDeviceDialog.onDeleteSuccess();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:394:          this.$refs.removeDeviceDialog.onDeleteFail();
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:462:                classList: ['move-device-group'],
+packages/app-vsaas-portal/src/pages/device/management/components/NVRDeviceManagementTable.vue:465:                  this.onClickMoveGroupOfDevice(device);

@@ -1,0 +1,2039 @@
+diff --git a/packages/advanced-vue-components/components/AppDeviceList.vue b/packages/advanced-vue-components/components/AppDeviceList.vue
+index 260eb58385..a4b91bcc4a 100644
+--- a/packages/advanced-vue-components/components/AppDeviceList.vue
++++ b/packages/advanced-vue-components/components/AppDeviceList.vue
+@@ -48,6 +48,10 @@
+           </template>
+         </AppSingleDevice>
+       </div>
++      <slot
++        name="dropdown"
++        :device="device"
++      />
+     </div>
+   </div>
+ </template>
+diff --git a/packages/advanced-vue-components/index.js b/packages/advanced-vue-components/index.js
+index 65cb1bb5b4..9a2dfda75e 100644
+--- a/packages/advanced-vue-components/index.js
++++ b/packages/advanced-vue-components/index.js
+@@ -40,3 +40,4 @@ export { default as SettingCanvas } from './components/SettingCanvas.vue';
+ export { default as DEVICE_TYPE_CONFIGS } from './constants/deviceTypeConfigs';
+ export { default as DropdownMenu } from './components/DropdownMenu.vue';
+ export { default as SearchBarDateTimePeriodSelector } from './components/SearchBar/SearchBarDateTimePeriodSelector.vue';
++export { default as DeviceGroupList } from './components/DeviceSelector/DeviceGroupList.vue';
+diff --git a/packages/app-vsaas-portal/src/components/Dropdowns/DeviceRoleDropdown.vue b/packages/app-vsaas-portal/src/components/Dropdowns/DeviceRoleDropdown.vue
+new file mode 100644
+index 0000000000..d140c12855
+--- /dev/null
++++ b/packages/app-vsaas-portal/src/components/Dropdowns/DeviceRoleDropdown.vue
+@@ -0,0 +1,105 @@
++<template>
++  <AppDropdown
++    :modelValue="modelValue"
++    :options="roleOptions"
++    :placeholder="placeholder"
++    :isError="isError"
++    :showErrorMessage="showErrorMessage"
++    :disabled="disabled"
++    :loading="isLoading"
++    :hasMore="hasMoreData"
++    :loadError="hasLoadError"
++    data-testid="device-role-dropdown"
++    @update:modelValue="onSelect"
++    @toggleDropdown="onToggleDropdown"
++    @loadMore="fetchRoles"
++  />
++</template>
++
++<script setup>
++import { computed, onMounted } from 'vue';
++import { useStore } from 'vuex';
++
++import { isOwner } from '@/utils/RoleHelper';
++
++const props = defineProps({
++  modelValue: {
++    type: [String],
++    default: '',
++  },
++  placeholder: {
++    type: String,
++    default: '',
++  },
++  isError: {
++    type: Boolean,
++    default: false,
++  },
++  showErrorMessage: {
++    type: Boolean,
++    default: false,
++  },
++  disabled: {
++    type: Boolean,
++    default: false,
++  },
++  initialDisplayText: {
++    type: String,
++    default: '',
++  },
++});
++
++const emit = defineEmits(['selected']);
++
++const store = useStore();
++
++const selectUserDeviceRoles = computed(() => store.state.user.detail.selectUserDeviceRoles);
++const isLoading = computed(() => selectUserDeviceRoles.value.loading);
++const hasLoadError = computed(() => selectUserDeviceRoles.value.loadError);
++const hasMoreData = computed(() => selectUserDeviceRoles.value.hasMore);
++const allRoles = computed(() => store.getters['user/allSelectUserDeviceRoles']);
++
++const roleOptions = computed(() => {
++  const options = allRoles.value
++    .filter((role) => !isOwner(role))
++    .map((role) => ({
++      text: role.name,
++      value: role.id,
++      disabled: role.isAssignable === false,
++    }));
++
++  const hasMatch = options.some((opt) => opt.value === props.modelValue);
++  if (!hasMatch && props.modelValue && props.initialDisplayText) {
++    options.unshift({
++      text: props.initialDisplayText,
++      value: props.modelValue,
++      disabled: false,
++    });
++  }
++
++  return options;
++});
++
++const onSelect = (roleId) => {
++  const role = allRoles.value.find((r) => r.id === roleId);
++  emit('selected', role);
++};
++
++const onToggleDropdown = async (isOpen) => {
++  if (isOpen && allRoles.value.length === 0) {
++    await fetchRoles();
++  }
++};
++
++const fetchRoles = async () => {
++  try {
++    await store.dispatch('user/fetchSelectUserDeviceRoles');
++  } catch (error) {
++    console.error('Failed to fetch device roles:', error);
++  }
++};
++
++onMounted(async () => {
++  await fetchRoles();
++});
++</script>
+diff --git a/packages/app-vsaas-portal/src/pages/user/detail/components/DeviceAccessDialogue.vue b/packages/app-vsaas-portal/src/pages/user/detail/components/DeviceAccessDialogue.vue
+new file mode 100644
+index 0000000000..0742af504a
+--- /dev/null
++++ b/packages/app-vsaas-portal/src/pages/user/detail/components/DeviceAccessDialogue.vue
+@@ -0,0 +1,746 @@
++<template>
++  <AppDialogue
++    ref="modal"
++    class="device-access-dialogue"
++    data-testid="device-access-dialogue"
++    name="DeviceAccessDialogue"
++    :closeWhenClickButton="closeOnSelect"
++    :title="dialogueTitle"
++    :subTitle="subTitle"
++    :primaryText="isProcessing ? $t('Selecting') : $t('Select')"
++    :buttonIconStatusMapping="buttonIconStatusMapping"
++    :state="modalState"
++    height="720px"
++    width="1116px"
++    @confirm="handleConfirm"
++  >
++    <template #content>
++      <div class="content-wrapper">
++        <div class="hint">
++          <h3 class="bold">
++            {{ selectedLengthHint }}
++          </h3>
++        </div>
++        <div class="dialogue-content">
++          <div class="left-menu">
++            <DeviceGroupList
++              :multiple="multiple"
++              :groupList="sites"
++              :currentSelectedGroups="currentSelectedSites"
++              :currentSelectedDevices="currentSelectedDevices"
++              :focusGroupId="focusSiteId"
++              :isSearching="isSearching"
++              @toggleSelectedGroups="toggleSelectedSites"
++              @changeFocusGroup="changeFocusSiteAndClearInput"
++            />
++          </div>
++          <div class="center-view">
++            <div class="search-container">
++              <AppInputFields
++                id="search-device-fields"
++                v-model.lazy="searchName"
++                class="search-input"
++                type="search"
++                :disabled="devices.length === 0"
++                @input="searchInputChange"
++              />
++            </div>
++            <div
++              v-if="hasSearchResult && currentFocusSiteInfo"
++              class="site-header-container"
++            >
++              <h6 class="site-hint">
++                {{ currentFocusSiteInfo }}
++              </h6>
++            </div>
++            <div
++              v-if="hasSearchResult"
++              class="site-batch-assign-container"
++            >
++              <h6 class="site-batch-selector-hint">
++                {{ t('Update Selected Devices Access') }}
++              </h6>
++              <div class="site-batch-assign-selector">
++                <DeviceRoleDropdown
++                  class="device-role-dropdown"
++                  :modelValue="currentBatchAssignRoleId"
++                  :placeholder="t('Select Role to assign')"
++                  :disabled="isBatchAssignDisabled"
++                  @selected="batchAssignRole"
++                />
++              </div>
++            </div>
++            <div
++              v-if="hasSearchResult"
++              ref="siteList"
++              class="site-list"
++            >
++              <div
++                v-for="(_site, index) in filteredSites"
++                :key="index"
++                class="site-wrapper"
++              >
++                <h6
++                  v-if="displayDevices[_site.id]"
++                  class="site-title"
++                  :title="_site.name"
++                >
++                  {{ _site.name }}
++                </h6>
++                <div
++                  v-if="displayDevices[_site.id]"
++                  class="site-device-container"
++                >
++                  <template v-if="multiple">
++                    <AppCheckBox
++                      v-model.lazy="isSelectAllMap[_site.id]"
++                      :indeterminate="checkIsSelectIndeterminate(_site.devices)"
++                      :disabled="_site.devices.length === 0"
++                      @click.prevent="selectAll(_site.id)"
++                    />
++                  </template>
++                  <span>
++                    {{ DEVICE_OF_GROUP_TYPE_LABEL[_site.type] }}
++                  </span>
++                </div>
++                <AppDeviceList
++                  class="site-device-list"
++                  :multiple="multiple"
++                  :selectMode="!multiple"
++                  :devicesData="displayDevices[_site.id]"
++                  :activeDeviceId="activeDeviceId"
++                  :defaultSelectedDevices="currentSelectedDevices"
++                  :enableListItemActive="false"
++                  :shouldDisplayThumbnail="shouldDisplayThumbnail(_site.type)"
++                  @toggleSelectedDevices="toggleSelectedDevices"
++                  @selectDevice="selectDevice"
++                >
++                  <template #rear="{ device }">
++                    <DeviceIndicator
++                      v-if="device.nvrName"
++                      :device="device"
++                    />
++                    <DeviceIndicator
++                      v-if="device.vssName"
++                      :device="device"
++                    />
++                  </template>
++                  <template #dropdown="{ device }">
++                    <DeviceRoleDropdown
++                      class="device-role-dropdown"
++                      :modelValue="deviceRoles[device.deviceId]?.roleId || ''"
++                      :placeholder="$t('Select Role')"
++                      :initialDisplayText="deviceRoles[device.deviceId]?.roleName || ''"
++                      @selected="(role) => updateDeviceRole(device.deviceId, role)"
++                    />
++                  </template>
++                </AppDeviceList>
++              </div>
++            </div>
++            <div
++              v-else
++              class="no-result-container"
++            >
++              <SvgIcon
++                class="no-result-icon"
++                :iconClass="`search_failed`"
++                size="100px"
++              />
++              <h6 class="text">
++                {{ $t('No search results') }}
++              </h6>
++            </div>
++          </div>
++        </div>
++      </div>
++    </template>
++    <template
++      v-if="isError"
++      #errorMessage
++    >
++      <AppFormErrorMessage :message="errorMessage" />
++    </template>
++  </AppDialogue>
++</template>
++
++<script setup>
++import { ref, computed, watch, useTemplateRef, onMounted } from 'vue';
++import { useI18n } from 'vue-i18n';
++import { useStore } from 'vuex';
++
++import { DeviceIndicator, DeviceGroupList, AppDeviceList } from '@vivotek/advanced-vue-components';
++import { DIALOGUE, GROUP_TYPES } from '@vivotek/const-vsaas';
++
++import DeviceRoleDropdown from '@/components/Dropdowns/DeviceRoleDropdown.vue';
++import { PERMISSION_DEVICE_SCOPE } from '@/constants/Permission';
++import { composeDeviceId, useDeviceRoleHelper } from '@/pages/user/detail/composables/useDeviceRoleHelper';
++
++const props = defineProps({
++  multiple: {
++    type: Boolean,
++    default: true,
++  },
++  availableDevices: {
++    type: Array,
++    default: () => null,
++  },
++  closeOnSelect: {
++    type: Boolean,
++    default: false,
++  },
++  title: {
++    type: String,
++    default: null,
++  },
++  subTitle: {
++    type: String,
++    default: null,
++  },
++  userId: {
++    type: String,
++    default: () => '',
++  },
++});
++
++const emit = defineEmits(['success']);
++
++const store = useStore();
++const { t } = useI18n();
++
++const modal = useTemplateRef('modal');
++const siteList = useTemplateRef('siteList');
++
++const modalState = ref(DIALOGUE.STATE.DEFAULT);
++const searchName = ref('');
++const currentSelectedDevices = ref([]);
++const currentSelectedSites = ref([]);
++const isSearching = ref(false);
++const focusSiteId = ref('');
++const deviceRoles = ref({});
++const originalGrantedDevices = ref(new Map());
++const batchAssignRoleId = ref({});
++
++const groupState = computed(() => store.state.group);
++const sortedGroups = computed(() => store.getters['group/sortedGroups']);
++const userDetailGrantedDevices = computed(() => store.getters['user/detailDeviceOverview']);
++const getAvailableDevicesWithPermission = computed(() =>
++  store.getters['device/getAvailableDevicesWithPermission'](PERMISSION_DEVICE_SCOPE.DEVICE_ALL_USERS),
++);
++const errorMessage = computed(() => {
++  if (isError.value) {
++    return t('Failed to assign device roles');
++  }
++  return '';
++});
++
++const devices = computed(() => {
++  if (props.availableDevices) {
++    return props.availableDevices;
++  }
++  return getAvailableDevicesWithPermission.value || [];
++});
++
++const { processSelectedDevices, processRemovedDevices, updateSelectedDevicesWithParentChannel } =
++  useDeviceRoleHelper(devices);
++
++const DEVICE_OF_GROUP_TYPE_LABEL = computed(() => ({
++  [GROUP_TYPES.VSS]: t('VSS'),
++  [GROUP_TYPES.NVR]: t('NVR'),
++  [GROUP_TYPES.BRIDGE]: t('Bridge'),
++  [GROUP_TYPES.SITE]: t('Cameras'),
++}));
++
++const sites = computed(() => {
++  const groupsValue = sortedGroups.value();
++  const result = groupsValue
++    .map((group) => ({
++      ...group,
++      devices: devices.value.filter((device) => device.options?.deviceGroupID === group.id),
++    }))
++    .filter((group) => group.devices.length > 0);
++  return result;
++});
++
++const availableDevicesId = computed(() => {
++  return devices.value.map((device) => device.deviceId);
++});
++
++const isSelectAllMap = computed(() => {
++  return sites.value.reduce(
++    (acc, group) => ({
++      ...acc,
++      [group.id]: group.devices.every((item) => currentSelectedDevices.value.includes(item.deviceId)),
++    }),
++    {},
++  );
++});
++
++const isProcessing = computed(() => {
++  return modalState.value === DIALOGUE.STATE.PROCESSING;
++});
++
++const isError = computed(() => {
++  return modalState.value === DIALOGUE.STATE.ERROR;
++});
++
++const isInvalidSelection = computed(() => {
++  return currentSelectedDevices.value.length === 0;
++});
++
++const activeDeviceId = computed(() => {
++  return groupState.value.activeDeviceId;
++});
++
++const dialogueTitle = computed(() => {
++  return props.title || t('Select Devices');
++});
++
++const selectedLengthHint = computed(() => {
++  const count = currentSelectedDevices.value.length;
++  return t('0 device is selected | 1 device is selected | {count} devices are selected', { count });
++});
++
++const filteredSites = computed(() => {
++  if (isSearching.value) {
++    return sites.value;
++  }
++
++  return sites.value.filter((item) => focusSiteId.value === item.id);
++});
++
++const hasSearchResult = computed(() => {
++  return Object.entries(displayDevices.value).length > 0;
++});
++
++const displayDevices = computed(() => {
++  const displayResult = {};
++  const isSearchingValue = isSearching.value;
++  const searchNameValue = searchName.value;
++
++  sites.value.forEach((group) => {
++    let result = group.devices;
++    if (isSearchingValue) {
++      result = result.filter((item) => item.displayName.toLowerCase().includes(searchNameValue.toLowerCase()));
++    }
++    if (result.length > 0) {
++      displayResult[group.id] = result;
++    }
++  });
++  return displayResult;
++});
++
++const buttonIconStatusMapping = computed(() => {
++  return {
++    ...DIALOGUE.PRIMARY_ACITON_BUTTON_MAPPING,
++    [DIALOGUE.STATE.DEFAULT]: [
++      { status: isInvalidSelection.value ? 'disabled' : '', icon: '' },
++      { status: '', icon: '' },
++    ],
++  };
++});
++
++const currentFocusSite = computed(() => {
++  if (!focusSiteId.value) {
++    return null;
++  }
++  return sites.value.find((site) => site.id === focusSiteId.value) || null;
++});
++
++const currentFocusSiteInfo = computed(() => {
++  if (!currentFocusSite.value) {
++    return null;
++  }
++
++  const totalDevices = currentFocusSite.value.devices.length;
++  const selectedDevices = currentFocusSite.value.devices.filter((device) =>
++    currentSelectedDevices.value.includes(device.deviceId),
++  ).length;
++
++  return `${t('Selected Devices in')} ${currentFocusSite.value.name} (${selectedDevices}/${totalDevices})`;
++});
++
++const currentFocusSiteSelectedDevices = computed(() => {
++  if (!currentFocusSite.value || isSearching.value) {
++    return [];
++  }
++  return currentFocusSite.value.devices.filter((device) => currentSelectedDevices.value.includes(device.deviceId));
++});
++
++const currentBatchAssignRoleId = computed({
++  get: () => batchAssignRoleId.value[focusSiteId.value] || '',
++  set: (value) => {
++    if (focusSiteId.value) {
++      batchAssignRoleId.value = {
++        ...batchAssignRoleId.value,
++        [focusSiteId.value]: value,
++      };
++    }
++  },
++});
++
++const isBatchAssignDisabled = computed(() => {
++  return currentFocusSiteSelectedDevices.value.length === 0;
++});
++
++/**
++ * initialize selected devices and roles
++ * only select devices that exist in availableDevicesId
++ */
++const initializeSelectedDevicesAndRoles = () => {
++  if (!userDetailGrantedDevices.value || userDetailGrantedDevices.value.length === 0) {
++    return;
++  }
++  const selectedDeviceIds = [];
++  const roleMapping = {};
++  const availableDeviceIdsSet = new Set(availableDevicesId.value);
++
++  originalGrantedDevices.value.clear();
++  userDetailGrantedDevices.value.forEach((grantedDevice) => {
++    const deviceId = composeDeviceId(grantedDevice.thingName, grantedDevice.derivant);
++    originalGrantedDevices.value.set(deviceId, { ...grantedDevice });
++
++    // only select devices that exist in availableDevicesId
++    if (availableDeviceIdsSet.has(deviceId)) {
++      selectedDeviceIds.push(deviceId);
++      roleMapping[deviceId] = {
++        roleId: grantedDevice.roleId || '',
++        roleName: grantedDevice.roleName || '',
++      };
++    }
++  });
++
++  currentSelectedDevices.value = selectedDeviceIds;
++  deviceRoles.value = roleMapping;
++};
++
++const changeFocusSite = (siteId) => {
++  focusSiteId.value = siteId;
++};
++
++const setFirstSiteToDefaultFocusSite = () => {
++  if (!sites.value.length) {
++    return;
++  }
++  const defaultFocusSiteId = sites.value[0].id;
++  changeFocusSite(defaultFocusSiteId);
++};
++
++const clearInput = () => {
++  searchName.value = '';
++  isSearching.value = false;
++};
++
++const setDefault = () => {
++  modalState.value = DIALOGUE.STATE.DEFAULT;
++  batchAssignRoleId.value = {};
++  clearInput();
++  setFirstSiteToDefaultFocusSite();
++  initializeSelectedDevicesAndRoles();
++};
++
++const openDialogue = () => {
++  setDefault();
++  modal.value?.show();
++};
++
++const selectDevice = (deviceId) => {
++  if (props.multiple) {
++    return;
++  }
++  currentSelectedDevices.value = [deviceId];
++};
++
++const getSiteDevicesId = (siteId) => {
++  return sites.value
++    .filter((site) => siteId.includes(site.id))
++    .map((item) => item.devices)
++    .flat()
++    .map((device) => device.deviceId)
++    .filter((deviceId) => availableDevicesId.value.indexOf(deviceId) >= 0);
++};
++
++const getIndeterminateGroupDevices = (indeterminateSites) => {
++  const indeterminateSiteDevicesId = getSiteDevicesId(indeterminateSites);
++  return currentSelectedDevices.value.filter((deviceId) => indeterminateSiteDevicesId.includes(deviceId));
++};
++
++const toggleSelectedSites = (selectedSites, indeterminateSites = []) => {
++  const indeterminateSiteDevices = getIndeterminateGroupDevices(indeterminateSites);
++  const fullySelectedSites = selectedSites.filter((group) => !indeterminateSites.includes(group));
++  const fullySelectedDevices = getSiteDevicesId(fullySelectedSites);
++  currentSelectedSites.value = selectedSites;
++  currentSelectedDevices.value = [...fullySelectedDevices, ...indeterminateSiteDevices];
++};
++
++const changeFocusSiteAndClearInput = (siteId) => {
++  clearInput();
++  changeFocusSite(siteId);
++  if (siteList.value) {
++    siteList.value.scrollTop = 0;
++  }
++};
++
++const checkIsSelectIndeterminate = (siteDevices) => {
++  if (devices.value.length === 0 || !siteDevices || siteDevices.length === 0) {
++    return false;
++  }
++  const devicesId = siteDevices.map((item) => item.deviceId);
++  return (
++    devicesId.every((item) => currentSelectedDevices.value.includes(item)) === false &&
++    devicesId.some((item) => currentSelectedDevices.value.includes(item))
++  );
++};
++
++const searchInputChange = (input) => {
++  if (!input) {
++    isSearching.value = false;
++    setFirstSiteToDefaultFocusSite();
++    return;
++  }
++  isSearching.value = true;
++};
++
++const shouldDisplayThumbnail = (siteType) => {
++  return siteType !== GROUP_TYPES.NVR && siteType !== GROUP_TYPES.BRIDGE && siteType !== GROUP_TYPES.VSS;
++};
++
++const updateDeviceRole = (deviceId, role) => {
++  deviceRoles.value[deviceId] = {
++    roleId: role?.id || '',
++    roleName: role?.name || '',
++  };
++};
++
++const handleConfirm = async (isConfirm) => {
++  if (!isConfirm) {
++    return;
++  }
++
++  if (!props.closeOnSelect) {
++    modalState.value = DIALOGUE.STATE.PROCESSING;
++  }
++
++  const grantedDevicesMap = new Map();
++  const selectedDeviceIdsSet = new Set(currentSelectedDevices.value);
++
++  processSelectedDevices(currentSelectedDevices.value, deviceRoles.value, selectedDeviceIdsSet, grantedDevicesMap);
++  processRemovedDevices(originalGrantedDevices.value, selectedDeviceIdsSet, grantedDevicesMap);
++
++  const grantedDevices = Array.from(grantedDevicesMap.values());
++
++  try {
++    await store.dispatch('user/assignDeviceRole', { userId: props.userId, assignments: grantedDevices });
++    modalState.value = DIALOGUE.STATE.SUCCESS;
++    emit('success');
++  } catch (error) {
++    modalState.value = DIALOGUE.STATE.ERROR;
++  }
++};
++
++const toggleSelectedDevices = ({ selectedDevices }) => {
++  currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(selectedDevices, currentSelectedDevices.value);
++};
++
++const selectAll = (groupId) => {
++  const devicesId = displayDevices.value[groupId].map((device) => device.deviceId);
++  const currentSelected = currentSelectedDevices.value;
++  const isAllSelected = devicesId.every((deviceId) => currentSelectedDevices.value.includes(deviceId));
++
++  if (isAllSelected) {
++    const targetSelectedDevices = currentSelected.filter((deviceId) => !devicesId.includes(deviceId));
++    currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(targetSelectedDevices, currentSelected);
++  } else {
++    const targetSelectedDevices = [...new Set([...currentSelected, ...devicesId])];
++    currentSelectedDevices.value = updateSelectedDevicesWithParentChannel(targetSelectedDevices, currentSelected);
++  }
++};
++
++const batchAssignRole = (role) => {
++  if (!role || isBatchAssignDisabled.value) {
++    return;
++  }
++
++  currentBatchAssignRoleId.value = role.id;
++
++  currentFocusSiteSelectedDevices.value.forEach((device) => {
++    deviceRoles.value[device.deviceId] = {
++      roleId: role.id,
++      roleName: role.name,
++    };
++  });
++};
++
++defineExpose({
++  openDialogue,
++});
++
++watch(
++  currentSelectedDevices,
++  (newValue) => {
++    currentSelectedSites.value = sites.value
++      .filter((site) => site.devices.some((device) => newValue.includes(device.deviceId)))
++      .map((item) => item.id);
++  },
++  { immediate: true },
++);
++
++onMounted(async () => {
++  setFirstSiteToDefaultFocusSite();
++  await store.dispatch('user/fetchDefaultDeviceRoleList');
++});
++</script>
++
++<style lang="less" scoped>
++.device-access-dialogue {
++  cursor: default;
++
++  .main-wrapper {
++    > div:not(.header) {
++      padding-left: 0px;
++      padding-right: 0px;
++    }
++
++    .content-wrapper {
++      display: flex;
++      flex-direction: column;
++      min-height: 0;
++      flex: 1;
++      > div {
++        padding-left: 40px;
++        padding-right: 40px;
++      }
++    }
++  }
++
++  .site-wrapper {
++    display: flex;
++    flex-direction: column;
++  }
++  .search-container {
++    display: flex;
++    flex-direction: row;
++  }
++  .search-input {
++    position: relative;
++    width: 300px;
++    height: 32px;
++  }
++  .hint {
++    padding-bottom: 20px;
++    border-bottom: 1px solid @color-surface05;
++    h3 {
++      color: @color-primary;
++      line-height: 37px;
++    }
++    h6 {
++      color: @color-text03;
++      line-height: 20px;
++      margin-top: 10px;
++      &.error {
++        color: @color-alert;
++      }
++    }
++  }
++  .site-header-container {
++    padding: 18px 18px 18px 0;
++  }
++  .site-hint,
++  .site-batch-selector-hint {
++    font-weight: 700;
++    font-size: 14px;
++    color: @color-text01;
++  }
++  .site-batch-assign-container {
++    display: flex;
++    align-items: center;
++    column-gap: 20px;
++    padding: 18px 0;
++  }
++  .site-batch-assign-selector {
++    width: 30%;
++  }
++  .dialogue-content {
++    flex: 1;
++    display: flex;
++    flex-direction: row;
++    flex-wrap: wrap;
++    position: relative;
++    min-height: 0;
++    padding-top: 10px;
++
++    .left-menu {
++      background-color: @color-surface03;
++      border-right: 1px solid #000;
++      height: 100%;
++    }
++    .center-view {
++      flex: 1;
++      display: flex;
++      flex-direction: column;
++      margin-left: 20px;
++      overflow-x: hidden;
++      height: 100%;
++    }
++  }
++  .site-list {
++    overflow-y: auto;
++    height: 440px;
++    margin-bottom: 20px;
++    .site-device-list {
++      :deep(.device) {
++        h6 {
++          max-width: 500px;
++        }
++        .svg-icon {
++          &[data-state='active'] {
++            background-color: transparent;
++          }
++        }
++      }
++    }
++  }
++  .site-title {
++    font-weight: bold;
++    padding: 18px;
++    font-size: 16px;
++    align-items: center;
++    line-height: 24px;
++    .text-ellipsis;
++  }
++  .site-device-container {
++    display: flex;
++    flex-direction: row;
++    align-items: center;
++    padding: 12px;
++    background-color: @color-surface07;
++
++    :deep(.check-box .svg-icon) {
++      margin-right: 10px;
++    }
++  }
++  .no-result-container {
++    height: 440px;
++    text-align: center;
++    display: flex;
++    flex-direction: column;
++    justify-content: center;
++  }
++  :deep(.single-device) {
++    width: 100%;
++  }
++}
++
++:deep(.device-wrapper) {
++  display: flex;
++  align-items: center;
++  justify-content: space-between;
++
++  & .device {
++    width: 100%;
++  }
++
++  & .device-role-dropdown {
++    width: 30%;
++  }
++}
++</style>
+diff --git a/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.js b/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.js
+new file mode 100644
+index 0000000000..3b1cbd6b3d
+--- /dev/null
++++ b/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.js
+@@ -0,0 +1,225 @@
++import { computed } from 'vue';
++
++import { DEVICE_TYPE } from '@vivotek/const-vsaas';
++
++export const DEFAULT_VIEWER_ROLE_ID = 'role-device-viewer';
++
++export const composeDeviceId = (thingName, derivant) => {
++  if (!derivant || derivant === 'none') {
++    return thingName;
++  }
++  return `${thingName}:${derivant}`;
++};
++
++export const parseDeviceId = (deviceId) => {
++  if (!deviceId.includes(':')) {
++    return { thingName: deviceId, derivant: 'none' };
++  }
++  const [thingName, derivant] = deviceId.split(':');
++  return { thingName, derivant };
++};
++
++export const isNvrChannel = (device) => {
++  return device?.type === DEVICE_TYPE.NVR_CHANNEL;
++};
++
++export const isVssChannel = (device) => {
++  return device?.type === DEVICE_TYPE.VSS_CHANNEL;
++};
++
++export const isParentDevice = (device) => {
++  return device?.type === DEVICE_TYPE.NVR || device?.type === DEVICE_TYPE.VSS;
++};
++
++export const getParentDeviceId = (device) => {
++  if (isNvrChannel(device)) {
++    return device.nvr.deviceId;
++  }
++  if (isVssChannel(device)) {
++    return device.vss.deviceId;
++  }
++  return null;
++};
++
++/**
++ * check the channel belongs to the specified parent device
++ */
++export const isChannelOfParent = ({ channelDevice, parentDevice }) => {
++  if (!channelDevice) {
++    return false;
++  }
++
++  const isNvr =
++    parentDevice?.type === DEVICE_TYPE.NVR &&
++    channelDevice?.type === DEVICE_TYPE.NVR_CHANNEL &&
++    channelDevice?.nvr?.deviceId === parentDevice?.deviceId;
++
++  const isVss =
++    parentDevice?.type === DEVICE_TYPE.VSS &&
++    channelDevice?.type === DEVICE_TYPE.VSS_CHANNEL &&
++    channelDevice.vss?.deviceId === parentDevice?.deviceId;
++
++  return isNvr || isVss;
++};
++
++export const useDeviceRoleHelper = (devices) => {
++  const deviceMap = computed(() => {
++    const map = new Map();
++    devices.value.forEach((device) => {
++      map.set(device.deviceId, device);
++    });
++    return map;
++  });
++
++  const createGrantedDevice = (deviceId, roleId = '') => {
++    const { thingName, derivant } = parseDeviceId(deviceId);
++
++    return {
++      thingName,
++      derivant,
++      roleId,
++    };
++  };
++
++  const createViewerGrantedDevice = (deviceId) => {
++    const { thingName, derivant } = parseDeviceId(deviceId);
++
++    return {
++      thingName,
++      derivant,
++      roleId: DEFAULT_VIEWER_ROLE_ID,
++    };
++  };
++
++  const createRemovedGrantedDevice = (originalDevice) => {
++    return {
++      thingName: originalDevice.thingName,
++      derivant: originalDevice.derivant,
++      roleId: null,
++    };
++  };
++
++  /**
++   * handle channel parent device
++   * if selected device is NVR/VSS channel, automatically add its parent device and give viewer permission
++   */
++  const addParentDeviceIfNeeded = (device, selectedDeviceIdsSet, grantedDevicesMap) => {
++    const parentDeviceId = getParentDeviceId(device);
++
++    if (!parentDeviceId) {
++      return;
++    }
++
++    if (!selectedDeviceIdsSet.has(parentDeviceId) && !grantedDevicesMap.has(parentDeviceId)) {
++      grantedDevicesMap.set(parentDeviceId, createViewerGrantedDevice(parentDeviceId));
++    }
++  };
++
++  /**
++   * handle selected devices
++   */
++  const processSelectedDevices = (currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap) => {
++    currentSelectedDevices.forEach((deviceId) => {
++      const roleId = deviceRoles[deviceId]?.roleId || '';
++      const device = deviceMap.value.get(deviceId);
++
++      grantedDevicesMap.set(deviceId, createGrantedDevice(deviceId, roleId));
++      addParentDeviceIfNeeded(device, selectedDeviceIdsSet, grantedDevicesMap);
++    });
++  };
++
++  /**
++   * handle removed devices
++   */
++  const processRemovedDevices = (originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap) => {
++    originalGrantedDevices.forEach((originalDevice, originalDeviceId) => {
++      if (selectedDeviceIdsSet.has(originalDeviceId)) {
++        return;
++      }
++
++      const device = deviceMap.value.get(originalDeviceId);
++
++      grantedDevicesMap.set(originalDeviceId, createRemovedGrantedDevice(originalDevice));
++
++      if (isParentDevice(device)) {
++        originalGrantedDevices.forEach((channelDevice, channelDeviceId) => {
++          const channelDeviceObj = deviceMap.value.get(channelDeviceId);
++
++          if (isChannelOfParent({ channelDevice: channelDeviceObj, parentDevice: device })) {
++            grantedDevicesMap.set(channelDeviceId, createRemovedGrantedDevice(channelDevice));
++          }
++        });
++      }
++    });
++  };
++
++  /**
++   * find all channels of parent devices
++   */
++  const getChannelsOfParents = (parentDeviceIds) => {
++    const channels = new Set();
++
++    parentDeviceIds.forEach((parentDeviceId) => {
++      const parentDevice = deviceMap.value.get(parentDeviceId);
++
++      if (parentDevice && isParentDevice(parentDevice)) {
++        devices.value.forEach((device) => {
++          if (
++            isChannelOfParent({
++              channelDevice: device,
++              parentDevice,
++            })
++          ) {
++            channels.add(device.deviceId);
++          }
++        });
++      }
++    });
++
++    return channels;
++  };
++
++  /**
++   * find all parents to add
++   */
++  const getParentsToAdd = (deviceIds, currentSelectedSet) => {
++    const parents = new Set();
++
++    deviceIds.forEach((deviceId) => {
++      const device = deviceMap.value.get(deviceId);
++      const parentDeviceId = getParentDeviceId(device);
++
++      if (parentDeviceId && !currentSelectedSet.has(parentDeviceId)) {
++        parents.add(parentDeviceId);
++      }
++    });
++
++    return Array.from(parents);
++  };
++
++  const updateSelectedDevicesWithParentChannel = (targetSelectedDevices, currentSelectedDevices) => {
++    const targetSet = new Set(targetSelectedDevices);
++    const currentSet = new Set(currentSelectedDevices);
++
++    const deselectedDevices = currentSelectedDevices.filter((id) => !targetSet.has(id));
++    const newSelectedDevices = targetSelectedDevices.filter((id) => !currentSet.has(id));
++
++    // handle deselected devices：check if deselected devices are NVR/VSS parents, and find channels to remove
++    const channelsToRemove = getChannelsOfParents(deselectedDevices);
++    const finalSelectedDevices = targetSelectedDevices.filter((id) => !channelsToRemove.has(id));
++
++    // handle selected devices：check if new selected devices are NVR/VSS channels, and find parents to add
++    const finalSelectedSet = new Set(finalSelectedDevices);
++    const parentsToAdd = getParentsToAdd(newSelectedDevices, finalSelectedSet);
++
++    return [...finalSelectedDevices, ...parentsToAdd];
++  };
++
++  return {
++    processSelectedDevices,
++    processRemovedDevices,
++    getChannelsOfParents,
++    getParentsToAdd,
++    updateSelectedDevicesWithParentChannel,
++  };
++};
+diff --git a/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.test.js b/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.test.js
+new file mode 100644
+index 0000000000..4909dece0a
+--- /dev/null
++++ b/packages/app-vsaas-portal/src/pages/user/detail/composables/useDeviceRoleHelper.test.js
+@@ -0,0 +1,638 @@
++import { describe, it, expect, beforeEach } from 'vitest';
++import { DEVICE_TYPE } from '@vivotek/const-vsaas';
++
++import {
++  composeDeviceId,
++  parseDeviceId,
++  isNvrChannel,
++  isVssChannel,
++  isParentDevice,
++  getParentDeviceId,
++  isChannelOfParent,
++  useDeviceRoleHelper,
++  DEFAULT_VIEWER_ROLE_ID,
++} from './useDeviceRoleHelper';
++
++describe('useDeviceRoleHelper', () => {
++  let mockDevices;
++
++  beforeEach(() => {
++    mockDevices = {
++      value: [
++        // NVR parent
++        {
++          deviceId: 'nvr-001',
++          type: DEVICE_TYPE.NVR,
++          groupId: 'site-1',
++        },
++        // NVR Channels
++        {
++          deviceId: 'nvr-001:ch1',
++          type: DEVICE_TYPE.NVR_CHANNEL,
++          groupId: 'site-1',
++          nvr: { deviceId: 'nvr-001' },
++        },
++        {
++          deviceId: 'nvr-001:ch2',
++          type: DEVICE_TYPE.NVR_CHANNEL,
++          groupId: 'site-1',
++          nvr: { deviceId: 'nvr-001' },
++        },
++        // VSS parent
++        {
++          deviceId: 'vss-001',
++          type: DEVICE_TYPE.VSS,
++          groupId: 'site-2',
++        },
++        // VSS Channels
++        {
++          deviceId: 'vss-001:ch1',
++          type: DEVICE_TYPE.VSS_CHANNEL,
++          groupId: 'site-2',
++          vss: { deviceId: 'vss-001' },
++        },
++        // Regular Camera
++        {
++          deviceId: 'camera-001',
++          type: DEVICE_TYPE.CAMERA,
++          groupId: 'site-3',
++        },
++      ],
++    };
++  });
++
++  describe('composeDeviceId', () => {
++    it('should compose thingName and derivant', () => {
++      expect(composeDeviceId('device-001', 'ch1')).toBe('device-001:ch1');
++    });
++
++    it('should return only thingName when derivant is "none"', () => {
++      expect(composeDeviceId('device-001', 'none')).toBe('device-001');
++    });
++
++    it('should return only thingName when derivant is empty', () => {
++      expect(composeDeviceId('device-001', '')).toBe('device-001');
++      expect(composeDeviceId('device-001', null)).toBe('device-001');
++      expect(composeDeviceId('device-001', undefined)).toBe('device-001');
++    });
++  });
++
++  describe('parseDeviceId', () => {
++    it('should parse deviceId with derivant', () => {
++      expect(parseDeviceId('device-001:ch1')).toEqual({
++        thingName: 'device-001',
++        derivant: 'ch1',
++      });
++    });
++
++    it('should parse deviceId without derivant', () => {
++      expect(parseDeviceId('device-001')).toEqual({
++        thingName: 'device-001',
++        derivant: 'none',
++      });
++    });
++  });
++
++  describe('Device Type Checks', () => {
++    describe('isNvrChannel', () => {
++      it('should correctly identify NVR channel', () => {
++        const nvrChannel = mockDevices.value[1];
++        expect(isNvrChannel(nvrChannel)).toBe(true);
++      });
++
++      it('should reject non-NVR channel devices', () => {
++        const camera = mockDevices.value[5];
++        const vssChannel = mockDevices.value[4];
++        expect(isNvrChannel(camera)).toBe(false);
++        expect(isNvrChannel(vssChannel)).toBe(false);
++      });
++
++      it('should handle null/undefined', () => {
++        expect(isNvrChannel(null)).toBe(false);
++        expect(isNvrChannel(undefined)).toBe(false);
++      });
++    });
++
++    describe('isVssChannel', () => {
++      it('should correctly identify VSS channel', () => {
++        const vssChannel = mockDevices.value[4];
++        expect(isVssChannel(vssChannel)).toBe(true);
++      });
++
++      it('should reject non-VSS channel devices', () => {
++        const camera = mockDevices.value[5];
++        const nvrChannel = mockDevices.value[1];
++        expect(isVssChannel(camera)).toBe(false);
++        expect(isVssChannel(nvrChannel)).toBe(false);
++      });
++
++      it('should handle null/undefined', () => {
++        expect(isVssChannel(null)).toBe(false);
++        expect(isVssChannel(undefined)).toBe(false);
++      });
++    });
++
++    describe('isParentDevice', () => {
++      it('should correctly identify NVR parent', () => {
++        const nvr = mockDevices.value[0];
++        expect(isParentDevice(nvr)).toBe(true);
++      });
++
++      it('should correctly identify VSS parent', () => {
++        const vss = mockDevices.value[3];
++        expect(isParentDevice(vss)).toBe(true);
++      });
++
++      it('should reject non-parent devices', () => {
++        const camera = mockDevices.value[5];
++        const nvrChannel = mockDevices.value[1];
++        expect(isParentDevice(camera)).toBe(false);
++        expect(isParentDevice(nvrChannel)).toBe(false);
++      });
++
++      it('should handle null/undefined', () => {
++        expect(isParentDevice(null)).toBe(false);
++        expect(isParentDevice(undefined)).toBe(false);
++      });
++    });
++
++    describe('getParentDeviceId', () => {
++      it('should return parent id for NVR channel', () => {
++        const nvrChannel = mockDevices.value[1];
++        expect(getParentDeviceId(nvrChannel)).toBe('nvr-001');
++      });
++
++      it('should return parent id for VSS channel', () => {
++        const vssChannel = mockDevices.value[4];
++        expect(getParentDeviceId(vssChannel)).toBe('vss-001');
++      });
++
++      it('should return null for non-channel devices', () => {
++        const camera = mockDevices.value[5];
++        const nvr = mockDevices.value[0];
++        expect(getParentDeviceId(camera)).toBeNull();
++        expect(getParentDeviceId(nvr)).toBeNull();
++      });
++
++      it('should handle null/undefined', () => {
++        expect(getParentDeviceId(null)).toBeNull();
++        expect(getParentDeviceId(undefined)).toBeNull();
++      });
++    });
++  });
++
++  describe('isChannelOfParent', () => {
++    it('should correctly identify NVR channel belongs to its parent', () => {
++      const nvrParent = mockDevices.value[0];
++      const nvrChannel = mockDevices.value[1];
++
++      expect(
++        isChannelOfParent({
++          channelDevice: nvrChannel,
++          parentDevice: nvrParent,
++        }),
++      ).toBe(true);
++    });
++
++    it('should correctly identify VSS channel belongs to its parent', () => {
++      const vssParent = mockDevices.value[3];
++      const vssChannel = mockDevices.value[4];
++
++      expect(
++        isChannelOfParent({
++          channelDevice: vssChannel,
++          parentDevice: vssParent,
++        }),
++      ).toBe(true);
++    });
++
++    it('should identify channel does not belong to wrong parent', () => {
++      const nvrParent = mockDevices.value[0];
++      const vssChannel = mockDevices.value[4];
++
++      expect(
++        isChannelOfParent({
++          channelDevice: vssChannel,
++          parentDevice: nvrParent,
++        }),
++      ).toBe(false);
++    });
++
++    it('should identify channel from different NVR', () => {
++      const nvr1 = {
++        deviceId: 'nvr-002',
++        type: DEVICE_TYPE.NVR,
++      };
++      const nvrChannel = mockDevices.value[1]; // belongs to nvr-001
++
++      expect(
++        isChannelOfParent({
++          channelDevice: nvrChannel,
++          parentDevice: nvr1,
++        }),
++      ).toBe(false);
++    });
++
++    it('should return false when channelDevice is null', () => {
++      const nvrParent = mockDevices.value[0];
++
++      expect(
++        isChannelOfParent({
++          channelDevice: null,
++          parentDevice: nvrParent,
++        }),
++      ).toBe(false);
++    });
++
++    it('should return false when parentDevice is null', () => {
++      const nvrChannel = mockDevices.value[1];
++
++      expect(
++        isChannelOfParent({
++          channelDevice: nvrChannel,
++          parentDevice: null,
++        }),
++      ).toBe(false);
++    });
++  });
++
++  describe('useDeviceRoleHelper Composable', () => {
++    describe('processSelectedDevices', () => {
++      let processSelectedDevices = null;
++      beforeEach(() => {
++        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
++        processSelectedDevices = deviceRoleHelper.processSelectedDevices;
++      });
++      it('should process selected regular device', () => {
++        const currentSelectedDevices = ['camera-001'];
++        const deviceRoles = {
++          'camera-001': {
++            roleId: 'role-supervisor',
++            roleName: 'supervisor',
++          },
++        };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(1);
++        expect(grantedDevicesMap.get('camera-001')).toEqual({
++          thingName: 'camera-001',
++          derivant: 'none',
++          roleId: 'role-supervisor',
++        });
++      });
++
++      it('should process device without roleId', () => {
++        const currentSelectedDevices = ['camera-001'];
++        const deviceRoles = {};
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.get('camera-001').roleId).toBe('');
++      });
++
++      it('should auto-add parent with viewer role when selecting NVR channel', () => {
++        const currentSelectedDevices = ['nvr-001:ch1'];
++        const deviceRoles = {
++          'nvr-001:ch1': {
++            roleId: 'role-supervisor',
++            roleName: 'supervisor',
++          },
++        };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        expect(grantedDevicesMap.get('nvr-001:ch1')).toEqual({
++          thingName: 'nvr-001',
++          derivant: 'ch1',
++          roleId: 'role-supervisor',
++        });
++        expect(grantedDevicesMap.get('nvr-001')).toEqual({
++          thingName: 'nvr-001',
++          derivant: 'none',
++          roleId: DEFAULT_VIEWER_ROLE_ID,
++        });
++      });
++
++      it('should auto-add parent with viewer role when selecting VSS channel', () => {
++        const currentSelectedDevices = ['vss-001:ch1'];
++        const deviceRoles = { 'vss-001:ch1': 'role-operator' };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        expect(grantedDevicesMap.get('vss-001')).toEqual({
++          thingName: 'vss-001',
++          derivant: 'none',
++          roleId: DEFAULT_VIEWER_ROLE_ID,
++        });
++      });
++
++      it('should not duplicate parent when it is already selected', () => {
++        const currentSelectedDevices = ['nvr-001', 'nvr-001:ch1'];
++        const deviceRoles = {
++          'nvr-001': {
++            roleId: 'role-operator',
++            roleName: 'operator',
++          },
++          'nvr-001:ch1': {
++            roleId: 'role-supervisor',
++            roleName: 'supervisor',
++          },
++        };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        // parent should keep its original role
++        expect(grantedDevicesMap.get('nvr-001').roleId).toBe('role-operator');
++      });
++
++      it('should not overwrite parent when already in grantedDevicesMap', () => {
++        const currentSelectedDevices = ['nvr-001:ch1'];
++        const deviceRoles = { 'nvr-001:ch1': 'role-supervisor' };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        // Pre-add parent
++        grantedDevicesMap.set('nvr-001', {
++          thingName: 'nvr-001',
++          derivant: 'none',
++          roleId: 'role-custom',
++        });
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        // should not overwrite existing parent
++        expect(grantedDevicesMap.get('nvr-001').roleId).toBe('role-custom');
++      });
++
++      it('should process multiple devices', () => {
++        const currentSelectedDevices = ['camera-001', 'nvr-001:ch1', 'vss-001:ch1'];
++        const deviceRoles = {
++          'camera-001': 'role-supervisor',
++          'nvr-001:ch1': 'role-operator',
++          'vss-001:ch1': 'role-viewer',
++        };
++        const selectedDeviceIdsSet = new Set(currentSelectedDevices);
++        const grantedDevicesMap = new Map();
++
++        processSelectedDevices(currentSelectedDevices, deviceRoles, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(5); // 3 devices + 2 parents
++        expect(grantedDevicesMap.has('camera-001')).toBe(true);
++        expect(grantedDevicesMap.has('nvr-001')).toBe(true);
++        expect(grantedDevicesMap.has('nvr-001:ch1')).toBe(true);
++        expect(grantedDevicesMap.has('vss-001')).toBe(true);
++        expect(grantedDevicesMap.has('vss-001:ch1')).toBe(true);
++      });
++    });
++
++    describe('processRemovedDevices', () => {
++      let processRemovedDevices = null;
++      beforeEach(() => {
++        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
++        processRemovedDevices = deviceRoleHelper.processRemovedDevices;
++      });
++      it('should set removed devices to roleId: null', () => {
++        const originalGrantedDevices = new Map([
++          ['camera-001', { thingName: 'camera-001', derivant: 'none', roleId: 'role-supervisor' }],
++        ]);
++        const selectedDeviceIdsSet = new Set([]);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.get('camera-001')).toEqual({
++          thingName: 'camera-001',
++          derivant: 'none',
++          roleId: null,
++        });
++      });
++
++      it('should set channels roleId to null when removing an NVR parent', () => {
++        const originalGrantedDevices = new Map([
++          ['nvr-001', { thingName: 'nvr-001', derivant: 'none', roleId: 'role-operator' }],
++          ['nvr-001:ch1', { thingName: 'nvr-001', derivant: 'ch1', roleId: 'role-supervisor' }],
++          ['nvr-001:ch2', { thingName: 'nvr-001', derivant: 'ch2', roleId: 'role-supervisor' }],
++        ]);
++        const selectedDeviceIdsSet = new Set([]);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(3);
++        expect(grantedDevicesMap.get('nvr-001').roleId).toBeNull();
++        expect(grantedDevicesMap.get('nvr-001:ch1').roleId).toBeNull();
++        expect(grantedDevicesMap.get('nvr-001:ch2').roleId).toBeNull();
++      });
++
++      it('should set channels roleId to null when removing a VSS parent', () => {
++        const originalGrantedDevices = new Map([
++          ['vss-001', { thingName: 'vss-001', derivant: 'none', roleId: 'role-operator' }],
++          ['vss-001:ch1', { thingName: 'vss-001', derivant: 'ch1', roleId: 'role-supervisor' }],
++        ]);
++        const selectedDeviceIdsSet = new Set([]);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        expect(grantedDevicesMap.get('vss-001').roleId).toBeNull();
++        expect(grantedDevicesMap.get('vss-001:ch1').roleId).toBeNull();
++      });
++
++      it('should not process devices that are still selected', () => {
++        const originalGrantedDevices = new Map([
++          ['camera-001', { thingName: 'camera-001', derivant: 'none', roleId: 'role-supervisor' }],
++        ]);
++        const selectedDeviceIdsSet = new Set(['camera-001']);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(0);
++      });
++
++      it('should only remove channels that belong to the parent', () => {
++        const originalGrantedDevices = new Map([
++          ['nvr-001', { thingName: 'nvr-001', derivant: 'none', roleId: 'role-operator' }],
++          ['nvr-001:ch1', { thingName: 'nvr-001', derivant: 'ch1', roleId: 'role-supervisor' }],
++          ['vss-001:ch1', { thingName: 'vss-001', derivant: 'ch1', roleId: 'role-viewer' }],
++        ]);
++        const selectedDeviceIdsSet = new Set(['vss-001:ch1']);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(2);
++        expect(grantedDevicesMap.has('nvr-001')).toBe(true);
++        expect(grantedDevicesMap.has('nvr-001:ch1')).toBe(true);
++        expect(grantedDevicesMap.has('vss-001:ch1')).toBe(false);
++      });
++
++      it('should handle empty originalGrantedDevices', () => {
++        const originalGrantedDevices = new Map();
++        const selectedDeviceIdsSet = new Set([]);
++        const grantedDevicesMap = new Map();
++
++        processRemovedDevices(originalGrantedDevices, selectedDeviceIdsSet, grantedDevicesMap);
++
++        expect(grantedDevicesMap.size).toBe(0);
++      });
++    });
++
++    describe('getChannelsOfParents', () => {
++      let getChannelsOfParents = null;
++      beforeEach(() => {
++        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
++        getChannelsOfParents = deviceRoleHelper.getChannelsOfParents;
++      });
++      it('should get all channels of an NVR parent', () => {
++        const channels = getChannelsOfParents(['nvr-001']);
++
++        expect(channels.size).toBe(2);
++        expect(channels.has('nvr-001:ch1')).toBe(true);
++        expect(channels.has('nvr-001:ch2')).toBe(true);
++      });
++
++      it('should get all channels of a VSS parent', () => {
++        const channels = getChannelsOfParents(['vss-001']);
++
++        expect(channels.size).toBe(1);
++        expect(channels.has('vss-001:ch1')).toBe(true);
++      });
++
++      it('should return an empty Set when device is not a parent', () => {
++        const channels = getChannelsOfParents(['camera-001']);
++
++        expect(channels.size).toBe(0);
++      });
++
++      it('should handle multiple parent devices', () => {
++        const channels = getChannelsOfParents(['nvr-001', 'vss-001']);
++
++        expect(channels.size).toBe(3);
++        expect(channels.has('nvr-001:ch1')).toBe(true);
++        expect(channels.has('nvr-001:ch2')).toBe(true);
++        expect(channels.has('vss-001:ch1')).toBe(true);
++      });
++
++      it('should handle non-existent parent deviceId', () => {
++        const channels = getChannelsOfParents(['nvr-999']);
++
++        expect(channels.size).toBe(0);
++      });
++
++      it('should handle empty array', () => {
++        const channels = getChannelsOfParents([]);
++
++        expect(channels.size).toBe(0);
++      });
++
++      it('should handle mixed parent and non-parent devices', () => {
++        const channels = getChannelsOfParents(['nvr-001', 'camera-001', 'vss-001']);
++
++        expect(channels.size).toBe(3);
++        expect(channels.has('nvr-001:ch1')).toBe(true);
++        expect(channels.has('nvr-001:ch2')).toBe(true);
++        expect(channels.has('vss-001:ch1')).toBe(true);
++      });
++    });
++
++    describe('getParentsToAdd', () => {
++      let getParentsToAdd = null;
++      beforeEach(() => {
++        const deviceRoleHelper = useDeviceRoleHelper(mockDevices);
++        getParentsToAdd = deviceRoleHelper.getParentsToAdd;
++      });
++      it('should find NVR parents to add', () => {
++        const deviceIds = ['nvr-001:ch1'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual(['nvr-001']);
++      });
++
++      it('should find VSS parents to add', () => {
++        const deviceIds = ['vss-001:ch1'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual(['vss-001']);
++      });
++
++      it('should not add parent again when it is already selected', () => {
++        const deviceIds = ['nvr-001:ch1'];
++        const currentSelectedSet = new Set(['nvr-001', 'nvr-001:ch1']);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual([]);
++      });
++
++      it('should return an empty array for regular devices', () => {
++        const deviceIds = ['camera-001'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual([]);
++      });
++
++      it('should handle multiple channels and return unique parents', () => {
++        const deviceIds = ['nvr-001:ch1', 'nvr-001:ch2', 'vss-001:ch1'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toHaveLength(2);
++        expect(parents).toContain('nvr-001');
++        expect(parents).toContain('vss-001');
++      });
++
++      it('should handle empty array', () => {
++        const deviceIds = [];
++        const currentSelectedSet = new Set();
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual([]);
++      });
++
++      it('should handle non-existent devices', () => {
++        const deviceIds = ['non-existent-device'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toEqual([]);
++      });
++
++      it('should handle mixed channels and regular devices', () => {
++        const deviceIds = ['camera-001', 'nvr-001:ch1', 'vss-001:ch1'];
++        const currentSelectedSet = new Set(deviceIds);
++
++        const parents = getParentsToAdd(deviceIds, currentSelectedSet);
++
++        expect(parents).toHaveLength(2);
++        expect(parents).toContain('nvr-001');
++        expect(parents).toContain('vss-001');
++      });
++    });
++  });
++});
+diff --git a/packages/app-vsaas-portal/src/pages/user/detail/index.vue b/packages/app-vsaas-portal/src/pages/user/detail/index.vue
+index ecd8b7d2a5..545cf9b19d 100644
+--- a/packages/app-vsaas-portal/src/pages/user/detail/index.vue
++++ b/packages/app-vsaas-portal/src/pages/user/detail/index.vue
+@@ -39,7 +39,7 @@
+                 class="access-settings-button"
+                 :disabled="isLoading"
+                 data-testid="access-settings-button"
+-                @click="openDeviceSelectModal()"
++                @click="openDeviceSelectModal"
+               >
+                 <SvgIcon
+                   size="20px"
+@@ -77,7 +77,12 @@
+           </div>
+         </div>
+       </div>
+-      <!-- TODO: Marco put your Diagoue -->
++      <DeviceAccessDialogue
++        ref="deviceAccessDialogueRef"
++        :multiple="true"
++        :userId="currentUser?.userSub"
++        @success="fetchDeviceAccess"
++      />
+     </template>
+     <template #footer>
+       <FooterPagination
+@@ -91,7 +96,7 @@
+   </SideMenusLayout>
+ </template>
+ <script setup>
+-import { getCurrentInstance, onBeforeMount, nextTick, onMounted, computed } from 'vue';
++import { getCurrentInstance, onBeforeMount, nextTick, onMounted, computed, useTemplateRef } from 'vue';
+ import { useRouter } from 'vue-router';
+ 
+ import { SideMenusLayout } from '@vivotek/advanced-vue-components';
+@@ -101,6 +106,7 @@ import { FooterPagination } from '@vivotek/vue-app-layouts';
+ 
+ import usePagination from '@/composables/usePagination/usePagination';
+ import { DEFAULT_PAGE_SIZE } from '@/constants/Pagination';
++import DeviceAccessDialogue from '@/pages/user/detail/components/DeviceAccessDialogue.vue';
+ 
+ import DeviceAccessTable from './components/DeviceAccessTable/DeviceAccessTable.vue';
+ import UserProfile from './components/UserProfile/UserProfile.vue';
+@@ -112,6 +118,8 @@ const router = useRouter();
+ const { proxy } = getCurrentInstance();
+ const mixpanel = proxy.$mixpanel;
+ 
++const deviceAccessDialogueRef = useTemplateRef('deviceAccessDialogueRef');
++
+ // ============================================================
+ // User
+ // ============================================================
+@@ -142,9 +150,7 @@ const {
+ 
+ const openDeviceSelectModal = () => {
+   mixpanel.time_event(TRACK_TIME_EVENT_KEY.USERS_SETUP_ACCESS);
+-  // TODO: Marco Open New Dialog
+-  // emit your event
+-  // refresh this page
++  deviceAccessDialogueRef.value?.openDialogue();
+ };
+ 
+ onMounted(async () => {
+diff --git a/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js b/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js
+index c81d17a655..549d10c1b3 100644
+--- a/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js
++++ b/packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js
+@@ -1287,6 +1287,14 @@ const RestfulApiService = {
+       data: { devices },
+     });
+   },
++  assignDeviceRole: async ({ userId, assignments }) => {
++    return ApiService.requestToApiServer({
++      apiPath: `v1/users/${userId}/device-roles/bulk`,
++      method: 'PATCH',
++      contentType: HTTP_CONTENT_TYPE.JSON,
++      data: { assignments },
++    });
++  },
+ };
+ 
+ const ApiServiceInterface = {
+diff --git a/packages/app-vsaas-portal/src/store/role/actions.js b/packages/app-vsaas-portal/src/store/role/actions.js
+index 874a97c139..e12ed96e5e 100644
+--- a/packages/app-vsaas-portal/src/store/role/actions.js
++++ b/packages/app-vsaas-portal/src/store/role/actions.js
+@@ -391,8 +391,13 @@ const actions = {
+     return mockRoleDetails;
+   },
+ 
+-  async assginOrganizationRole({ commit }, updateList) {
+-    const res = await apiServiceInterface.assignOrganizationRole(updateList);
++  async assignOrganizationRole({ commit }, updateList) {
++    const res = await apiServiceInterface.assignOrgRoles({ assignments: updateList });
++    return res;
++  },
++
++  async assignDeviceRole({ commit }, { userId, assignments }) {
++    const res = await apiServiceInterface.assignDeviceRole({ userId, assignments });
+     return res;
+   },
+ };
+diff --git a/packages/app-vsaas-portal/src/store/user/actions.js b/packages/app-vsaas-portal/src/store/user/actions.js
+index 60fa88f4ac..e4ca3b243a 100644
+--- a/packages/app-vsaas-portal/src/store/user/actions.js
++++ b/packages/app-vsaas-portal/src/store/user/actions.js
+@@ -2,7 +2,11 @@ import { USER_ROLE } from '@vivotek/const-vsaas';
+ import { APP_TABLE_STATUS } from '@vivotek/generic-vue-components';
+ import { getTagged } from '@vivotek/lib-utility';
+ 
++import { PERMISSION_TYPES } from '@/constants/Permission';
++
+ const Log = getTagged('store/account/action');
++const ROLES_PER_PAGE = 10;
++const ROLES_LIMIT = 100;
+ 
+ function translateToUserObject(user, rootState, rootGetters) {
+   const roleInfo = user.role;
+@@ -182,18 +186,16 @@ const actions = {
+       return;
+     }
+ 
+-    const ITEMS_PER_PAGE = 10;
+-
+     commit('setSelectUserRolesLoading', true);
+     commit('setSelectUserRolesLoadError', false);
+ 
+     try {
+-      const offset = selectUserRoles.page * ITEMS_PER_PAGE;
++      const offset = selectUserRoles.page * ROLES_PER_PAGE;
+       const params = new URLSearchParams({
+-        type: 'org',
++        type: PERMISSION_TYPES.ORGANIZATION,
+         isCustomRole: true,
+         offset,
+-        limit: ITEMS_PER_PAGE,
++        limit: ROLES_PER_PAGE,
+       });
+       const { roles, total } = await rootState.apiService.listRoles(params.toString());
+       const loadedCount = offset + roles.length;
+@@ -212,10 +214,10 @@ const actions = {
+   async fetchDefaultRoleList({ commit, rootState }) {
+     try {
+       const params = new URLSearchParams({
+-        type: 'org',
++        type: PERMISSION_TYPES.ORGANIZATION,
+         isCustomRole: false,
+         offset: 0,
+-        limit: 100,
++        limit: ROLES_LIMIT,
+       });
+       const { roles } = await rootState.apiService.listRoles(params.toString());
+ 
+@@ -225,6 +227,62 @@ const actions = {
+       throw error.generalize ? error.generalize() : error;
+     }
+   },
++
++  async fetchDefaultDeviceRoleList({ commit, rootState }) {
++    try {
++      const params = new URLSearchParams({
++        type: PERMISSION_TYPES.DEVICE,
++        isCustomRole: false,
++        offset: 0,
++        limit: ROLES_LIMIT,
++      });
++      const { roles } = await rootState.apiService.listRoles(params.toString());
++      commit('addSelectUserDefaultDeviceRoles', roles);
++    } catch (error) {
++      Log.error('fetchDefaultDeviceRoleList failed', error);
++      throw error.generalize ? error.generalize() : error;
++    }
++  },
++
++  async fetchSelectUserDeviceRoles({ commit, state, rootState }) {
++    const { selectUserDeviceRoles } = state.detail;
++    if (selectUserDeviceRoles.loading || !selectUserDeviceRoles.hasMore) {
++      return;
++    }
++
++    commit('setSelectUserDeviceRolesLoading', true);
++    commit('setSelectUserDeviceRolesLoadError', false);
++
++    try {
++      const offset = selectUserDeviceRoles.page * ROLES_PER_PAGE;
++      const params = new URLSearchParams({
++        type: PERMISSION_TYPES.DEVICE,
++        isCustomRole: true,
++        offset,
++        limit: ROLES_PER_PAGE,
++      });
++      const { roles, total } = await rootState.apiService.listRoles(params.toString());
++      const loadedCount = offset + roles.length;
++
++      commit('addSelectUserDeviceRoles', roles);
++      commit('setSelectUserDeviceRolesPage', selectUserDeviceRoles.page + 1);
++      commit('setSelectUserDeviceRolesHasMore', loadedCount < total);
++    } catch (error) {
++      Log.error('fetchSelectUserDeviceRoles failed', error);
++      commit('setSelectUserDeviceRolesLoadError', true);
++    } finally {
++      commit('setSelectUserDeviceRolesLoading', false);
++    }
++  },
++
++  async assignDeviceRole({ commit, rootState }, { userId, assignments }) {
++    try {
++      await rootState.apiService.assignDeviceRole({ userId, assignments });
++    } catch (error) {
++      Log.error('assignDeviceRole failed', error);
++      throw error.generalize ? error.generalize() : error;
++    }
++  },
+ };
+ 
+ export default actions;
+diff --git a/packages/app-vsaas-portal/src/store/user/getters.js b/packages/app-vsaas-portal/src/store/user/getters.js
+index 4ebe50559b..b92c6e362f 100644
+--- a/packages/app-vsaas-portal/src/store/user/getters.js
++++ b/packages/app-vsaas-portal/src/store/user/getters.js
+@@ -45,4 +45,7 @@ export default {
+   detailIsLoading(state) {
+     return state.detail.isLoading;
+   },
++  allSelectUserDeviceRoles(state) {
++    return [...state.detail.selectUserDeviceRoles.defaultRole, ...state.detail.selectUserDeviceRoles.roles];
++  },
+ };
+diff --git a/packages/app-vsaas-portal/src/store/user/index.js b/packages/app-vsaas-portal/src/store/user/index.js
+index 1cb0f9ff57..c6fd00d9eb 100644
+--- a/packages/app-vsaas-portal/src/store/user/index.js
++++ b/packages/app-vsaas-portal/src/store/user/index.js
+@@ -28,6 +28,14 @@ const user = {
+     detail: {
+       deviceOverview: [],
+       isLoading: false,
++      selectUserDeviceRoles: {
++        defaultRole: [],
++        roles: [],
++        loading: false,
++        loadError: false,
++        page: 0,
++        hasMore: true,
++      },
+     },
+   },
+   getters,
+diff --git a/packages/app-vsaas-portal/src/store/user/mutations.js b/packages/app-vsaas-portal/src/store/user/mutations.js
+index e4cc192379..0eaec65656 100644
+--- a/packages/app-vsaas-portal/src/store/user/mutations.js
++++ b/packages/app-vsaas-portal/src/store/user/mutations.js
+@@ -56,6 +56,24 @@ const mutations = {
+   setDetailLoading(state, isLoading) {
+     state.detail.isLoading = isLoading;
+   },
++  addSelectUserDefaultDeviceRoles(state, roles) {
++    state.detail.selectUserDeviceRoles.defaultRole = [...roles];
++  },
++  addSelectUserDeviceRoles(state, roles) {
++    state.detail.selectUserDeviceRoles.roles = [...state.detail.selectUserDeviceRoles.roles, ...roles];
++  },
++  setSelectUserDeviceRolesLoading(state, isLoading) {
++    state.detail.selectUserDeviceRoles.loading = isLoading;
++  },
++  setSelectUserDeviceRolesLoadError(state, hasError) {
++    state.detail.selectUserDeviceRoles.loadError = hasError;
++  },
++  setSelectUserDeviceRolesPage(state, page) {
++    state.detail.selectUserDeviceRoles.page = page;
++  },
++  setSelectUserDeviceRolesHasMore(state, hasMore) {
++    state.detail.selectUserDeviceRoles.hasMore = hasMore;
++  },
+ 
+   // ============================================================
+   // Group Role

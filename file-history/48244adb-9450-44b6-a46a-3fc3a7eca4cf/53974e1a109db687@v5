@@ -1,0 +1,132 @@
+<template>
+  <AppDialogue
+    ref="revokeUserAdminDialogue"
+    name="revokeUserAdminDialogue"
+    :title="$t('Remove organization admin')"
+    :state="currentState"
+    :buttons="revokeAdminButtons"
+    :closeWhenClickButton="false"
+    :buttonIconStatusMapping="SECONDARY_ACTION_BUTTON_MAPPING"
+  >
+    <template #content>
+      <div class="default-dialog-content">
+        <h6>
+          <!-- eslint-disable-next-line max-len -->
+          {{ $t('By removing organization admin from the user, their site access will be reset to default.') }}
+        </h6>
+        <h6 class="bold">
+          {{ $t('Are you sure you want to remove the following user from the organization admin?') }}
+        </h6>
+
+        <div class="avatar-email-wrapper">
+          <AppAvatar
+            :name="user.email"
+            :role="user.role"
+            :showBorder="user.isCurrentUser"
+            roleIconStyle="smaller"
+          />
+          <h6 v-text="user.email" />
+        </div>
+      </div>
+    </template>
+    <template
+      v-if="isError"
+      #errorMessage
+    >
+      <AppFormErrorMessage :message="$t('Failed to remove organization admin. Try again.')" />
+    </template>
+  </AppDialogue>
+</template>
+
+<script>
+import { mapActions } from 'vuex';
+
+import { DIALOGUE } from '@vivotek/const-vsaas';
+
+import AppAvatar from '@/components/Avatars/AppAvatar.vue';
+
+export default {
+  name: 'RevokeUserAdminDialogue',
+  components: {
+    AppAvatar,
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      currentState: DIALOGUE.STATE.DEFAULT,
+      SECONDARY_ACTION_BUTTON_MAPPING: DIALOGUE.SECONDARY_ACTION_BUTTON_MAPPING,
+    };
+  },
+  methods: {
+    ...mapActions('user', ['setOrganizationRoleOfUser']),
+    async confirm() {
+      this.setState(DIALOGUE.STATE.PROCESSING);
+      try {
+        await this.setOrganizationRoleOfUser({
+          email: this.user.email,
+          role: 'USER',
+        });
+        this.setState(DIALOGUE.STATE.SUCCESS);
+      } catch (error) {
+        this.setState(DIALOGUE.STATE.ERROR);
+      }
+    },
+    setState(state) {
+      this.currentState = state;
+    },
+    show() {
+      this.setState(DIALOGUE.STATE.DEFAULT);
+      this.$refs.revokeUserAdminDialogue.show();
+    },
+  },
+  computed: {
+    revokeAdminButtons() {
+      return [
+        {
+          class: 'primary',
+          text: this.$t('Keep'),
+          clickHandler: () => {
+            this.$refs.revokeUserAdminDialogue.hide();
+          },
+        },
+        {
+          class: 'ghost',
+          text: this.isProcessing ? this.$t('Removing...') : this.$t('Remove'),
+          clickHandler: () => {
+            this.confirm();
+          },
+        },
+      ];
+    },
+    isProcessing() {
+      return this.currentState === DIALOGUE.STATE.PROCESSING;
+    },
+    isError() {
+      return this.currentState === DIALOGUE.STATE.ERROR;
+    },
+  },
+};
+</script>
+
+<style scoped lang="less">
+.avatar-email-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  padding: 16px 0;
+  .app-avatar {
+    width: 28px;
+    height: 28px;
+    + h6 {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+</style>

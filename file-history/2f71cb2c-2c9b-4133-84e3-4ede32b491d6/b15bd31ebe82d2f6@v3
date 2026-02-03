@@ -1,0 +1,324 @@
+
+# Device related fragments
+fragment DeviceInfo on DeviceInfo {
+  mac
+  organizationID
+  name
+  type
+  thingName
+  city
+  derivant
+  derivantMac
+  ip
+  firmware
+  fwUpgradeVersion
+  fwUpgradeState
+  model
+  modelType
+  online
+  deviceGroupID: siteID
+  roleID
+  roleName
+  fisheye
+  ptz
+  recording
+  recordingCapacityDays
+  recordingType
+  timezone
+  vca {
+    capability
+    version
+  }
+  auth
+  storageCapacity
+  archiveLimitedSize
+  wizardFinished
+  support
+  sipUsername
+  retentionDaysByUser
+  maxRetentionDays
+  isTimelapseEnabled
+  sharedLink {
+		id
+		enabled
+		password
+		expireTime
+		canPlayback
+		url
+	}
+  contractInfo {
+    mainPlan {
+      planType
+      additionalInfo
+      state
+    }
+    addOnPlans {
+      planType
+      additionalInfo
+      state
+    }
+    otherPlans {
+      planType
+      additionalInfo
+      state
+    }
+  }
+  protocol
+}
+
+fragment DeviceGroup on DeviceGroup {
+  id
+  name
+  organizationID
+  owner
+  location {
+    latitude
+    longitude
+    address
+  }
+}
+
+# Organization related fragments
+fragment MyOrganization on MyOrganization {
+  organizationID
+  organizationName
+  onBoard
+  inviterEmail
+  licensePhase
+  licenseMainPlans
+  isFreePlan
+  storageLocation
+  isRequiredMFA
+  username
+  snoozeUntil
+  eventDelayTimeSeconds
+  support
+}
+
+fragment OrganizationAlarmSetting on OrganizationAlarmSetting {
+  actions
+  alarmID
+  alarmName
+  createdBy
+  events
+  scheduleBitwise
+  getSettingsURL
+  putSettingsURL
+  enable
+  pauseUntil
+  city
+}
+
+fragment OrganizationIPSpeaker on OrganizationIPSpeaker {
+  mac
+  name
+  organizationID
+  thingName
+  type
+  model
+  auth
+  volume
+  sipUsername
+  associatedDevices {
+    thingName
+    derivant
+  }
+}
+
+# User management related fragments
+fragment UserManagement on UserManagmentV2 {
+  email
+  organizationID
+  userSub
+  state
+  onBoard
+  username
+  role {
+    id
+    name
+  }
+}
+
+# Archive related fragments
+fragment Archive on Archive {
+  thingName
+  createdAt
+  filename
+  creatorNickname
+  creatorEmail
+  startAt
+  endAt
+  owner
+  status
+  videoLength
+  videoSize
+  taskArn
+  id
+  sharedToken
+  updatedAt
+  derivant
+  cloudSize
+  sharedLink {
+    enabled
+    password
+    expireTime
+    enableDownload
+    url
+  }
+}
+
+fragment SharedArchive on GetSharedArchiveCookieOutput {
+  cookie
+  createdAt
+  creatorEmail
+  deviceGroupName
+  deviceName
+  fileName
+  orgName
+  startAt
+  videoLength
+  thingName
+  storageLocation
+  passwordRequired
+  status
+  bucketName
+  region
+  enableDownload
+}
+
+# Message related fragments
+fragment MessageItem on MessageItem {
+  source {
+    derivant
+    thingName
+  }
+  eventID
+  time
+  type
+  name
+  localtime
+  starttime
+  thumbnails3key
+  information
+  profileID
+  recognizedThumbnailS3Keys
+  sceneThumbnailS3Keys
+  messageTypeID
+  plateNumber
+}
+
+# Access control related fragments
+fragment AccessControlMessage on AccessControlWebhookEvent {
+  id
+  integrationId
+  eventId
+  eventType
+  providerEventType
+  actorId
+  actorName
+  actorEmail
+  objectType
+  objectId
+  objectName
+  createdTime
+  createdTimestamp
+  offset
+  bindingDevices {
+    thingName
+    derivant
+  }
+}
+
+fragment AccessControlLock on AccessControlLock {
+  lockId
+  lockType
+  lockName
+  lockStatus
+}
+
+fragment AccessControlBinding on AccessControlBinding {
+  lockId
+  lockType
+  lockName
+}
+
+# Audit log related fragments
+fragment AuditLog on AuditLog {
+  eventCategory
+  eventName
+  target
+  datetime
+  user
+  username
+  ip
+  location
+  details
+}
+
+# Webhook related fragments
+fragment Webhook on Webhook {
+  organizationID
+  webhookID
+  name
+  url
+  sender
+  httpMethod
+  authType
+  disableHTTPCerts
+  contentType
+  headers {
+    key
+    value
+  }
+  payload
+  alarmIDBindings
+}
+
+fragment CloudTestWebhook on CloudTestWebhookOutput {
+  status
+  errorMessage
+  httpCode
+  httpResponse
+}
+
+# SIService related fragments
+fragment SIService on SIService {
+  companyID
+  companyName
+  phoneNumber
+  email
+  enableRemoteAccess
+  autoSendSystemEvent
+}
+
+# Snooze rule related fragments
+fragment SnoozeRule on SnoozeRule {
+  id
+  device {
+    thingName
+    derivant
+  }
+  eventType
+  ruleName
+  snoozeFor
+  snoozeUntil
+  editorEmail
+  messageTypeID
+}
+
+# Credential related fragments
+fragment Credential on Credential {
+  accessKeyId
+  secretAccessKey
+  sessionToken
+}
+
+# API key related fragments
+fragment ApiKey on ApiKey {
+  keyID
+  keyName
+  enabled
+  createdAt
+  expiresAt
+}
+

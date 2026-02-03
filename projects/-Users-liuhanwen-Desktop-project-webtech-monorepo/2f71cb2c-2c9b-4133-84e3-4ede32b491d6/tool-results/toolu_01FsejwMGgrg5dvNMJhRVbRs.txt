@@ -1,0 +1,12 @@
+Found 11 files
+packages/app-vsaas-portal/src/pages/user/management/components/InviteUserDialogueV2.vue
+packages/app-vsaas-portal/src/store/account/actions.test.js
+packages/app-vsaas-portal/src/i18n/languages/TradChinese.json
+packages/app-vsaas-portal/src/i18n/languages/Japanese.json
+packages/app-vsaas-portal/src/i18n/languages/English.json
+packages/app-vsaas-portal/src/utils/RoleHelper.js
+packages/app-vsaas-portal/src/store/user/actions.js
+packages/app-vsaas-portal/src/pages/user/management/index.vue
+packages/app-vsaas-portal/CHANGELOG.md
+packages/app-vsaas-portal/src/pages/user/management/InviteUserDialogue/InviteUserDialogue.vue
+packages/app-vsaas-portal/src/pages/user/management/InviteUserDialogue/InviteUserDialogue.test.js

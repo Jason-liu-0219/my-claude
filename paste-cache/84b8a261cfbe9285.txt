@@ -1,0 +1,14 @@
+  2. DeviceSettingsMenu.js - PoE Switch                                                                                                    
+  poeSwitch: ({ t }) => [  // ❌ 缺少 device, canDoDevice 參數                                                                             
+    {                                                                                                                                      
+      label: t('System'),                                                                                                                  
+      path: 'system',                                                                                                                      
+      options: [                                                                                                                           
+        {                                                                                                                                  
+          label: t('Overview'),                                                                                                            
+          path: 'poe-switch-settings',                                                                                                     
+          // ❌ 缺少 isSupport: hasSettingsPermission                                                                                      
+        },                                                                                                                                 
+      ],                                                                                                                                   
+    },                                                                                                                                     
+  ],   

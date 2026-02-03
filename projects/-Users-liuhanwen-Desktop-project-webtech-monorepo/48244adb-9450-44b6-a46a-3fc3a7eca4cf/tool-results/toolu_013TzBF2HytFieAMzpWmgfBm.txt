@@ -1,0 +1,7 @@
+Found 6 files
+packages/app-vsaas-portal/src/singletons/ApiServiceInterface.js
+packages/app-vsaas-portal/CHANGELOG.md
+packages/app-vsaas-portal/src/store/device/mutations.js
+packages/app-vsaas-portal/src/store/device/actions.test.js
+packages/app-vsaas-portal/src/store/device/actions.js
+packages/app-vsaas-portal/src/graphql/queries.gql

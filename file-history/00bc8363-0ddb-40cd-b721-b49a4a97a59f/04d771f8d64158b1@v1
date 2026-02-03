@@ -1,0 +1,30 @@
+# Claude 全局指令
+
+## 自動技能觸發規則
+
+### Debug Investigator（問題調查）
+當用戶的問題符合以下情況時，**自動使用 `/debug-investigator` skill**：
+- 提到 bug、error、錯誤、問題、壞了、不work
+- 詢問「是哪次改動造成的」、「什麼時候改壞的」
+- 需要追溯代碼歷史、查找 commit
+- 提到 regression、回歸問題
+- 需要 git blame、git log 分析
+
+**觸發範例：**
+- 「這個功能昨天還正常」→ 使用 debug-investigator
+- 「幫我查這個 bug」→ 使用 debug-investigator
+- 「是誰改壞的」→ 使用 debug-investigator
+
+### Vue3
+當用戶的問題涉及 Vue 3 開發時，**自動使用 `/vue3` skill**：
+- Vue 組件開發
+- Composition API（ref, reactive, computed, watch）
+- Vue Router、Pinia
+- SFC 語法
+
+## 回應偏好
+
+- 使用繁體中文回應
+- 代碼註解可用英文
+- 提供實際可執行的命令和代碼
+- 調查問題時產出結構化報告

@@ -1,0 +1,41 @@
+62-      targetUser.groupsRole = targetUser.groupsRole.map((groupRole) => {
+63-        groupRole.role = GROUP_ROLE.NONE;
+64-        return groupRole;
+65-      });
+66-      commit(
+67-        'updateUser',
+68-        translateToUserObject(
+69-          {
+70-            ...targetUser,
+71-            role,
+72-          },
+73-          rootState,
+74-          rootGetters,
+75-        ),
+76-      );
+77-      return response;
+78-    } catch (error) {
+79-      throw error.generalize();
+80-    }
+81-  },
+82:  async inviteUserToOrganization(
+83-    { commit, getters, rootGetters, rootState, dispatch },
+84-    { userName, email, locale, organizationRole, asAdmin, isResendInvitation = false },
+85-  ) {
+86-    try {
+87-      const { organizationID } = rootGetters['organization/currentOrganization'];
+88-      const input = {
+89-        organizationID,
+90-        email,
+91-        locale,
+92-        ...(isResendInvitation ? {} : { username: userName, organizationRoleID: organizationRole.id, join: true }),
+93-      };
+94-      let response;
+95-      if (isResendInvitation) {
+96-        response = await rootState.apiService.inviteAgain(input);
+97-      } else {
+98-        response = await rootState.apiService.setUserOfOrganization(input);
+99-      }
+100-      const targetUser = getters.getUserByEmail(email);
+101-      if (targetUser) {
+102-        commit('updateUser', translateToUserObject(targetUser, rootState, rootGetters));

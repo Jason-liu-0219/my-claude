@@ -1,0 +1,235 @@
+import { reactive } from 'vue';
+
+import {
+  DEVICE_TYPE,
+  FIRMWARE_UPGRADE_STATUS_MAP,
+  CHANNEL_FIRMWARE_UPGRADE_STATUS_MAP,
+  ADD_DEVICE_INSPECT_TYPE,
+} from '@vivotek/const-vsaas';
+import {
+  composeVsaasDeviceId as ComposeVsaasDeviceId,
+  VsaasNVR,
+  VsaasNVRCamera as NVRCamera,
+  VsaasVSS,
+  VsaasVSSCamera as VSSCamera,
+} from '@vivotek/device';
+import RemoteConfigService, { PORTAL_FEATURE_CONFIG_KEY } from '@vivotek/lib-remote-config';
+
+import DeviceFactory from '@/models/Device/DeviceFactory';
+import { convertMainLicense, convertCloudBackupLicense, convertAILicenseExpired } from '@/utils/LicenseHelper';
+
+const mutations = {
+  setDevices(state, { items: devices, groupsMap, plan, dependencies }) {
+    const excludedDeviceTypes = ['ipspeaker', 'poeSwitch'];
+    const devicesWithoutExternalDevice = devices.filter((device) => !excludedDeviceTypes.includes(device.type));
+    const disableSpeedDomeModels = RemoteConfigService.getConfiguration(PORTAL_FEATURE_CONFIG_KEY.DISABLE_SPEED_DOMES);
+
+    devicesWithoutExternalDevice.forEach((item) => {
+      const device = reactive(DeviceFactory({ options: { ...item, plan } }).injectDependencies(dependencies));
+      if (disableSpeedDomeModels.includes(device.model)) {
+        device.services.configurator.updateState({
+          isBlockCameraVcaCapabilityAndSupport: true,
+        });
+      }
+      device.sharedLink = item.sharedLink?.enabled ? item.sharedLink : { enabled: false };
+      device.mainLicense = convertMainLicense(item.contractInfo);
+      device.cloudBackupLicense = convertCloudBackupLicense(item.contractInfo);
+      device.aiLicenseExpired = convertAILicenseExpired(item.contractInfo);
+
+      if (!state.deviceMap[item.type]) {
+        state.deviceMap[item.type] = new Map();
+      }
+
+      state.deviceMap?.[item.type]?.set(device.deviceId, device);
+
+      const groupName = groupsMap?.[item.siteID]?.name;
+
+      if (groupName) {
+        device.groupName = groupName;
+      } else {
+        state.uninitializedDevices[device.deviceId] = device;
+      }
+    });
+  },
+  resetDevices(state) {
+    state.uninitializedDevices = {};
+    state.searchStatus = 'initial';
+    state.deviceMap = {
+      nvr: new Map(),
+      bridge: new Map(),
+      camera: new Map(),
+      nvrchannel: new Map(),
+      unknownDevice: new Map(),
+      vss: new Map(),
+      vsschannel: new Map(),
+    };
+    state.isFetchingData = false;
+    state.isFetchedOutdatedFirmwareDevice = false;
+    state.outdatedFirmwareDeviceList = [];
+    state.deviceIdForAddDevice = '';
+    state.retainOriginalSettingsForAddDevice = false;
+    state.cacheForAddDevice = {
+      city: null,
+      group: null,
+    };
+    state.currentAddedDeviceType = null;
+  },
+  deleteDevice(state, device) {
+    const map = state.deviceMap[device?.type || device.options.type];
+    if (!map.has(device.deviceId)) {
+      return;
+    }
+
+    map.get(device.deviceId).notifyUpdate();
+    map.delete(device.deviceId);
+
+    delete state.uninitializedDevices[device.deviceId];
+  },
+  updateDevice(state, { device, groupName, plan }) {
+    const deviceId = ComposeVsaasDeviceId(device);
+    const map = state.deviceMap[device.type];
+    const nvrMap = state.deviceMap.nvr;
+    const vssMap = state.deviceMap.vss;
+    const listOfMap = Array.from(map.values());
+    const deviceOfState = map.get(deviceId);
+
+    device.groupName = groupName;
+
+    if (state.deviceMap.unknownDevice.has(deviceId) && !deviceOfState) {
+      state.deviceMap.unknownDevice.delete(deviceId);
+    }
+
+    if (!deviceOfState || deviceOfState.isUnknownDevice) {
+      const newDeviceInstance = DeviceFactory({ options: { ...device, plan } });
+
+      map.set(deviceId, reactive(newDeviceInstance));
+    }
+
+    const target = map.get(deviceId);
+    Object.keys(target.options).forEach((key) => {
+      target.options[key] = device[key];
+      /**
+       * If device has never been updated via Carota, the fwUpgradeState in listDeviceInfoOfOrganization will be null.
+       * To ensure OTA status remains accurate, when device state changes, retrieve the latest state via getDeviceInfo
+       * and update the status in OTAService in real time.
+       */
+      if (key === 'fwUpgradeState' && target.services?.ota && device[key]) {
+        if (target.type === DEVICE_TYPE.NVR_CHANNEL) {
+          target.services.ota.setStatus(CHANNEL_FIRMWARE_UPGRADE_STATUS_MAP[device[key]]);
+        } else {
+          target.services.ota.setStatus(FIRMWARE_UPGRADE_STATUS_MAP[device[key]]);
+        }
+      }
+    });
+
+    if (target instanceof VsaasNVR) {
+      listOfMap
+        .filter((item) => item instanceof NVRCamera && item.nvrMac === device.mac)
+        .forEach((channel) => {
+          map.get(channel.deviceId).nvr = target.options;
+        });
+      nvrMap.set(target.deviceId, target);
+    } else if (target instanceof NVRCamera) {
+      const nvr = listOfMap.find((item) => item instanceof VsaasNVR && item.mac === target.nvrMac);
+      if (nvr) {
+        target.nvr = nvr.options;
+      }
+    } else if (target instanceof VsaasVSS) {
+      listOfMap
+        .filter((item) => item instanceof VSSCamera && item.vssMac === device.mac)
+        .forEach((channel) => {
+          map.get(channel.deviceId).vss = target.options;
+        });
+      vssMap.set(target.deviceId, target);
+    } else if (target instanceof VSSCamera) {
+      const vss = listOfMap.find((item) => item instanceof VsaasVSS && item.mac === target.vssMac);
+      if (vss) {
+        target.vss = vss.options;
+      }
+    }
+  },
+  updateDevicesGroupName(state, { group, devices }) {
+    if (!group || !devices) {
+      return;
+    }
+
+    const groupName = group.name;
+
+    devices.forEach((device) => {
+      const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+
+      currentDevice.groupName = groupName;
+    });
+  },
+  setInitialDeviceGroupName(state, { groupsMap }) {
+    Object.values(state.uninitializedDevices).forEach((device) => {
+      const groupName = groupsMap[device.siteID]?.name;
+      if (!groupName) {
+        return;
+      }
+
+      const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+
+      currentDevice.groupName = groupName;
+
+      delete state.uninitializedDevices[device.deviceId];
+    });
+  },
+  updateNvrWizardFinished(state, { device, value }) {
+    const currentDevice = state.deviceMap[device.type].get(device.deviceId);
+
+    currentDevice.wizardFinished = value;
+  },
+  setSearchStatus(state, status) {
+    state.searchStatus = status;
+  },
+  setIsFetchingData(state, nextToken) {
+    state.isFetchingData = !!nextToken;
+  },
+  setIsFetchedOutdatedFirmwareDevice(state, status) {
+    state.isFetchedOutdatedFirmwareDevice = status;
+  },
+  setOutdatedFirmwareDeviceList(state, deviceList) {
+    state.outdatedFirmwareDeviceList = deviceList;
+  },
+  setSharedDevice(state, { deviceInfo, dependencies, canPlayback }) {
+    const device = reactive(DeviceFactory({ options: deviceInfo })).injectDependencies(dependencies);
+    state.sharedDevice = device;
+    state.sharedDevice.canPlayback = canPlayback;
+    state.sharedDevice.services.recording.disableCloudStreaming = true;
+  },
+  setDeviceSharedLink(state, { deviceId, deviceType, sharedLink }) {
+    const device = state.deviceMap[deviceType].get(deviceId);
+    if (device) {
+      device.sharedLink = {
+        ...device.sharedLink,
+        ...sharedLink,
+      };
+    }
+  },
+  deleteDeviceSharedLink(state, { deviceId, deviceType }) {
+    const device = state.deviceMap[deviceType].get(deviceId);
+    if (device) {
+      delete device.sharedLink;
+    }
+  },
+  updateDeviceIdForAddDevice(state, deviceId) {
+    state.deviceIdForAddDevice = deviceId;
+  },
+  updateRetainOriginalSettingsForAddDevice(state, retainOriginalSettings) {
+    state.retainOriginalSettingsForAddDevice = retainOriginalSettings;
+  },
+  updateCacheForAddDevice(state, cache) {
+    state.cacheForAddDevice = { ...state.cacheForAddDevice, ...cache };
+  },
+  setCurrentAddedDeviceType(state, deviceInspect) {
+    state.currentAddedDeviceType = ADD_DEVICE_INSPECT_TYPE[deviceInspect.deviceType];
+  },
+  clearAddDeviceStore(state) {
+    state.deviceIdForAddDevice = '';
+    state.retainOriginalSettingsForAddDevice = false;
+    state.currentAddedDeviceType = '';
+  },
+};
+
+export default mutations;
